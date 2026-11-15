@@ -1,0 +1,18 @@
+{
+  "name": "Santini 3D - Lancio del Giorno",
+  "short_name": "Santini 3D",
+  "description": "Scopri i santi del giorno e lancia i santini in 3D come frisbee in scenari suggestivi.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f172a",
+  "theme_color": "#1e293b",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
