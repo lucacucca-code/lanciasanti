@@ -1,4 +1,4 @@
-// Santini 3D - Motore Three.js con fisica di lancio tipo frisbee e 4 scenari fotografici reali
+// Santini 3D - Motore Three.js con foto reali dei santi o fallback illustrato
 
 let scene, camera, renderer;
 let currentCardMesh = null;
@@ -9,11 +9,9 @@ let currentEnv = 'montagna';
 let deck = [];
 let currentIndex = 0;
 
-// Variabili per il drag & lancio (frisbee)
 let isDragging = false;
 let dragStartPos = { x: 0, y: 0, time: 0 };
 let dragCurrentPos = { x: 0, y: 0 };
-// Posizione rialzata per mostrare il santino interamente al centro-basso sopra il suggerimento
 const cardRestPos = new THREE.Vector3(0, 0.22, 3.1);
 
 const textureLoader = new THREE.TextureLoader();
@@ -33,7 +31,6 @@ function init() {
   renderer.shadowMap.enabled = true;
   container.appendChild(renderer.domElement);
 
-  // Luci
   const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
   scene.add(ambientLight);
 
@@ -44,7 +41,6 @@ function init() {
   scene.add(environmentGroup);
   buildEnvironment(currentEnv);
 
-  // Carica santi del giorno
   const datiOggi = getSantiDiOggi();
   document.getElementById('date-title').textContent = `Santi del ${datiOggi.dataFormattata}`;
   deck = datiOggi.santi;
@@ -54,52 +50,118 @@ function init() {
   animate();
 }
 
-// Genera dinamicamente la texture ad alta risoluzione del Santino con cornice dorata sempre uguale
-function createSantinoTexture(santo) {
-  const canvas = document.createElement('canvas');
-  canvas.width = 512;
-  canvas.height = 768;
-  const ctx = canvas.getContext('2d');
+// Crea la texture del santino (supporta foto reale o fallback icona)
+async function createSantinoTextureAsync(santo) {
+  return new Promise((resolve) => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 512;
+    canvas.height = 768;
+    const ctx = canvas.getContext('2d');
 
-  // Sfondo pergamena calda
-  ctx.fillStyle = '#fdf8eb';
-  ctx.fillRect(0, 0, 512, 768);
+    // Sfondo pergamena
+    ctx.fillStyle = '#fdf8eb';
+    ctx.fillRect(0, 0, 512, 768);
 
-  // Cornice dorata esterna (uguale per tutti i santini)
-  const gradGold = ctx.createLinearGradient(0, 0, 512, 768);
-  gradGold.addColorStop(0, '#b45309');
-  gradGold.addColorStop(0.25, '#fbbf24');
-  gradGold.addColorStop(0.5, '#fef08a');
-  gradGold.addColorStop(0.75, '#d97706');
-  gradGold.addColorStop(1, '#78350f');
+    // Cornice dorata esterna
+    const gradGold = ctx.createLinearGradient(0, 0, 512, 768);
+    gradGold.addColorStop(0, '#b45309');
+    gradGold.addColorStop(0.25, '#fbbf24');
+    gradGold.addColorStop(0.5, '#fef08a');
+    gradGold.addColorStop(0.75, '#d97706');
+    gradGold.addColorStop(1, '#78350f');
 
-  ctx.lineWidth = 28;
-  ctx.strokeStyle = gradGold;
-  ctx.strokeRect(14, 14, 484, 740);
+    ctx.lineWidth = 28;
+    ctx.strokeStyle = gradGold;
+    ctx.strokeRect(14, 14, 484, 740);
 
-  // Filigrana interna
-  ctx.lineWidth = 4;
-  ctx.strokeStyle = '#92400e';
-  ctx.strokeRect(36, 36, 440, 696);
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = '#92400e';
+    ctx.strokeRect(36, 36, 440, 696);
 
-  // Angoli decorativi dorati
-  const corners = [[42,42], [470,42], [42,726], [470,726]];
-  ctx.fillStyle = '#d97706';
-  corners.forEach(([cx, cy]) => {
-    ctx.beginPath();
-    ctx.arc(cx, cy, 12, 0, Math.PI * 2);
-    ctx.fill();
+    const corners = [[42,42], [470,42], [42,726], [470,726]];
+    ctx.fillStyle = '#d97706';
+    corners.forEach(([cx, cy]) => {
+      ctx.beginPath();
+      ctx.arc(cx, cy, 12, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    const imgX = 64, imgY = 68, imgW = 384, imgH = 380;
+
+    const finishCanvas = () => {
+      // Cornice interna illustrazione
+      ctx.lineWidth = 6;
+      ctx.strokeStyle = '#b45309';
+      ctx.strokeRect(imgX, imgY, imgW, imgH);
+
+      // Nome del Santo
+      ctx.fillStyle = '#1e293b';
+      ctx.font = 'bold 34px Georgia, serif';
+      wrapText(ctx, santo.nome, 256, 495, 400, 38);
+
+      // Titolo
+      ctx.fillStyle = '#b45309';
+      ctx.font = 'italic 22px Georgia, serif';
+      wrapText(ctx, santo.titolo, 256, 575, 400, 26);
+
+      // Divisore
+      ctx.beginPath();
+      ctx.moveTo(120, 615);
+      ctx.lineTo(392, 615);
+      ctx.strokeStyle = '#d97706';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Bio
+      ctx.fillStyle = '#475569';
+      ctx.font = '19px Georgia, serif';
+      wrapText(ctx, santo.bio, 256, 650, 390, 24);
+
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.anisotropy = 4;
+      resolve(texture);
+    };
+
+    if (santo.fotoUrl) {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.onload = () => {
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(imgX, imgY, imgW, imgH);
+        ctx.clip();
+        
+        // Disegna l'immagine adattandola al riquadro (cover)
+        const hRatio = imgW / img.width;
+        const vRatio = imgH / img.height;
+        const ratio = Math.max(hRatio, vRatio);
+        const centerShiftX = (imgW - img.width * ratio) / 2;
+        const centerShiftY = (imgH - img.height * ratio) / 2;
+        ctx.drawImage(img, 0, 0, img.width, img.height, imgX + centerShiftX, imgY + centerShiftY, img.width * ratio, img.height * ratio);
+        ctx.restore();
+
+        finishCanvas();
+      };
+      img.onerror = () => {
+        // Fallback in caso di errore di caricamento dell'immagine remota
+        drawFallbackIcon(ctx, santo, imgX, imgY, imgW, imgH);
+        finishCanvas();
+      };
+      img.src = santo.fotoUrl;
+    } else {
+      drawFallbackIcon(ctx, santo, imgX, imgY, imgW, imgH);
+      finishCanvas();
+    }
   });
+}
 
-  // Riquadro centrale immagine random del santo
-  const imgX = 64, imgY = 68, imgW = 384, imgH = 380;
+function drawFallbackIcon(ctx, santo, imgX, imgY, imgW, imgH) {
   const bgGrad = ctx.createRadialGradient(256, 258, 30, 256, 258, 240);
   bgGrad.addColorStop(0, santo.grafica.coloreSecondario);
   bgGrad.addColorStop(1, santo.grafica.colorePrimario);
   ctx.fillStyle = bgGrad;
   ctx.fillRect(imgX, imgY, imgW, imgH);
 
-  // Aureola luminosa dietro l'icona
   ctx.beginPath();
   ctx.arc(256, 255, 115, 0, Math.PI * 2);
   ctx.fillStyle = 'rgba(254, 240, 138, 0.35)';
@@ -108,43 +170,10 @@ function createSantinoTexture(santo) {
   ctx.strokeStyle = '#fbbf24';
   ctx.stroke();
 
-  // Icona centrale
   ctx.font = '150px serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillText(santo.grafica.icona, 256, 262);
-
-  // Cornice interna dell'illustrazione
-  ctx.lineWidth = 6;
-  ctx.strokeStyle = '#b45309';
-  ctx.strokeRect(imgX, imgY, imgW, imgH);
-
-  // Nome del Santo
-  ctx.fillStyle = '#1e293b';
-  ctx.font = 'bold 34px Georgia, serif';
-  wrapText(ctx, santo.nome, 256, 495, 400, 38);
-
-  // Titolo liturgico
-  ctx.fillStyle = '#b45309';
-  ctx.font = 'italic 22px Georgia, serif';
-  wrapText(ctx, santo.titolo, 256, 575, 400, 26);
-
-  // Linea divisoria
-  ctx.beginPath();
-  ctx.moveTo(120, 615);
-  ctx.lineTo(392, 615);
-  ctx.strokeStyle = '#d97706';
-  ctx.lineWidth = 2;
-  ctx.stroke();
-
-  // Breve descrizione
-  ctx.fillStyle = '#475569';
-  ctx.font = '19px Georgia, serif';
-  wrapText(ctx, santo.bio, 256, 650, 390, 24);
-
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.anisotropy = 4;
-  return texture;
 }
 
 // Texture retro del santino
@@ -192,7 +221,7 @@ function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
   ctx.fillText(line.trim(), x, currentY);
 }
 
-function spawnNextCard() {
+async function spawnNextCard() {
   updateUI();
   if (currentIndex >= deck.length) {
     document.getElementById('reset-btn').style.display = 'inline-block';
@@ -207,8 +236,7 @@ function spawnNextCard() {
   const santo = deck[currentIndex];
   document.getElementById('current-saint-sub').textContent = santo.nome;
 
-  const frontTex = createSantinoTexture(santo);
-  // Dimensioni leggermente ridotte (1.18 x 1.77) per far rientrare interamente la carta nello schermo
+  const frontTex = await createSantinoTextureAsync(santo);
   const geometry = new THREE.BoxGeometry(1.18, 1.77, 0.02);
 
   const sideMat = new THREE.MeshStandardMaterial({ color: 0xd97706 });
@@ -229,7 +257,6 @@ function updateUI() {
   document.getElementById('card-counter').textContent = `${remaining} / ${deck.length}`;
 }
 
-// Caricamento sfondi fotografici reali con adattamento proporzionale (aspect-ratio cover)
 function updateBackgroundAspect(texture) {
   if (!texture || !texture.image) return;
   const targetAspect = window.innerWidth / window.innerHeight;
@@ -243,7 +270,6 @@ function updateBackgroundAspect(texture) {
   texture.needsUpdate = true;
 }
 
-// Costruzione dei 4 scenari fotografici reali (Montagna, Grattacielo, Scogliera, Piazza San Pietro)
 function buildEnvironment(envType) {
   while (environmentGroup.children.length > 0) {
     environmentGroup.remove(environmentGroup.children[0]);
@@ -274,12 +300,10 @@ function buildEnvironment(envType) {
     },
     undefined,
     (err) => {
-      console.warn(`Immagine ${fileName} non ancora caricata nel repo, uso colore di fallback.`, err);
       scene.background = new THREE.Color(fallbackColors[envType] || 0x1e293b);
     }
   );
 
-  // Parapetto/Bordo in primo piano semi-trasparente abbassato per non coprire il santino
   const ledgeConfigs = {
     'montagna': { color: 0x64748b, opacity: 0.85 },
     'grattacielo': { color: 0x334155, opacity: 0.75 },
@@ -300,7 +324,6 @@ function buildEnvironment(envType) {
   environmentGroup.add(ledge);
 }
 
-// Gestione Input Touch e Mouse per lancio tipo Frisbee
 function setupEvents() {
   const dom = renderer.domElement;
 
@@ -357,7 +380,6 @@ function setupEvents() {
   window.addEventListener('mousemove', e => onMove(e.clientX, e.clientY));
   window.addEventListener('mouseup', onEnd);
 
-  // Cambio ambiente
   document.querySelectorAll('.env-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.env-btn').forEach(b => b.classList.remove('active'));
@@ -367,7 +389,6 @@ function setupEvents() {
     });
   });
 
-  // Reset mazzo
   document.getElementById('reset-btn').addEventListener('click', () => {
     currentIndex = 0;
     flyingCards.forEach(fc => scene.remove(fc.mesh));
@@ -385,7 +406,6 @@ function setupEvents() {
   });
 }
 
-// Fisica di volo e planata tipo Frisbee
 function launchCardAsFrisbee(mesh, vx, forwardSpeed) {
   mesh.rotation.x = -Math.PI / 2.2;
 
