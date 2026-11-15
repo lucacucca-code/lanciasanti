@@ -13,7 +13,8 @@ let currentIndex = 0;
 let isDragging = false;
 let dragStartPos = { x: 0, y: 0, time: 0 };
 let dragCurrentPos = { x: 0, y: 0 };
-const cardRestPos = new THREE.Vector3(0, -0.5, 3.2);
+// Posizione rialzata per mostrare il santino interamente al centro-basso sopra il suggerimento
+const cardRestPos = new THREE.Vector3(0, 0.22, 3.1);
 
 const textureLoader = new THREE.TextureLoader();
 
@@ -207,7 +208,8 @@ function spawnNextCard() {
   document.getElementById('current-saint-sub').textContent = santo.nome;
 
   const frontTex = createSantinoTexture(santo);
-  const geometry = new THREE.BoxGeometry(1.5, 2.25, 0.02);
+  // Dimensioni leggermente ridotte (1.18 x 1.77) per far rientrare interamente la carta nello schermo
+  const geometry = new THREE.BoxGeometry(1.18, 1.77, 0.02);
 
   const sideMat = new THREE.MeshStandardMaterial({ color: 0xd97706 });
   const frontMat = new THREE.MeshStandardMaterial({ map: frontTex, roughness: 0.35 });
@@ -217,7 +219,7 @@ function spawnNextCard() {
   const card = new THREE.Mesh(geometry, materials);
 
   card.position.copy(cardRestPos);
-  card.rotation.set(-0.25, 0, 0);
+  card.rotation.set(-0.2, 0, 0);
   scene.add(card);
   currentCardMesh = card;
 }
@@ -277,7 +279,7 @@ function buildEnvironment(envType) {
     }
   );
 
-  // Parapetto/Bordo in primo piano semi-trasparente per dare senso di profondità e altezza al lancio
+  // Parapetto/Bordo in primo piano semi-trasparente abbassato per non coprire il santino
   const ledgeConfigs = {
     'montagna': { color: 0x64748b, opacity: 0.85 },
     'grattacielo': { color: 0x334155, opacity: 0.75 },
@@ -286,7 +288,7 @@ function buildEnvironment(envType) {
   };
 
   const cfg = ledgeConfigs[envType] || { color: 0x334155, opacity: 0.8 };
-  const ledgeGeo = new THREE.BoxGeometry(8, 1.2, 3.5);
+  const ledgeGeo = new THREE.BoxGeometry(8, 1.0, 3.5);
   const ledgeMat = new THREE.MeshStandardMaterial({
     color: cfg.color,
     roughness: 0.85,
@@ -294,7 +296,7 @@ function buildEnvironment(envType) {
     opacity: cfg.opacity
   });
   const ledge = new THREE.Mesh(ledgeGeo, ledgeMat);
-  ledge.position.set(0, -2.5, 3.6);
+  ledge.position.set(0, -2.7, 3.6);
   environmentGroup.add(ledge);
 }
 
@@ -319,7 +321,7 @@ function setupEvents() {
     currentCardMesh.position.x = cardRestPos.x + dx * 3.5;
     currentCardMesh.position.y = cardRestPos.y - dy * 3.5;
     currentCardMesh.rotation.z = -dx * 1.2;
-    currentCardMesh.rotation.x = -0.25 + dy * 1.2;
+    currentCardMesh.rotation.x = -0.2 + dy * 1.2;
   };
 
   const onEnd = () => {
@@ -343,7 +345,7 @@ function setupEvents() {
       }, 350);
     } else {
       currentCardMesh.position.copy(cardRestPos);
-      currentCardMesh.rotation.set(-0.25, 0, 0);
+      currentCardMesh.rotation.set(-0.2, 0, 0);
     }
   };
 
