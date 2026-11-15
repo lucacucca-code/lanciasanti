@@ -1,4 +1,4 @@
-// Santini 3D - Motore Three.js con foto reali dei santi o fallback illustrato
+// Santini 3D - Motore Three.js con foto reali, testo centrato e contrasto ottimizzato
 
 let scene, camera, renderer;
 let currentCardMesh = null;
@@ -12,7 +12,7 @@ let currentIndex = 0;
 let isDragging = false;
 let dragStartPos = { x: 0, y: 0, time: 0 };
 let dragCurrentPos = { x: 0, y: 0 };
-const cardRestPos = new THREE.Vector3(0, 0.22, 3.1);
+const cardRestPos = new THREE.Vector3(0, 0.25, 3.1);
 
 const textureLoader = new THREE.TextureLoader();
 
@@ -31,11 +31,12 @@ function init() {
   renderer.shadowMap.enabled = true;
   container.appendChild(renderer.domElement);
 
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
+  // Illuminazione bilanciata per evitare riflessi bianchi bruciati sulla carta
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.68);
   scene.add(ambientLight);
 
-  const dirLight = new THREE.DirectionalLight(0xfff5e4, 0.9);
-  dirLight.position.set(8, 18, 10);
+  const dirLight = new THREE.DirectionalLight(0xfff1d6, 0.42);
+  dirLight.position.set(5, 14, 8);
   scene.add(dirLight);
 
   scene.add(environmentGroup);
@@ -50,7 +51,7 @@ function init() {
   animate();
 }
 
-// Crea la texture del santino (supporta foto reale o fallback icona)
+// Crea la texture del santino con testo perfettamente centrato e contrasto elevato
 async function createSantinoTextureAsync(santo) {
   return new Promise((resolve) => {
     const canvas = document.createElement('canvas');
@@ -58,64 +59,82 @@ async function createSantinoTextureAsync(santo) {
     canvas.height = 768;
     const ctx = canvas.getContext('2d');
 
-    // Sfondo pergamena
-    ctx.fillStyle = '#fdf8eb';
+    // Sfondo pergamena antica più calda e scura per dare contrasto al testo
+    const bgPergamena = ctx.createLinearGradient(0, 0, 0, 768);
+    bgPergamena.addColorStop(0, '#f3e5c8');
+    bgPergamena.addColorStop(0.5, '#ead5ad');
+    bgPergamena.addColorStop(1, '#dfc28d');
+    ctx.fillStyle = bgPergamena;
     ctx.fillRect(0, 0, 512, 768);
 
-    // Cornice dorata esterna
+    // Cornice dorata esterna ricca e contrastata
     const gradGold = ctx.createLinearGradient(0, 0, 512, 768);
-    gradGold.addColorStop(0, '#b45309');
-    gradGold.addColorStop(0.25, '#fbbf24');
-    gradGold.addColorStop(0.5, '#fef08a');
-    gradGold.addColorStop(0.75, '#d97706');
-    gradGold.addColorStop(1, '#78350f');
+    gradGold.addColorStop(0, '#78350f');
+    gradGold.addColorStop(0.25, '#d97706');
+    gradGold.addColorStop(0.5, '#f59e0b');
+    gradGold.addColorStop(0.75, '#b45309');
+    gradGold.addColorStop(1, '#451a03');
 
     ctx.lineWidth = 28;
     ctx.strokeStyle = gradGold;
     ctx.strokeRect(14, 14, 484, 740);
 
+    // Filigrana interna scura
     ctx.lineWidth = 4;
-    ctx.strokeStyle = '#92400e';
+    ctx.strokeStyle = '#5c2808';
     ctx.strokeRect(36, 36, 440, 696);
 
+    // Angoli decorativi
     const corners = [[42,42], [470,42], [42,726], [470,726]];
-    ctx.fillStyle = '#d97706';
+    ctx.fillStyle = '#78350f';
     corners.forEach(([cx, cy]) => {
       ctx.beginPath();
       ctx.arc(cx, cy, 12, 0, Math.PI * 2);
       ctx.fill();
     });
 
-    const imgX = 64, imgY = 68, imgW = 384, imgH = 380;
+    const imgX = 76, imgY = 64, imgW = 360, imgH = 360;
 
     const finishCanvas = () => {
-      // Cornice interna illustrazione
+      // Cornice interna dell'illustrazione
       ctx.lineWidth = 6;
-      ctx.strokeStyle = '#b45309';
+      ctx.strokeStyle = '#78350f';
       ctx.strokeRect(imgX, imgY, imgW, imgH);
 
-      // Nome del Santo
-      ctx.fillStyle = '#1e293b';
-      ctx.font = 'bold 34px Georgia, serif';
-      wrapText(ctx, santo.nome, 256, 495, 400, 38);
-
-      // Titolo
-      ctx.fillStyle = '#b45309';
-      ctx.font = 'italic 22px Georgia, serif';
-      wrapText(ctx, santo.titolo, 256, 575, 400, 26);
-
-      // Divisore
-      ctx.beginPath();
-      ctx.moveTo(120, 615);
-      ctx.lineTo(392, 615);
-      ctx.strokeStyle = '#d97706';
+      // Riquadro testo inferiore leggermente ombreggiato per massima leggibilità
+      ctx.fillStyle = 'rgba(255, 251, 235, 0.72)';
+      ctx.fillRect(52, 442, 408, 272);
       ctx.lineWidth = 2;
+      ctx.strokeStyle = 'rgba(120, 53, 15, 0.35)';
+      ctx.strokeRect(52, 442, 408, 272);
+
+      // Allineamento esplicito al centro orizzontale
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'alphabetic';
+
+      // Nome del Santo (scuro e nitido)
+      ctx.fillStyle = '#1c1917';
+      ctx.font = 'bold 32px Georgia, serif';
+      const afterNameY = wrapText(ctx, santo.nome, 256, 485, 380, 36);
+
+      // Titolo liturgico (marrone/ambra intenso)
+      ctx.fillStyle = '#92400e';
+      ctx.font = 'italic bold 21px Georgia, serif';
+      const afterTitleY = wrapText(ctx, santo.titolo, 256, afterNameY + 14, 380, 26);
+
+      // Linea divisoria centrata
+      const lineY = afterTitleY + 10;
+      ctx.beginPath();
+      ctx.moveTo(136, lineY);
+      ctx.lineTo(376, lineY);
+      ctx.strokeStyle = '#92400e';
+      ctx.lineWidth = 2.5;
       ctx.stroke();
 
-      // Bio
-      ctx.fillStyle = '#475569';
+      // Breve descrizione (grigio antracite scuro ad alto contrasto)
+      ctx.fillStyle = '#292524';
       ctx.font = '19px Georgia, serif';
-      wrapText(ctx, santo.bio, 256, 650, 390, 24);
+      wrapText(ctx, santo.bio, 256, lineY + 30, 370, 24);
 
       const texture = new THREE.CanvasTexture(canvas);
       texture.anisotropy = 4;
@@ -130,8 +149,7 @@ async function createSantinoTextureAsync(santo) {
         ctx.beginPath();
         ctx.rect(imgX, imgY, imgW, imgH);
         ctx.clip();
-        
-        // Disegna l'immagine adattandola al riquadro (cover)
+
         const hRatio = imgW / img.width;
         const vRatio = imgH / img.height;
         const ratio = Math.max(hRatio, vRatio);
@@ -143,7 +161,6 @@ async function createSantinoTextureAsync(santo) {
         finishCanvas();
       };
       img.onerror = () => {
-        // Fallback in caso di errore di caricamento dell'immagine remota
         drawFallbackIcon(ctx, santo, imgX, imgY, imgW, imgH);
         finishCanvas();
       };
@@ -156,24 +173,24 @@ async function createSantinoTextureAsync(santo) {
 }
 
 function drawFallbackIcon(ctx, santo, imgX, imgY, imgW, imgH) {
-  const bgGrad = ctx.createRadialGradient(256, 258, 30, 256, 258, 240);
+  const bgGrad = ctx.createRadialGradient(256, 244, 30, 256, 244, 220);
   bgGrad.addColorStop(0, santo.grafica.coloreSecondario);
   bgGrad.addColorStop(1, santo.grafica.colorePrimario);
   ctx.fillStyle = bgGrad;
   ctx.fillRect(imgX, imgY, imgW, imgH);
 
   ctx.beginPath();
-  ctx.arc(256, 255, 115, 0, Math.PI * 2);
+  ctx.arc(256, 244, 108, 0, Math.PI * 2);
   ctx.fillStyle = 'rgba(254, 240, 138, 0.35)';
   ctx.fill();
   ctx.lineWidth = 5;
   ctx.strokeStyle = '#fbbf24';
   ctx.stroke();
 
-  ctx.font = '150px serif';
+  ctx.font = '140px serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillText(santo.grafica.icona, 256, 262);
+  ctx.fillText(santo.grafica.icona, 256, 250);
 }
 
 // Texture retro del santino
@@ -183,11 +200,11 @@ function createBackTexture() {
   canvas.height = 768;
   const ctx = canvas.getContext('2d');
 
-  ctx.fillStyle = '#78350f';
+  ctx.fillStyle = '#5c2808';
   ctx.fillRect(0, 0, 512, 768);
 
   ctx.lineWidth = 24;
-  ctx.strokeStyle = '#fbbf24';
+  ctx.strokeStyle = '#d97706';
   ctx.strokeRect(16, 16, 480, 736);
 
   ctx.fillStyle = '#fef3c7';
@@ -202,7 +219,9 @@ function createBackTexture() {
 
 const sharedBackTexture = createBackTexture();
 
+// Funzione wrapText che mantiene il centramento e restituisce la coordinata Y finale
 function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+  ctx.textAlign = 'center';
   const words = text.split(' ');
   let line = '';
   let currentY = y;
@@ -219,6 +238,7 @@ function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
     }
   }
   ctx.fillText(line.trim(), x, currentY);
+  return currentY + lineHeight * 0.5;
 }
 
 async function spawnNextCard() {
@@ -239,15 +259,16 @@ async function spawnNextCard() {
   const frontTex = await createSantinoTextureAsync(santo);
   const geometry = new THREE.BoxGeometry(1.18, 1.77, 0.02);
 
-  const sideMat = new THREE.MeshStandardMaterial({ color: 0xd97706 });
-  const frontMat = new THREE.MeshStandardMaterial({ map: frontTex, roughness: 0.35 });
-  const backMat = new THREE.MeshStandardMaterial({ map: sharedBackTexture, roughness: 0.4 });
+  // Materiale opaco/satinato (roughness 0.78) per eliminare il riflesso speculare bianco
+  const sideMat = new THREE.MeshStandardMaterial({ color: 0x92400e, roughness: 0.6 });
+  const frontMat = new THREE.MeshStandardMaterial({ map: frontTex, roughness: 0.78, metalness: 0.05 });
+  const backMat = new THREE.MeshStandardMaterial({ map: sharedBackTexture, roughness: 0.78, metalness: 0.05 });
 
   const materials = [sideMat, sideMat, sideMat, sideMat, frontMat, backMat];
   const card = new THREE.Mesh(geometry, materials);
 
   card.position.copy(cardRestPos);
-  card.rotation.set(-0.2, 0, 0);
+  card.rotation.set(-0.16, 0, 0);
   scene.add(card);
   currentCardMesh = card;
 }
@@ -344,7 +365,7 @@ function setupEvents() {
     currentCardMesh.position.x = cardRestPos.x + dx * 3.5;
     currentCardMesh.position.y = cardRestPos.y - dy * 3.5;
     currentCardMesh.rotation.z = -dx * 1.2;
-    currentCardMesh.rotation.x = -0.2 + dy * 1.2;
+    currentCardMesh.rotation.x = -0.16 + dy * 1.2;
   };
 
   const onEnd = () => {
@@ -368,7 +389,7 @@ function setupEvents() {
       }, 350);
     } else {
       currentCardMesh.position.copy(cardRestPos);
-      currentCardMesh.rotation.set(-0.2, 0, 0);
+      currentCardMesh.rotation.set(-0.16, 0, 0);
     }
   };
 
