@@ -1,4 +1,4 @@
-// Santini 3D - Motore Three.js con fisica di lancio tipo frisbee e 4 scenari 3D
+// Santini 3D - Motore Three.js con fisica di lancio tipo frisbee e 4 scenari fotografici reali
 
 let scene, camera, renderer;
 let currentCardMesh = null;
@@ -15,11 +15,12 @@ let dragStartPos = { x: 0, y: 0, time: 0 };
 let dragCurrentPos = { x: 0, y: 0 };
 const cardRestPos = new THREE.Vector3(0, -0.5, 3.2);
 
+const textureLoader = new THREE.TextureLoader();
+
 function init() {
   const container = document.getElementById('canvas-container');
 
   scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x87ceeb, 0.012);
 
   camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 300);
   camera.position.set(0, 1.2, 5.5);
@@ -32,7 +33,7 @@ function init() {
   container.appendChild(renderer.domElement);
 
   // Luci
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.75);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
   scene.add(ambientLight);
 
   const dirLight = new THREE.DirectionalLight(0xfff5e4, 0.9);
@@ -226,140 +227,75 @@ function updateUI() {
   document.getElementById('card-counter').textContent = `${remaining} / ${deck.length}`;
 }
 
-// Costruzione dei 4 scenari 3D (Montagna, Grattacielo, Scogliera, Piazza San Pietro)
+// Caricamento sfondi fotografici reali con adattamento proporzionale (aspect-ratio cover)
+function updateBackgroundAspect(texture) {
+  if (!texture || !texture.image) return;
+  const targetAspect = window.innerWidth / window.innerHeight;
+  const imageAspect = texture.image.width / texture.image.height;
+  const factor = imageAspect / targetAspect;
+
+  texture.offset.x = factor > 1 ? (1 - 1 / factor) / 2 : 0;
+  texture.repeat.x = factor > 1 ? 1 / factor : 1;
+  texture.offset.y = factor > 1 ? 0 : (1 - factor) / 2;
+  texture.repeat.y = factor > 1 ? 1 : factor;
+  texture.needsUpdate = true;
+}
+
+// Costruzione dei 4 scenari fotografici reali (Montagna, Grattacielo, Scogliera, Piazza San Pietro)
 function buildEnvironment(envType) {
   while (environmentGroup.children.length > 0) {
     environmentGroup.remove(environmentGroup.children[0]);
   }
 
-  if (envType === 'montagna') {
-    scene.background = new THREE.Color(0x60a5fa);
-    scene.fog = new THREE.FogExp2(0x93c5fd, 0.01);
+  const bgFiles = {
+    'montagna': 'montagna.jpg',
+    'grattacielo': 'grattacielo.jpg',
+    'scogliera': 'scogliera.jpg',
+    'sanpietro': 'sanpietro.jpg'
+  };
 
-    // Piattaforma rocciosa in primo piano (cima)
-    const peakGeo = new THREE.ConeGeometry(4, 5, 7);
-    const peakMat = new THREE.MeshStandardMaterial({ color: 0x64748b, flatShading: true });
-    const peak = new THREE.Mesh(peakGeo, peakMat);
-    peak.position.set(0, -3.5, 3);
-    environmentGroup.add(peak);
+  const fallbackColors = {
+    'montagna': 0x60a5fa,
+    'grattacielo': 0xf97316,
+    'scogliera': 0x0284c7,
+    'sanpietro': 0x7dd3fc
+  };
 
-    // Catena montuosa in lontananza
-    for (let i = 0; i < 18; i++) {
-      const h = 12 + Math.random() * 22;
-      const r = 8 + Math.random() * 10;
-      const mGeo = new THREE.ConeGeometry(r, h, 6);
-      const mMat = new THREE.MeshStandardMaterial({
-        color: i % 2 === 0 ? 0x475569 : 0xe2e8f0,
-        flatShading: true
-      });
-      const m = new THREE.Mesh(mGeo, mMat);
-      m.position.set((Math.random() - 0.5) * 90, -10 + h / 2 - 8, -25 - Math.random() * 60);
-      environmentGroup.add(m);
+  const fileName = bgFiles[envType];
+
+  textureLoader.load(
+    fileName,
+    (texture) => {
+      updateBackgroundAspect(texture);
+      scene.background = texture;
+      scene.fog = null;
+    },
+    undefined,
+    (err) => {
+      console.warn(`Immagine ${fileName} non ancora caricata nel repo, uso colore di fallback.`, err);
+      scene.background = new THREE.Color(fallbackColors[envType] || 0x1e293b);
     }
+  );
 
-    // Nuvole basse sotto la cima
-    addClouds(-4, 15);
-  }
-  else if (envType === 'grattacielo') {
-    scene.background = new THREE.Color(0xf97316); // Tramonto metropolitano
-    scene.fog = new THREE.FogExp2(0xfdba74, 0.012);
+  // Parapetto/Bordo in primo piano semi-trasparente per dare senso di profondità e altezza al lancio
+  const ledgeConfigs = {
+    'montagna': { color: 0x64748b, opacity: 0.85 },
+    'grattacielo': { color: 0x334155, opacity: 0.75 },
+    'scogliera': { color: 0x78716c, opacity: 0.85 },
+    'sanpietro': { color: 0xfef3c7, opacity: 0.9 }
+  };
 
-    // Parapetto del tetto
-    const roofGeo = new THREE.BoxGeometry(8, 2, 5);
-    const roofMat = new THREE.MeshStandardMaterial({ color: 0x334155 });
-    const roof = new THREE.Mesh(roofGeo, roofMat);
-    roof.position.set(0, -2.2, 3.5);
-    environmentGroup.add(roof);
-
-    // Grattacieli sottostanti
-    for (let i = 0; i < 35; i++) {
-      const w = 3 + Math.random() * 4;
-      const d = 3 + Math.random() * 4;
-      const h = 15 + Math.random() * 35;
-      const bGeo = new THREE.BoxGeometry(w, h, d);
-      const bMat = new THREE.MeshStandardMaterial({
-        color: Math.random() > 0.5 ? 0x1e293b : 0x0f172a
-      });
-      const b = new THREE.Mesh(bGeo, bMat);
-      b.position.set((Math.random() - 0.5) * 75, -35 + h / 2, -12 - Math.random() * 65);
-      environmentGroup.add(b);
-    }
-  }
-  else if (envType === 'scogliera') {
-    scene.background = new THREE.Color(0x38bdf8);
-    scene.fog = new THREE.FogExp2(0xbae6fd, 0.01);
-
-    // Bordo scogliera
-    const cliffGeo = new THREE.BoxGeometry(7, 8, 5);
-    const cliffMat = new THREE.MeshStandardMaterial({ color: 0x78716c, flatShading: true });
-    const cliff = new THREE.Mesh(cliffGeo, cliffMat);
-    cliff.position.set(0, -5.2, 3.5);
-    environmentGroup.add(cliff);
-
-    // Mare infinito sottostante
-    const seaGeo = new THREE.PlaneGeometry(300, 300);
-    const seaMat = new THREE.MeshStandardMaterial({ color: 0x0284c7, roughness: 0.2 });
-    const sea = new THREE.Mesh(seaGeo, seaMat);
-    sea.rotation.x = -Math.PI / 2;
-    sea.position.set(0, -14, -50);
-    environmentGroup.add(sea);
-
-    // Faraglioni
-    for (let i = 0; i < 6; i++) {
-      const rockGeo = new THREE.ConeGeometry(2.5, 10, 5);
-      const rock = new THREE.Mesh(rockGeo, cliffMat);
-      rock.position.set((Math.random() - 0.5) * 50, -11, -25 - Math.random() * 40);
-      environmentGroup.add(rock);
-    }
-  }
-  else if (envType === 'sanpietro') {
-    scene.background = new THREE.Color(0x7dd3fc);
-    scene.fog = new THREE.FogExp2(0xe0f2fe, 0.008);
-
-    // Balconata / Terrazzo della Basilica
-    const terraceGeo = new THREE.BoxGeometry(9, 2, 4);
-    const travertinoMat = new THREE.MeshStandardMaterial({ color: 0xfef3c7 });
-    const terrace = new THREE.Mesh(terraceGeo, travertinoMat);
-    terrace.position.set(0, -2.2, 3.8);
-    environmentGroup.add(terrace);
-
-    // Pavimentazione Piazza San Pietro in basso
-    const piazzaGeo = new THREE.CircleGeometry(45, 32);
-    const piazzaMat = new THREE.MeshStandardMaterial({ color: 0x57534e });
-    const piazza = new THREE.Mesh(piazzaGeo, piazzaMat);
-    piazza.rotation.x = -Math.PI / 2;
-    piazza.position.set(0, -12, -35);
-    environmentGroup.add(piazza);
-
-    // Obelisco Vaticano al centro della piazza
-    const obeliskGeo = new THREE.CylinderGeometry(0.4, 0.8, 9, 4);
-    const obeliskMat = new THREE.MeshStandardMaterial({ color: 0xd6d3d1 });
-    const obelisk = new THREE.Mesh(obeliskGeo, obeliskMat);
-    obelisk.position.set(0, -7.5, -35);
-    environmentGroup.add(obelisk);
-
-    // Colonnato del Bernini (semicerchi di colonne)
-    const colGeo = new THREE.CylinderGeometry(0.5, 0.5, 6, 8);
-    for (let angle = -1.2; angle <= 1.2; angle += 0.15) {
-      if (Math.abs(angle) < 0.25) continue; // Apertura centrale
-      const x = Math.sin(angle) * 28;
-      const z = -35 + Math.cos(angle) * 24;
-      const col = new THREE.Mesh(colGeo, travertinoMat);
-      col.position.set(x, -9, z);
-      environmentGroup.add(col);
-    }
-  }
-}
-
-function addClouds(yLevel, count) {
-  const cloudGeo = new THREE.DodecahedronGeometry(3, 1);
-  const cloudMat = new THREE.MeshStandardMaterial({ color: 0xffffff, transparent: true, opacity: 0.85 });
-  for (let i = 0; i < count; i++) {
-    const cloud = new THREE.Mesh(cloudGeo, cloudMat);
-    cloud.scale.set(2 + Math.random() * 2, 0.6, 1.5);
-    cloud.position.set((Math.random() - 0.5) * 70, yLevel + (Math.random() - 0.5) * 3, -15 - Math.random() * 50);
-    environmentGroup.add(cloud);
-  }
+  const cfg = ledgeConfigs[envType] || { color: 0x334155, opacity: 0.8 };
+  const ledgeGeo = new THREE.BoxGeometry(8, 1.2, 3.5);
+  const ledgeMat = new THREE.MeshStandardMaterial({
+    color: cfg.color,
+    roughness: 0.85,
+    transparent: true,
+    opacity: cfg.opacity
+  });
+  const ledge = new THREE.Mesh(ledgeGeo, ledgeMat);
+  ledge.position.set(0, -2.5, 3.6);
+  environmentGroup.add(ledge);
 }
 
 // Gestione Input Touch e Mouse per lancio tipo Frisbee
@@ -382,7 +318,6 @@ function setupEvents() {
 
     currentCardMesh.position.x = cardRestPos.x + dx * 3.5;
     currentCardMesh.position.y = cardRestPos.y - dy * 3.5;
-    // Inclinazione frisbee durante il trascinamento
     currentCardMesh.rotation.z = -dx * 1.2;
     currentCardMesh.rotation.x = -0.25 + dy * 1.2;
   };
@@ -392,10 +327,9 @@ function setupEvents() {
     isDragging = false;
 
     const dt = Math.max(0.05, (performance.now() - dragStartPos.time) / 1000);
-    const dy = dragStartPos.y - dragCurrentPos.y; // Positivo se scorre verso l'alto
+    const dy = dragStartPos.y - dragCurrentPos.y;
     const dx = dragCurrentPos.x - dragStartPos.x;
 
-    // Se lo swipe verso l'alto è sufficiente, lancia il santino!
     if (dy > 45) {
       const speedY = Math.min(25, (dy / window.innerHeight) / dt * 4.5);
       const speedX = (dx / window.innerWidth) / dt * 2.5;
@@ -408,7 +342,6 @@ function setupEvents() {
         spawnNextCard();
       }, 350);
     } else {
-      // Ritorna al centro se il lancio è troppo debole
       currentCardMesh.position.copy(cardRestPos);
       currentCardMesh.rotation.set(-0.25, 0, 0);
     }
@@ -435,7 +368,6 @@ function setupEvents() {
   // Reset mazzo
   document.getElementById('reset-btn').addEventListener('click', () => {
     currentIndex = 0;
-    // Rimuove eventuali carte rimaste in volo
     flyingCards.forEach(fc => scene.remove(fc.mesh));
     flyingCards = [];
     spawnNextCard();
@@ -445,19 +377,21 @@ function setupEvents() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
+    if (scene.background && scene.background.isTexture) {
+      updateBackgroundAspect(scene.background);
+    }
   });
 }
 
 // Fisica di volo e planata tipo Frisbee
 function launchCardAsFrisbee(mesh, vx, forwardSpeed) {
-  // Orienta il santino piatto come un frisbee
   mesh.rotation.x = -Math.PI / 2.2;
 
   flyingCards.push({
     mesh,
     velocity: new THREE.Vector3(vx, 3.8 + forwardSpeed * 0.18, -14 - forwardSpeed * 0.9),
-    spinSpeed: (vx >= 0 ? -1 : 1) * (12 + Math.random() * 6), // Rotazione rapida sull'asse
-    curveForce: -vx * 0.45, // Effetto aerodinamico curva frisbee
+    spinSpeed: (vx >= 0 ? -1 : 1) * (12 + Math.random() * 6),
+    curveForce: -vx * 0.45,
     age: 0
   });
 }
@@ -471,32 +405,25 @@ function animate() {
   const dt = Math.min(0.05, (now - lastTime) / 1000);
   lastTime = now;
 
-  // Lieve fluttuazione del santino in attesa
   if (currentCardMesh && !isDragging) {
     currentCardMesh.position.y = cardRestPos.y + Math.sin(now * 0.003) * 0.04;
     currentCardMesh.rotation.y = Math.sin(now * 0.002) * 0.06;
   }
 
-  // Aggiornamento fisica santini lanciati tipo frisbee
   for (let i = flyingCards.length - 1; i >= 0; i--) {
     const fc = flyingCards[i];
     fc.age += dt;
 
-    // Portanza aerodinamica (plana prima di scendere verso il basso)
     const lift = Math.max(-4.5, 2.5 - fc.age * 2.2);
     fc.velocity.y += lift * dt;
     fc.velocity.x += fc.curveForce * dt;
-
-    // Attrito dell'aria
     fc.velocity.z *= (1 - 0.18 * dt);
 
     fc.mesh.position.addScaledVector(fc.velocity, dt);
 
-    // Rotazione frisbee veloce sull'asse verticale locale + leggero rollio
     fc.mesh.rotation.z += fc.spinSpeed * dt;
     fc.mesh.rotation.y = Math.sin(fc.age * 3) * 0.25;
 
-    // Rimuovi quando è volato molto lontano o caduto nell'abisso
     if (fc.mesh.position.z < -120 || fc.mesh.position.y < -25 || fc.age > 7) {
       scene.remove(fc.mesh);
       flyingCards.splice(i, 1);
