@@ -29518,6 +29518,42 @@ const SANTI_BONUS = [
       colorePrimario: "#1e3a8a",
       coloreSecondario: "#60a5fa"
     }
+  },
+
+  {
+    nome: "Dea Kali",
+    titolo: "La dea che alza le mani sui fedeli",
+    bio: "Santino speciale sbloccato con 9 giorni consecutivi.",
+    fotoUrl: "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcS45COS-HMlGYo7H14WxA3UOMjVIozwoH24SUnLF3J75OCZuTBsQDh4pZt1DLcuufam38_p8cCY8LAeBwTG5OwEpwV0b9GsYAdElUFZ_uqpg7o_Y-P1Y_4FD7j04stmFAIRbi3hpS8&usqp=CAc", // Inserisci qui l'URL o il percorso dell'immagine, oppure lascia vuoto per usare l'icona sotto
+    grafica: {
+      icona: "⚔️",
+      colorePrimario: "#1e3a8a",
+      coloreSecondario: "#60a5fa"
+    }
+  },
+  
+  {
+    nome: "Jesù",
+    titolo: "Figlio di Dio",
+    bio: "Cosa aggiungere? è Jesù. Santino speciale sbloccato con 12 giorni consecutivi.",
+    fotoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStN2UjzMUvNesdOkykLAAOPk-sYh60-7fF9IVfj6ymCw&s=10", // Inserisci qui l'URL o il percorso dell'immagine, oppure lascia vuoto per usare l'icona sotto
+    grafica: {
+      icona: "⚔️",
+      colorePrimario: "#1e3a8a",
+      coloreSecondario: "#60a5fa"
+    }
+  },
+  
+  {
+    nome: "Anubis",
+    titolo: "Quello Sciacallo di Anubis",
+    bio: "Mezzo Dio e mezzo Cane. Santino speciale sbloccato con 15 giorni consecutivi.",
+    fotoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeMrYUi2i1I7JNCYVhQ2ugiOmFDFCiYDn-Bh29r7VX9Q&s=10", // Inserisci qui l'URL o il percorso dell'immagine, oppure lascia vuoto per usare l'icona sotto
+    grafica: {
+      icona: "⚔️",
+      colorePrimario: "#1e3a8a",
+      coloreSecondario: "#60a5fa"
+    }
   }
   
   
