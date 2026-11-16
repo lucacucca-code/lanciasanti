@@ -1,802 +1,346 @@
-// Santini 3D - Motore Three.js con foto reali, testo centrato, streak 3 giorni, santi bonus e selettore data
-
-let scene, camera, renderer;
-let currentCardMesh = null;
-let flyingCards = [];
-let environmentGroup = new THREE.Group();
-let currentEnv = 'montagna';
-
-let deck = [];
-let currentIndex = 0;
-let datiCorrentiCache = null;
-let selectedDateStr = null; // Formato 'YYYY-MM-DD'
-
-// Gestione modalità bonus e progressione
-let isBonusMode = false;
-let selectedBonusIndex = 0;
-const STORAGE_KEY = 'santini_3d_progress_v1';
-
-let isDragging = false;
-let dragStartPos = { x: 0, y: 0, time: 0 };
-let dragCurrentPos = { x: 0, y: 0 };
-const cardRestPos = new THREE.Vector3(0, 0.25, 3.1);
-
-const textureLoader = new THREE.TextureLoader();
-
-// --- GESTIONE DATE E LETTURA DATABASE SANTI ---
-
-function formatDateYYYYMMDD(dateObj) {
-  const y = dateObj.getFullYear();
-  const m = String(dateObj.getMonth() + 1).padStart(2, '0');
-  const d = String(dateObj.getDate()).padStart(2, '0');
-  return `${y}-${m}-${d}`;
-}
-
-function getTodayDateString() {
-  return formatDateYYYYMMDD(new Date());
-}
-
-function getYesterdayDateString() {
-  const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
-  return formatDateYYYYMMDD(yesterday);
-}
-
-// Recupera i santi per una specifica data YYYY-MM-DD usando la struttura di santi.js
-function getSantiByDateString(dateStr) {
-  const todayStr = getTodayDateString();
-  if (!dateStr || dateStr === todayStr) {
-    return getSantiDiOggi();
-  }
-
-  const parts = dateStr.split('-');
-  const year = parseInt(parts[0], 10);
-  const month = parseInt(parts[1], 10) - 1;
-  const day = parseInt(parts[2], 10);
-  const targetDate = new Date(year, month, day);
-
-  const mese = String(targetDate.getMonth() + 1).padStart(2, '0');
-  const giorno = String(targetDate.getDate()).padStart(2, '0');
-  const chiave = `${mese}-${giorno}`;
-
-  const opzioniData = { day: 'numeric', month: 'long' };
-  const dataFormattata = targetDate.toLocaleDateString('it-IT', opzioniData);
-
-  const lista = (typeof SANTI_DATABASE !== 'undefined' && SANTI_DATABASE[chiave])
-    ? SANTI_DATABASE[chiave]
-    : (typeof SANTI_DATABASE !== 'undefined' ? (SANTI_DATABASE['default'] || Object.values(SANTI_DATABASE)[0] || []) : []);
-
-  const pool = (typeof IMMAGINI_SANTI_POOL !== 'undefined' && Array.isArray(IMMAGINI_SANTI_POOL))
-    ? IMMAGINI_SANTI_POOL
-    : [{ icona: '✝️', colorePrimario: '#78350f', coloreSecondario: '#fbbf24' }];
-
-  return {
-    dataFormattata,
-    santi: lista.map(santo => {
-      const graficaRandom = pool[Math.floor(Math.random() * pool.length)];
-      return {
-        ...santo,
-        grafica: santo.grafica || graficaRandom
-      };
-    })
-  };
-}
-
-// --- GESTIONE PROGRESSIONE, STREAK E SBLOCCO SELETTORE DATA ---
-
-function loadProgress() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      return {
-        streak: parsed.streak || 0,
-        lastCompletedDate: parsed.lastCompletedDate || null,
-        unlockedBonusCount: parsed.unlockedBonusCount || 0
-      };
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#1e293b" />
+  <title>Santini 3D - Lancio del Giorno</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icon.svg" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: none;
     }
-  } catch (e) {
-    console.warn('Errore lettura progressi:', e);
-  }
-  return { streak: 0, lastCompletedDate: null, unlockedBonusCount: 0 };
-}
-
-function saveProgress(progress) {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
-  } catch (e) {
-    console.warn('Errore salvataggio progressi:', e);
-  }
-}
-
-function getTotalBonusCount() {
-  return (typeof SANTI_BONUS !== 'undefined' && Array.isArray(SANTI_BONUS)) ? SANTI_BONUS.length : 0;
-}
-
-function getAvailableBonusList() {
-  const total = getTotalBonusCount();
-  if (total === 0) return [];
-  const progress = loadProgress();
-  return SANTI_BONUS.slice(0, progress.unlockedBonusCount);
-}
-
-function areAllBonusUnlocked() {
-  const total = getTotalBonusCount();
-  if (total === 0) return false;
-  const progress = loadProgress();
-  return progress.unlockedBonusCount >= total;
-}
-
-function updateDatePickerVisibility() {
-  const pickerBar = document.getElementById('date-picker-bar');
-  if (!pickerBar) return;
-
-  if (areAllBonusUnlocked()) {
-    pickerBar.style.display = 'flex';
-    const input = document.getElementById('custom-date-input');
-    if (input && !input.value) {
-      input.value = selectedDateStr || getTodayDateString();
+    body, html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Georgia', serif;
+      background: #0f172a;
     }
-  } else {
-    pickerBar.style.display = 'none';
-  }
-}
-
-// Registra il completamento del mazzo giornaliero (valido SOLO se la data attiva è oggi)
-function registerDailyDeckCompletion() {
-  const progress = loadProgress();
-  const today = getTodayDateString();
-
-  // Se l'utente sta giocando con una data diversa da oggi, non altera la serie
-  if (selectedDateStr && selectedDateStr !== today) {
-    return { newlyUnlocked: false, allUnlockedJustNow: false, progress };
-  }
-
-  // Se l'utente ha già completato il mazzo oggi (es. ha cliccato "Ricarica mazzo santi"), non incrementare
-  if (progress.lastCompletedDate === today) {
-    return { newlyUnlocked: false, allUnlockedJustNow: false, progress };
-  }
-
-  const yesterday = getYesterdayDateString();
-  if (progress.lastCompletedDate === yesterday) {
-    progress.streak += 1;
-  } else {
-    progress.streak = 1;
-  }
-
-  progress.lastCompletedDate = today;
-
-  let newlyUnlocked = false;
-  let allUnlockedJustNow = false;
-  const maxBonusDisponibili = getTotalBonusCount();
-
-  if (progress.streak % 3 === 0 && progress.unlockedBonusCount < maxBonusDisponibili) {
-    progress.unlockedBonusCount += 1;
-    newlyUnlocked = true;
-    if (progress.unlockedBonusCount >= maxBonusDisponibili) {
-      allUnlockedJustNow = true;
+    #canvas-container {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
     }
-  }
-
-  saveProgress(progress);
-  updateStreakBadge();
-  updateDatePickerVisibility();
-  return { newlyUnlocked, allUnlockedJustNow, progress };
-}
-
-function updateStreakBadge() {
-  const progress = loadProgress();
-  const badge = document.getElementById('streak-badge');
-  const unlocked = getAvailableBonusList().length;
-  const bonusLabel = unlocked > 0 ? ` • ✨ ${unlocked} bonus` : '';
-  badge.textContent = `🔥 Serie: ${progress.streak} gg${bonusLabel}`;
-}
-
-function loadDeckForDate(dateStr) {
-  selectedDateStr = dateStr;
-  isBonusMode = false;
-  currentIndex = 0;
-
-  const input = document.getElementById('custom-date-input');
-  if (input) input.value = dateStr;
-
-  flyingCards.forEach(fc => scene.remove(fc.mesh));
-  flyingCards = [];
-
-  datiCorrentiCache = getSantiByDateString(dateStr);
-  deck = datiCorrentiCache.santi;
-  document.getElementById('date-title').textContent = `Santi del ${datiCorrentiCache.dataFormattata}`;
-  spawnNextCard();
-}
-
-// --- INIZIALIZZAZIONE SCENA 3D ---
-
-function init() {
-  const container = document.getElementById('canvas-container');
-
-  scene = new THREE.Scene();
-
-  camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 300);
-  camera.position.set(0, 1.2, 5.5);
-  camera.lookAt(0, 0.4, -5);
-
-  renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.shadowMap.enabled = true;
-  container.appendChild(renderer.domElement);
-
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.68);
-  scene.add(ambientLight);
-
-  const dirLight = new THREE.DirectionalLight(0xfff1d6, 0.42);
-  dirLight.position.set(5, 14, 8);
-  scene.add(dirLight);
-
-  scene.add(environmentGroup);
-  buildEnvironment(currentEnv);
-
-  selectedDateStr = getTodayDateString();
-  datiCorrentiCache = getSantiByDateString(selectedDateStr);
-  document.getElementById('date-title').textContent = `Santi del ${datiCorrentiCache.dataFormattata}`;
-  deck = datiCorrentiCache.santi;
-
-  updateStreakBadge();
-  updateDatePickerVisibility();
-  spawnNextCard();
-
-  setupEvents();
-  animate();
-}
-
-// Crea la texture del santino con testo perfettamente centrato e contrasto elevato
-async function createSantinoTextureAsync(santo, isBonusCard = false) {
-  return new Promise((resolve) => {
-    const canvas = document.createElement('canvas');
-    canvas.width = 512;
-    canvas.height = 768;
-    const ctx = canvas.getContext('2d');
-
-    const bgPergamena = ctx.createLinearGradient(0, 0, 0, 768);
-    if (isBonusCard) {
-      bgPergamena.addColorStop(0, '#fef9c3');
-      bgPergamena.addColorStop(0.5, '#fde68a');
-      bgPergamena.addColorStop(1, '#f59e0b');
-    } else {
-      bgPergamena.addColorStop(0, '#f3e5c8');
-      bgPergamena.addColorStop(0.5, '#ead5ad');
-      bgPergamena.addColorStop(1, '#dfc28d');
+    #ui-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 16px;
     }
-    ctx.fillStyle = bgPergamena;
-    ctx.fillRect(0, 0, 512, 768);
-
-    const gradGold = ctx.createLinearGradient(0, 0, 512, 768);
-    gradGold.addColorStop(0, '#78350f');
-    gradGold.addColorStop(0.25, '#d97706');
-    gradGold.addColorStop(0.5, '#f59e0b');
-    gradGold.addColorStop(0.75, '#b45309');
-    gradGold.addColorStop(1, '#451a03');
-
-    ctx.lineWidth = 28;
-    ctx.strokeStyle = gradGold;
-    ctx.strokeRect(14, 14, 484, 740);
-
-    ctx.lineWidth = 4;
-    ctx.strokeStyle = '#5c2808';
-    ctx.strokeRect(36, 36, 440, 696);
-
-    const corners = [[42,42], [470,42], [42,726], [470,726]];
-    ctx.fillStyle = '#78350f';
-    corners.forEach(([cx, cy]) => {
-      ctx.beginPath();
-      ctx.arc(cx, cy, 12, 0, Math.PI * 2);
-      ctx.fill();
-    });
-
-    const imgX = 76, imgY = 64, imgW = 360, imgH = 360;
-
-    const finishCanvas = () => {
-      ctx.lineWidth = 6;
-      ctx.strokeStyle = '#78350f';
-      ctx.strokeRect(imgX, imgY, imgW, imgH);
-
-      ctx.fillStyle = 'rgba(255, 251, 235, 0.82)';
-      ctx.fillRect(52, 442, 408, 272);
-      ctx.lineWidth = 2;
-      ctx.strokeStyle = 'rgba(120, 53, 15, 0.35)';
-      ctx.strokeRect(52, 442, 408, 272);
-
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'alphabetic';
-
-      ctx.fillStyle = '#1c1917';
-      ctx.font = 'bold 32px Georgia, serif';
-      const afterNameY = wrapText(ctx, santo.nome, 256, 485, 380, 36);
-
-      ctx.fillStyle = '#92400e';
-      ctx.font = 'italic bold 21px Georgia, serif';
-      const afterTitleY = wrapText(ctx, santo.titolo, 256, afterNameY + 14, 380, 26);
-
-      const lineY = afterTitleY + 10;
-      ctx.beginPath();
-      ctx.moveTo(136, lineY);
-      ctx.lineTo(376, lineY);
-      ctx.strokeStyle = '#92400e';
-      ctx.lineWidth = 2.5;
-      ctx.stroke();
-
-      ctx.fillStyle = '#292524';
-      ctx.font = '19px Georgia, serif';
-      wrapText(ctx, santo.bio, 256, lineY + 30, 370, 24);
-
-      const texture = new THREE.CanvasTexture(canvas);
-      texture.anisotropy = 4;
-      resolve(texture);
-    };
-
-    if (santo.fotoUrl) {
-      const img = new Image();
-      img.crossOrigin = "anonymous";
-      img.onload = () => {
-        ctx.save();
-        ctx.beginPath();
-        ctx.rect(imgX, imgY, imgW, imgH);
-        ctx.clip();
-
-        const hRatio = imgW / img.width;
-        const vRatio = imgH / img.height;
-        const ratio = Math.max(hRatio, vRatio);
-        const centerShiftX = (imgW - img.width * ratio) / 2;
-        const centerShiftY = (imgH - img.height * ratio) / 2;
-        ctx.drawImage(img, 0, 0, img.width, img.height, imgX + centerShiftX, imgY + centerShiftY, img.width * ratio, img.height * ratio);
-        ctx.restore();
-
-        finishCanvas();
-      };
-      img.onerror = () => {
-        drawFallbackIcon(ctx, santo, imgX, imgY, imgW, imgH);
-        finishCanvas();
-      };
-      img.src = santo.fotoUrl;
-    } else {
-      drawFallbackIcon(ctx, santo, imgX, imgY, imgW, imgH);
-      finishCanvas();
+    .top-bar {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      pointer-events: auto;
     }
-  });
-}
-
-function drawFallbackIcon(ctx, santo, imgX, imgY, imgW, imgH) {
-  const bgGrad = ctx.createRadialGradient(256, 244, 30, 256, 244, 220);
-  bgGrad.addColorStop(0, santo.grafica.coloreSecondario);
-  bgGrad.addColorStop(1, santo.grafica.colorePrimario);
-  ctx.fillStyle = bgGrad;
-  ctx.fillRect(imgX, imgY, imgW, imgH);
-
-  ctx.beginPath();
-  ctx.arc(256, 244, 108, 0, Math.PI * 2);
-  ctx.fillStyle = 'rgba(254, 240, 138, 0.35)';
-  ctx.fill();
-  ctx.lineWidth = 5;
-  ctx.strokeStyle = '#fbbf24';
-  ctx.stroke();
-
-  ctx.font = '140px serif';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText(santo.grafica.icona, 256, 250);
-}
-
-function createBackTexture() {
-  const canvas = document.createElement('canvas');
-  canvas.width = 512;
-  canvas.height = 768;
-  const ctx = canvas.getContext('2d');
-
-  ctx.fillStyle = '#5c2808';
-  ctx.fillRect(0, 0, 512, 768);
-
-  ctx.lineWidth = 24;
-  ctx.strokeStyle = '#d97706';
-  ctx.strokeRect(16, 16, 480, 736);
-
-  ctx.fillStyle = '#fef3c7';
-  ctx.font = 'bold 42px Georgia, serif';
-  ctx.textAlign = 'center';
-  ctx.fillText('✝', 256, 340);
-  ctx.font = 'italic 26px Georgia, serif';
-  ctx.fillText('Santi del Giorno', 256, 400);
-
-  return new THREE.CanvasTexture(canvas);
-}
-
-const sharedBackTexture = createBackTexture();
-
-function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
-  ctx.textAlign = 'center';
-  const words = text.split(' ');
-  let line = '';
-  let currentY = y;
-
-  for (let n = 0; n < words.length; n++) {
-    const testLine = line + words[n] + ' ';
-    const metrics = ctx.measureText(testLine);
-    if (metrics.width > maxWidth && n > 0) {
-      ctx.fillText(line.trim(), x, currentY);
-      line = words[n] + ' ';
-      currentY += lineHeight;
-    } else {
-      line = testLine;
+    .header-info {
+      background: rgba(15, 23, 42, 0.78);
+      backdrop-filter: blur(8px);
+      color: #f8fafc;
+      padding: 12px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(212, 175, 55, 0.45);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
     }
-  }
-  ctx.fillText(line.trim(), x, currentY);
-  return currentY + lineHeight * 0.5;
-}
-
-// --- GESTIONE CARTE E MODALITÀ BONUS ---
-
-async function spawnCardMesh(santo, isBonusCard = false) {
-  if (currentCardMesh) {
-    scene.remove(currentCardMesh);
-    currentCardMesh = null;
-  }
-
-  const frontTex = await createSantinoTextureAsync(santo, isBonusCard);
-  const geometry = new THREE.BoxGeometry(1.18, 1.77, 0.02);
-
-  const sideMat = new THREE.MeshStandardMaterial({ color: isBonusCard ? 0xd97706 : 0x92400e, roughness: 0.6 });
-  const frontMat = new THREE.MeshStandardMaterial({ map: frontTex, roughness: 0.78, metalness: 0.05 });
-  const backMat = new THREE.MeshStandardMaterial({ map: sharedBackTexture, roughness: 0.78, metalness: 0.05 });
-
-  const materials = [sideMat, sideMat, sideMat, sideMat, frontMat, backMat];
-  const card = new THREE.Mesh(geometry, materials);
-
-  card.position.copy(cardRestPos);
-  card.rotation.set(-0.16, 0, 0);
-  scene.add(card);
-  currentCardMesh = card;
-}
-
-async function spawnNextCard() {
-  updateUI();
-
-  const endActions = document.getElementById('end-actions');
-  const bonusModeBtn = document.getElementById('bonus-mode-btn');
-  const bonusPickerContainer = document.getElementById('bonus-picker-container');
-  const exitBonusBtn = document.getElementById('exit-bonus-btn');
-
-  // MODALITÀ BONUS INFINITA
-  if (isBonusMode) {
-    const bonusList = getAvailableBonusList();
-    if (bonusList.length === 0) {
-      exitBonusMode();
-      return;
+    .header-info h1 {
+      font-size: 1.05rem;
+      color: #fbbf24;
+      letter-spacing: 0.5px;
+    }
+    .header-info p {
+      font-size: 0.82rem;
+      color: #cbd5e1;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    .badges-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+    }
+    .counter-badge {
+      background: #d97706;
+      color: #fff;
+      font-family: system-ui, sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 5px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .streak-badge {
+      background: rgba(251, 191, 36, 0.18);
+      border: 1px solid rgba(251, 191, 36, 0.5);
+      color: #fde68a;
+      font-family: system-ui, sans-serif;
+      font-weight: 600;
+      font-size: 0.74rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      white-space: nowrap;
     }
 
-    if (selectedBonusIndex >= bonusList.length) {
-      selectedBonusIndex = 0;
+    /* Barra Selettore Data (visibile quando tutti i bonus sono sbloccati) */
+    .date-picker-bar {
+      display: none;
+      background: rgba(15, 23, 42, 0.82);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(251, 191, 36, 0.55);
+      border-radius: 12px;
+      padding: 8px 12px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    }
+    .date-picker-label {
+      color: #fde68a;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .date-picker-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    #custom-date-input {
+      background: rgba(30, 41, 59, 0.95);
+      color: #f8fafc;
+      border: 1px solid rgba(251, 191, 36, 0.5);
+      border-radius: 8px;
+      padding: 5px 8px;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 0.82rem;
+      color-scheme: dark;
+      touch-action: auto;
+      user-select: auto;
+      -webkit-user-select: auto;
+    }
+    #today-date-btn {
+      background: #fbbf24;
+      color: #0f172a;
+      border: none;
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
     }
 
-    endActions.style.display = 'none';
-    bonusPickerContainer.style.display = 'flex';
-    exitBonusBtn.style.display = 'inline-block';
-
-    const santoBonus = bonusList[selectedBonusIndex];
-    document.getElementById('date-title').textContent = '✨ Santi Bonus Infiniti';
-    document.getElementById('current-saint-sub').textContent = santoBonus.nome;
-    document.getElementById('hint-text').textContent = '✨ Lancia questo santino bonus quante volte vuoi!';
-
-    await spawnCardMesh(santoBonus, true);
-    return;
-  }
-
-  // MODALITÀ NORMALE (SANTI DELLA DATA CORRENTE / SCELTA)
-  bonusPickerContainer.style.display = 'none';
-  exitBonusBtn.style.display = 'none';
-  document.getElementById('date-title').textContent = `Santi del ${datiCorrentiCache.dataFormattata}`;
-
-  if (currentIndex >= deck.length) {
-    const result = registerDailyDeckCompletion();
-    const availableBonus = getAvailableBonusList();
-
-    endActions.style.display = 'flex';
-    bonusModeBtn.style.display = availableBonus.length > 0 ? 'inline-block' : 'none';
-
-    if (result.allUnlockedJustNow) {
-      document.getElementById('hint-text').textContent = '🏆 Tutti i Bonus sbloccati! Ora puoi scegliere qualsiasi data in alto!';
-    } else if (result.newlyUnlocked) {
-      document.getElementById('hint-text').textContent = '🎉 3 giorni consecutivi! Nuovo Santino Bonus sbloccato!';
-    } else {
-      document.getElementById('hint-text').textContent = `Hai lanciato tutti i santi del ${datiCorrentiCache.dataFormattata}!`;
+    /* Stile per selettore ambienti e selettore santi bonus */
+    .horizontal-selector {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      gap: 8px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 4px 2px 8px 2px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(212, 175, 55, 0.4) rgba(15, 23, 42, 0.4);
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
+      touch-action: pan-x;
+      max-width: 100%;
     }
-    document.getElementById('current-saint-sub').textContent = 'Mazzo completato';
-    return;
-  }
-
-  endActions.style.display = 'none';
-  document.getElementById('hint-text').textContent = '👆 Trascina e lancia il santino come un frisbee!';
-
-  const santo = deck[currentIndex];
-  document.getElementById('current-saint-sub').textContent = santo.nome;
-  await spawnCardMesh(santo, false);
-}
-
-function enterBonusMode() {
-  const bonusList = getAvailableBonusList();
-  if (bonusList.length === 0) return;
-
-  isBonusMode = true;
-  selectedBonusIndex = 0;
-  renderBonusSelector();
-  spawnNextCard();
-}
-
-function exitBonusMode() {
-  isBonusMode = false;
-  if (currentCardMesh) {
-    scene.remove(currentCardMesh);
-    currentCardMesh = null;
-  }
-  spawnNextCard();
-}
-
-function renderBonusSelector() {
-  const container = document.getElementById('bonus-selector');
-  container.innerHTML = '';
-
-  const bonusList = getAvailableBonusList();
-  bonusList.forEach((santo, idx) => {
-    const btn = document.createElement('button');
-    btn.className = 'bonus-select-btn' + (idx === selectedBonusIndex ? ' active' : '');
-    const icon = (santo.grafica && santo.grafica.icona) ? santo.grafica.icona : '✨';
-    btn.textContent = `${icon} ${santo.nome}`;
-    btn.addEventListener('click', () => {
-      if (selectedBonusIndex === idx) return;
-      selectedBonusIndex = idx;
-      renderBonusSelector();
-      spawnNextCard();
-    });
-    container.appendChild(btn);
-  });
-}
-
-function updateUI() {
-  if (isBonusMode) {
-    document.getElementById('card-counter').textContent = '∞ Bonus';
-    return;
-  }
-  const remaining = Math.max(0, deck.length - currentIndex);
-  document.getElementById('card-counter').textContent = `${remaining} / ${deck.length}`;
-}
-
-// --- AMBIENTI 3D ---
-
-function updateBackgroundAspect(texture) {
-  if (!texture || !texture.image) return;
-  const targetAspect = window.innerWidth / window.innerHeight;
-  const imageAspect = texture.image.width / texture.image.height;
-  const factor = imageAspect / targetAspect;
-
-  texture.offset.x = factor > 1 ? (1 - 1 / factor) / 2 : 0;
-  texture.repeat.x = factor > 1 ? 1 / factor : 1;
-  texture.offset.y = factor > 1 ? 0 : (1 - factor) / 2;
-  texture.repeat.y = factor > 1 ? 1 : factor;
-  texture.needsUpdate = true;
-}
-
-function buildEnvironment(envType) {
-  while (environmentGroup.children.length > 0) {
-    environmentGroup.remove(environmentGroup.children[0]);
-  }
-
-  const bgFiles = {
-    'montagna': 'montagna.jpg',
-    'grattacielo': 'grattacielo.jpg',
-    'scogliera': 'scogliera.jpg',
-    'sanpietro': 'sanpietro.jpg'
-  };
-
-  const fallbackColors = {
-    'montagna': 0x60a5fa,
-    'grattacielo': 0xf97316,
-    'scogliera': 0x0284c7,
-    'sanpietro': 0x7dd3fc
-  };
-
-  const fileName = bgFiles[envType];
-
-  textureLoader.load(
-    fileName,
-    (texture) => {
-      updateBackgroundAspect(texture);
-      scene.background = texture;
-      scene.fog = null;
-    },
-    undefined,
-    () => {
-      scene.background = new THREE.Color(fallbackColors[envType] || 0x1e293b);
+    .horizontal-selector::-webkit-scrollbar {
+      height: 5px;
     }
-  );
-
-  const ledgeConfigs = {
-    'montagna': { color: 0x64748b, opacity: 0.85 },
-    'grattacielo': { color: 0x334155, opacity: 0.75 },
-    'scogliera': { color: 0x78716c, opacity: 0.85 },
-    'sanpietro': { color: 0xfef3c7, opacity: 0.9 }
-  };
-
-  const cfg = ledgeConfigs[envType] || { color: 0x334155, opacity: 0.8 };
-  const ledgeGeo = new THREE.BoxGeometry(8, 1.0, 3.5);
-  const ledgeMat = new THREE.MeshStandardMaterial({
-    color: cfg.color,
-    roughness: 0.85,
-    transparent: true,
-    opacity: cfg.opacity
-  });
-  const ledge = new THREE.Mesh(ledgeGeo, ledgeMat);
-  ledge.position.set(0, -2.7, 3.6);
-  environmentGroup.add(ledge);
-}
-
-// --- EVENTI E FISICA LANCIO ---
-
-function setupEvents() {
-  const dom = renderer.domElement;
-
-  const onStart = (x, y) => {
-    if (!currentCardMesh) return;
-    isDragging = true;
-    dragStartPos = { x, y, time: performance.now() };
-    dragCurrentPos = { x, y };
-  };
-
-  const onMove = (x, y) => {
-    if (!isDragging || !currentCardMesh) return;
-    dragCurrentPos = { x, y };
-
-    const dx = (x - dragStartPos.x) / window.innerWidth;
-    const dy = (y - dragStartPos.y) / window.innerHeight;
-
-    currentCardMesh.position.x = cardRestPos.x + dx * 3.5;
-    currentCardMesh.position.y = cardRestPos.y - dy * 3.5;
-    currentCardMesh.rotation.z = -dx * 1.2;
-    currentCardMesh.rotation.x = -0.16 + dy * 1.2;
-  };
-
-  const onEnd = () => {
-    if (!isDragging || !currentCardMesh) return;
-    isDragging = false;
-
-    const dt = Math.max(0.05, (performance.now() - dragStartPos.time) / 1000);
-    const dy = dragStartPos.y - dragCurrentPos.y;
-    const dx = dragCurrentPos.x - dragStartPos.x;
-
-    if (dy > 45) {
-      const speedY = Math.min(25, (dy / window.innerHeight) / dt * 4.5);
-      const speedX = (dx / window.innerWidth) / dt * 2.5;
-
-      launchCardAsFrisbee(currentCardMesh, speedX, speedY);
-      currentCardMesh = null;
-
-      if (!isBonusMode) {
-        currentIndex++;
-      }
-
-      setTimeout(() => {
-        spawnNextCard();
-      }, 350);
-    } else {
-      currentCardMesh.position.copy(cardRestPos);
-      currentCardMesh.rotation.set(-0.16, 0, 0);
+    .horizontal-selector::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.4);
+      border-radius: 4px;
     }
-  };
-
-  dom.addEventListener('touchstart', e => onStart(e.touches[0].clientX, e.touches[0].clientY), { passive: true });
-  dom.addEventListener('touchmove', e => onMove(e.touches[0].clientX, e.touches[0].clientY), { passive: true });
-  dom.addEventListener('touchend', onEnd);
-
-  dom.addEventListener('mousedown', e => onStart(e.clientX, e.clientY));
-  window.addEventListener('mousemove', e => onMove(e.clientX, e.clientY));
-  window.addEventListener('mouseup', onEnd);
-
-  document.querySelectorAll('.env-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.env-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      currentEnv = btn.dataset.env;
-      buildEnvironment(currentEnv);
-    });
-  });
-
-  document.getElementById('reset-btn').addEventListener('click', () => {
-    isBonusMode = false;
-    currentIndex = 0;
-    flyingCards.forEach(fc => scene.remove(fc.mesh));
-    flyingCards = [];
-    spawnNextCard();
-  });
-
-  document.getElementById('bonus-mode-btn').addEventListener('click', () => {
-    enterBonusMode();
-  });
-
-  document.getElementById('exit-bonus-btn').addEventListener('click', () => {
-    exitBonusMode();
-  });
-
-  // Eventi selettore data (sbloccato quando tutti i bonus sono attivi)
-  const customDateInput = document.getElementById('custom-date-input');
-  if (customDateInput) {
-    customDateInput.addEventListener('change', (e) => {
-      if (e.target.value) {
-        loadDeckForDate(e.target.value);
-      }
-    });
-  }
-
-  const todayDateBtn = document.getElementById('today-date-btn');
-  if (todayDateBtn) {
-    todayDateBtn.addEventListener('click', () => {
-      loadDeckForDate(getTodayDateString());
-    });
-  }
-
-  window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    if (scene.background && scene.background.isTexture) {
-      updateBackgroundAspect(scene.background);
+    .horizontal-selector::-webkit-scrollbar-thumb {
+      background: rgba(212, 175, 55, 0.4);
+      border-radius: 4px;
     }
-  });
-}
 
-function launchCardAsFrisbee(mesh, vx, forwardSpeed) {
-  mesh.rotation.x = -Math.PI / 2.2;
-
-  flyingCards.push({
-    mesh,
-    velocity: new THREE.Vector3(vx, 3.8 + forwardSpeed * 0.18, -14 - forwardSpeed * 0.9),
-    spinSpeed: (vx >= 0 ? -1 : 1) * (12 + Math.random() * 6),
-    curveForce: -vx * 0.45,
-    age: 0
-  });
-}
-
-let lastTime = performance.now();
-
-function animate() {
-  requestAnimationFrame(animate);
-
-  const now = performance.now();
-  const dt = Math.min(0.05, (now - lastTime) / 1000);
-  lastTime = now;
-
-  if (currentCardMesh && !isDragging) {
-    currentCardMesh.position.y = cardRestPos.y + Math.sin(now * 0.003) * 0.04;
-    currentCardMesh.rotation.y = Math.sin(now * 0.002) * 0.06;
-  }
-
-  for (let i = flyingCards.length - 1; i >= 0; i--) {
-    const fc = flyingCards[i];
-    fc.age += dt;
-
-    const lift = Math.max(-4.5, 2.5 - fc.age * 2.2);
-    fc.velocity.y += lift * dt;
-    fc.velocity.x += fc.curveForce * dt;
-    fc.velocity.z *= (1 - 0.18 * dt);
-
-    fc.mesh.position.addScaledVector(fc.velocity, dt);
-
-    fc.mesh.rotation.z += fc.spinSpeed * dt;
-    fc.mesh.rotation.y = Math.sin(fc.age * 3) * 0.25;
-
-    if (fc.mesh.position.z < -120 || fc.mesh.position.y < -25 || fc.age > 7) {
-      scene.remove(fc.mesh);
-      flyingCards.splice(i, 1);
+    .env-btn, .bonus-select-btn {
+      flex: 0 0 auto;
+      touch-action: pan-x;
+      background: rgba(15, 23, 42, 0.78);
+      color: #cbd5e1;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      padding: 8px 14px;
+      border-radius: 12px;
+      font-size: 0.82rem;
+      font-family: system-ui, -apple-system, sans-serif;
+      cursor: pointer;
+      white-space: nowrap;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      transition: all 0.2s ease;
     }
-  }
+    .env-btn:hover, .bonus-select-btn:hover {
+      border-color: rgba(251, 191, 36, 0.7);
+      color: #f8fafc;
+    }
+    .env-btn.active {
+      background: #fbbf24;
+      color: #0f172a;
+      font-weight: 700;
+      border-color: #fbbf24;
+      box-shadow: 0 2px 12px rgba(251, 191, 36, 0.35);
+    }
+    .bonus-select-btn {
+      border-color: rgba(168, 85, 247, 0.5);
+    }
+    .bonus-select-btn.active {
+      background: linear-gradient(135deg, #9333ea, #d97706);
+      color: #ffffff;
+      font-weight: 700;
+      border-color: #fde68a;
+      box-shadow: 0 2px 12px rgba(168, 85, 247, 0.45);
+    }
 
-  renderer.render(scene, camera);
-}
+    .bottom-hint {
+      text-align: center;
+      pointer-events: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+    }
+    .end-actions {
+      display: none;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+    .action-btn {
+      border: none;
+      padding: 12px 20px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      font-family: system-ui, sans-serif;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+    .action-btn:active {
+      transform: scale(0.96);
+    }
+    #reset-btn {
+      background: #fbbf24;
+      color: #0f172a;
+      box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
+    }
+    #bonus-mode-btn {
+      display: none;
+      background: linear-gradient(135deg, #9333ea, #c026d3);
+      color: #ffffff;
+      border: 1px solid rgba(253, 230, 138, 0.6);
+      box-shadow: 0 4px 15px rgba(147, 51, 234, 0.45);
+    }
+    #exit-bonus-btn {
+      display: none;
+      background: rgba(15, 23, 42, 0.85);
+      color: #fbbf24;
+      border: 1px solid rgba(251, 191, 36, 0.5);
+      padding: 8px 16px;
+      font-size: 0.82rem;
+    }
+    #bonus-picker-container {
+      display: none;
+      width: 100%;
+      max-width: 500px;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .hint-pill {
+      background: rgba(15, 23, 42, 0.75);
+      color: #f1f5f9;
+      font-family: system-ui, sans-serif;
+      font-size: 0.85rem;
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.15);
+      backdrop-filter: blur(6px);
+    }
+  </style>
+  <!-- Three.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+  <div id="canvas-container"></div>
 
-window.addEventListener('DOMContentLoaded', init);
+  <div id="ui-layer">
+    <div class="top-bar">
+      <div class="header-info">
+        <div>
+          <h1 id="date-title">Santi del Giorno</h1>
+          <p id="current-saint-sub">Scorri verso l'alto per lanciare il santino</p>
+        </div>
+        <div class="badges-group">
+          <div class="counter-badge" id="card-counter">0 / 0</div>
+          <div class="streak-badge" id="streak-badge">🔥 Serie: 0 gg</div>
+        </div>
+      </div>
+
+      <!-- Selettore data sbloccato al completamento di tutti i bonus -->
+      <div class="date-picker-bar" id="date-picker-bar">
+        <span class="date-picker-label">📅 Scegli data:</span>
+        <div class="date-picker-controls">
+          <input type="date" id="custom-date-input" />
+          <button type="button" id="today-date-btn">Oggi</button>
+        </div>
+      </div>
+
+      <div class="horizontal-selector" id="env-selector">
+        <button class="env-btn active" data-env="montagna">🏔️ Cima Montagna</button>
+        <button class="env-btn" data-env="grattacielo">🏙️ Tetto Grattacielo</button>
+        <button class="env-btn" data-env="scogliera">🌊 Scogliera</button>
+        <button class="env-btn" data-env="sanpietro">⛪ Piazza San Pietro</button>
+      </div>
+    </div>
+
+    <div class="bottom-hint">
+      <!-- Scelte a fine mazzo -->
+      <div class="end-actions" id="end-actions">
+        <button class="action-btn" id="reset-btn">Ricarica mazzo santi</button>
+        <button class="action-btn" id="bonus-mode-btn">✨ Lancia santi bonus</button>
+      </div>
+
+      <!-- Controlli modalità bonus infinita -->
+      <div id="bonus-picker-container">
+        <div class="horizontal-selector" id="bonus-selector"></div>
+        <button class="action-btn" id="exit-bonus-btn">↩ Torna ai santi del giorno</button>
+      </div>
+
+      <div class="hint-pill" id="hint-text">👆 Trascina e lancia il santino come un frisbee!</div>
+    </div>
+  </div>
+
+  <!-- Database Santi -->
+  <script src="santi.js"></script>
+  <!-- Logica 3D e Fisica -->
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(err => console.warn('SW non registrato:', err));
+      });
+    }
+  </script>
+</body>
+</html>
