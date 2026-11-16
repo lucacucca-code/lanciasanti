@@ -75,55 +75,68 @@
       padding: 5px 10px;
       border-radius: 999px;
       white-space: nowrap;
-.env-selector {
-  display: flex;
-  gap: 8px;
-  min-width: 0;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 0 2px 6px;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.45) rgba(15, 23, 42, 0.35);
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-x: contain;
-  touch-action: pan-x;
-}
+    }
 
-.env-selector::-webkit-scrollbar {
-  height: 4px;
-}
+    /* Stile migliorato per l'env-selector */
+    .env-selector {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      gap: 8px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 4px 2px 8px 2px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(212, 175, 55, 0.4) rgba(15, 23, 42, 0.4);
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
+      touch-action: pan-x;
+    }
 
-.env-selector::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.35);
-  border-radius: 4px;
-}
+    .env-selector::-webkit-scrollbar {
+      height: 5px;
+    }
 
-.env-selector::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.45);
-  border-radius: 4px;
-}
+    .env-selector::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.4);
+      border-radius: 4px;
+    }
 
-.env-btn {
-  flex: 0 0 auto;
-  touch-action: pan-x;
-  background: rgba(15, 23, 42, 0.75);
-  color: #e2e8f0;
-  border: 1px solid rgba(255,255,255,0.2);
-  padding: 8px 13px;
-  border-radius: 20px;
-  font-size: 0.82rem;
-  font-family: system-ui, sans-serif;
-  cursor: pointer;
-  white-space: nowrap;
-  backdrop-filter: blur(6px);
-  transition: all 0.2s;
-}
+    .env-selector::-webkit-scrollbar-thumb {
+      background: rgba(212, 175, 55, 0.4);
+      border-radius: 4px;
+    }
+
+    .env-btn {
+      flex: 0 0 auto;
+      touch-action: pan-x;
+      background: rgba(15, 23, 42, 0.78);
+      color: #cbd5e1;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      padding: 8px 14px;
+      border-radius: 12px;
+      font-size: 0.82rem;
+      font-family: system-ui, -apple-system, sans-serif;
+      cursor: pointer;
+      white-space: nowrap;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      transition: all 0.2s ease;
+    }
+
+    .env-btn:hover {
+      border-color: rgba(251, 191, 36, 0.7);
+      color: #f8fafc;
+    }
+
     .env-btn.active {
       background: #fbbf24;
       color: #0f172a;
       font-weight: 700;
       border-color: #fbbf24;
+      box-shadow: 0 2px 12px rgba(251, 191, 36, 0.35);
     }
+
     .bottom-hint {
       text-align: center;
       pointer-events: auto;
@@ -185,7 +198,6 @@
       <div class="hint-pill" id="hint-text">👆 Trascina e lancia il santino come un frisbee!</div>
     </div>
   </div>
-
 
   <!-- Database Santi -->
   <script src="santi.js"></script>
