@@ -55,6 +55,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 10px;
     }
     .header-info h1 {
       font-size: 1.05rem;
@@ -66,6 +67,12 @@
       color: #cbd5e1;
       font-family: system-ui, -apple-system, sans-serif;
     }
+    .badges-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+    }
     .counter-badge {
       background: #d97706;
       color: #fff;
@@ -76,9 +83,20 @@
       border-radius: 999px;
       white-space: nowrap;
     }
+    .streak-badge {
+      background: rgba(251, 191, 36, 0.18);
+      border: 1px solid rgba(251, 191, 36, 0.5);
+      color: #fde68a;
+      font-family: system-ui, sans-serif;
+      font-weight: 600;
+      font-size: 0.74rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
 
-    /* Stile migliorato per l'env-selector */
-    .env-selector {
+    /* Stile per selettore ambienti e selettore santi bonus */
+    .horizontal-selector {
       display: flex;
       flex-direction: row;
       flex-wrap: nowrap;
@@ -91,23 +109,21 @@
       -webkit-overflow-scrolling: touch;
       overscroll-behavior-x: contain;
       touch-action: pan-x;
+      max-width: 100%;
     }
-
-    .env-selector::-webkit-scrollbar {
+    .horizontal-selector::-webkit-scrollbar {
       height: 5px;
     }
-
-    .env-selector::-webkit-scrollbar-track {
+    .horizontal-selector::-webkit-scrollbar-track {
       background: rgba(15, 23, 42, 0.4);
       border-radius: 4px;
     }
-
-    .env-selector::-webkit-scrollbar-thumb {
+    .horizontal-selector::-webkit-scrollbar-thumb {
       background: rgba(212, 175, 55, 0.4);
       border-radius: 4px;
     }
 
-    .env-btn {
+    .env-btn, .bonus-select-btn {
       flex: 0 0 auto;
       touch-action: pan-x;
       background: rgba(15, 23, 42, 0.78);
@@ -123,18 +139,26 @@
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
       transition: all 0.2s ease;
     }
-
-    .env-btn:hover {
+    .env-btn:hover, .bonus-select-btn:hover {
       border-color: rgba(251, 191, 36, 0.7);
       color: #f8fafc;
     }
-
     .env-btn.active {
       background: #fbbf24;
       color: #0f172a;
       font-weight: 700;
       border-color: #fbbf24;
       box-shadow: 0 2px 12px rgba(251, 191, 36, 0.35);
+    }
+    .bonus-select-btn {
+      border-color: rgba(168, 85, 247, 0.5);
+    }
+    .bonus-select-btn.active {
+      background: linear-gradient(135deg, #9333ea, #d97706);
+      color: #ffffff;
+      font-weight: 700;
+      border-color: #fde68a;
+      box-shadow: 0 2px 12px rgba(168, 85, 247, 0.45);
     }
 
     .bottom-hint {
@@ -144,6 +168,54 @@
       flex-direction: column;
       align-items: center;
       gap: 10px;
+      width: 100%;
+    }
+    .end-actions {
+      display: none;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+    .action-btn {
+      border: none;
+      padding: 12px 20px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      font-family: system-ui, sans-serif;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+    .action-btn:active {
+      transform: scale(0.96);
+    }
+    #reset-btn {
+      background: #fbbf24;
+      color: #0f172a;
+      box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
+    }
+    #bonus-mode-btn {
+      display: none;
+      background: linear-gradient(135deg, #9333ea, #c026d3);
+      color: #ffffff;
+      border: 1px solid rgba(253, 230, 138, 0.6);
+      box-shadow: 0 4px 15px rgba(147, 51, 234, 0.45);
+    }
+    #exit-bonus-btn {
+      display: none;
+      background: rgba(15, 23, 42, 0.85);
+      color: #fbbf24;
+      border: 1px solid rgba(251, 191, 36, 0.5);
+      padding: 8px 16px;
+      font-size: 0.82rem;
+    }
+    #bonus-picker-container {
+      display: none;
+      width: 100%;
+      max-width: 500px;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
     }
     .hint-pill {
       background: rgba(15, 23, 42, 0.75);
@@ -154,19 +226,6 @@
       border-radius: 999px;
       border: 1px solid rgba(255,255,255,0.15);
       backdrop-filter: blur(6px);
-    }
-    #reset-btn {
-      display: none;
-      background: #fbbf24;
-      color: #0f172a;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 999px;
-      font-weight: 700;
-      font-size: 0.95rem;
-      font-family: system-ui, sans-serif;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
     }
   </style>
   <!-- Three.js CDN -->
@@ -182,10 +241,13 @@
           <h1 id="date-title">Santi del Giorno</h1>
           <p id="current-saint-sub">Scorri verso l'alto per lanciare il santino</p>
         </div>
-        <div class="counter-badge" id="card-counter">0 / 0</div>
+        <div class="badges-group">
+          <div class="counter-badge" id="card-counter">0 / 0</div>
+          <div class="streak-badge" id="streak-badge">🔥 Serie: 0 gg</div>
+        </div>
       </div>
 
-      <div class="env-selector" id="env-selector">
+      <div class="horizontal-selector" id="env-selector">
         <button class="env-btn active" data-env="montagna">🏔️ Cima Montagna</button>
         <button class="env-btn" data-env="grattacielo">🏙️ Tetto Grattacielo</button>
         <button class="env-btn" data-env="scogliera">🌊 Scogliera</button>
@@ -194,7 +256,18 @@
     </div>
 
     <div class="bottom-hint">
-      <button id="reset-btn">Ricarica il mazzo dei Santi</button>
+      <!-- Scelte a fine mazzo -->
+      <div class="end-actions" id="end-actions">
+        <button class="action-btn" id="reset-btn">Ricarica mazzo santi</button>
+        <button class="action-btn" id="bonus-mode-btn">✨ Lancia santi bonus</button>
+      </div>
+
+      <!-- Controlli modalità bonus infinita -->
+      <div id="bonus-picker-container">
+        <div class="horizontal-selector" id="bonus-selector"></div>
+        <button class="action-btn" id="exit-bonus-btn">↩ Torna ai santi del giorno</button>
+      </div>
+
       <div class="hint-pill" id="hint-text">👆 Trascina e lancia il santino come un frisbee!</div>
     </div>
   </div>
