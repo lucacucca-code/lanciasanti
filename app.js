@@ -1,4 +1,4 @@
-// Santini 3D - Motore Three.js con foto reali, testo centrato, streak 3 giorni e santi bonus infiniti
+// Santini 3D - Motore Three.js con foto reali, testo centrato, streak 3 giorni, santi bonus e selettore data
 
 let scene, camera, renderer;
 let currentCardMesh = null;
@@ -8,7 +8,8 @@ let currentEnv = 'montagna';
 
 let deck = [];
 let currentIndex = 0;
-let datiOggiCache = null;
+let datiCorrentiCache = null;
+let selectedDateStr = null; // Formato 'YYYY-MM-DD'
 
 // Gestione modalità bonus e progressione
 let isBonusMode = false;
@@ -22,24 +23,66 @@ const cardRestPos = new THREE.Vector3(0, 0.25, 3.1);
 
 const textureLoader = new THREE.TextureLoader();
 
-// --- GESTIONE PROGRESSIONE E STREAK (localStorage) ---
+// --- GESTIONE DATE E LETTURA DATABASE SANTI ---
+
+function formatDateYYYYMMDD(dateObj) {
+  const y = dateObj.getFullYear();
+  const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+  const d = String(dateObj.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
 
 function getTodayDateString() {
-  const now = new Date();
-  const y = now.getFullYear();
-  const m = String(now.getMonth() + 1).padStart(2, '0');
-  const d = String(now.getDate()).padStart(2, '0');
-  return `${y}-${m}-${d}`;
+  return formatDateYYYYMMDD(new Date());
 }
 
 function getYesterdayDateString() {
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
-  const y = yesterday.getFullYear();
-  const m = String(yesterday.getMonth() + 1).padStart(2, '0');
-  const d = String(yesterday.getDate()).padStart(2, '0');
-  return `${y}-${m}-${d}`;
+  return formatDateYYYYMMDD(yesterday);
 }
+
+// Recupera i santi per una specifica data YYYY-MM-DD usando la struttura di santi.js
+function getSantiByDateString(dateStr) {
+  const todayStr = getTodayDateString();
+  if (!dateStr || dateStr === todayStr) {
+    return getSantiDiOggi();
+  }
+
+  const parts = dateStr.split('-');
+  const year = parseInt(parts[0], 10);
+  const month = parseInt(parts[1], 10) - 1;
+  const day = parseInt(parts[2], 10);
+  const targetDate = new Date(year, month, day);
+
+  const mese = String(targetDate.getMonth() + 1).padStart(2, '0');
+  const giorno = String(targetDate.getDate()).padStart(2, '0');
+  const chiave = `${mese}-${giorno}`;
+
+  const opzioniData = { day: 'numeric', month: 'long' };
+  const dataFormattata = targetDate.toLocaleDateString('it-IT', opzioniData);
+
+  const lista = (typeof SANTI_DATABASE !== 'undefined' && SANTI_DATABASE[chiave])
+    ? SANTI_DATABASE[chiave]
+    : (typeof SANTI_DATABASE !== 'undefined' ? (SANTI_DATABASE['default'] || Object.values(SANTI_DATABASE)[0] || []) : []);
+
+  const pool = (typeof IMMAGINI_SANTI_POOL !== 'undefined' && Array.isArray(IMMAGINI_SANTI_POOL))
+    ? IMMAGINI_SANTI_POOL
+    : [{ icona: '✝️', colorePrimario: '#78350f', coloreSecondario: '#fbbf24' }];
+
+  return {
+    dataFormattata,
+    santi: lista.map(santo => {
+      const graficaRandom = pool[Math.floor(Math.random() * pool.length)];
+      return {
+        ...santo,
+        grafica: santo.grafica || graficaRandom
+      };
+    })
+  };
+}
+
+// --- GESTIONE PROGRESSIONE, STREAK E SBLOCCO SELETTORE DATA ---
 
 function loadProgress() {
   try {
@@ -66,46 +109,79 @@ function saveProgress(progress) {
   }
 }
 
+function getTotalBonusCount() {
+  return (typeof SANTI_BONUS !== 'undefined' && Array.isArray(SANTI_BONUS)) ? SANTI_BONUS.length : 0;
+}
+
 function getAvailableBonusList() {
-  if (typeof SANTI_BONUS === 'undefined' || !Array.isArray(SANTI_BONUS)) {
-    return [];
-  }
+  const total = getTotalBonusCount();
+  if (total === 0) return [];
   const progress = loadProgress();
   return SANTI_BONUS.slice(0, progress.unlockedBonusCount);
 }
 
-// Registra il completamento del mazzo giornaliero (max 1 volta al giorno)
+function areAllBonusUnlocked() {
+  const total = getTotalBonusCount();
+  if (total === 0) return false;
+  const progress = loadProgress();
+  return progress.unlockedBonusCount >= total;
+}
+
+function updateDatePickerVisibility() {
+  const pickerBar = document.getElementById('date-picker-bar');
+  if (!pickerBar) return;
+
+  if (areAllBonusUnlocked()) {
+    pickerBar.style.display = 'flex';
+    const input = document.getElementById('custom-date-input');
+    if (input && !input.value) {
+      input.value = selectedDateStr || getTodayDateString();
+    }
+  } else {
+    pickerBar.style.display = 'none';
+  }
+}
+
+// Registra il completamento del mazzo giornaliero (valido SOLO se la data attiva è oggi)
 function registerDailyDeckCompletion() {
   const progress = loadProgress();
   const today = getTodayDateString();
-  const yesterday = getYesterdayDateString();
+
+  // Se l'utente sta giocando con una data diversa da oggi, non altera la serie
+  if (selectedDateStr && selectedDateStr !== today) {
+    return { newlyUnlocked: false, allUnlockedJustNow: false, progress };
+  }
 
   // Se l'utente ha già completato il mazzo oggi (es. ha cliccato "Ricarica mazzo santi"), non incrementare
   if (progress.lastCompletedDate === today) {
-    return { newlyUnlocked: false, progress };
+    return { newlyUnlocked: false, allUnlockedJustNow: false, progress };
   }
 
+  const yesterday = getYesterdayDateString();
   if (progress.lastCompletedDate === yesterday) {
     progress.streak += 1;
   } else {
-    // Ha saltato uno o più giorni (o è la prima volta): la serie riparte da 1
     progress.streak = 1;
   }
 
   progress.lastCompletedDate = today;
 
   let newlyUnlocked = false;
-  const maxBonusDisponibili = (typeof SANTI_BONUS !== 'undefined' && Array.isArray(SANTI_BONUS)) ? SANTI_BONUS.length : 0;
+  let allUnlockedJustNow = false;
+  const maxBonusDisponibili = getTotalBonusCount();
 
-  // Ogni 3 giorni consecutivi sblocca un nuovo santino bonus in modo permanente
   if (progress.streak % 3 === 0 && progress.unlockedBonusCount < maxBonusDisponibili) {
     progress.unlockedBonusCount += 1;
     newlyUnlocked = true;
+    if (progress.unlockedBonusCount >= maxBonusDisponibili) {
+      allUnlockedJustNow = true;
+    }
   }
 
   saveProgress(progress);
   updateStreakBadge();
-  return { newlyUnlocked, progress };
+  updateDatePickerVisibility();
+  return { newlyUnlocked, allUnlockedJustNow, progress };
 }
 
 function updateStreakBadge() {
@@ -114,6 +190,23 @@ function updateStreakBadge() {
   const unlocked = getAvailableBonusList().length;
   const bonusLabel = unlocked > 0 ? ` • ✨ ${unlocked} bonus` : '';
   badge.textContent = `🔥 Serie: ${progress.streak} gg${bonusLabel}`;
+}
+
+function loadDeckForDate(dateStr) {
+  selectedDateStr = dateStr;
+  isBonusMode = false;
+  currentIndex = 0;
+
+  const input = document.getElementById('custom-date-input');
+  if (input) input.value = dateStr;
+
+  flyingCards.forEach(fc => scene.remove(fc.mesh));
+  flyingCards = [];
+
+  datiCorrentiCache = getSantiByDateString(dateStr);
+  deck = datiCorrentiCache.santi;
+  document.getElementById('date-title').textContent = `Santi del ${datiCorrentiCache.dataFormattata}`;
+  spawnNextCard();
 }
 
 // --- INIZIALIZZAZIONE SCENA 3D ---
@@ -143,11 +236,13 @@ function init() {
   scene.add(environmentGroup);
   buildEnvironment(currentEnv);
 
-  datiOggiCache = getSantiDiOggi();
-  document.getElementById('date-title').textContent = `Santi del ${datiOggiCache.dataFormattata}`;
-  deck = datiOggiCache.santi;
+  selectedDateStr = getTodayDateString();
+  datiCorrentiCache = getSantiByDateString(selectedDateStr);
+  document.getElementById('date-title').textContent = `Santi del ${datiCorrentiCache.dataFormattata}`;
+  deck = datiCorrentiCache.santi;
 
   updateStreakBadge();
+  updateDatePickerVisibility();
   spawnNextCard();
 
   setupEvents();
@@ -162,7 +257,6 @@ async function createSantinoTextureAsync(santo, isBonusCard = false) {
     canvas.height = 768;
     const ctx = canvas.getContext('2d');
 
-    // Sfondo pergamena (leggermente più luminoso/prezioso per i santini bonus)
     const bgPergamena = ctx.createLinearGradient(0, 0, 0, 768);
     if (isBonusCard) {
       bgPergamena.addColorStop(0, '#fef9c3');
@@ -176,7 +270,6 @@ async function createSantinoTextureAsync(santo, isBonusCard = false) {
     ctx.fillStyle = bgPergamena;
     ctx.fillRect(0, 0, 512, 768);
 
-    // Cornice dorata esterna
     const gradGold = ctx.createLinearGradient(0, 0, 512, 768);
     gradGold.addColorStop(0, '#78350f');
     gradGold.addColorStop(0.25, '#d97706');
@@ -188,12 +281,10 @@ async function createSantinoTextureAsync(santo, isBonusCard = false) {
     ctx.strokeStyle = gradGold;
     ctx.strokeRect(14, 14, 484, 740);
 
-    // Filigrana interna scura
     ctx.lineWidth = 4;
     ctx.strokeStyle = '#5c2808';
     ctx.strokeRect(36, 36, 440, 696);
 
-    // Angoli decorativi
     const corners = [[42,42], [470,42], [42,726], [470,726]];
     ctx.fillStyle = '#78350f';
     corners.forEach(([cx, cy]) => {
@@ -209,7 +300,6 @@ async function createSantinoTextureAsync(santo, isBonusCard = false) {
       ctx.strokeStyle = '#78350f';
       ctx.strokeRect(imgX, imgY, imgW, imgH);
 
-      // Riquadro testo inferiore
       ctx.fillStyle = 'rgba(255, 251, 235, 0.82)';
       ctx.fillRect(52, 442, 408, 272);
       ctx.lineWidth = 2;
@@ -219,17 +309,14 @@ async function createSantinoTextureAsync(santo, isBonusCard = false) {
       ctx.textAlign = 'center';
       ctx.textBaseline = 'alphabetic';
 
-      // Nome del Santo
       ctx.fillStyle = '#1c1917';
       ctx.font = 'bold 32px Georgia, serif';
       const afterNameY = wrapText(ctx, santo.nome, 256, 485, 380, 36);
 
-      // Titolo liturgico
       ctx.fillStyle = '#92400e';
       ctx.font = 'italic bold 21px Georgia, serif';
       const afterTitleY = wrapText(ctx, santo.titolo, 256, afterNameY + 14, 380, 26);
 
-      // Linea divisoria centrata
       const lineY = afterTitleY + 10;
       ctx.beginPath();
       ctx.moveTo(136, lineY);
@@ -238,7 +325,6 @@ async function createSantinoTextureAsync(santo, isBonusCard = false) {
       ctx.lineWidth = 2.5;
       ctx.stroke();
 
-      // Breve descrizione
       ctx.fillStyle = '#292524';
       ctx.font = '19px Georgia, serif';
       wrapText(ctx, santo.bio, 256, lineY + 30, 370, 24);
@@ -403,23 +489,24 @@ async function spawnNextCard() {
     return;
   }
 
-  // MODALITÀ NORMALE (SANTI DEL GIORNO)
+  // MODALITÀ NORMALE (SANTI DELLA DATA CORRENTE / SCELTA)
   bonusPickerContainer.style.display = 'none';
   exitBonusBtn.style.display = 'none';
-  document.getElementById('date-title').textContent = `Santi del ${datiOggiCache.dataFormattata}`;
+  document.getElementById('date-title').textContent = `Santi del ${datiCorrentiCache.dataFormattata}`;
 
   if (currentIndex >= deck.length) {
-    // Mazzo giornaliero completato! Aggiorna streak e controlla eventuali sblocchi
     const result = registerDailyDeckCompletion();
     const availableBonus = getAvailableBonusList();
 
     endActions.style.display = 'flex';
     bonusModeBtn.style.display = availableBonus.length > 0 ? 'inline-block' : 'none';
 
-    if (result.newlyUnlocked) {
+    if (result.allUnlockedJustNow) {
+      document.getElementById('hint-text').textContent = '🏆 Tutti i Bonus sbloccati! Ora puoi scegliere qualsiasi data in alto!';
+    } else if (result.newlyUnlocked) {
       document.getElementById('hint-text').textContent = '🎉 3 giorni consecutivi! Nuovo Santino Bonus sbloccato!';
     } else {
-      document.getElementById('hint-text').textContent = 'Hai lanciato tutti i santi di oggi!';
+      document.getElementById('hint-text').textContent = `Hai lanciato tutti i santi del ${datiCorrentiCache.dataFormattata}!`;
     }
     document.getElementById('current-saint-sub').textContent = 'Mazzo completato';
     return;
@@ -590,7 +677,6 @@ function setupEvents() {
       launchCardAsFrisbee(currentCardMesh, speedX, speedY);
       currentCardMesh = null;
 
-      // In modalità normale avanza nel mazzo; in modalità bonus il mazzo è infinito
       if (!isBonusMode) {
         currentIndex++;
       }
@@ -636,6 +722,23 @@ function setupEvents() {
   document.getElementById('exit-bonus-btn').addEventListener('click', () => {
     exitBonusMode();
   });
+
+  // Eventi selettore data (sbloccato quando tutti i bonus sono attivi)
+  const customDateInput = document.getElementById('custom-date-input');
+  if (customDateInput) {
+    customDateInput.addEventListener('change', (e) => {
+      if (e.target.value) {
+        loadDeckForDate(e.target.value);
+      }
+    });
+  }
+
+  const todayDateBtn = document.getElementById('today-date-btn');
+  if (todayDateBtn) {
+    todayDateBtn.addEventListener('click', () => {
+      loadDeckForDate(getTodayDateString());
+    });
+  }
 
   window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
