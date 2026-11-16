@@ -29495,6 +29495,35 @@ const SANTI_DATABASE = {
   ]
 };
 
+// Santini Bonus sbloccabili ogni 3 giorni consecutivi (in ordine di sblocco)
+const SANTI_BONUS = [
+  {
+    nome: "San Michele Arcangelo",
+    titolo: "Principe delle Milizie Celesti",
+    bio: "Difensore della fede e protettore contro il male. Santino speciale sbloccato con 3 giorni consecutivi.",
+    fotoUrl: "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSqQOmgMHJyYfoluClaKobMcYN1YY0ja0vuhM48Kn0xOxkomDX9o-X3Fb54Xpd3Bnw946SHPXh63vbJhiEYDBEcTmT3tmv0AmOhc_IDSLzbMz7dSfHG_cpi&usqp=CAc", // Inserisci qui l'URL o il percorso dell'immagine, oppure lascia vuoto per usare l'icona sotto
+    grafica: {
+      icona: "⚔️",
+      colorePrimario: "#1e3a8a",
+      coloreSecondario: "#60a5fa"
+    }
+  },
+   {
+    nome: "Madonna degli incroci",
+    titolo: "La madonna è dietro l'angolo",
+    bio: "Ti proteggerà dalle paure e dalle ipocondrie. Santino speciale sbloccato con 6 giorni consecutivi.",
+    fotoUrl: "https://www.roma.com/wp-content/uploads/2026/11/Le-madonnelle-di-Roma-perche-agli-angoli-delle-strade-ci-sono-le-edicole-sacre-3.png", // Inserisci qui l'URL o il percorso dell'immagine, oppure lascia vuoto per usare l'icona sotto
+    grafica: {
+      icona: "⚔️",
+      colorePrimario: "#1e3a8a",
+      coloreSecondario: "#60a5fa"
+    }
+  }
+  
+  
+  // Per aggiungere altri santini bonus (6 giorni, 9 giorni, ecc.), metti una virgola dopo la graffa sopra e incolla un nuovo blocco { ... }
+];
+
 const IMMAGINI_SANTI_POOL = [
   { icona: "🕊️", colorePrimario: "#1e3a8a", coloreSecondario: "#93c5fd", titolo: "Colomba dello Spirito" },
   { icona: "✝️", colorePrimario: "#7f1d1d", coloreSecondario: "#fca5a5", titolo: "Croce Gloriosa" },
