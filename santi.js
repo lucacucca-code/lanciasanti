@@ -1,54 +1,24709 @@
-// Database dei Santi del Giorno (chiave: "MM-DD")
-// Esempio completo per oggi (15 Novembre) + altre date dimorative.
-// Puoi aggiungere tutti i giorni dell'anno seguendo lo stesso formato.
-
-// Database dei Santi del Giorno con immagini reali mirate e fallback di sicurezza
+// Database dei Santi del Giorno con immagini reali mirate e fallback di sicurezza (366 giorni completi)
 
 const SANTI_DATABASE = {
-  // 15 Novembre (Santi con immagini reali verificate)
-  "11-15": [
-    { 
-      nome: "Sant'Alberto Magno", 
-      titolo: "Vescovo e Dottore della Chiesa", 
-      bio: "Patrono degli scienziati e dei filosofi naturali.",
-      fotoUrl: "https://upload.wikimedia.org/wikipedia/commons/8/8f/Vicente_salvador_gomez-san_alberto.jpg"
+  "01-01": [
+    {
+      "nome": "Solennità di Maria Santissima",
+      "titolo": "Madre di Dio. In Rito ambrosiano Solennità della Circoncisione del Signore",
+      "bio": "Solennità di Maria Santissima, Madre di Dio. In Rito ambrosiano Solennità della Circoncisione del Signore."
     },
-    { 
-      nome: "San Leopoldo III il Pio", 
-      titolo: "Margravio d'Austria", 
-      bio: "Fondatore di monasteri e padre dei poveri.",
-      fotoUrl: "https://www.santodelgiorno.it/foto/santo7363.jpg"
+    {
+      "nome": "deposizione di San Basilio",
+      "titolo": "Vescovo di Cesarea di Cappadocia",
+      "bio": "deposizione di San Basilio, vescovo di Cesarea di Cappadocia."
     },
-    { 
-      nome: "San Giuseppe Pignatelli", 
-      titolo: "Sacerdote Gesuita", 
-      bio: "Restauratore della Compagnia di Gesù.",
-      fotoUrl: "https://upload.wikimedia.org/wikipedia/commons/4/4c/%D0%98%D0%BE%D1%81%D0%B8%D1%84_%D0%9F%D0%B8%D0%BD%D1%8C%D1%8F%D1%82%D0%B5%D0%BB%D0%BB%D0%B8.jpg"
+    {
+      "nome": "San Giustino di Chieti",
+      "titolo": "Vescovo di Chieti",
+      "bio": "San Giustino di Chieti, vescovo di Chieti."
     },
-    { nome: "San Malo (Maclovio)", titolo: "Vescovo in Bretagna", bio: "Evangelizzatore dell'Armorica." },
-    { nome: "San Fintano di Rheinau", titolo: "Eremita", bio: "Monaco irlandese pellegrino in Svizzera." },
-    { nome: "San Desiderio di Cahors", titolo: "Vescovo", bio: "Tesoriere reale e pastore caritatevole." },
-    { nome: "San Gurias di Edessa", titolo: "Martire", bio: "Testimone della fede sotto Diocleziano." },
-    { nome: "San Samonas di Edessa", titolo: "Martire", bio: "Compagno di martirio di San Gurias." },
-    { nome: "San Abibo di Edessa", titolo: "Diacono e Martire", bio: "Martirizzato a Edessa per la fede cristiana." },
-    { nome: "San Sidonio", titolo: "Abate", bio: "Discepolo di San Filiberto di Jumièges." },
-    { nome: "San Marino di Cagliari", titolo: "Martire", bio: "Venerato in Sardegna fin dai primi secoli." },
-    { nome: "Beata Lucia Broccadelli da Narni", titolo: "Vergine Domenicana", bio: "Mistica stimmatizzata del XV secolo." },
-    { nome: "Beato Caio di Corea", titolo: "Martire", bio: "Catechista laico martirizzato in Giappone." },
-    { nome: "Beato Ugo Faringdon", titolo: "Abate e Martire", bio: "Ultimo abate di Reading, martire in Inghilterra." }
+    {
+      "nome": "Sant'Almachio",
+      "titolo": "Martire, ucciso a Roma dai gladiatori",
+      "bio": "Sant'Almachio, martire, ucciso a Roma dai gladiatori."
+    },
+    {
+      "nome": "Sant'Eugendo",
+      "titolo": "Abate di Condat",
+      "bio": "Sant'Eugendo, abate di Condat."
+    },
+    {
+      "nome": "San Fulgenzio",
+      "titolo": "Vescovo di Ruspe",
+      "bio": "San Fulgenzio, vescovo di Ruspe."
+    },
+    {
+      "nome": "San Chiaro di Vienne",
+      "titolo": "Abate del monastero di San Marcello a Vienne",
+      "bio": "San Chiaro di Vienne, abate del monastero di San Marcello a Vienne."
+    },
+    {
+      "nome": "San Frodoberto",
+      "titolo": "Fondatore e primo abate di Moûtiers-la-Celle",
+      "bio": "San Frodoberto, fondatore e primo abate di Moûtiers-la-Celle."
+    },
+    {
+      "nome": "San Guglielmo da Volpiano",
+      "titolo": "Abate di San Benigno a Digione",
+      "bio": "San Guglielmo da Volpiano, abate di San Benigno a Digione."
+    },
+    {
+      "nome": "Sant'Odilone di Cluny",
+      "titolo": "Abate di Cluny",
+      "bio": "Sant'Odilone di Cluny, abate di Cluny."
+    },
+    {
+      "nome": "Santa Zdislava Berka",
+      "titolo": "Madre di famiglia",
+      "bio": "Santa Zdislava Berka, madre di famiglia."
+    },
+    {
+      "nome": "Beato Ugolino da Gualdo Cattaneo",
+      "titolo": "Monaco",
+      "bio": "Beato Ugolino da Gualdo Cattaneo, monaco."
+    },
+    {
+      "nome": "San Giuseppe Maria Tomasi",
+      "titolo": "Sacerdote teatino e cardinale",
+      "bio": "San Giuseppe Maria Tomasi, sacerdote teatino e cardinale."
+    },
+    {
+      "nome": "Beati martiri di Angers",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Beati martiri di Angers, sacerdoti e martiri."
+    },
+    {
+      "nome": "San Vincenzo Maria Strambi (C.P.)",
+      "titolo": "Vescovo di Macerata e Tolentino",
+      "bio": "San Vincenzo Maria Strambi (C.P.), vescovo di Macerata e Tolentino."
+    },
+    {
+      "nome": "San Sigismondo Gorazdowski (Zygmunt)",
+      "titolo": "Sacerdote, fondatore delle Suore di San Giuseppe",
+      "bio": "San Sigismondo Gorazdowski (Zygmunt), sacerdote, fondatore delle Suore di San Giuseppe."
+    },
+    {
+      "nome": "Beato Marian Konopiński",
+      "titolo": "Martire di Dachau",
+      "bio": "Beato Marian Konopiński, martire di Dachau."
+    }
   ],
-  // Fallback di esempio per altre date
-  "default": [
-    { 
-      nome: "San Francesco d'Assisi", 
-      titolo: "Patrono d'Italia", 
-      bio: "Il poverello di Assisi, amante del Creato.",
-      fotoUrl: "https://upload.wikimedia.org/wikipedia/commons/8/8a/Raphael_-_Saint_Francis_of_Assisi_-_Google_Art_Project.jpg"
+  "01-02": [
+    {
+      "nome": "San Basilio Magno",
+      "titolo": "Vescovo di Cesarea di Cappadocia e Gregorio di Nazianzo, vescovo di Nazianzo, poi di Sasim",
+      "bio": "San Basilio Magno, vescovo di Cesarea di Cappadocia e Gregorio di Nazianzo, vescovo di Nazianzo, poi di Sasima e di Costantinopoli e Padri Dottori della Chiesa."
     },
-    { nome: "Santa Chiara d'Assisi", titolo: "Vergine", bio: "Fondatrice delle Clarisse." },
-    { nome: "San Pietro Apostolo", titolo: "Principe degli Apostoli", bio: "Primo Vescovo di Roma." },
-    { nome: "San Paolo di Tarso", titolo: "Apostolo delle Genti", bio: "Instancabile annunciatore del Vangelo." },
-    { nome: "Santa Teresa d'Avila", titolo: "Dottore della Chiesa", bio: "Mistica e riformatrice del Carmelo." }
+    {
+      "nome": "San Telesforo",
+      "titolo": "Papa e martire",
+      "bio": "San Telesforo, papa e martire."
+    },
+    {
+      "nome": "Santi Argeo",
+      "titolo": "Narciso e Marcellino, martiri",
+      "bio": "Santi Argeo, Narciso e Marcellino, martiri."
+    },
+    {
+      "nome": "San Teodoro di Marsiglia",
+      "titolo": "Vescovo di Marsiglia",
+      "bio": "San Teodoro di Marsiglia, vescovo di Marsiglia."
+    },
+    {
+      "nome": "San Bladulfo",
+      "titolo": "Sacerdote e monaco di Bobbio",
+      "bio": "San Bladulfo, sacerdote e monaco di Bobbio."
+    },
+    {
+      "nome": "San Giovanni Bono (il buono)",
+      "titolo": "Arcivescovo di Milano",
+      "bio": "San Giovanni Bono (il buono), arcivescovo di Milano."
+    },
+    {
+      "nome": "San Vincenziano",
+      "titolo": "Eremita",
+      "bio": "San Vincenziano, eremita."
+    },
+    {
+      "nome": "San Mainchin di Limerick",
+      "titolo": "Venerato come vescovo di Limerick",
+      "bio": "San Mainchin di Limerick, venerato come vescovo di Limerick."
+    },
+    {
+      "nome": "Sant'Adalardo di Corbie (O.S.B.)",
+      "titolo": "Abate di Corbie",
+      "bio": "Sant'Adalardo di Corbie (O.S.B.), abate di Corbie."
+    },
+    {
+      "nome": "Sant'Airaldo (O.Cart.)",
+      "titolo": "Vescovo di Saint-Jean de Maurienne",
+      "bio": "Sant'Airaldo (O.Cart.), vescovo di Saint-Jean de Maurienne."
+    },
+    {
+      "nome": "San Silvestro di Troina",
+      "titolo": "Abate basiliano",
+      "bio": "San Silvestro di Troina, abate basiliano."
+    },
+    {
+      "nome": "Beato Marcolino da Forlì",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Marcolino da Forlì, sacerdote domenicano."
+    },
+    {
+      "nome": "Beata Stefana Quinzani",
+      "titolo": "Vergine, suora domenicana",
+      "bio": "Beata Stefana Quinzani, vergine, suora domenicana."
+    },
+    {
+      "nome": "Beati Guillaume Repin e Lorenzo Bàtard",
+      "titolo": "Sacerdoti e martiri di Angers",
+      "bio": "Beati Guillaume Repin e Lorenzo Bàtard, sacerdoti e martiri di Angers."
+    },
+    {
+      "nome": "Beata Marie-Anne Sureau Blondin",
+      "titolo": "Vergine, fondatrice delle Suore di Sant'Anna di Lachine",
+      "bio": "Beata Marie-Anne Sureau Blondin, vergine, fondatrice delle Suore di Sant'Anna di Lachine."
+    }
+  ],
+  "01-03": [
+    {
+      "nome": "Santissimo Nome di Gesù",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santissimo Nome di Gesù."
+    },
+    {
+      "nome": "Sant'Antero",
+      "titolo": "Papa",
+      "bio": "Sant'Antero, papa."
+    },
+    {
+      "nome": "Santi Teopempto e Teona",
+      "titolo": "Martiri di Nicomedia",
+      "bio": "Santi Teopempto e Teona, martiri di Nicomedia."
+    },
+    {
+      "nome": "San Gordio",
+      "titolo": "Martire",
+      "bio": "San Gordio, martire."
+    },
+    {
+      "nome": "San Daniele di Padova",
+      "titolo": "Diacono di Padova e martire",
+      "bio": "San Daniele di Padova, diacono di Padova e martire."
+    },
+    {
+      "nome": "San Teogene",
+      "titolo": "Martire dell'Ellesponto",
+      "bio": "San Teogene, martire dell'Ellesponto."
+    },
+    {
+      "nome": "San Fiorenzo",
+      "titolo": "Vescovo di Vienne",
+      "bio": "San Fiorenzo, vescovo di Vienne."
+    },
+    {
+      "nome": "Santa Genoveffa di Parigi",
+      "titolo": "Vergine",
+      "bio": "Santa Genoveffa di Parigi, vergine."
+    },
+    {
+      "nome": "San Luciano",
+      "titolo": "Vescovo di Lentini",
+      "bio": "San Luciano, vescovo di Lentini."
+    },
+    {
+      "nome": "San Ciriaco Elias Chavara (C.M.I.)",
+      "titolo": "Fondatore delle congregazioni dei fratelli e delle suore del Carmelo malabaresi",
+      "bio": "San Ciriaco Elias Chavara (C.M.I.), fondatore delle congregazioni dei fratelli e delle suore del Carmelo malabaresi."
+    }
+  ],
+  "01-04": [
+    {
+      "nome": "Santi Ermete e Caio",
+      "titolo": "Martiri",
+      "bio": "Santi Ermete e Caio, martiri."
+    },
+    {
+      "nome": "San Gregorio di Langres",
+      "titolo": "Vescovo di Langres",
+      "bio": "San Gregorio di Langres, vescovo di Langres."
+    },
+    {
+      "nome": "San Ferreolo di Uzès",
+      "titolo": "Vescovo di Uzès",
+      "bio": "San Ferreolo di Uzès, vescovo di Uzès."
+    },
+    {
+      "nome": "San Rigomero",
+      "titolo": "Vescovo di Meaux",
+      "bio": "San Rigomero, vescovo di Meaux."
+    },
+    {
+      "nome": "San Rigoberto di Reims",
+      "titolo": "Vescovo di Reims",
+      "bio": "San Rigoberto di Reims, vescovo di Reims."
+    },
+    {
+      "nome": "Santa Farailde di Gand",
+      "titolo": "Vedova di Gand",
+      "bio": "Santa Farailde di Gand, vedova di Gand."
+    },
+    {
+      "nome": "Sant'Angela da Foligno (O.F.S.)",
+      "titolo": "Laica mistica",
+      "bio": "Sant'Angela da Foligno (O.F.S.), laica mistica."
+    },
+    {
+      "nome": "Beata Cristiana da Santa Croce",
+      "titolo": "Vergine",
+      "bio": "Beata Cristiana da Santa Croce, vergine."
+    },
+    {
+      "nome": "Beato Tommaso Plumtree",
+      "titolo": "Martire d'Inghilterra",
+      "bio": "Beato Tommaso Plumtree, martire d'Inghilterra."
+    },
+    {
+      "nome": "Sant'Elisabetta Anna Bayley Seton (S.C.)",
+      "titolo": "Vedova, religiosa e fondatrice delle Suore della carità",
+      "bio": "Sant'Elisabetta Anna Bayley Seton (S.C.), vedova, religiosa e fondatrice delle Suore della carità."
+    },
+    {
+      "nome": "San Manuel González García",
+      "titolo": "Vescovo di Malaga e poi di Palencia e fondatore delle Suore missionarie eucaristiche di Na",
+      "bio": "San Manuel González García, vescovo di Malaga e poi di Palencia e fondatore delle Suore missionarie eucaristiche di Nazareth."
+    }
+  ],
+  "01-05": [
+    {
+      "nome": "Santa Sincletica",
+      "titolo": "Vergine",
+      "bio": "Santa Sincletica, vergine."
+    },
+    {
+      "nome": "San Deogratias",
+      "titolo": "Vescovo di Cartagine",
+      "bio": "San Deogratias, vescovo di Cartagine."
+    },
+    {
+      "nome": "Sant'Emiliana",
+      "titolo": "Vergine",
+      "bio": "Sant'Emiliana, vergine."
+    },
+    {
+      "nome": "San Convoione",
+      "titolo": "Abate, fondatore dell'Abbazia di Saint-Sauveur de Redon",
+      "bio": "San Convoione, abate, fondatore dell'Abbazia di Saint-Sauveur de Redon."
+    },
+    {
+      "nome": "Sant'Edoardo il Confessore",
+      "titolo": "Re d'Inghilterra",
+      "bio": "Sant'Edoardo il Confessore, re d'Inghilterra."
+    },
+    {
+      "nome": "San Gerlaco",
+      "titolo": "Eremita",
+      "bio": "San Gerlaco, eremita."
+    },
+    {
+      "nome": "Beato Ruggero",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Ruggero, sacerdote francescano."
+    },
+    {
+      "nome": "Beati Francesco Peltier",
+      "titolo": "Giacomo Ledoyen e Pietro Tessier, sacerdoti e martiri",
+      "bio": "Beati Francesco Peltier, Giacomo Ledoyen e Pietro Tessier, sacerdoti e martiri."
+    },
+    {
+      "nome": "San Giovanni Nepomuceno Neumann",
+      "titolo": "Redentorista, vescovo di Filadelfia",
+      "bio": "San Giovanni Nepomuceno Neumann, redentorista, vescovo di Filadelfia."
+    },
+    {
+      "nome": "Beata Maria Repetto",
+      "titolo": "Vergine della congregazione delle Suore di Nostra Signora del Rifugio in Monte Calvario",
+      "bio": "Beata Maria Repetto, vergine della congregazione delle Suore di Nostra Signora del Rifugio in Monte Calvario."
+    },
+    {
+      "nome": "San Carlo di Sant'Andrea (C.P.)",
+      "titolo": "Sacerdote",
+      "bio": "San Carlo di Sant'Andrea (C.P.), sacerdote."
+    },
+    {
+      "nome": "Beata Maria Marcellina dell'Immacolata Concezione",
+      "titolo": "Vedova, fondatrice delle Suore dell'Immacolata Concezione della Beata Vergine Maria",
+      "bio": "Beata Maria Marcellina dell'Immacolata Concezione, vedova, fondatrice delle Suore dell'Immacolata Concezione della Beata Vergine Maria."
+    },
+    {
+      "nome": "Beato Pietro Bonilli",
+      "titolo": "Sacerdote, fondatore delle Suore della Sacra Famiglia di Spoleto",
+      "bio": "Beato Pietro Bonilli, sacerdote, fondatore delle Suore della Sacra Famiglia di Spoleto."
+    },
+    {
+      "nome": "Santa Genoveva Torres Morales",
+      "titolo": "Vergine, fondatrice delle Suore del Sacro Cuore di Gesù e dei Santi Angeli",
+      "bio": "Santa Genoveva Torres Morales, vergine, fondatrice delle Suore del Sacro Cuore di Gesù e dei Santi Angeli."
+    }
+  ],
+  "01-06": [
+    {
+      "nome": "Solennità dell'Epifania del Signore",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Solennità dell'Epifania del Signore."
+    },
+    {
+      "nome": "Santi Giuliano e Basilissa",
+      "titolo": "Martiri",
+      "bio": "Santi Giuliano e Basilissa, martiri."
+    },
+    {
+      "nome": "San Felice di Nantes",
+      "titolo": "Vescovo di Nantes",
+      "bio": "San Felice di Nantes, vescovo di Nantes."
+    },
+    {
+      "nome": "Beato Macario",
+      "titolo": "Abate",
+      "bio": "Beato Macario, abate."
+    },
+    {
+      "nome": "San Pietro Tommaso",
+      "titolo": "Carmelitano, patriarca di Costantinopoli",
+      "bio": "San Pietro Tommaso, carmelitano, patriarca di Costantinopoli."
+    },
+    {
+      "nome": "Sant'Andrea Corsini (O.C.)",
+      "titolo": "Vescovo di Fiesole",
+      "bio": "Sant'Andrea Corsini (O.C.), vescovo di Fiesole."
+    },
+    {
+      "nome": "San Giovanni de Ribera",
+      "titolo": "Vescovo di Valencia e viceré",
+      "bio": "San Giovanni de Ribera, vescovo di Valencia e viceré."
+    },
+    {
+      "nome": "San Carlo da Sezze",
+      "titolo": "Francescano",
+      "bio": "San Carlo da Sezze, francescano."
+    },
+    {
+      "nome": "Santa Raffaella Maria del Sacro Cuore",
+      "titolo": "Vergine, fondatrice delle Ancelle del Sacro Cuore di Gesù",
+      "bio": "Santa Raffaella Maria del Sacro Cuore, vergine, fondatrice delle Ancelle del Sacro Cuore di Gesù."
+    },
+    {
+      "nome": "Sant'André Bessette (C.S.C.)",
+      "titolo": "Religioso",
+      "bio": "Sant'André Bessette (C.S.C.), religioso."
+    },
+    {
+      "nome": "Sant'Abo di Tiflis",
+      "titolo": "Laico martire",
+      "bio": "Sant'Abo di Tiflis, laico martire."
+    }
+  ],
+  "01-07": [
+    {
+      "nome": "San Raimondo di Peñafort (O.P.)",
+      "titolo": "Sacerdote, maestro generale dell'ordine domenicano",
+      "bio": "San Raimondo di Peñafort (O.P.), sacerdote, maestro generale dell'ordine domenicano."
+    },
+    {
+      "nome": "San Polieuto",
+      "titolo": "Martire",
+      "bio": "San Polieuto, martire."
+    },
+    {
+      "nome": "San Luciano di Antiochia",
+      "titolo": "Sacerdote e martire della chiesa di Antiochia",
+      "bio": "San Luciano di Antiochia, sacerdote e martire della chiesa di Antiochia."
+    },
+    {
+      "nome": "San Valentino di Mais",
+      "titolo": "Vescovo di Passavia",
+      "bio": "San Valentino di Mais, vescovo di Passavia."
+    },
+    {
+      "nome": "San Crispino I di Pavia",
+      "titolo": "Vescovo di Pavia",
+      "bio": "San Crispino I di Pavia, vescovo di Pavia."
+    },
+    {
+      "nome": "San Valentiniano",
+      "titolo": "Vescovo di Coira",
+      "bio": "San Valentiniano, vescovo di Coira."
+    },
+    {
+      "nome": "San Tillone",
+      "titolo": "Monaco",
+      "bio": "San Tillone, monaco."
+    },
+    {
+      "nome": "San Ciro",
+      "titolo": "Vescovo di Costantinopoli",
+      "bio": "San Ciro, vescovo di Costantinopoli."
+    },
+    {
+      "nome": "Sant'Alderico",
+      "titolo": "Vescovo di Le Mans",
+      "bio": "Sant'Alderico, vescovo di Le Mans."
+    },
+    {
+      "nome": "San Canuto Lavard",
+      "titolo": "Martire",
+      "bio": "San Canuto Lavard, martire."
+    },
+    {
+      "nome": "Beato Matteo Guimerà (O.F.M.)",
+      "titolo": "Vescovo di Agrigento",
+      "bio": "Beato Matteo Guimerà (O.F.M.), vescovo di Agrigento."
+    },
+    {
+      "nome": "Beato Ambrogio Fernandes",
+      "titolo": "Gesuita, martire del Giappone",
+      "bio": "Beato Ambrogio Fernandes, gesuita, martire del Giappone."
+    },
+    {
+      "nome": "San Giuseppe Tuân",
+      "titolo": "Padre di famiglia, martire del Vietnam",
+      "bio": "San Giuseppe Tuân, padre di famiglia, martire del Vietnam."
+    },
+    {
+      "nome": "Beata Maria Teresa Haze",
+      "titolo": "Vergine, fondatrice delle Figlie della Croce",
+      "bio": "Beata Maria Teresa Haze, vergine, fondatrice delle Figlie della Croce."
+    }
+  ],
+  "01-08": [
+    {
+      "nome": "Sant'Apollinare Claudio",
+      "titolo": "Vescovo di Gerapoli di Frigia",
+      "bio": "Sant'Apollinare Claudio, vescovo di Gerapoli di Frigia."
+    },
+    {
+      "nome": "Santi Teofilo ed Elladio",
+      "titolo": "Martiri",
+      "bio": "Santi Teofilo ed Elladio, martiri."
+    },
+    {
+      "nome": "San Luciano",
+      "titolo": "Vescovo di Beauvais, San Massimiano e San Giuliano, martiri",
+      "bio": "San Luciano, vescovo di Beauvais, San Massimiano e San Giuliano, martiri."
+    },
+    {
+      "nome": "San Paziente",
+      "titolo": "Vescovo di Metz",
+      "bio": "San Paziente, vescovo di Metz."
+    },
+    {
+      "nome": "San Severino",
+      "titolo": "Sacerdote monaco e abate",
+      "bio": "San Severino, sacerdote monaco e abate."
+    },
+    {
+      "nome": "San Massimo di Pavia",
+      "titolo": "Vescovo di Pavia",
+      "bio": "San Massimo di Pavia, vescovo di Pavia."
+    },
+    {
+      "nome": "San Giorgio",
+      "titolo": "Monaco ed eremita",
+      "bio": "San Giorgio, monaco ed eremita."
+    },
+    {
+      "nome": "San Nathalan",
+      "titolo": "Vescovo di Aberdeen",
+      "bio": "San Nathalan, vescovo di Aberdeen."
+    },
+    {
+      "nome": "Sant'Erardo di Ratisbona",
+      "titolo": "Vescovo di Ratisbona",
+      "bio": "Sant'Erardo di Ratisbona, vescovo di Ratisbona."
+    },
+    {
+      "nome": "Santa Gudula di Bruxelles",
+      "titolo": "Vergine",
+      "bio": "Santa Gudula di Bruxelles, vergine."
+    },
+    {
+      "nome": "Sant'Alberto di Cashel",
+      "titolo": "Vescovo di Cashel",
+      "bio": "Sant'Alberto di Cashel, vescovo di Cashel."
+    },
+    {
+      "nome": "San Lorenzo Giustiniani",
+      "titolo": "Patriarca di Venezia",
+      "bio": "San Lorenzo Giustiniani, patriarca di Venezia."
+    },
+    {
+      "nome": "Beato Edoardo Waterson",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Edoardo Waterson, sacerdote e martire."
+    },
+    {
+      "nome": "Beata Eurosia Fabris Barban",
+      "titolo": "Laica e madre di famiglia",
+      "bio": "Beata Eurosia Fabris Barban, laica e madre di famiglia."
+    }
+  ],
+  "01-09": [
+    {
+      "nome": "San Marcellino di Ancona",
+      "titolo": "Vescovo di Ancona",
+      "bio": "San Marcellino di Ancona, vescovo di Ancona."
+    },
+    {
+      "nome": "Sant'Adriano di Canterbury (O.S.B.)",
+      "titolo": "Abate di Sant'Agostino a Canterbury",
+      "bio": "Sant'Adriano di Canterbury (O.S.B.), abate di Sant'Agostino a Canterbury."
+    },
+    {
+      "nome": "San Fillano",
+      "titolo": "Abate del monastero di Sant'Andrea",
+      "bio": "San Fillano, abate del monastero di Sant'Andrea."
+    },
+    {
+      "nome": "Sant'Eustrazio",
+      "titolo": "Abate",
+      "bio": "Sant'Eustrazio, abate."
+    },
+    {
+      "nome": "Sant'Onorato di Buzancais",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Sant'Onorato di Buzancais."
+    },
+    {
+      "nome": "Beata Giulia Della Rena",
+      "titolo": "Terziaria agostiniana",
+      "bio": "Beata Giulia Della Rena, terziaria agostiniana."
+    },
+    {
+      "nome": "Beato Antonio Fatati",
+      "titolo": "Vescovo di Teramo e di Ancona",
+      "bio": "Beato Antonio Fatati, vescovo di Teramo e di Ancona."
+    },
+    {
+      "nome": "Beata Maria Teresa di Gesù (Alessia Le Clerc)",
+      "titolo": "Vergine, fondatrice delle Canonichesse di Sant'Agostino della Congregazione di Nostra Sign",
+      "bio": "Beata Maria Teresa di Gesù (Alessia Le Clerc), vergine, fondatrice delle Canonichesse di Sant'Agostino della Congregazione di Nostra Signora."
+    },
+    {
+      "nome": "Sante Agata Yi",
+      "titolo": "Vergine, Teresa Kim, vedova, e compagni, martiri",
+      "bio": "Sante Agata Yi, vergine, Teresa Kim, vedova, e compagni, martiri."
+    },
+    {
+      "nome": "Beati Giuseppe Pawlowski e Casimiro Grelewski",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Beati Giuseppe Pawlowski e Casimiro Grelewski, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beata Paolina Maria Jaricot (F.L.D.)",
+      "titolo": "Laica fondatrice della Pontificia Opera della Propagazione della Fede",
+      "bio": "Beata Paolina Maria Jaricot (F.L.D.), laica fondatrice della Pontificia Opera della Propagazione della Fede."
+    }
+  ],
+  "01-10": [
+    {
+      "nome": "San Milziade",
+      "titolo": "Papa",
+      "bio": "San Milziade, papa."
+    },
+    {
+      "nome": "San Paolo di Tebe",
+      "titolo": "Primo eremita",
+      "bio": "San Paolo di Tebe, primo eremita."
+    },
+    {
+      "nome": "San Gregorio di Nissa",
+      "titolo": "Vescovo di Nissa",
+      "bio": "San Gregorio di Nissa, vescovo di Nissa."
+    },
+    {
+      "nome": "San Giovanni di Gerusalemme",
+      "titolo": "Vescovo di Gerusalemme",
+      "bio": "San Giovanni di Gerusalemme, vescovo di Gerusalemme."
+    },
+    {
+      "nome": "San Petronio",
+      "titolo": "Vescovo di Die",
+      "bio": "San Petronio, vescovo di Die."
+    },
+    {
+      "nome": "San Marciano",
+      "titolo": "Sacerdote",
+      "bio": "San Marciano, sacerdote."
+    },
+    {
+      "nome": "San Valerio",
+      "titolo": "Eremita",
+      "bio": "San Valerio, eremita."
+    },
+    {
+      "nome": "San Domiziano di Melitene",
+      "titolo": "Metropolita di Melitene",
+      "bio": "San Domiziano di Melitene, metropolita di Melitene."
+    },
+    {
+      "nome": "Sant'Agatone",
+      "titolo": "Papa",
+      "bio": "Sant'Agatone, papa."
+    },
+    {
+      "nome": "Sant'Arconzio di Viviers",
+      "titolo": "Vescovo di Viviers",
+      "bio": "Sant'Arconzio di Viviers, vescovo di Viviers."
+    },
+    {
+      "nome": "San Pietro I Orseolo",
+      "titolo": "Eremita",
+      "bio": "San Pietro I Orseolo, eremita."
+    },
+    {
+      "nome": "Beato Benincasa di Cava",
+      "titolo": "Abate di Cava",
+      "bio": "Beato Benincasa di Cava, abate di Cava."
+    },
+    {
+      "nome": "San Guglielmo di Bourges",
+      "titolo": "Cistercense, vescovo di Bourges",
+      "bio": "San Guglielmo di Bourges, cistercense, vescovo di Bourges."
+    },
+    {
+      "nome": "Beato Gonsalvo di Amarante",
+      "titolo": "Domenicano ed eremita",
+      "bio": "Beato Gonsalvo di Amarante, domenicano ed eremita."
+    },
+    {
+      "nome": "Beato Gregorio X",
+      "titolo": "Papa",
+      "bio": "Beato Gregorio X, papa."
+    },
+    {
+      "nome": "Beato Egidio da Laurenzana",
+      "titolo": "Francescano ed eremita",
+      "bio": "Beato Egidio da Laurenzana, francescano ed eremita."
+    },
+    {
+      "nome": "Beata Anna degli Angeli Monteagudo",
+      "titolo": "Vergine domenicana",
+      "bio": "Beata Anna degli Angeli Monteagudo, vergine domenicana."
+    },
+    {
+      "nome": "Santa Francesca Salesia",
+      "titolo": "Vergine, fondatrice delle Suore oblate di San Francesco di Sales",
+      "bio": "Santa Francesca Salesia, vergine, fondatrice delle Suore oblate di San Francesco di Sales."
+    },
+    {
+      "nome": "Beata María Dolores Rodríguez Sopeña",
+      "titolo": "Vergine, fondatrice dell'Istituto delle Dame Catechiste",
+      "bio": "Beata María Dolores Rodríguez Sopeña, vergine, fondatrice dell'Istituto delle Dame Catechiste."
+    },
+    {
+      "nome": "Beato Mamerto Esquiú y Medina",
+      "titolo": "Vescovo e missionario",
+      "bio": "Beato Mamerto Esquiú y Medina, vescovo e missionario."
+    }
+  ],
+  "01-11": [
+    {
+      "nome": "Sant'Igino",
+      "titolo": "Papa",
+      "bio": "Sant'Igino, papa."
+    },
+    {
+      "nome": "San Salvio",
+      "titolo": "Martire",
+      "bio": "San Salvio, martire."
+    },
+    {
+      "nome": "San Tipasio il Vecchio",
+      "titolo": "Martire",
+      "bio": "San Tipasio il Vecchio, martire."
+    },
+    {
+      "nome": "San Pietro Balsamo",
+      "titolo": "Martire",
+      "bio": "San Pietro Balsamo, martire."
+    },
+    {
+      "nome": "San Leucio d'Alessandria",
+      "titolo": "Primo vescovo di Brindisi",
+      "bio": "San Leucio d'Alessandria, primo vescovo di Brindisi."
+    },
+    {
+      "nome": "Sant'Onorata",
+      "titolo": "Vergine",
+      "bio": "Sant'Onorata, vergine."
+    },
+    {
+      "nome": "San Teodosio il Cenobiarca monaco anacoreta",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "San Teodosio il Cenobiarca monaco anacoreta."
+    },
+    {
+      "nome": "San Paolino II",
+      "titolo": "Vescovo di Aquileia",
+      "bio": "San Paolino II, vescovo di Aquileia."
+    },
+    {
+      "nome": "Beato Bernardino Scammacca",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Bernardino Scammacca, sacerdote domenicano."
+    },
+    {
+      "nome": "Beato Guglielmo Carter",
+      "titolo": "Martire",
+      "bio": "Beato Guglielmo Carter, martire."
+    },
+    {
+      "nome": "San Tommaso Placidi da Cori (O.F.M.)",
+      "titolo": "Sacerdote e fondatore",
+      "bio": "San Tommaso Placidi da Cori (O.F.M.), sacerdote e fondatore."
+    },
+    {
+      "nome": "Beato Francesco Rogaczewski",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Francesco Rogaczewski, sacerdote e martire."
+    }
+  ],
+  "01-12": [
+    {
+      "nome": "Sant'Arcadio di Mauritania",
+      "titolo": "Martire",
+      "bio": "Sant'Arcadio di Mauritania, martire."
+    },
+    {
+      "nome": "Santi Tigrio",
+      "titolo": "Sacerdote, ed Eutropio, lettore, martiri",
+      "bio": "Santi Tigrio, sacerdote, ed Eutropio, lettore, martiri."
+    },
+    {
+      "nome": "Santa Cesaria di Arles",
+      "titolo": "Badessa",
+      "bio": "Santa Cesaria di Arles, badessa."
+    },
+    {
+      "nome": "San Ferreolo di Grenoble",
+      "titolo": "Vescovo di Grenoble e martire",
+      "bio": "San Ferreolo di Grenoble, vescovo di Grenoble e martire."
+    },
+    {
+      "nome": "San Benedetto Biscop",
+      "titolo": "Abate",
+      "bio": "San Benedetto Biscop, abate."
+    },
+    {
+      "nome": "Sant'Aelredo di Rievaulx (O.Cist.)",
+      "titolo": "Abate",
+      "bio": "Sant'Aelredo di Rievaulx (O.Cist.), abate."
+    },
+    {
+      "nome": "San Martino della Santa Croce",
+      "titolo": "Sacerdote e canonico regolare",
+      "bio": "San Martino della Santa Croce, sacerdote e canonico regolare."
+    },
+    {
+      "nome": "San Bernardo da Corleone",
+      "titolo": "Frate cappuccino",
+      "bio": "San Bernardo da Corleone, frate cappuccino."
+    },
+    {
+      "nome": "Santa Marguerite Bourgeoys",
+      "titolo": "Vergine, fondatrice della Suore della Congregazione di Nostra Signora",
+      "bio": "Santa Marguerite Bourgeoys, vergine, fondatrice della Suore della Congregazione di Nostra Signora."
+    },
+    {
+      "nome": "Beato Antonio Fournier",
+      "titolo": "Martire",
+      "bio": "Beato Antonio Fournier, martire."
+    },
+    {
+      "nome": "Beato Pietro Francesco Jamet",
+      "titolo": "Sacerdote, fondatore delle Figlie del Buon Salvatore",
+      "bio": "Beato Pietro Francesco Jamet, sacerdote, fondatore delle Figlie del Buon Salvatore."
+    },
+    {
+      "nome": "Sant'Antonio Maria Pucci (O.S.M.)",
+      "titolo": "Sacerdote",
+      "bio": "Sant'Antonio Maria Pucci (O.S.M.), sacerdote."
+    },
+    {
+      "nome": "Beato Nicola Bunkerd Kitbamrung",
+      "titolo": "Sacerdote e martire in Thailandia",
+      "bio": "Beato Nicola Bunkerd Kitbamrung, sacerdote e martire in Thailandia."
+    }
+  ],
+  "01-13": [
+    {
+      "nome": "Sant'Ilario di Poitiers",
+      "titolo": "Vescovo di Poitiers e dottore della Chiesa",
+      "bio": "Sant'Ilario di Poitiers, vescovo di Poitiers e dottore della Chiesa."
+    },
+    {
+      "nome": "Santi Ermilio e Stratonico",
+      "titolo": "Martiri",
+      "bio": "Santi Ermilio e Stratonico, martiri."
+    },
+    {
+      "nome": "Sant'Agrizio",
+      "titolo": "Vescovo di Treviri",
+      "bio": "Sant'Agrizio, vescovo di Treviri."
+    },
+    {
+      "nome": "San Remigio di Reims",
+      "titolo": "Arcivescovo di Reims",
+      "bio": "San Remigio di Reims, arcivescovo di Reims."
+    },
+    {
+      "nome": "San Mungo di Glasgow",
+      "titolo": "Vescovo di Glasgow e abate",
+      "bio": "San Mungo di Glasgow, vescovo di Glasgow e abate."
+    },
+    {
+      "nome": "San Pietro di Capitolias",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Pietro di Capitolias, sacerdote e martire."
+    },
+    {
+      "nome": "Santi Gumesindo",
+      "titolo": "Sacerdote, e Servidio, monaco, martiri a Cordova",
+      "bio": "Santi Gumesindo, sacerdote, e Servidio, monaco, martiri a Cordova."
+    },
+    {
+      "nome": "San Goffredo di Cappenberg",
+      "titolo": "Canonico regolare",
+      "bio": "San Goffredo di Cappenberg, canonico regolare."
+    },
+    {
+      "nome": "Santa Iutta",
+      "titolo": "Vedova",
+      "bio": "Santa Iutta, vedova."
+    },
+    {
+      "nome": "Beata Veronica Negroni da Binasco",
+      "titolo": "Vergine, religiosa nel monastero di Santa Marta",
+      "bio": "Beata Veronica Negroni da Binasco, vergine, religiosa nel monastero di Santa Marta."
+    },
+    {
+      "nome": "Santi Domenico Phạm Trọng Khảm",
+      "titolo": "Luca Phạm Trọng Thìn e Giuseppe Phạm Trọng Tả, martiri",
+      "bio": "Santi Domenico Phạm Trọng Khảm, Luca Phạm Trọng Thìn e Giuseppe Phạm Trọng Tả, martiri."
+    },
+    {
+      "nome": "Beato Emilio Szramek",
+      "titolo": "Sacerdote e martire a Dachau",
+      "bio": "Beato Emilio Szramek, sacerdote e martire a Dachau."
+    }
+  ],
+  "01-14": [
+    {
+      "nome": "San Potito",
+      "titolo": "Martire nella Dacia",
+      "bio": "San Potito, martire nella Dacia."
+    },
+    {
+      "nome": "San Glicerio",
+      "titolo": "Diacono e martire",
+      "bio": "San Glicerio, diacono e martire."
+    },
+    {
+      "nome": "San Felice di Nola",
+      "titolo": "Sacerdote di Nola",
+      "bio": "San Felice di Nola, sacerdote di Nola."
+    },
+    {
+      "nome": "Santa Macrina l'Anziana",
+      "titolo": "Matrona",
+      "bio": "Santa Macrina l'Anziana, matrona."
+    },
+    {
+      "nome": "Santi monaci di Raithu e del Monte Sinai",
+      "titolo": "Martiri",
+      "bio": "Santi monaci di Raithu e del Monte Sinai, martiri."
+    },
+    {
+      "nome": "Santa Nino",
+      "titolo": "Laica",
+      "bio": "Santa Nino, laica."
+    },
+    {
+      "nome": "San Firmino di Mende",
+      "titolo": "Vescovo di Mende",
+      "bio": "San Firmino di Mende, vescovo di Mende."
+    },
+    {
+      "nome": "Sant'Eufrasio di Clermont",
+      "titolo": "Vescovo di Clermont",
+      "bio": "Sant'Eufrasio di Clermont, vescovo di Clermont."
+    },
+    {
+      "nome": "San Dazio di Milano",
+      "titolo": "Vescovo di Milano",
+      "bio": "San Dazio di Milano, vescovo di Milano."
+    },
+    {
+      "nome": "San Fulgenzio",
+      "titolo": "Vescovo di Astigi",
+      "bio": "San Fulgenzio, vescovo di Astigi."
+    },
+    {
+      "nome": "San Lazzaro Pillai (Nilakandan",
+      "titolo": "Detto Devasahayam), laico martire",
+      "bio": "San Lazzaro Pillai (Nilakandan, detto Devasahayam), laico martire."
+    },
+    {
+      "nome": "Beato Oddone di Novara",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Oddone di Novara, sacerdote domenicano."
+    },
+    {
+      "nome": "Beato Odorico da Pordenone",
+      "titolo": "Missionario",
+      "bio": "Beato Odorico da Pordenone, missionario."
+    },
+    {
+      "nome": "Beato Pietro Donders",
+      "titolo": "Sacerdote redentorista",
+      "bio": "Beato Pietro Donders, sacerdote redentorista."
+    }
+  ],
+  "01-15": [
+    {
+      "nome": "Santa Secondina",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Secondina, vergine e martire."
+    },
+    {
+      "nome": "San Giovanni Calibita",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "San Giovanni Calibita."
+    },
+    {
+      "nome": "Santa Ita",
+      "titolo": "Vergine",
+      "bio": "Santa Ita, vergine."
+    },
+    {
+      "nome": "San Probo",
+      "titolo": "Vescovo di Rieti",
+      "bio": "San Probo, vescovo di Rieti."
+    },
+    {
+      "nome": "San Mauro",
+      "titolo": "Abate",
+      "bio": "San Mauro, abate."
+    },
+    {
+      "nome": "Santa Tarsicia",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Tarsicia, vergine e martire."
+    },
+    {
+      "nome": "Sant'Ableberto di Cambrai",
+      "titolo": "Vescovo di Cambrai",
+      "bio": "Sant'Ableberto di Cambrai, vescovo di Cambrai."
+    },
+    {
+      "nome": "San Malardo di Chartres",
+      "titolo": "Vescovo di Chartres",
+      "bio": "San Malardo di Chartres, vescovo di Chartres."
+    },
+    {
+      "nome": "San Romedio",
+      "titolo": "Laico anacoreta",
+      "bio": "San Romedio, laico anacoreta."
+    },
+    {
+      "nome": "San Bonito di Clermont",
+      "titolo": "Vescovo di Clermont",
+      "bio": "San Bonito di Clermont, vescovo di Clermont."
+    },
+    {
+      "nome": "Beato Pietro di Castelnau",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Pietro di Castelnau, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Giacomo l'Elemosiniere",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Beato Giacomo l'Elemosiniere."
+    },
+    {
+      "nome": "Beato Angelo da Gualdo Tadino",
+      "titolo": "Eremita",
+      "bio": "Beato Angelo da Gualdo Tadino, eremita."
+    },
+    {
+      "nome": "San Francesco Fernández de Capillas",
+      "titolo": "Sacerdote domenicano e martire in Cina",
+      "bio": "San Francesco Fernández de Capillas, sacerdote domenicano e martire in Cina."
+    },
+    {
+      "nome": "Sant'Arnoldo Janssen (S.V.D.)",
+      "titolo": "Sacerdote, missionario e fondatore della Società del Verbo Divino",
+      "bio": "Sant'Arnoldo Janssen (S.V.D.), sacerdote, missionario e fondatore della Società del Verbo Divino."
+    },
+    {
+      "nome": "Beato Nikolaus Gross",
+      "titolo": "Padre di famiglia e martire",
+      "bio": "Beato Nikolaus Gross, padre di famiglia e martire."
+    }
+  ],
+  "01-16": [
+    {
+      "nome": "Marcello I",
+      "titolo": "Papa",
+      "bio": "Marcello I, papa."
+    },
+    {
+      "nome": "San Tammaro",
+      "titolo": "Vescovo di Benevento",
+      "bio": "San Tammaro, vescovo di Benevento."
+    },
+    {
+      "nome": "San Dana",
+      "titolo": "Martire",
+      "bio": "San Dana, martire."
+    },
+    {
+      "nome": "San Mela",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "San Mela."
+    },
+    {
+      "nome": "Sant'Onorato di Arles",
+      "titolo": "Vescovo di Arles",
+      "bio": "Sant'Onorato di Arles, vescovo di Arles."
+    },
+    {
+      "nome": "San Giacomo di Tarantasia",
+      "titolo": "Vescovo di Tarantasia",
+      "bio": "San Giacomo di Tarantasia, vescovo di Tarantasia."
+    },
+    {
+      "nome": "San Tiziano di Oderzo",
+      "titolo": "Vescovo di Oderzo",
+      "bio": "San Tiziano di Oderzo, vescovo di Oderzo."
+    },
+    {
+      "nome": "San Leobazio",
+      "titolo": "Abate",
+      "bio": "San Leobazio, abate."
+    },
+    {
+      "nome": "San Troverio",
+      "titolo": "Sacerdote, monaco ed eremita",
+      "bio": "San Troverio, sacerdote, monaco ed eremita."
+    },
+    {
+      "nome": "San Furseo",
+      "titolo": "Abate, fondatore del monastero di Lagny",
+      "bio": "San Furseo, abate, fondatore del monastero di Lagny."
+    },
+    {
+      "nome": "Santa Giovanna da Bagno di Romagna",
+      "titolo": "Vergine camaldolese",
+      "bio": "Santa Giovanna da Bagno di Romagna, vergine camaldolese."
+    },
+    {
+      "nome": "Santi Berardo",
+      "titolo": "Ottone, Pietro, Accursio e Adiuto, primi martiri francescani",
+      "bio": "Santi Berardo, Ottone, Pietro, Accursio e Adiuto, primi martiri francescani."
+    },
+    {
+      "nome": "San Giuseppe Vaz",
+      "titolo": "Sacerdote oratoriano",
+      "bio": "San Giuseppe Vaz, sacerdote oratoriano."
+    },
+    {
+      "nome": "Beato Giuseppe Tovini",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Beato Giuseppe Tovini."
+    }
+  ],
+  "01-17": [
+    {
+      "nome": "Sant'Antonio abate",
+      "titolo": "Abate",
+      "bio": "Sant'Antonio abate, abate."
+    },
+    {
+      "nome": "Santi Speusippo",
+      "titolo": "Elasippo, Melasippo e Leonilla, martiri in Cappadocia",
+      "bio": "Santi Speusippo, Elasippo, Melasippo e Leonilla, martiri in Cappadocia."
+    },
+    {
+      "nome": "San Giuliano Saba",
+      "titolo": "Eremita",
+      "bio": "San Giuliano Saba, eremita."
+    },
+    {
+      "nome": "San Marcello",
+      "titolo": "Vescovo di Die",
+      "bio": "San Marcello, vescovo di Die."
+    },
+    {
+      "nome": "San Sulpizio il Pio",
+      "titolo": "Vescovo di Bourges",
+      "bio": "San Sulpizio il Pio, vescovo di Bourges."
+    },
+    {
+      "nome": "Beato Gamelberto",
+      "titolo": "Sacerdote, fondatore del monastero di Metten",
+      "bio": "Beato Gamelberto, sacerdote, fondatore del monastero di Metten."
+    },
+    {
+      "nome": "Santa Rossellina",
+      "titolo": "Badessa di Celle-Roubaud",
+      "bio": "Santa Rossellina, badessa di Celle-Roubaud."
+    },
+    {
+      "nome": "San Gennaro Sánchez Delgadillo",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Gennaro Sánchez Delgadillo, sacerdote e martire."
+    }
+  ],
+  "01-18": [
+    {
+      "nome": "Santi Successo",
+      "titolo": "Paolo e Lucio, vescovi e martiri a Cartagine",
+      "bio": "Santi Successo, Paolo e Lucio, vescovi e martiri a Cartagine."
+    },
+    {
+      "nome": "Santi Cosconio",
+      "titolo": "Zenone e Melanippo, martiri a Nicea, in Bitinia",
+      "bio": "Santi Cosconio, Zenone e Melanippo, martiri a Nicea, in Bitinia."
+    },
+    {
+      "nome": "San Volusiano di Tours",
+      "titolo": "Vescovo di Tours e martire",
+      "bio": "San Volusiano di Tours, vescovo di Tours e martire."
+    },
+    {
+      "nome": "Santa Prisca romana",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santa Prisca romana."
+    },
+    {
+      "nome": "San Deicolo di Lure",
+      "titolo": "Abate e fondatore del monastero di Luxeuil",
+      "bio": "San Deicolo di Lure, abate e fondatore del monastero di Luxeuil."
+    },
+    {
+      "nome": "Beata Beatrice II d'Este",
+      "titolo": "Monaca",
+      "bio": "Beata Beatrice II d'Este, monaca."
+    },
+    {
+      "nome": "Santa Margherita d'Ungheria",
+      "titolo": "Vergine",
+      "bio": "Santa Margherita d'Ungheria, vergine."
+    },
+    {
+      "nome": "San Fazio",
+      "titolo": "Pellegrino e penitente",
+      "bio": "San Fazio, pellegrino e penitente."
+    },
+    {
+      "nome": "Beato Andrea Grego da Peschiera",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Andrea Grego da Peschiera, sacerdote domenicano."
+    },
+    {
+      "nome": "Beata Cristina Ciccarelli",
+      "titolo": "Vergine agostiniana",
+      "bio": "Beata Cristina Ciccarelli, vergine agostiniana."
+    },
+    {
+      "nome": "Beata Regina Protmann",
+      "titolo": "Vergine, fondatrice delle Suore di Santa Caterina Vergine e Martire",
+      "bio": "Beata Regina Protmann, vergine, fondatrice delle Suore di Santa Caterina Vergine e Martire."
+    },
+    {
+      "nome": "Beate Felicita Pricet",
+      "titolo": "Monica Pichery, Carla Lucas e Vittoria Gusteau, martiri",
+      "bio": "Beate Felicita Pricet, Monica Pichery, Carla Lucas e Vittoria Gusteau, martiri."
+    },
+    {
+      "nome": "Beata Maria Teresa Fasce",
+      "titolo": "Badessa del monastero agostiniano di Cascia",
+      "bio": "Beata Maria Teresa Fasce, badessa del monastero agostiniano di Cascia."
+    },
+    {
+      "nome": "Beato Tommaso da Baabdath (O.F.M. Cap.) (Géries Saleh)",
+      "titolo": "Sacerdote martire",
+      "bio": "Beato Tommaso da Baabdath (O.F.M. Cap.) (Géries Saleh), sacerdote martire."
+    }
+  ],
+  "01-19": [
+    {
+      "nome": "San Germanico",
+      "titolo": "Martire di Filadelfia",
+      "bio": "San Germanico, martire di Filadelfia."
+    },
+    {
+      "nome": "San Ponziano da Spoleto",
+      "titolo": "Martire di Spoleto",
+      "bio": "San Ponziano da Spoleto, martire di Spoleto."
+    },
+    {
+      "nome": "Santi Mario",
+      "titolo": "Marta, Audiface e Abaco, martiri",
+      "bio": "Santi Mario, Marta, Audiface e Abaco, martiri."
+    },
+    {
+      "nome": "San Macario Magno",
+      "titolo": "Sacerdote e abate del monastero di Scete",
+      "bio": "San Macario Magno, sacerdote e abate del monastero di Scete."
+    },
+    {
+      "nome": "San Macario di Alessandria",
+      "titolo": "Monaco",
+      "bio": "San Macario di Alessandria, monaco."
+    },
+    {
+      "nome": "San Bassiano",
+      "titolo": "Vescovo di Lodi",
+      "bio": "San Bassiano, vescovo di Lodi."
+    },
+    {
+      "nome": "San Launomaro",
+      "titolo": "Abate di Corbion",
+      "bio": "San Launomaro, abate di Corbion."
+    },
+    {
+      "nome": "San Giovanni",
+      "titolo": "Vescovo di Ravenna",
+      "bio": "San Giovanni, vescovo di Ravenna."
+    },
+    {
+      "nome": "San Remigio di Rouen",
+      "titolo": "Vescovo di Rouen",
+      "bio": "San Remigio di Rouen, vescovo di Rouen."
+    },
+    {
+      "nome": "Sant'Arsenio",
+      "titolo": "Vescovo di Corfù",
+      "bio": "Sant'Arsenio, vescovo di Corfù."
+    },
+    {
+      "nome": "Beato Marcelo Spínola y Maestre",
+      "titolo": "Vescovo di Siviglia, fondatore delle Ancelle del Divin Cuore",
+      "bio": "Beato Marcelo Spínola y Maestre, vescovo di Siviglia, fondatore delle Ancelle del Divin Cuore."
+    }
+  ],
+  "01-20": [
+    {
+      "nome": "San Fabiano",
+      "titolo": "Papa e martire",
+      "bio": "San Fabiano, papa e martire."
+    },
+    {
+      "nome": "San Sebastiano",
+      "titolo": "Martire",
+      "bio": "San Sebastiano, martire."
+    },
+    {
+      "nome": "Sant'Ascla",
+      "titolo": "Martire ad Antinoe",
+      "bio": "Sant'Ascla, martire ad Antinoe."
+    },
+    {
+      "nome": "San Neofito di Nicea martire a Nicea",
+      "titolo": "In Bitinia",
+      "bio": "San Neofito di Nicea martire a Nicea, in Bitinia."
+    },
+    {
+      "nome": "Sant'Eutimio",
+      "titolo": "Abate",
+      "bio": "Sant'Eutimio, abate."
+    },
+    {
+      "nome": "San Vulstano di Worcester",
+      "titolo": "Vescovo di Worcester",
+      "bio": "San Vulstano di Worcester, vescovo di Worcester."
+    },
+    {
+      "nome": "Beato Benedetto Ricasoli",
+      "titolo": "Eremita",
+      "bio": "Beato Benedetto Ricasoli, eremita."
+    },
+    {
+      "nome": "Sant'Enrico di Uppsala",
+      "titolo": "Vescovo di Uppsala e martire",
+      "bio": "Sant'Enrico di Uppsala, vescovo di Uppsala e martire."
+    },
+    {
+      "nome": "Santa Eustochia Calafato",
+      "titolo": "Vergine e badessa clarissa",
+      "bio": "Santa Eustochia Calafato, vergine e badessa clarissa."
+    },
+    {
+      "nome": "Santo Stefano Min Kuk-ka",
+      "titolo": "Catechista e martire",
+      "bio": "Santo Stefano Min Kuk-ka, catechista e martire."
+    },
+    {
+      "nome": "Beato Cipriano Iwene Tansi",
+      "titolo": "Sacerdote cistercense",
+      "bio": "Beato Cipriano Iwene Tansi, sacerdote cistercense."
+    },
+    {
+      "nome": "Santa Maria Cristina dell'Immacolata Concezione",
+      "titolo": "Fondatrice delle Suore vittime espiatrici di Gesù Sacramentato",
+      "bio": "Santa Maria Cristina dell'Immacolata Concezione, fondatrice delle Suore vittime espiatrici di Gesù Sacramentato."
+    },
+    {
+      "nome": "Beato Angelo Paoli",
+      "titolo": "Sacerdote religioso dell'Ordine della Beata Vergine del Monte Carmelo",
+      "bio": "Beato Angelo Paoli, sacerdote religioso dell'Ordine della Beata Vergine del Monte Carmelo."
+    },
+    {
+      "nome": "Beato Basilio Antonio Maria Moreau (Basile-Antoine-Marie)",
+      "titolo": "Sacerdote e fondatore della Congregazione di Santa Croce e delle Suore Marianite di Santa ",
+      "bio": "Beato Basilio Antonio Maria Moreau (Basile-Antoine-Marie), sacerdote e fondatore della Congregazione di Santa Croce e delle Suore Marianite di Santa Croce."
+    },
+    {
+      "nome": "Beato Eusebio d'Esztergom (Boldog Özséb)",
+      "titolo": "Sacerdote, eremita e fondatore",
+      "bio": "Beato Eusebio d'Esztergom (Boldog Özséb), sacerdote, eremita e fondatore."
+    }
+  ],
+  "01-21": [
+    {
+      "nome": "Sant'Agnese di Roma",
+      "titolo": "Vergine e martire",
+      "bio": "Sant'Agnese di Roma, vergine e martire."
+    },
+    {
+      "nome": "San Publio di Malta",
+      "titolo": "Vescovo di Atene",
+      "bio": "San Publio di Malta, vescovo di Atene."
+    },
+    {
+      "nome": "Santi Fruttuoso di Tarragona",
+      "titolo": "Vescovo di Tarragona, Augurio ed Eulogio, diaconi, martiri di Tarragona",
+      "bio": "Santi Fruttuoso di Tarragona, vescovo di Tarragona, Augurio ed Eulogio, diaconi, martiri di Tarragona."
+    },
+    {
+      "nome": "San Patroclo di Troyes",
+      "titolo": "Martire a Troyes",
+      "bio": "San Patroclo di Troyes, martire a Troyes."
+    },
+    {
+      "nome": "Sant'Epifanio di Pavia",
+      "titolo": "Vescovo di Pavia",
+      "bio": "Sant'Epifanio di Pavia, vescovo di Pavia."
+    },
+    {
+      "nome": "San Meinrado di Einsiedeln",
+      "titolo": "Sacerdote e monaco a Einsiedeln",
+      "bio": "San Meinrado di Einsiedeln, sacerdote e monaco a Einsiedeln."
+    },
+    {
+      "nome": "Beati Edoardo Stransham e Nicola Wheeler",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Beati Edoardo Stransham e Nicola Wheeler, sacerdoti e martiri."
+    },
+    {
+      "nome": "Sant'Albano Roe",
+      "titolo": "Benedettino, e il Beato Tommaso Green, sacerdoti e martiri",
+      "bio": "Sant'Albano Roe, benedettino, e il Beato Tommaso Green, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beata Giuseppa Maria di Sant'Agnese",
+      "titolo": "Vergine agostiniana",
+      "bio": "Beata Giuseppa Maria di Sant'Agnese, vergine agostiniana."
+    },
+    {
+      "nome": "Beati martiri Giovanni Battista Turpin du Cormier e tredici compagni",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Beati martiri Giovanni Battista Turpin du Cormier e tredici compagni, sacerdoti e martiri."
+    },
+    {
+      "nome": "San Giovanni Yi-Yun",
+      "titolo": "Padre di famiglia, martire di Corea",
+      "bio": "San Giovanni Yi-Yun, padre di famiglia, martire di Corea."
+    }
+  ],
+  "01-22": [
+    {
+      "nome": "San Vincenzo di Saragozza",
+      "titolo": "Diacono di Saragozza e martire",
+      "bio": "San Vincenzo di Saragozza, diacono di Saragozza e martire."
+    },
+    {
+      "nome": "San Valerio",
+      "titolo": "Vescovo di Saragozza",
+      "bio": "San Valerio, vescovo di Saragozza."
+    },
+    {
+      "nome": "San Gaudenzio di Novara",
+      "titolo": "Primo vescovo di Novara",
+      "bio": "San Gaudenzio di Novara, primo vescovo di Novara."
+    },
+    {
+      "nome": "Sant'Anastasio il Persiano",
+      "titolo": "Monaco e martire in Persia",
+      "bio": "Sant'Anastasio il Persiano, monaco e martire in Persia."
+    },
+    {
+      "nome": "San Bernardo di Vienne",
+      "titolo": "Vescovo di Vienne",
+      "bio": "San Bernardo di Vienne, vescovo di Vienne."
+    },
+    {
+      "nome": "San Domenico di Sora",
+      "titolo": "Abate di Sora",
+      "bio": "San Domenico di Sora, abate di Sora."
+    },
+    {
+      "nome": "Beata Maria Mancini",
+      "titolo": "Vedova, religiosa domenicana",
+      "bio": "Beata Maria Mancini, vedova, religiosa domenicana."
+    },
+    {
+      "nome": "Beato Antonio della Chiesa",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Antonio della Chiesa, sacerdote domenicano."
+    },
+    {
+      "nome": "Beato William Patenson",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato William Patenson, sacerdote e martire."
+    },
+    {
+      "nome": "San Francesco Gil de Federich e San Matteo Alonso de Leciñana",
+      "titolo": "Sacerdoti domenicani e martiri",
+      "bio": "San Francesco Gil de Federich e San Matteo Alonso de Leciñana, sacerdoti domenicani e martiri."
+    },
+    {
+      "nome": "San Vincenzo Pallotti (S.A.C.)",
+      "titolo": "Sacerdote, fondatore della Società dell'apostolato cattolico",
+      "bio": "San Vincenzo Pallotti (S.A.C.), sacerdote, fondatore della Società dell'apostolato cattolico."
+    },
+    {
+      "nome": "Beato Guillaume-Joseph Chaminade",
+      "titolo": "Sacerdote, fondatore delle Figlie di Maria Immacolata e la Società di Maria",
+      "bio": "Beato Guillaume-Joseph Chaminade, sacerdote, fondatore delle Figlie di Maria Immacolata e la Società di Maria."
+    },
+    {
+      "nome": "Beata Laura Vicuña",
+      "titolo": "Vergine",
+      "bio": "Beata Laura Vicuña, vergine."
+    },
+    {
+      "nome": "Beato Giuseppe Nascimbeni",
+      "titolo": "Sacerdote, fondatore delle Piccole suore della Sacra Famiglia",
+      "bio": "Beato Giuseppe Nascimbeni, sacerdote, fondatore delle Piccole suore della Sacra Famiglia."
+    },
+    {
+      "nome": "Beato László Batthyány-Strattmann",
+      "titolo": "Padre di famiglia",
+      "bio": "Beato László Batthyány-Strattmann, padre di famiglia."
+    }
+  ],
+  "01-23": [
+    {
+      "nome": "Santi Severiano e Aquila",
+      "titolo": "Martiri",
+      "bio": "Santi Severiano e Aquila, martiri."
+    },
+    {
+      "nome": "Sant'Emerenziana",
+      "titolo": "Vergine e martire",
+      "bio": "Sant'Emerenziana, vergine e martire."
+    },
+    {
+      "nome": "Santi Clemente di Ancira",
+      "titolo": "Vescovo di Ancira, e Agatangelo, martiri",
+      "bio": "Santi Clemente di Ancira, vescovo di Ancira, e Agatangelo, martiri."
+    },
+    {
+      "nome": "Sant'Amasio",
+      "titolo": "Vescovo di Teano",
+      "bio": "Sant'Amasio, vescovo di Teano."
+    },
+    {
+      "nome": "Sant'Ildefonso di Toledo",
+      "titolo": "Vescovo di Toledo",
+      "bio": "Sant'Ildefonso di Toledo, vescovo di Toledo."
+    },
+    {
+      "nome": "San Maimbodo",
+      "titolo": "Pellegrino ed eremita",
+      "bio": "San Maimbodo, pellegrino ed eremita."
+    },
+    {
+      "nome": "Sant'Andrea Chong Hwa-Gyong",
+      "titolo": "Catechista e martire di Corea",
+      "bio": "Sant'Andrea Chong Hwa-Gyong, catechista e martire di Corea."
+    },
+    {
+      "nome": "Beata Benedetta Bianchi Porro",
+      "titolo": "Giovane laica",
+      "bio": "Beata Benedetta Bianchi Porro, giovane laica."
+    },
+    {
+      "nome": "Beata Margherita Molli",
+      "titolo": "Mistica",
+      "bio": "Beata Margherita Molli, mistica."
+    }
+  ],
+  "01-24": [
+    {
+      "nome": "San Francesco di Sales",
+      "titolo": "Vescovo di Ginevra e dottore della Chiesa",
+      "bio": "San Francesco di Sales, vescovo di Ginevra e dottore della Chiesa."
+    },
+    {
+      "nome": "San Feliciano di Foligno",
+      "titolo": "Primo vescovo di Foligno",
+      "bio": "San Feliciano di Foligno, primo vescovo di Foligno."
+    },
+    {
+      "nome": "San Sabiniano di Troyes",
+      "titolo": "Martire a Troyes",
+      "bio": "San Sabiniano di Troyes, martire a Troyes."
+    },
+    {
+      "nome": "San Babila",
+      "titolo": "Vescovo di Antiochia",
+      "bio": "San Babila, vescovo di Antiochia."
+    },
+    {
+      "nome": "Santi Urbano",
+      "titolo": "Prilidano ed Epolono, fanciulli martiri",
+      "bio": "Santi Urbano, Prilidano ed Epolono, fanciulli martiri."
+    },
+    {
+      "nome": "Sant'Esuperanzio di Cingoli",
+      "titolo": "Vescovo di Cingoli",
+      "bio": "Sant'Esuperanzio di Cingoli, vescovo di Cingoli."
+    },
+    {
+      "nome": "Beata Paola Gambara Costa",
+      "titolo": "Vedova",
+      "bio": "Beata Paola Gambara Costa, vedova."
+    },
+    {
+      "nome": "Beati Guglielmo Ireland",
+      "titolo": "Sacerdote gesuita, e Giovanni Grove, martiri",
+      "bio": "Beati Guglielmo Ireland, sacerdote gesuita, e Giovanni Grove, martiri."
+    },
+    {
+      "nome": "Beata Marie Poussepin",
+      "titolo": "Vergine, fondatrice delle suore domenicane della carità",
+      "bio": "Beata Marie Poussepin, vergine, fondatrice delle suore domenicane della carità."
+    },
+    {
+      "nome": "Beati Vincenzo Lewionuk e dodici compagni",
+      "titolo": "Martiri",
+      "bio": "Beati Vincenzo Lewionuk e dodici compagni, martiri."
+    },
+    {
+      "nome": "Beato Timoteo Giuseppe Giaccardo (S.S.P.)",
+      "titolo": "Sacerdote",
+      "bio": "Beato Timoteo Giuseppe Giaccardo (S.S.P.), sacerdote."
+    },
+    {
+      "nome": "Beata Gaetana Tolomeo",
+      "titolo": "Vergine",
+      "bio": "Beata Gaetana Tolomeo, vergine."
+    }
+  ],
+  "01-25": [
+    {
+      "nome": "Conversione di San Paolo Apostolo",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Conversione di San Paolo Apostolo."
+    },
+    {
+      "nome": "Sant'Anania di Damasco",
+      "titolo": "Personaggio del Nuovo Testamento, discepolo di Gesù Martire",
+      "bio": "Sant'Anania di Damasco, Personaggio del Nuovo Testamento, discepolo di Gesù Martire."
+    },
+    {
+      "nome": "Sant'Artema di Pozzuoli",
+      "titolo": "Martire",
+      "bio": "Sant'Artema di Pozzuoli, martire."
+    },
+    {
+      "nome": "Sant'Agileo di Cartagine",
+      "titolo": "Martire a Cartagine",
+      "bio": "Sant'Agileo di Cartagine, martire a Cartagine."
+    },
+    {
+      "nome": "Santi Gioventino e Massimino",
+      "titolo": "Martiri",
+      "bio": "Santi Gioventino e Massimino, martiri."
+    },
+    {
+      "nome": "San Bretannione di Tomis",
+      "titolo": "Vescovo di Tomi, in Scizia",
+      "bio": "San Bretannione di Tomis, vescovo di Tomi, in Scizia."
+    },
+    {
+      "nome": "San Palemone",
+      "titolo": "Anacoreta",
+      "bio": "San Palemone, anacoreta."
+    },
+    {
+      "nome": "San Preietto di Clermont",
+      "titolo": "Vescovo di Clermont, e Amarino, uomo di Dio, martiri in Alvernia",
+      "bio": "San Preietto di Clermont, vescovo di Clermont, e Amarino, uomo di Dio, martiri in Alvernia."
+    },
+    {
+      "nome": "San Poppone di Stablo",
+      "titolo": "Abate di Stavelot e di Malmedy",
+      "bio": "San Poppone di Stablo, abate di Stavelot e di Malmedy."
+    },
+    {
+      "nome": "Beato Enrico Suso",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Enrico Suso, sacerdote domenicano."
+    },
+    {
+      "nome": "Beato Antonio Migliorati",
+      "titolo": "Sacerdote agostiniano",
+      "bio": "Beato Antonio Migliorati, sacerdote agostiniano."
+    },
+    {
+      "nome": "Beata Arcangela Girlani",
+      "titolo": "Vergine carmelitana",
+      "bio": "Beata Arcangela Girlani, vergine carmelitana."
+    },
+    {
+      "nome": "Beato Manuel Domingo y Sol",
+      "titolo": "Sacerdote, fondatore dei Sacerdoti operai dioceSani",
+      "bio": "Beato Manuel Domingo y Sol, sacerdote, fondatore dei Sacerdoti operai dioceSani."
+    },
+    {
+      "nome": "Beata Teresa Grillo Michel",
+      "titolo": "Vedova, fondatrice delle Piccole suore della Divina Provvidenza",
+      "bio": "Beata Teresa Grillo Michel, vedova, fondatrice delle Piccole suore della Divina Provvidenza."
+    },
+    {
+      "nome": "Beato Antonio Swiadek",
+      "titolo": "Sacerdote e martire a Dachau",
+      "bio": "Beato Antonio Swiadek, sacerdote e martire a Dachau."
+    }
+  ],
+  "01-26": [
+    {
+      "nome": "San Timoteo e San Tito",
+      "titolo": "Discepoli di San Paolo",
+      "bio": "San Timoteo e San Tito, discepoli di San Paolo."
+    },
+    {
+      "nome": "San Teogene d'Ippona",
+      "titolo": "Martire",
+      "bio": "San Teogene d'Ippona, martire."
+    },
+    {
+      "nome": "Santa Paola Romana",
+      "titolo": "Vedova",
+      "bio": "Santa Paola Romana, vedova."
+    },
+    {
+      "nome": "Sant'Alberico di Cîteaux (O.Cist.)",
+      "titolo": "Abate di Cîteaux e fondatore",
+      "bio": "Sant'Alberico di Cîteaux (O.Cist.), abate di Cîteaux e fondatore."
+    },
+    {
+      "nome": "Sant'Agostino Erlendsson",
+      "titolo": "Arcivescovo di Nidaros",
+      "bio": "Sant'Agostino Erlendsson, arcivescovo di Nidaros."
+    },
+    {
+      "nome": "Beata Maria de la Dive",
+      "titolo": "Martire",
+      "bio": "Beata Maria de la Dive, martire."
+    },
+    {
+      "nome": "Beato Michał Kozal",
+      "titolo": "Vescovo ausiliare di Włocławek e martire a Dachau",
+      "bio": "Beato Michał Kozal, vescovo ausiliare di Włocławek e martire a Dachau."
+    }
+  ],
+  "01-27": [
+    {
+      "nome": "Sant'Angela Merici",
+      "titolo": "Vergine, fondatrice della compagnia di Sant'Orsola",
+      "bio": "Sant'Angela Merici, vergine, fondatrice della compagnia di Sant'Orsola."
+    },
+    {
+      "nome": "San Giuliano martire",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "San Giuliano martire."
+    },
+    {
+      "nome": "San Giuliano di Le Mans",
+      "titolo": "Primo vescovo di Le Mans",
+      "bio": "San Giuliano di Le Mans, primo vescovo di Le Mans."
+    },
+    {
+      "nome": "Santa Devota",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Devota, vergine e martire."
+    },
+    {
+      "nome": "San Marino di Bodon",
+      "titolo": "Abate di Bodon",
+      "bio": "San Marino di Bodon, abate di Bodon."
+    },
+    {
+      "nome": "San Vitaliano",
+      "titolo": "Papa",
+      "bio": "San Vitaliano, papa."
+    },
+    {
+      "nome": "San Teodorico",
+      "titolo": "Vescovo di Orléans",
+      "bio": "San Teodorico, vescovo di Orléans."
+    },
+    {
+      "nome": "San Gilduino",
+      "titolo": "Diacono di Dol",
+      "bio": "San Gilduino, diacono di Dol."
+    },
+    {
+      "nome": "Beato Giovanni",
+      "titolo": "Canonico regolare",
+      "bio": "Beato Giovanni, canonico regolare."
+    },
+    {
+      "nome": "Beato Manfredo Settala",
+      "titolo": "Sacerdote ed eremita",
+      "bio": "Beato Manfredo Settala, sacerdote ed eremita."
+    },
+    {
+      "nome": "Beata Rosalia du Verdier de la Sorinière",
+      "titolo": "Vergine del monastero del Calvario e martire",
+      "bio": "Beata Rosalia du Verdier de la Sorinière, vergine del monastero del Calvario e martire."
+    },
+    {
+      "nome": "San Giovanni Maria",
+      "titolo": "Detto Muzei, martire dell'Uganda",
+      "bio": "San Giovanni Maria, detto Muzei, martire dell'Uganda."
+    },
+    {
+      "nome": "Sant'Enrico de Osso y Cervello",
+      "titolo": "Sacerdote, fondatore della Compagnia di Santa Teresa di Gesù",
+      "bio": "Sant'Enrico de Osso y Cervello, sacerdote, fondatore della Compagnia di Santa Teresa di Gesù."
+    },
+    {
+      "nome": "Beato Jurgis Matulaitis-Matulevičius",
+      "titolo": "Vescovo di Vilnius e poi nunzio apostolico in Lituania",
+      "bio": "Beato Jurgis Matulaitis-Matulevičius, vescovo di Vilnius e poi nunzio apostolico in Lituania."
+    },
+    {
+      "nome": "Beato Gabriele Allegra",
+      "titolo": "Sacerdote religioso dell'Ordine dei Frati Minori",
+      "bio": "Beato Gabriele Allegra, sacerdote religioso dell'Ordine dei Frati Minori."
+    }
+  ],
+  "01-28": [
+    {
+      "nome": "San Tommaso d'Aquino (O.P.)",
+      "titolo": "Sacerdote e dottore della Chiesa",
+      "bio": "San Tommaso d'Aquino (O.P.), sacerdote e dottore della Chiesa."
+    },
+    {
+      "nome": "San Giovanni",
+      "titolo": "Sacerdote, fondatore del monastero di Réome",
+      "bio": "San Giovanni, sacerdote, fondatore del monastero di Réome."
+    },
+    {
+      "nome": "San Giacomo",
+      "titolo": "Eremita in Palestina",
+      "bio": "San Giacomo, eremita in Palestina."
+    },
+    {
+      "nome": "San Giuliano",
+      "titolo": "Vescovo di Cuenca",
+      "bio": "San Giuliano, vescovo di Cuenca."
+    },
+    {
+      "nome": "Beato Bartolomeo Aiutamicristo da Pisa",
+      "titolo": "Religioso camaldolese",
+      "bio": "Beato Bartolomeo Aiutamicristo da Pisa, religioso camaldolese."
+    },
+    {
+      "nome": "Beato Giuliano Maunoir",
+      "titolo": "Sacerdote gesuita",
+      "bio": "Beato Giuliano Maunoir, sacerdote gesuita."
+    },
+    {
+      "nome": "Santi Agata Lin Zhao",
+      "titolo": "Vergine, Girolamo Lu Tingmei e Lorenzo Wang Bing, martiri della Cina",
+      "bio": "Santi Agata Lin Zhao, vergine, Girolamo Lu Tingmei e Lorenzo Wang Bing, martiri della Cina."
+    },
+    {
+      "nome": "San Giuseppe Freinademetz (S.V.D.)",
+      "titolo": "Sacerdote",
+      "bio": "San Giuseppe Freinademetz (S.V.D.), sacerdote."
+    },
+    {
+      "nome": "Beata Maria Luisa Montesinos Orduña",
+      "titolo": "Vergine e martire",
+      "bio": "Beata Maria Luisa Montesinos Orduña, vergine e martire."
+    },
+    {
+      "nome": "Beata Olimpia Bida",
+      "titolo": "Vergine delle Suore di San Giuseppe e martire",
+      "bio": "Beata Olimpia Bida, vergine delle Suore di San Giuseppe e martire."
+    }
+  ],
+  "01-29": [
+    {
+      "nome": "Santi Sarbellio",
+      "titolo": "Sacerdote, e Bebaia, sua sorella, martiri",
+      "bio": "Santi Sarbellio, sacerdote, e Bebaia, sua sorella, martiri."
+    },
+    {
+      "nome": "Santi Papia e Mauro",
+      "titolo": "Soldati, martiri",
+      "bio": "Santi Papia e Mauro, soldati, martiri."
+    },
+    {
+      "nome": "San Costanzo di Perugia",
+      "titolo": "Vescovo di Perugia",
+      "bio": "San Costanzo di Perugia, vescovo di Perugia."
+    },
+    {
+      "nome": "Santi Gioventino e Massimino",
+      "titolo": "Martiri",
+      "bio": "Santi Gioventino e Massimino, martiri."
+    },
+    {
+      "nome": "San Valerio di Treviri",
+      "titolo": "Primo vescovo di Treviri",
+      "bio": "San Valerio di Treviri, primo vescovo di Treviri."
+    },
+    {
+      "nome": "Sant'Afraate",
+      "titolo": "Anacoreta",
+      "bio": "Sant'Afraate, anacoreta."
+    },
+    {
+      "nome": "San Gildas",
+      "titolo": "Abate",
+      "bio": "San Gildas, abate."
+    },
+    {
+      "nome": "San Sulpizio di Bourges",
+      "titolo": "Vescovo di Bourges",
+      "bio": "San Sulpizio di Bourges, vescovo di Bourges."
+    },
+    {
+      "nome": "San Giuliano l'ospitaliere",
+      "titolo": "Laico nobile cavaliere",
+      "bio": "San Giuliano l'ospitaliere, laico nobile cavaliere."
+    },
+    {
+      "nome": "Beata Villana delle Botti",
+      "titolo": "Terziaria domenicana",
+      "bio": "Beata Villana delle Botti, terziaria domenicana."
+    },
+    {
+      "nome": "Beata Bolesława Lament",
+      "titolo": "Vergine, fondatrice delle Suore missionarie della Sacra Famiglia",
+      "bio": "Beata Bolesława Lament, vergine, fondatrice delle Suore missionarie della Sacra Famiglia."
+    }
+  ],
+  "01-30": [
+    {
+      "nome": "San Mattia",
+      "titolo": "Vescovo di Gerusalemme",
+      "bio": "San Mattia, vescovo di Gerusalemme."
+    },
+    {
+      "nome": "San Barsimeo",
+      "titolo": "Vescovo di Edessa di Osroene",
+      "bio": "San Barsimeo, vescovo di Edessa di Osroene."
+    },
+    {
+      "nome": "Santa Martina vergine e martire",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santa Martina vergine e martire."
+    },
+    {
+      "nome": "Santa Batilde",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santa Batilde."
+    },
+    {
+      "nome": "Sant'Aldegonda di Maubeuge",
+      "titolo": "Badessa di Maubeuge",
+      "bio": "Sant'Aldegonda di Maubeuge, badessa di Maubeuge."
+    },
+    {
+      "nome": "Sant'Armentario",
+      "titolo": "Vescovo di Pavia",
+      "bio": "Sant'Armentario, vescovo di Pavia."
+    },
+    {
+      "nome": "San Teofilo il Giovane",
+      "titolo": "Martire",
+      "bio": "San Teofilo il Giovane, martire."
+    },
+    {
+      "nome": "Sant'Adelelmo di Burgos",
+      "titolo": "Abate di Burgos",
+      "bio": "Sant'Adelelmo di Burgos, abate di Burgos."
+    },
+    {
+      "nome": "Beato Francesco Taylor",
+      "titolo": "Martire",
+      "bio": "Beato Francesco Taylor, martire."
+    },
+    {
+      "nome": "Santa Giacinta Marescotti",
+      "titolo": "Vergine del Terz'ordine francescano",
+      "bio": "Santa Giacinta Marescotti, vergine del Terz'ordine francescano."
+    },
+    {
+      "nome": "Beato Sebastiano Valfrè",
+      "titolo": "Sacerdote oratoriano",
+      "bio": "Beato Sebastiano Valfrè, sacerdote oratoriano."
+    },
+    {
+      "nome": "San Paolo Ho Hyob",
+      "titolo": "Soldato, martire",
+      "bio": "San Paolo Ho Hyob, soldato, martire."
+    },
+    {
+      "nome": "San Tommaso Khuông",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Tommaso Khuông, sacerdote e martire."
+    },
+    {
+      "nome": "San Davide Galván Bermúdez",
+      "titolo": "Sacerdote e martire del Messico",
+      "bio": "San Davide Galván Bermúdez, sacerdote e martire del Messico."
+    },
+    {
+      "nome": "San Muziano Maria Wiaux",
+      "titolo": "Lasalliano",
+      "bio": "San Muziano Maria Wiaux, lasalliano."
+    },
+    {
+      "nome": "Beato Columba Marmion",
+      "titolo": "Abate di Maredsous",
+      "bio": "Beato Columba Marmion, abate di Maredsous."
+    },
+    {
+      "nome": "Beata Carmela García Moyón",
+      "titolo": "Martire",
+      "bio": "Beata Carmela García Moyón, martire."
+    },
+    {
+      "nome": "Beato Sigismondo Pisarski",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Sigismondo Pisarski, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Bronislao Markiewicz",
+      "titolo": "Sacerdote, fondatore della Congregazione di San Michele Arcangelo",
+      "bio": "Beato Bronislao Markiewicz, sacerdote, fondatore della Congregazione di San Michele Arcangelo."
+    }
+  ],
+  "01-31": [
+    {
+      "nome": "San Giovanni Bosco",
+      "titolo": "Sacerdote, fondatore della Società salesiana e delle Figlie di Maria Ausiliatrice",
+      "bio": "San Giovanni Bosco, sacerdote, fondatore della Società salesiana e delle Figlie di Maria Ausiliatrice."
+    },
+    {
+      "nome": "Santi Vittorino",
+      "titolo": "Vittore, Niceforo, Claudio, Diodoro, Serapione e Papia, martiri di Corinto",
+      "bio": "Santi Vittorino, Vittore, Niceforo, Claudio, Diodoro, Serapione e Papia, martiri di Corinto."
+    },
+    {
+      "nome": "San Metrano",
+      "titolo": "Martire di Alessandria d'Egitto",
+      "bio": "San Metrano, martire di Alessandria d'Egitto."
+    },
+    {
+      "nome": "San Ciro e Giovanni",
+      "titolo": "Martiri",
+      "bio": "San Ciro e Giovanni, martiri."
+    },
+    {
+      "nome": "San Geminiano di Modena",
+      "titolo": "Vescovo di Modena",
+      "bio": "San Geminiano di Modena, vescovo di Modena."
+    },
+    {
+      "nome": "Sant'Abramo di Arbela",
+      "titolo": "Vescovo di Arbela, martire",
+      "bio": "Sant'Abramo di Arbela, vescovo di Arbela, martire."
+    },
+    {
+      "nome": "San Giulio di Orta",
+      "titolo": "Sacerdote",
+      "bio": "San Giulio di Orta, sacerdote."
+    },
+    {
+      "nome": "Santa Marcella di Roma",
+      "titolo": "Vedova",
+      "bio": "Santa Marcella di Roma, vedova."
+    },
+    {
+      "nome": "Sant'Aidano di Ferns",
+      "titolo": "Vescovo di Ferns",
+      "bio": "Sant'Aidano di Ferns, vescovo di Ferns."
+    },
+    {
+      "nome": "San Valdo",
+      "titolo": "Vescovo di Évreux",
+      "bio": "San Valdo, vescovo di Évreux."
+    },
+    {
+      "nome": "Sant'Eusebio",
+      "titolo": "Eremita",
+      "bio": "Sant'Eusebio, eremita."
+    },
+    {
+      "nome": "San Giovanni Battista Candotti",
+      "titolo": "Sacerdote e compositore di musica sacra",
+      "bio": "San Giovanni Battista Candotti, sacerdote e compositore di musica sacra."
+    },
+    {
+      "nome": "Beata Ludovica Albertoni",
+      "titolo": "Vedova, terziaria francescana",
+      "bio": "Beata Ludovica Albertoni, vedova, terziaria francescana."
+    },
+    {
+      "nome": "San Francesco Saverio Maria Bianchi",
+      "titolo": "Sacerdote barnabita",
+      "bio": "San Francesco Saverio Maria Bianchi, sacerdote barnabita."
+    },
+    {
+      "nome": "Santi Agostino Pak Chong-Won",
+      "titolo": "Catechista e cinque compagni, martiri coreani",
+      "bio": "Santi Agostino Pak Chong-Won, catechista e cinque compagni, martiri coreani."
+    },
+    {
+      "nome": "Beata Candelaria di San Giuseppe",
+      "titolo": "Fondatrice delle carmelitane del Venezuela",
+      "bio": "Beata Candelaria di San Giuseppe, fondatrice delle carmelitane del Venezuela."
+    }
+  ],
+  "02-01": [
+    {
+      "nome": "San Trifone martire",
+      "titolo": "Martire",
+      "bio": "San Trifone martire, martire."
+    },
+    {
+      "nome": "San Severo di Ravenna",
+      "titolo": "Vescovo di Ravenna",
+      "bio": "San Severo di Ravenna, vescovo di Ravenna."
+    },
+    {
+      "nome": "San Paolo",
+      "titolo": "Vescovo di Saint-Paul-Trois-Châteaux",
+      "bio": "San Paolo, vescovo di Saint-Paul-Trois-Châteaux."
+    },
+    {
+      "nome": "Santa Brigida d'Irlanda",
+      "titolo": "Vergine, badessa di Kildare",
+      "bio": "Santa Brigida d'Irlanda, vergine, badessa di Kildare."
+    },
+    {
+      "nome": "Sant'Orso di Aosta",
+      "titolo": "Sacerdote d'Aosta",
+      "bio": "Sant'Orso di Aosta, sacerdote d'Aosta."
+    },
+    {
+      "nome": "Sant'Agrippano",
+      "titolo": "Vescovo di Le Puy e martire",
+      "bio": "Sant'Agrippano, vescovo di Le Puy e martire."
+    },
+    {
+      "nome": "San Sigiberto III il Giovane",
+      "titolo": "Re d'Austrasia",
+      "bio": "San Sigiberto III il Giovane, re d'Austrasia."
+    },
+    {
+      "nome": "San Raimondo",
+      "titolo": "Abate, fondatore dell'Ordine di Calatrava",
+      "bio": "San Raimondo, abate, fondatore dell'Ordine di Calatrava."
+    },
+    {
+      "nome": "San Giovanni",
+      "titolo": "Vescovo di Saint-Malo",
+      "bio": "San Giovanni, vescovo di Saint-Malo."
+    },
+    {
+      "nome": "Beato Reginaldo d'Orléans",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Reginaldo d'Orléans, sacerdote domenicano."
+    },
+    {
+      "nome": "Santa Verdiana",
+      "titolo": "Vergine",
+      "bio": "Santa Verdiana, vergine."
+    },
+    {
+      "nome": "Beato Andrea dei Conti di Segni",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Andrea dei Conti di Segni, sacerdote francescano."
+    },
+    {
+      "nome": "Beato Conor O'Devany",
+      "titolo": "Francescano, vescovo di Down e Connor, e Patrizio O'Lougham, sacerdote, martiri d'Irlanda",
+      "bio": "Beato Conor O'Devany, francescano, vescovo di Down e Connor, e Patrizio O'Lougham, sacerdote, martiri d'Irlanda."
+    },
+    {
+      "nome": "Sant'Enrico Morse (S.J.)",
+      "titolo": "Sacerdote e martire",
+      "bio": "Sant'Enrico Morse (S.J.), sacerdote e martire."
+    },
+    {
+      "nome": "Beata Maria Anna Vaillot e quarantasei compagne",
+      "titolo": "Martiri",
+      "bio": "Beata Maria Anna Vaillot e quarantasei compagne, martiri."
+    },
+    {
+      "nome": "Santi Paolo Hong Yong-ju",
+      "titolo": "Giovanni Yi Mun-u e Barbara Ch'oe Yong-i, martiri coreani",
+      "bio": "Santi Paolo Hong Yong-ju, Giovanni Yi Mun-u e Barbara Ch'oe Yong-i, martiri coreani."
+    },
+    {
+      "nome": "Beata Giovanna Francesca della Visitazione",
+      "titolo": "Vergine, fondatrice delle Piccole serve del Sacro Cuore di Gesù per gli ammalati poveri",
+      "bio": "Beata Giovanna Francesca della Visitazione, vergine, fondatrice delle Piccole serve del Sacro Cuore di Gesù per gli ammalati poveri."
+    },
+    {
+      "nome": "Beato Luigi Variara",
+      "titolo": "Sacerdote salesiano, fondatore delle Figlie dei Sacri Cuori di Gesù e di Maria",
+      "bio": "Beato Luigi Variara, sacerdote salesiano, fondatore delle Figlie dei Sacri Cuori di Gesù e di Maria."
+    }
+  ],
+  "02-02": [
+    {
+      "nome": "Presentazione del Signore",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Presentazione del Signore."
+    },
+    {
+      "nome": "San Floscolo",
+      "titolo": "Vescovo di Orléans",
+      "bio": "San Floscolo, vescovo di Orléans."
+    },
+    {
+      "nome": "San Lorenzo di Canterbury",
+      "titolo": "Vescovo di Canterbury",
+      "bio": "San Lorenzo di Canterbury, vescovo di Canterbury."
+    },
+    {
+      "nome": "San Burcardo di Würzburg",
+      "titolo": "Vescovo di Würzburg",
+      "bio": "San Burcardo di Würzburg, vescovo di Würzburg."
+    },
+    {
+      "nome": "Beato Simone Fidati",
+      "titolo": "Sacerdote agostiniano",
+      "bio": "Beato Simone Fidati, sacerdote agostiniano."
+    },
+    {
+      "nome": "Beato Pietro Cambiani",
+      "titolo": "Sacerdote domenicano e martire",
+      "bio": "Beato Pietro Cambiani, sacerdote domenicano e martire."
+    },
+    {
+      "nome": "Santa Caterina de' Ricci",
+      "titolo": "Vergine del Terz'ordine domenicano",
+      "bio": "Santa Caterina de' Ricci, vergine del Terz'ordine domenicano."
+    },
+    {
+      "nome": "Santa Giovanna di Lestonnac",
+      "titolo": "Fondatrice della Compagnia di Maria di Nostra Signora",
+      "bio": "Santa Giovanna di Lestonnac, fondatrice della Compagnia di Maria di Nostra Signora."
+    },
+    {
+      "nome": "San Nicola da Longobardi",
+      "titolo": "Religioso dell'Ordine dei Minimi",
+      "bio": "San Nicola da Longobardi, religioso dell'Ordine dei Minimi."
+    },
+    {
+      "nome": "Beato Stefano Bellesini",
+      "titolo": "Sacerdote agostiniano",
+      "bio": "Beato Stefano Bellesini, sacerdote agostiniano."
+    },
+    {
+      "nome": "San Théophane Vénard",
+      "titolo": "Sacerdote della Società per le missioni estere di Parigi, martire",
+      "bio": "San Théophane Vénard, sacerdote della Società per le missioni estere di Parigi, martire."
+    },
+    {
+      "nome": "Beata Maria Caterina Kasper",
+      "titolo": "Fondatrice delle Povere ancelle di Gesù Cristo",
+      "bio": "Beata Maria Caterina Kasper, fondatrice delle Povere ancelle di Gesù Cristo."
+    },
+    {
+      "nome": "Beato Andrea Carlo Ferrari",
+      "titolo": "Vescovo di Milano",
+      "bio": "Beato Andrea Carlo Ferrari, vescovo di Milano."
+    },
+    {
+      "nome": "Beata Maria Domenica Mantovani",
+      "titolo": "Fondatrice delle Piccole suore della Sacra Famiglia",
+      "bio": "Beata Maria Domenica Mantovani, fondatrice delle Piccole suore della Sacra Famiglia."
+    }
+  ],
+  "02-03": [
+    {
+      "nome": "San Biagio di Sebaste",
+      "titolo": "Vescovo di Sebastea e martire",
+      "bio": "San Biagio di Sebaste, vescovo di Sebastea e martire."
+    },
+    {
+      "nome": "Sant'Oscar di Brema",
+      "titolo": "Vescovo di Amburgo e di Brema",
+      "bio": "Sant'Oscar di Brema, vescovo di Amburgo e di Brema."
+    },
+    {
+      "nome": "San Simeone il giusto e Sant'Anna",
+      "titolo": "Profeti",
+      "bio": "San Simeone il giusto e Sant'Anna, profeti."
+    },
+    {
+      "nome": "San Celerino di Cartagine",
+      "titolo": "Lettore e martire",
+      "bio": "San Celerino di Cartagine, lettore e martire."
+    },
+    {
+      "nome": "San Leonio",
+      "titolo": "Sacerdote",
+      "bio": "San Leonio, sacerdote."
+    },
+    {
+      "nome": "Santi Teridio e Remedio",
+      "titolo": "Vescovi di Gap",
+      "bio": "Santi Teridio e Remedio, vescovi di Gap."
+    },
+    {
+      "nome": "San Lupicino di Lione",
+      "titolo": "Vescovo di Lione",
+      "bio": "San Lupicino di Lione, vescovo di Lione."
+    },
+    {
+      "nome": "Sant'Adelino",
+      "titolo": "Sacerdote e abate di Chelles",
+      "bio": "Sant'Adelino, sacerdote e abate di Chelles."
+    },
+    {
+      "nome": "Santa Werburga",
+      "titolo": "Badessa",
+      "bio": "Santa Werburga, badessa."
+    },
+    {
+      "nome": "Santa Berlina",
+      "titolo": "Vergine",
+      "bio": "Santa Berlina, vergine."
+    },
+    {
+      "nome": "Beato Elinando",
+      "titolo": "Monaco",
+      "bio": "Beato Elinando, monaco."
+    },
+    {
+      "nome": "Beato Giovanni Nelson",
+      "titolo": "Sacerdote gesuita e martire",
+      "bio": "Beato Giovanni Nelson, sacerdote gesuita e martire."
+    },
+    {
+      "nome": "Santa Claudina Thévenet",
+      "titolo": "Vergine, fondatrice delle Religiose di Gesù-Maria",
+      "bio": "Santa Claudina Thévenet, vergine, fondatrice delle Religiose di Gesù-Maria."
+    },
+    {
+      "nome": "Santa Marie Rivier",
+      "titolo": "Vergine, fondatrice delle Suore della Presentazione di Maria",
+      "bio": "Santa Marie Rivier, vergine, fondatrice delle Suore della Presentazione di Maria."
+    },
+    {
+      "nome": "Beata Maria Helena Stollenwerk",
+      "titolo": "Vergine, fondatrice delle Missionarie serve dello Spirito Santo e delle Suore serve dello ",
+      "bio": "Beata Maria Helena Stollenwerk, vergine, fondatrice delle Missionarie serve dello Spirito Santo e delle Suore serve dello Spirito Santo dell'adorazione perpetua."
+    }
+  ],
+  "02-04": [
+    {
+      "nome": "Sant'Eutichio martire",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Sant'Eutichio martire."
+    },
+    {
+      "nome": "Santi Papia",
+      "titolo": "Diodoro e Claudiano, martiri di Perge",
+      "bio": "Santi Papia, Diodoro e Claudiano, martiri di Perge."
+    },
+    {
+      "nome": "Santi Filea",
+      "titolo": "Vescovo, e Filoromo, tribuno, martiri",
+      "bio": "Santi Filea, vescovo, e Filoromo, tribuno, martiri."
+    },
+    {
+      "nome": "Sant'Isidoro",
+      "titolo": "Sacerdote ed eremita",
+      "bio": "Sant'Isidoro, sacerdote ed eremita."
+    },
+    {
+      "nome": "Sant'Aventino di Chartres",
+      "titolo": "Vescovo di Chartres",
+      "bio": "Sant'Aventino di Chartres, vescovo di Chartres."
+    },
+    {
+      "nome": "Sant'Aventino",
+      "titolo": "Vescovo di Troyes",
+      "bio": "Sant'Aventino, vescovo di Troyes."
+    },
+    {
+      "nome": "San Rabáno",
+      "titolo": "Detto Mauro, vescovo di Magonza",
+      "bio": "San Rabáno, detto Mauro, vescovo di Magonza."
+    },
+    {
+      "nome": "San Nicola Studita",
+      "titolo": "Monaco, egumeno del Monastero di Studion",
+      "bio": "San Nicola Studita, monaco, egumeno del Monastero di Studion."
+    },
+    {
+      "nome": "San Gilberto di Sempringham",
+      "titolo": "Sacerdote, fondatore dell'abbazia di Sempringham e dell'ordine che porta il suo nome",
+      "bio": "San Gilberto di Sempringham, sacerdote, fondatore dell'abbazia di Sempringham e dell'ordine che porta il suo nome."
+    },
+    {
+      "nome": "Santa Giovanna di Valois",
+      "titolo": "Regina di Francia, fondatrice delle monache Annunciate",
+      "bio": "Santa Giovanna di Valois, regina di Francia, fondatrice delle monache Annunciate."
+    },
+    {
+      "nome": "Beato Giovanni Speed",
+      "titolo": "Martire",
+      "bio": "Beato Giovanni Speed, martire."
+    },
+    {
+      "nome": "San Giuseppe da Leonessa",
+      "titolo": "Sacerdote cappuccino",
+      "bio": "San Giuseppe da Leonessa, sacerdote cappuccino."
+    },
+    {
+      "nome": "San Giovanni de Britto",
+      "titolo": "Sacerdote gesuita e martire",
+      "bio": "San Giovanni de Britto, sacerdote gesuita e martire."
+    }
+  ],
+  "02-05": [
+    {
+      "nome": "Sant'Agata",
+      "titolo": "Vergine e martire",
+      "bio": "Sant'Agata, vergine e martire."
+    },
+    {
+      "nome": "Santi martiri del Ponto",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri del Ponto."
+    },
+    {
+      "nome": "Sant'Alcimo Ecdicio Avito",
+      "titolo": "Vescovo di Vienne",
+      "bio": "Sant'Alcimo Ecdicio Avito, vescovo di Vienne."
+    },
+    {
+      "nome": "San Ingenuino di Sabiona",
+      "titolo": "Primo vescovo di Bressanone",
+      "bio": "San Ingenuino di Sabiona, primo vescovo di Bressanone."
+    },
+    {
+      "nome": "San Luca di Demenna",
+      "titolo": "Abate di rito orientale",
+      "bio": "San Luca di Demenna, abate di rito orientale."
+    },
+    {
+      "nome": "San Saba il Giovane",
+      "titolo": "Monaco",
+      "bio": "San Saba il Giovane, monaco."
+    },
+    {
+      "nome": "Sant'Albuino di Bressanone",
+      "titolo": "Vescovo di Bressanone",
+      "bio": "Sant'Albuino di Bressanone, vescovo di Bressanone."
+    },
+    {
+      "nome": "Sant'Adelaide di Vilich",
+      "titolo": "Prima badessa del monastero di Vilich",
+      "bio": "Sant'Adelaide di Vilich, prima badessa del monastero di Vilich."
+    },
+    {
+      "nome": "passione dei Santi Paolo Miki e cinque compagni",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "passione dei Santi Paolo Miki e cinque compagni."
+    },
+    {
+      "nome": "Beato Francesca Mézière",
+      "titolo": "Vergine e martire",
+      "bio": "Beato Francesca Mézière, vergine e martire."
+    },
+    {
+      "nome": "Beata Elisabetta Canori Mora",
+      "titolo": "Madre di famiglia, del terz'ordine trinitario",
+      "bio": "Beata Elisabetta Canori Mora, madre di famiglia, del terz'ordine trinitario."
+    },
+    {
+      "nome": "San Gesù Mendez Montoya",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Gesù Mendez Montoya, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Eduardo Francisco Pironio",
+      "titolo": "Cardinale e vescovo",
+      "bio": "Beato Eduardo Francisco Pironio, cardinale e vescovo."
+    }
+  ],
+  "02-06": [
+    {
+      "nome": "Santi Paolo Miki (S.J.)",
+      "titolo": "Pietro Battista Blásquez e compagni, martiri del Giappone",
+      "bio": "Santi Paolo Miki (S.J.), Pietro Battista Blásquez e compagni, martiri del Giappone."
+    },
+    {
+      "nome": "Sant'Antoliano",
+      "titolo": "Martire",
+      "bio": "Sant'Antoliano, martire."
+    },
+    {
+      "nome": "San Silvano",
+      "titolo": "Vescovo di Emesa, Luca, diacono, e Mocio, lettore",
+      "bio": "San Silvano, vescovo di Emesa, Luca, diacono, e Mocio, lettore."
+    },
+    {
+      "nome": "Santa Dorotea",
+      "titolo": "Vergine, e San Teofilo, martiri",
+      "bio": "Santa Dorotea, vergine, e San Teofilo, martiri."
+    },
+    {
+      "nome": "San Melis di Ardagh",
+      "titolo": "Vescovo di Ardagh",
+      "bio": "San Melis di Ardagh, vescovo di Ardagh."
+    },
+    {
+      "nome": "San Vedasto di Arras",
+      "titolo": "Vescovo di Arras",
+      "bio": "San Vedasto di Arras, vescovo di Arras."
+    },
+    {
+      "nome": "Sant'Amando di Maastricht",
+      "titolo": "Vescovo di Maastricht",
+      "bio": "Sant'Amando di Maastricht, vescovo di Maastricht."
+    },
+    {
+      "nome": "Santa Renilde",
+      "titolo": "Badessa",
+      "bio": "Santa Renilde, badessa."
+    },
+    {
+      "nome": "San Guarino Foscari",
+      "titolo": "Vescovo di Palestrina",
+      "bio": "San Guarino Foscari, vescovo di Palestrina."
+    },
+    {
+      "nome": "San Brinolfo",
+      "titolo": "Vescovo di Skara",
+      "bio": "San Brinolfo, vescovo di Skara."
+    },
+    {
+      "nome": "Beato Angelo da Furci",
+      "titolo": "Sacerdote agostiniano",
+      "bio": "Beato Angelo da Furci, sacerdote agostiniano."
+    },
+    {
+      "nome": "Sant'Alfonso Maria Fusco",
+      "titolo": "Sacerdote, fondatore delle Suore di San Giovanni Battista",
+      "bio": "Sant'Alfonso Maria Fusco, sacerdote, fondatore delle Suore di San Giovanni Battista."
+    },
+    {
+      "nome": "Beato Francesco Spinelli",
+      "titolo": "Sacerdote, fondatore delle Suore adoratrici del Santissimo Sacramento",
+      "bio": "Beato Francesco Spinelli, sacerdote, fondatore delle Suore adoratrici del Santissimo Sacramento."
+    },
+    {
+      "nome": "San Matteo Correa Magallanes",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Matteo Correa Magallanes, sacerdote e martire."
+    },
+    {
+      "nome": "Beata Rosalia Rendu (Giovanna Maria)",
+      "titolo": "Religiosa",
+      "bio": "Beata Rosalia Rendu (Giovanna Maria), religiosa."
+    }
+  ],
+  "02-07": [
+    {
+      "nome": "San Massimo di Nola",
+      "titolo": "Vescovo di Nola",
+      "bio": "San Massimo di Nola, vescovo di Nola."
+    },
+    {
+      "nome": "San Partenio",
+      "titolo": "Vescovo di Lampsaco",
+      "bio": "San Partenio, vescovo di Lampsaco."
+    },
+    {
+      "nome": "San Mosè",
+      "titolo": "Vescovo dei Saraceni",
+      "bio": "San Mosè, vescovo dei Saraceni."
+    },
+    {
+      "nome": "Santa Giuliana",
+      "titolo": "Vedova",
+      "bio": "Santa Giuliana, vedova."
+    },
+    {
+      "nome": "San Lorenzo Maiorano",
+      "titolo": "Vescovo di Siponto",
+      "bio": "San Lorenzo Maiorano, vescovo di Siponto."
+    },
+    {
+      "nome": "San Riccardo",
+      "titolo": "Pellegrino",
+      "bio": "San Riccardo, pellegrino."
+    },
+    {
+      "nome": "San Luca il Giovane",
+      "titolo": "Monaco eremita",
+      "bio": "San Luca il Giovane, monaco eremita."
+    },
+    {
+      "nome": "Beato Rizzerio da Muccia",
+      "titolo": "Tra i primi e discepoli di san Francesco",
+      "bio": "Beato Rizzerio da Muccia, tra i primi e discepoli di san Francesco."
+    },
+    {
+      "nome": "Beato Antonio da Stroncone",
+      "titolo": "Francescano",
+      "bio": "Beato Antonio da Stroncone, francescano."
+    },
+    {
+      "nome": "Beato Tommaso Sherwood",
+      "titolo": "Martire",
+      "bio": "Beato Tommaso Sherwood, martire."
+    },
+    {
+      "nome": "Beati Guglielmo Salès e Guglielmo Saultemouche",
+      "titolo": "Gesuiti, martiri",
+      "bio": "Beati Guglielmo Salès e Guglielmo Saultemouche, gesuiti, martiri."
+    },
+    {
+      "nome": "Sant'Egidio Maria di San Giuseppe (O.F.M. Alc.)",
+      "titolo": "Religioso francescano",
+      "bio": "Sant'Egidio Maria di San Giuseppe (O.F.M. Alc.), religioso francescano."
+    },
+    {
+      "nome": "San Giovanni da Triora",
+      "titolo": "Sacerdote francescano e martire",
+      "bio": "San Giovanni da Triora, sacerdote francescano e martire."
+    },
+    {
+      "nome": "Beata Maria della Provvidenza Smet",
+      "titolo": "Vergine, fondatrice delle Ausiliatrici delle anime del Purgatorio",
+      "bio": "Beata Maria della Provvidenza Smet, vergine, fondatrice delle Ausiliatrici delle anime del Purgatorio."
+    },
+    {
+      "nome": "Beato San Pio IX",
+      "titolo": "Papa",
+      "bio": "Beato San Pio IX, papa."
+    },
+    {
+      "nome": "Beata Anna Katharina Emmerick",
+      "titolo": "Vergine, canonichessa regolare di Sant'Agostino",
+      "bio": "Beata Anna Katharina Emmerick, vergine, canonichessa regolare di Sant'Agostino."
+    },
+    {
+      "nome": "Beata Anna Maria Adorni",
+      "titolo": "Vedova, fondatrice delle Ancelle dell'Immacolata",
+      "bio": "Beata Anna Maria Adorni, vedova, fondatrice delle Ancelle dell'Immacolata."
+    },
+    {
+      "nome": "Beato Anselmo Polanco Fontecha",
+      "titolo": "Vescovo di Teruel, e Beato Felipe Ripoll Morata, sacerdote, martiri",
+      "bio": "Beato Anselmo Polanco Fontecha, vescovo di Teruel, e Beato Felipe Ripoll Morata, sacerdote, martiri."
+    },
+    {
+      "nome": "Beato Adalberto Nierychlewski",
+      "titolo": "Sacerdote micaelita e martire ad Auschwitz",
+      "bio": "Beato Adalberto Nierychlewski, sacerdote micaelita e martire ad Auschwitz."
+    },
+    {
+      "nome": "Beato Pietro Verhun",
+      "titolo": "Sacerdote e martire in Siberia",
+      "bio": "Beato Pietro Verhun, sacerdote e martire in Siberia."
+    },
+    {
+      "nome": "Beato Alfredo Cremonesi",
+      "titolo": "Sacerdote martire del Pontificio Istituto Missioni Estere",
+      "bio": "Beato Alfredo Cremonesi, sacerdote martire del Pontificio Istituto Missioni Estere."
+    },
+    {
+      "nome": "Beato Felipe Ripoll Morata",
+      "titolo": "Sacerdote martire",
+      "bio": "Beato Felipe Ripoll Morata, sacerdote martire."
+    }
+  ],
+  "02-08": [
+    {
+      "nome": "San Girolamo Emiliani",
+      "titolo": "Fondatore dei Chierici regolari di Somasca",
+      "bio": "San Girolamo Emiliani, fondatore dei Chierici regolari di Somasca."
+    },
+    {
+      "nome": "Santa Giuseppina Bakhita",
+      "titolo": "Vergine della congregazione delle Figlie della carità",
+      "bio": "Santa Giuseppina Bakhita, vergine della congregazione delle Figlie della carità."
+    },
+    {
+      "nome": "Santa Cointa",
+      "titolo": "Martire",
+      "bio": "Santa Cointa, martire."
+    },
+    {
+      "nome": "Sant'Evenzio di Pavia",
+      "titolo": "Vescovo di Pavia",
+      "bio": "Sant'Evenzio di Pavia, vescovo di Pavia."
+    },
+    {
+      "nome": "Santi martiri costantinopolitani",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri costantinopolitani."
+    },
+    {
+      "nome": "San Giacuto",
+      "titolo": "Abate",
+      "bio": "San Giacuto, abate."
+    },
+    {
+      "nome": "Sant'Onorato di Milano",
+      "titolo": "Vescovo di Milano",
+      "bio": "Sant'Onorato di Milano, vescovo di Milano."
+    },
+    {
+      "nome": "San Nicezio di Besançon",
+      "titolo": "Vescovo di Besançon",
+      "bio": "San Nicezio di Besançon, vescovo di Besançon."
+    },
+    {
+      "nome": "San Paolo",
+      "titolo": "Vescovo di Verdun",
+      "bio": "San Paolo, vescovo di Verdun."
+    },
+    {
+      "nome": "Beato Pietro Igneo",
+      "titolo": "Monaco",
+      "bio": "Beato Pietro Igneo, monaco."
+    },
+    {
+      "nome": "Santo Stefano di Grandmont",
+      "titolo": "Abate, fondatore dell'abbazia di Grandmont",
+      "bio": "Santo Stefano di Grandmont, abate, fondatore dell'abbazia di Grandmont."
+    },
+    {
+      "nome": "Beata Giuseppina Bonino",
+      "titolo": "Fondatrice delle Suore della Sacra Famiglia di Savigliano",
+      "bio": "Beata Giuseppina Bonino, fondatrice delle Suore della Sacra Famiglia di Savigliano."
+    },
+    {
+      "nome": "Beata Elisabetta Martinez",
+      "titolo": "Religiosa e fondatrice delle Figlie di Santa Maria di Leuca",
+      "bio": "Beata Elisabetta Martinez, religiosa e fondatrice delle Figlie di Santa Maria di Leuca."
+    }
+  ],
+  "02-09": [
+    {
+      "nome": "Sant'Apollonia",
+      "titolo": "Vergine e martire",
+      "bio": "Sant'Apollonia, vergine e martire."
+    },
+    {
+      "nome": "Santi martiri di Alessandria d'Egitto",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri di Alessandria d'Egitto."
+    },
+    {
+      "nome": "Santi Primo e Donato",
+      "titolo": "Diaconi e martiri",
+      "bio": "Santi Primo e Donato, diaconi e martiri."
+    },
+    {
+      "nome": "San Marone",
+      "titolo": "Sacerdote, abate ed eremita",
+      "bio": "San Marone, sacerdote, abate ed eremita."
+    },
+    {
+      "nome": "San Teilo di Llandaff",
+      "titolo": "Vescovo e abate di Llandaff",
+      "bio": "San Teilo di Llandaff, vescovo e abate di Llandaff."
+    },
+    {
+      "nome": "San Sabino di Canosa",
+      "titolo": "Vescovo di Canosa",
+      "bio": "San Sabino di Canosa, vescovo di Canosa."
+    },
+    {
+      "nome": "Sant'Ansberto di Rouen",
+      "titolo": "Abate di Fontenelle e poi vescovo di Rouen",
+      "bio": "Sant'Ansberto di Rouen, abate di Fontenelle e poi vescovo di Rouen."
+    },
+    {
+      "nome": "Sant'Altone di Altomünster",
+      "titolo": "Fondatore e abate del monastero di Altomünster",
+      "bio": "Sant'Altone di Altomünster, fondatore e abate del monastero di Altomünster."
+    },
+    {
+      "nome": "San Rinaldo di Nocera Umbra (O.S.B. Cam.)",
+      "titolo": "Monaco di Fonte Avellana e vescovo di Nocera Umbra",
+      "bio": "San Rinaldo di Nocera Umbra (O.S.B. Cam.), monaco di Fonte Avellana e vescovo di Nocera Umbra."
+    },
+    {
+      "nome": "San Michele Febres Cordero (F.S.C.r)",
+      "titolo": "Religioso e educatore",
+      "bio": "San Michele Febres Cordero (F.S.C.r), religioso e educatore."
+    },
+    {
+      "nome": "Beato Giacomo Abbondo",
+      "titolo": "Sacerdote",
+      "bio": "Beato Giacomo Abbondo, sacerdote."
+    }
+  ],
+  "02-10": [
+    {
+      "nome": "Santa Scolastica",
+      "titolo": "Vergine",
+      "bio": "Santa Scolastica, vergine."
+    },
+    {
+      "nome": "Santi Caralampo",
+      "titolo": "Porfirio, Dauto e tre compagne, martiri",
+      "bio": "Santi Caralampo, Porfirio, Dauto e tre compagne, martiri."
+    },
+    {
+      "nome": "Santi Zotico e Amanzio",
+      "titolo": "Martiri",
+      "bio": "Santi Zotico e Amanzio, martiri."
+    },
+    {
+      "nome": "San Silvano",
+      "titolo": "Vescovo di Terracina",
+      "bio": "San Silvano, vescovo di Terracina."
+    },
+    {
+      "nome": "San Troiano",
+      "titolo": "Vescovo di Saintes",
+      "bio": "San Troiano, vescovo di Saintes."
+    },
+    {
+      "nome": "San Protadio di Besançon",
+      "titolo": "Vescovo di Besançon",
+      "bio": "San Protadio di Besançon, vescovo di Besançon."
+    },
+    {
+      "nome": "Santa Austreberta",
+      "titolo": "Vergine, badessa di Pavilly",
+      "bio": "Santa Austreberta, vergine, badessa di Pavilly."
+    },
+    {
+      "nome": "San Guglielmo di Malavalle",
+      "titolo": "Eremita a Malavalle",
+      "bio": "San Guglielmo di Malavalle, eremita a Malavalle."
+    },
+    {
+      "nome": "San José Sánchez del Río",
+      "titolo": "Laico martire",
+      "bio": "San José Sánchez del Río, laico martire."
+    },
+    {
+      "nome": "Beato Ugo di Fosses",
+      "titolo": "Abate di Saint-Maur-des-Fossés e Prémontré",
+      "bio": "Beato Ugo di Fosses, abate di Saint-Maur-des-Fossés e Prémontré."
+    },
+    {
+      "nome": "Beata Chiara",
+      "titolo": "Vedova",
+      "bio": "Beata Chiara, vedova."
+    },
+    {
+      "nome": "Beato Pietro Frémond e cinque compagni martiri",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Beato Pietro Frémond e cinque compagni martiri."
+    },
+    {
+      "nome": "Beata Eusebia Palomino Yenes",
+      "titolo": "Vergine delle Figlie di Maria Ausiliatrice",
+      "bio": "Beata Eusebia Palomino Yenes, vergine delle Figlie di Maria Ausiliatrice."
+    },
+    {
+      "nome": "Beato Alojzije Viktor Stepinac",
+      "titolo": "Arcivescovo di Zagabria",
+      "bio": "Beato Alojzije Viktor Stepinac, arcivescovo di Zagabria."
+    }
+  ],
+  "02-11": [
+    {
+      "nome": "Beata Vergine Maria di Lourdes",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Beata Vergine Maria di Lourdes."
+    },
+    {
+      "nome": "Santa Sotere",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Sotere, vergine e martire."
+    },
+    {
+      "nome": "Santi martiri di Numidia",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri di Numidia."
+    },
+    {
+      "nome": "San Castrese di Sessa",
+      "titolo": "Martire",
+      "bio": "San Castrese di Sessa, martire."
+    },
+    {
+      "nome": "San Secondino",
+      "titolo": "Vescovo di Eca",
+      "bio": "San Secondino, vescovo di Eca."
+    },
+    {
+      "nome": "San Severino",
+      "titolo": "Abate di Agauno",
+      "bio": "San Severino, abate di Agauno."
+    },
+    {
+      "nome": "San Gregorio II",
+      "titolo": "Papa",
+      "bio": "San Gregorio II, papa."
+    },
+    {
+      "nome": "San Pasquale I",
+      "titolo": "Papa",
+      "bio": "San Pasquale I, papa."
+    },
+    {
+      "nome": "Sant'Ardano",
+      "titolo": "Abate del monastero di Tournus",
+      "bio": "Sant'Ardano, abate del monastero di Tournus."
+    },
+    {
+      "nome": "San Pietro Maldonado",
+      "titolo": "Sacerdote e martire in Messico",
+      "bio": "San Pietro Maldonado, sacerdote e martire in Messico."
+    },
+    {
+      "nome": "Beato Tobia Borras Romeu",
+      "titolo": "Religioso dei fatebenefratelli e martire",
+      "bio": "Beato Tobia Borras Romeu, religioso dei fatebenefratelli e martire."
+    }
+  ],
+  "02-12": [
+    {
+      "nome": "Santi martiri di Abitina",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri di Abitina."
+    },
+    {
+      "nome": "Sant'Eulalia di Barcellona",
+      "titolo": "Vergine e martire di Barcellona",
+      "bio": "Sant'Eulalia di Barcellona, vergine e martire di Barcellona."
+    },
+    {
+      "nome": "San Melezio di Antiochia",
+      "titolo": "Vescovo di Sebastea, poi di Berea e poi patriarca di Antiochia",
+      "bio": "San Melezio di Antiochia, vescovo di Sebastea, poi di Berea e poi patriarca di Antiochia."
+    },
+    {
+      "nome": "San Benedetto d'Aniane",
+      "titolo": "Abate di Aniane",
+      "bio": "San Benedetto d'Aniane, abate di Aniane."
+    },
+    {
+      "nome": "Sant'Antonio Cauleas",
+      "titolo": "Vescovo di Costantinopoli",
+      "bio": "Sant'Antonio Cauleas, vescovo di Costantinopoli."
+    },
+    {
+      "nome": "Beata Ombelina di Jully",
+      "titolo": "Priora di Jully-les-Nonnains",
+      "bio": "Beata Ombelina di Jully, priora di Jully-les-Nonnains."
+    },
+    {
+      "nome": "San Ludano",
+      "titolo": "Pellegrino",
+      "bio": "San Ludano, pellegrino."
+    },
+    {
+      "nome": "Beati Thomas Hemerford",
+      "titolo": "Giacomo Fenn, Giovanni Nutter, Giovanni Munden e Giorgio Haydock], sacerdoti e martiri d'I",
+      "bio": "Beati Thomas Hemerford, Giacomo Fenn, Giovanni Nutter, Giovanni Munden e Giorgio Haydock], sacerdoti e martiri d'Inghilterra."
+    }
+  ],
+  "02-13": [
+    {
+      "nome": "San Martiniano di Atene",
+      "titolo": "Vescovo di Atene",
+      "bio": "San Martiniano di Atene, vescovo di Atene."
+    },
+    {
+      "nome": "San Castore di Karden",
+      "titolo": "Sacerdote ed eremita",
+      "bio": "San Castore di Karden, sacerdote ed eremita."
+    },
+    {
+      "nome": "San Benigno",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Benigno, sacerdote e martire."
+    },
+    {
+      "nome": "Santo Stefano di Lione",
+      "titolo": "Vescovo di Lione",
+      "bio": "Santo Stefano di Lione, vescovo di Lione."
+    },
+    {
+      "nome": "Santo Stefano",
+      "titolo": "Abate di Rieti",
+      "bio": "Santo Stefano, abate di Rieti."
+    },
+    {
+      "nome": "San Gosberto di Osnabrück",
+      "titolo": "Vescovo di Osnabrück",
+      "bio": "San Gosberto di Osnabrück, vescovo di Osnabrück."
+    },
+    {
+      "nome": "San Guimerra di Carcassonne",
+      "titolo": "Vescovo di Carcassonne",
+      "bio": "San Guimerra di Carcassonne, vescovo di Carcassonne."
+    },
+    {
+      "nome": "San Fulcrano di Lodève",
+      "titolo": "Vescovo di Lodève",
+      "bio": "San Fulcrano di Lodève, vescovo di Lodève."
+    },
+    {
+      "nome": "San Gilberto di Meaux",
+      "titolo": "Vescovo di Meaux",
+      "bio": "San Gilberto di Meaux, vescovo di Meaux."
+    },
+    {
+      "nome": "Sant'Apollo",
+      "titolo": "Evangelizzatore personaggio del Nuovo Testamento",
+      "bio": "Sant'Apollo, evangelizzatore personaggio del Nuovo Testamento."
+    },
+    {
+      "nome": "Beato Giordano di Sassonia",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Giordano di Sassonia, sacerdote domenicano."
+    },
+    {
+      "nome": "Beata Cristina Semenzi da Calvisano",
+      "titolo": "Vedova, terziaria agostiniana",
+      "bio": "Beata Cristina Semenzi da Calvisano, vedova, terziaria agostiniana."
+    },
+    {
+      "nome": "Beata Eustochio Bellini",
+      "titolo": "Vergine benedettina",
+      "bio": "Beata Eustochio Bellini, vergine benedettina."
+    },
+    {
+      "nome": "San Paolo Liu Hanzuo",
+      "titolo": "Sacerdote e martire di Cina",
+      "bio": "San Paolo Liu Hanzuo, sacerdote e martire di Cina."
+    },
+    {
+      "nome": "San Paolo Lê Văn Lộc",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Paolo Lê Văn Lộc, sacerdote e martire."
+    }
+  ],
+  "02-14": [
+    {
+      "nome": "Santi Cirillo e Metodio",
+      "titolo": "Apostoli degli slavi",
+      "bio": "Santi Cirillo e Metodio, apostoli degli slavi."
+    },
+    {
+      "nome": "San Valentino di Terni",
+      "titolo": "Vescovo e martire",
+      "bio": "San Valentino di Terni, vescovo e martire."
+    },
+    {
+      "nome": "San Vitale di Spoleto",
+      "titolo": "Martire",
+      "bio": "San Vitale di Spoleto, martire."
+    },
+    {
+      "nome": "San Zenone di Roma",
+      "titolo": "Martire",
+      "bio": "San Zenone di Roma, martire."
+    },
+    {
+      "nome": "Santi Bassiano",
+      "titolo": "Tonione, Proto, Lucio, Cirione, Agatone, Mosè, Dionigi e Ammonio, martiri",
+      "bio": "Santi Bassiano, Tonione, Proto, Lucio, Cirione, Agatone, Mosè, Dionigi e Ammonio, martiri."
+    },
+    {
+      "nome": "Sant'Eleucadio",
+      "titolo": "Vescovo di Ravenna",
+      "bio": "Sant'Eleucadio, vescovo di Ravenna."
+    },
+    {
+      "nome": "Sant'Aussenzio di Bitinia",
+      "titolo": "Sacerdote e archimandrita",
+      "bio": "Sant'Aussenzio di Bitinia, sacerdote e archimandrita."
+    },
+    {
+      "nome": "San Nostriano di Napoli",
+      "titolo": "Vescovo di Napoli",
+      "bio": "San Nostriano di Napoli, vescovo di Napoli."
+    },
+    {
+      "nome": "Sant'Antonino di Sorrento",
+      "titolo": "Abate",
+      "bio": "Sant'Antonino di Sorrento, abate."
+    },
+    {
+      "nome": "San Giovanni Battista della Concezione",
+      "titolo": "Sacerdote, riformatore dell'Ordine della Santissima Trinità",
+      "bio": "San Giovanni Battista della Concezione, sacerdote, riformatore dell'Ordine della Santissima Trinità."
+    },
+    {
+      "nome": "Beato Vincenzo Vilar David",
+      "titolo": "Martire",
+      "bio": "Beato Vincenzo Vilar David, martire."
+    }
+  ],
+  "02-15": [
+    {
+      "nome": "Sant'Onesimo (discepolo di San Paolo)",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Sant'Onesimo (discepolo di San Paolo)."
+    },
+    {
+      "nome": "Santi Faustino e Giovita",
+      "titolo": "Martiri",
+      "bio": "Santi Faustino e Giovita, martiri."
+    },
+    {
+      "nome": "Santi Isicio",
+      "titolo": "Giuseppe, Zosimo, Baralo e Agape, martiri",
+      "bio": "Santi Isicio, Giuseppe, Zosimo, Baralo e Agape, martiri."
+    },
+    {
+      "nome": "Santa Giorgia",
+      "titolo": "Vergine",
+      "bio": "Santa Giorgia, vergine."
+    },
+    {
+      "nome": "San Quinidio",
+      "titolo": "Vescovo di Vaison",
+      "bio": "San Quinidio, vescovo di Vaison."
+    },
+    {
+      "nome": "San Severo",
+      "titolo": "Sacerdote",
+      "bio": "San Severo, sacerdote."
+    },
+    {
+      "nome": "San Decoroso",
+      "titolo": "Vescovo di Capua",
+      "bio": "San Decoroso, vescovo di Capua."
+    },
+    {
+      "nome": "San Wilfrido della Gherardesca",
+      "titolo": "Abate",
+      "bio": "San Wilfrido della Gherardesca, abate."
+    },
+    {
+      "nome": "San Sigfrido di Vaxjo (O.S.B.)",
+      "titolo": "Vescovo di Växjö, apostolo di Svezia",
+      "bio": "San Sigfrido di Vaxjo (O.S.B.), vescovo di Växjö, apostolo di Svezia."
+    },
+    {
+      "nome": "Beato Angelo Scarpetti",
+      "titolo": "Sacerdote agostiniano",
+      "bio": "Beato Angelo Scarpetti, sacerdote agostiniano."
+    },
+    {
+      "nome": "San Claudio de La Colombière",
+      "titolo": "Sacerdote gesuita",
+      "bio": "San Claudio de La Colombière, sacerdote gesuita."
+    },
+    {
+      "nome": "Beato Michele Sopocko",
+      "titolo": "Sacerdote, fondatore delle Suore di Gesù misericordioso",
+      "bio": "Beato Michele Sopocko, sacerdote, fondatore delle Suore di Gesù misericordioso."
+    }
+  ],
+  "02-16": [
+    {
+      "nome": "Santa Giuliana di Nicomedia",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Giuliana di Nicomedia, vergine e martire."
+    },
+    {
+      "nome": "Santi Elia",
+      "titolo": "Geremia, Isaia, Samuele e Daniele e compagni, martiri",
+      "bio": "Santi Elia, Geremia, Isaia, Samuele e Daniele e compagni, martiri."
+    },
+    {
+      "nome": "San Maruta",
+      "titolo": "Arcivescovo di Martiropoli",
+      "bio": "San Maruta, arcivescovo di Martiropoli."
+    },
+    {
+      "nome": "Beata Filippa Mareri",
+      "titolo": "Vergine, fondatrice del monastero delle francescane di Borgo San Pietro",
+      "bio": "Beata Filippa Mareri, vergine, fondatrice del monastero delle francescane di Borgo San Pietro."
+    },
+    {
+      "nome": "Beato Nicola Paglia",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Nicola Paglia, sacerdote domenicano."
+    },
+    {
+      "nome": "Beato Giuseppe Allamano",
+      "titolo": "Sacerdote, fondatore dei missionari delle missionarie della Consolata",
+      "bio": "Beato Giuseppe Allamano, sacerdote, fondatore dei missionari delle missionarie della Consolata."
+    }
+  ],
+  "02-17": [
+    {
+      "nome": "Sette santi fondatori dei Servi di Maria",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Sette santi fondatori dei Servi di Maria."
+    },
+    {
+      "nome": "San Teodoro Tirone anche conosciuto come San Teodoro di Amasea",
+      "titolo": "Martire",
+      "bio": "San Teodoro Tirone anche conosciuto come San Teodoro di Amasea, martire."
+    },
+    {
+      "nome": "San Bonoso",
+      "titolo": "Vescovo di Treviri",
+      "bio": "San Bonoso, vescovo di Treviri."
+    },
+    {
+      "nome": "San Mesrop Mashtots",
+      "titolo": "Monaco armeno",
+      "bio": "San Mesrop Mashtots, monaco armeno."
+    },
+    {
+      "nome": "San Flaviano di Costantinopoli",
+      "titolo": "Vescovo di Costantinopoli",
+      "bio": "San Flaviano di Costantinopoli, vescovo di Costantinopoli."
+    },
+    {
+      "nome": "San Fintano",
+      "titolo": "Abate e fondatore del monastero di Cluain Ednech",
+      "bio": "San Fintano, abate e fondatore del monastero di Cluain Ednech."
+    },
+    {
+      "nome": "San Finan di Lindisfarne",
+      "titolo": "Vescovo-abate di Lindisfarne",
+      "bio": "San Finan di Lindisfarne, vescovo-abate di Lindisfarne."
+    },
+    {
+      "nome": "San Silvino",
+      "titolo": "Vescovo di Thérouanne",
+      "bio": "San Silvino, vescovo di Thérouanne."
+    },
+    {
+      "nome": "San Costabile Gentilcore",
+      "titolo": "Abate di Cava",
+      "bio": "San Costabile Gentilcore, abate di Cava."
+    },
+    {
+      "nome": "Sant'Evermodo",
+      "titolo": "Premostratense, vescovo di Ratzeburg",
+      "bio": "Sant'Evermodo, premostratense, vescovo di Ratzeburg."
+    },
+    {
+      "nome": "Beato Luca Belludi",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Luca Belludi, sacerdote francescano."
+    },
+    {
+      "nome": "San Pietro Yu Chong-Nyul",
+      "titolo": "Martire di Corea",
+      "bio": "San Pietro Yu Chong-Nyul, martire di Corea."
+    },
+    {
+      "nome": "Beato Antonio Leszczewicz",
+      "titolo": "Sacerdote mariano e martire",
+      "bio": "Beato Antonio Leszczewicz, sacerdote mariano e martire."
+    },
+    {
+      "nome": "Beata Ascensione di San Giusepppe Sánchez Romero battezzata Isabella",
+      "titolo": "Religiosa e martire",
+      "bio": "Beata Ascensione di San Giusepppe Sánchez Romero battezzata Isabella, religiosa e martire."
+    },
+    {
+      "nome": "Beata Rosalia Rendu (Giovanna Maria)",
+      "titolo": "Religiosa",
+      "bio": "Beata Rosalia Rendu (Giovanna Maria), religiosa."
+    }
+  ],
+  "02-18": [
+    {
+      "nome": "Santi Sadoth e centoventotto compagni",
+      "titolo": "Martiri persiani",
+      "bio": "Santi Sadoth e centoventotto compagni, martiri persiani."
+    },
+    {
+      "nome": "Sant'Eladio di Toledo",
+      "titolo": "Vescovo di Toledo",
+      "bio": "Sant'Eladio di Toledo, vescovo di Toledo."
+    },
+    {
+      "nome": "San Tarasio di Costantinopoli",
+      "titolo": "Vescovo di Costantinopoli",
+      "bio": "San Tarasio di Costantinopoli, vescovo di Costantinopoli."
+    },
+    {
+      "nome": "Sant'Angilberto di Centula (O.S.B.)",
+      "titolo": "Abate di Saint-Riquier",
+      "bio": "Sant'Angilberto di Centula (O.S.B.), abate di Saint-Riquier."
+    },
+    {
+      "nome": "San Teotonio di Coimbra",
+      "titolo": "Fondatore dei Canonici regolari della Santa Croce",
+      "bio": "San Teotonio di Coimbra, fondatore dei Canonici regolari della Santa Croce."
+    },
+    {
+      "nome": "Beato Giovanni da Fiesole",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Giovanni da Fiesole, sacerdote domenicano."
+    },
+    {
+      "nome": "Beato Guglielmo Harrington",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Guglielmo Harrington, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Giovanni Pibhush",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giovanni Pibhush, sacerdote e martire."
+    },
+    {
+      "nome": "San Francesco Regis Clet (C.M.)",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Francesco Regis Clet (C.M.), sacerdote e martire."
+    },
+    {
+      "nome": "San Giovanni Pietro Neel",
+      "titolo": "Sacerdote delle Missioni Estere di Parigi, Martino Wu Xuesheng, catechista, Giovanni Zhang",
+      "bio": "San Giovanni Pietro Neel, sacerdote delle Missioni Estere di Parigi, Martino Wu Xuesheng, catechista, Giovanni Zhang Tianshen, neofita e Giovanni Chen Xianheng martiri."
+    },
+    {
+      "nome": "Santa Geltrude Comensoli",
+      "titolo": "Vergine, fondatrice delle Suore sacramentine",
+      "bio": "Santa Geltrude Comensoli, vergine, fondatrice delle Suore sacramentine."
+    },
+    {
+      "nome": "Beato Giorgio Kashira",
+      "titolo": "Sacerdote mariano e martire",
+      "bio": "Beato Giorgio Kashira, sacerdote mariano e martire."
+    }
+  ],
+  "02-19": [
+    {
+      "nome": "San Quodvultdeus",
+      "titolo": "Vescovo di Cartagine",
+      "bio": "San Quodvultdeus, vescovo di Cartagine."
+    },
+    {
+      "nome": "Santi martiri di Palestina",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri di Palestina."
+    },
+    {
+      "nome": "San Mansueto Savelli",
+      "titolo": "Vescovo di Milano e confessore",
+      "bio": "San Mansueto Savelli, vescovo di Milano e confessore."
+    },
+    {
+      "nome": "San Barbato di Benevento",
+      "titolo": "Vescovo di Milano",
+      "bio": "San Barbato di Benevento, vescovo di Milano."
+    },
+    {
+      "nome": "San Giorgio",
+      "titolo": "Monaco aquitano",
+      "bio": "San Giorgio, monaco aquitano."
+    },
+    {
+      "nome": "San Proclo",
+      "titolo": "Monaco",
+      "bio": "San Proclo, monaco."
+    },
+    {
+      "nome": "Deposizione del Beato Bonifacio di Losanna",
+      "titolo": "Già vescovo di Losanna",
+      "bio": "Deposizione del Beato Bonifacio di Losanna, già vescovo di Losanna."
+    },
+    {
+      "nome": "San Corrado Confalonieri (T.O.R.)",
+      "titolo": "Eremita",
+      "bio": "San Corrado Confalonieri (T.O.R.), eremita."
+    },
+    {
+      "nome": "Beato Alvaro da Cordova",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Alvaro da Cordova, sacerdote domenicano."
+    },
+    {
+      "nome": "Beata Elisabetta Picenardi",
+      "titolo": "Vergine, servita",
+      "bio": "Beata Elisabetta Picenardi, vergine, servita."
+    },
+    {
+      "nome": "Santa Lucia Yi Zhenmei",
+      "titolo": "Vergine e martire in Cina",
+      "bio": "Santa Lucia Yi Zhenmei, vergine e martire in Cina."
+    },
+    {
+      "nome": "Beato Giuseppe Zapłata",
+      "titolo": "Religioso dei fratelli del Sacro Cuore di Gesù e martire",
+      "bio": "Beato Giuseppe Zapłata, religioso dei fratelli del Sacro Cuore di Gesù e martire."
+    }
+  ],
+  "02-20": [
+    {
+      "nome": "San Serapione",
+      "titolo": "Martire",
+      "bio": "San Serapione, martire."
+    },
+    {
+      "nome": "Santi cinque martiri di Tiro",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi cinque martiri di Tiro."
+    },
+    {
+      "nome": "San Tirannione",
+      "titolo": "Vescovo di Tiro e martire",
+      "bio": "San Tirannione, vescovo di Tiro e martire."
+    },
+    {
+      "nome": "Sant'Eleuterio di Tournai",
+      "titolo": "Confessore, vescovo di Tournai",
+      "bio": "Sant'Eleuterio di Tournai, confessore, vescovo di Tournai."
+    },
+    {
+      "nome": "Sant'Eucherio",
+      "titolo": "Vescovo di Orléans",
+      "bio": "Sant'Eucherio, vescovo di Orléans."
+    },
+    {
+      "nome": "San Leone il Taumaturgo (O.S.B.)",
+      "titolo": "Vescovo di Catania",
+      "bio": "San Leone il Taumaturgo (O.S.B.), vescovo di Catania."
+    },
+    {
+      "nome": "Santa Giacinta Marto",
+      "titolo": "Veggente di Fatima",
+      "bio": "Santa Giacinta Marto, veggente di Fatima."
+    },
+    {
+      "nome": "Beata Stanisława Rodzińska",
+      "titolo": "Vergine della congregazione delle Suore di San Domenico e martire",
+      "bio": "Beata Stanisława Rodzińska, vergine della congregazione delle Suore di San Domenico e martire."
+    }
+  ],
+  "02-21": [
+    {
+      "nome": "San Pier Damiani (O.S.B. Cam.)",
+      "titolo": "Vescovo di Ostia e dottore della Chiesa",
+      "bio": "San Pier Damiani (O.S.B. Cam.), vescovo di Ostia e dottore della Chiesa."
+    },
+    {
+      "nome": "Sant'Eustazio di Antiochia",
+      "titolo": "Vescovo di Antiochia",
+      "bio": "Sant'Eustazio di Antiochia, vescovo di Antiochia."
+    },
+    {
+      "nome": "San Germano",
+      "titolo": "Abate",
+      "bio": "San Germano, abate."
+    },
+    {
+      "nome": "Beato Tommaso Pormort",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Tommaso Pormort, sacerdote e martire."
+    },
+    {
+      "nome": "San Roberto Southwell (S.J.)",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Roberto Southwell (S.J.), sacerdote e martire."
+    },
+    {
+      "nome": "Beato Noël Pinot",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Noël Pinot, sacerdote e martire."
+    },
+    {
+      "nome": "Beata Maria Enrichetta Dominici",
+      "titolo": "Superiora delle Suore di Sant'Anna",
+      "bio": "Beata Maria Enrichetta Dominici, superiora delle Suore di Sant'Anna."
+    }
+  ],
+  "02-22": [
+    {
+      "nome": "festa della Cattedra di San Pietro",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "festa della Cattedra di San Pietro."
+    },
+    {
+      "nome": "San Papia di Gerapoli",
+      "titolo": "Vescovo di Gerapoli di Frigia",
+      "bio": "San Papia di Gerapoli, vescovo di Gerapoli di Frigia."
+    },
+    {
+      "nome": "San Pascasio",
+      "titolo": "Vescovo di Vienne",
+      "bio": "San Pascasio, vescovo di Vienne."
+    },
+    {
+      "nome": "San Massimiano di Ravenna",
+      "titolo": "Primo arcivescovo di Ravenna",
+      "bio": "San Massimiano di Ravenna, primo arcivescovo di Ravenna."
+    },
+    {
+      "nome": "Beata Isabella di Francia",
+      "titolo": "Vergine, fondatrice delle minoresse",
+      "bio": "Beata Isabella di Francia, vergine, fondatrice delle minoresse."
+    },
+    {
+      "nome": "Santa Margherita da Cortona",
+      "titolo": "Penitente del terz'ordine francescano",
+      "bio": "Santa Margherita da Cortona, penitente del terz'ordine francescano."
+    },
+    {
+      "nome": "Beato Diego Carvalho",
+      "titolo": "Sacerdote gesuita e martire del Giappone",
+      "bio": "Beato Diego Carvalho, sacerdote gesuita e martire del Giappone."
+    },
+    {
+      "nome": "Beata Maria di Gesù d'Oultremont (Emilia d'Oultremont d'Hooghvorst)",
+      "titolo": "Vedova, fondatrice della Società di Maria Riparatrice",
+      "bio": "Beata Maria di Gesù d'Oultremont (Emilia d'Oultremont d'Hooghvorst), vedova, fondatrice della Società di Maria Riparatrice."
+    }
+  ],
+  "02-23": [
+    {
+      "nome": "San Policarpo",
+      "titolo": "Vescovo di Smirne, martire",
+      "bio": "San Policarpo, vescovo di Smirne, martire."
+    },
+    {
+      "nome": "San Sireno",
+      "titolo": "Monaco e martire",
+      "bio": "San Sireno, monaco e martire."
+    },
+    {
+      "nome": "Santa Milburge",
+      "titolo": "Vergine e badessa",
+      "bio": "Santa Milburge, vergine e badessa."
+    },
+    {
+      "nome": "San Villigiso di Magonza",
+      "titolo": "Vescovo di Magonza",
+      "bio": "San Villigiso di Magonza, vescovo di Magonza."
+    },
+    {
+      "nome": "San Giovanni Theristis",
+      "titolo": "Monaco",
+      "bio": "San Giovanni Theristis, monaco."
+    },
+    {
+      "nome": "Beata Rafaela Ybarra de Vilallonga",
+      "titolo": "Fondatrice delle Suore dei Santi Angeli custodi",
+      "bio": "Beata Rafaela Ybarra de Vilallonga, fondatrice delle Suore dei Santi Angeli custodi."
+    },
+    {
+      "nome": "Beato Nicola Tabouillot",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Nicola Tabouillot, sacerdote e martire."
+    },
+    {
+      "nome": "Beata Giuseppina Vannini",
+      "titolo": "Vergine, fondatrice delle Figlie di San Camillo",
+      "bio": "Beata Giuseppina Vannini, vergine, fondatrice delle Figlie di San Camillo."
+    },
+    {
+      "nome": "Beato Ludovico Mzyk",
+      "titolo": "Sacerdote verbita e martire",
+      "bio": "Beato Ludovico Mzyk, sacerdote verbita e martire."
+    },
+    {
+      "nome": "Beato Wincenty Stefan Frelichowski",
+      "titolo": "Sacerdote, martire a Dachau",
+      "bio": "Beato Wincenty Stefan Frelichowski, sacerdote, martire a Dachau."
+    },
+    {
+      "nome": "Beata Giovannina Franchi",
+      "titolo": "Fondatrice della congregazione Suore Infermiere dell'Addolorata di Como",
+      "bio": "Beata Giovannina Franchi, fondatrice della congregazione Suore Infermiere dell'Addolorata di Como."
+    }
+  ],
+  "02-24": [
+    {
+      "nome": "Sant'Evezio",
+      "titolo": "Martire",
+      "bio": "Sant'Evezio, martire."
+    },
+    {
+      "nome": "San Pietro Palatino",
+      "titolo": "Martire",
+      "bio": "San Pietro Palatino, martire."
+    },
+    {
+      "nome": "San Modesto",
+      "titolo": "Vescovo di Treviri",
+      "bio": "San Modesto, vescovo di Treviri."
+    },
+    {
+      "nome": "Sant'Etelberto",
+      "titolo": "Re del Kent",
+      "bio": "Sant'Etelberto, re del Kent."
+    },
+    {
+      "nome": "Beato Costanzo da Fabriano",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Costanzo da Fabriano, sacerdote domenicano."
+    },
+    {
+      "nome": "Beato Marco de' Marconi",
+      "titolo": "Religioso girolamino",
+      "bio": "Beato Marco de' Marconi, religioso girolamino."
+    },
+    {
+      "nome": "Beata Giuseppa Naval Girbès",
+      "titolo": "Vergine",
+      "bio": "Beata Giuseppa Naval Girbès, vergine."
+    },
+    {
+      "nome": "Beato Tommaso Maria Fusco",
+      "titolo": "Sacerdote, fondatore delle Figlie della Carità del Preziosissimo Sangue",
+      "bio": "Beato Tommaso Maria Fusco, sacerdote, fondatore delle Figlie della Carità del Preziosissimo Sangue."
+    },
+    {
+      "nome": "Beata Ascensione del Cuore di Gesù Nicol Goñi",
+      "titolo": "Al secolo Florentina, religiosa e fondatrice della congregazione delle Suore Missionarie D",
+      "bio": "Beata Ascensione del Cuore di Gesù Nicol Goñi, al secolo Florentina, religiosa e fondatrice della congregazione delle Suore Missionarie Domenicane del Rosario."
+    }
+  ],
+  "02-25": [
+    {
+      "nome": "San Nestore di Magydos",
+      "titolo": "Vescovo di Magido e martire",
+      "bio": "San Nestore di Magydos, vescovo di Magido e martire."
+    },
+    {
+      "nome": "San Cesario",
+      "titolo": "Medico",
+      "bio": "San Cesario, medico."
+    },
+    {
+      "nome": "Sant'Aldetrude di Maubeuge",
+      "titolo": "Vergine, badessa di Maubeuge",
+      "bio": "Sant'Aldetrude di Maubeuge, vergine, badessa di Maubeuge."
+    },
+    {
+      "nome": "Santa Valpurga di Heidenheim",
+      "titolo": "Vergine, badessa di Heidenheim",
+      "bio": "Santa Valpurga di Heidenheim, vergine, badessa di Heidenheim."
+    },
+    {
+      "nome": "San Gerlando di Agrigento",
+      "titolo": "Vescovo di Agrigento",
+      "bio": "San Gerlando di Agrigento, vescovo di Agrigento."
+    },
+    {
+      "nome": "Beato Roberto d'Arbrissel",
+      "titolo": "Sacerdote",
+      "bio": "Beato Roberto d'Arbrissel, sacerdote."
+    },
+    {
+      "nome": "Beato Avertano",
+      "titolo": "Pellegrino e religioso carmelitano",
+      "bio": "Beato Avertano, pellegrino e religioso carmelitano."
+    },
+    {
+      "nome": "Beato Sebastiano Aparicio",
+      "titolo": "Francescano",
+      "bio": "Beato Sebastiano Aparicio, francescano."
+    },
+    {
+      "nome": "Beato Domenico Lentini",
+      "titolo": "Sacerdote",
+      "bio": "Beato Domenico Lentini, sacerdote."
+    },
+    {
+      "nome": "Beata Maria Adeodata Pisani",
+      "titolo": "Vergine benedettina, badessa di San Pietro a Medina",
+      "bio": "Beata Maria Adeodata Pisani, vergine benedettina, badessa di San Pietro a Medina."
+    },
+    {
+      "nome": "Beata Maria Ludovica De Angelis",
+      "titolo": "Vergine della congregazione delle Figlie di Nostra Signora della Misericordia",
+      "bio": "Beata Maria Ludovica De Angelis, vergine della congregazione delle Figlie di Nostra Signora della Misericordia."
+    },
+    {
+      "nome": "San Lorenzo Bai Xiaoman",
+      "titolo": "Martire in Cina",
+      "bio": "San Lorenzo Bai Xiaoman, martire in Cina."
+    },
+    {
+      "nome": "San Turibio Romo Gonzalez",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Turibio Romo Gonzalez, sacerdote e martire."
+    },
+    {
+      "nome": "Santi Luigi Versiglia (S.D.B.)",
+      "titolo": "Vescovo di Caristo, e Callisto Caravario (S.D.B.), sacerdote, missionari, martiri",
+      "bio": "Santi Luigi Versiglia (S.D.B.), vescovo di Caristo, e Callisto Caravario (S.D.B.), sacerdote, missionari, martiri."
+    },
+    {
+      "nome": "Beato Ciriaco María Sancha y Hervás",
+      "titolo": "Cardinale arcivescovo",
+      "bio": "Beato Ciriaco María Sancha y Hervás, cardinale arcivescovo."
+    }
+  ],
+  "02-26": [
+    {
+      "nome": "Sant'Alessandro",
+      "titolo": "Vescovo di Alessandria",
+      "bio": "Sant'Alessandro, vescovo di Alessandria."
+    },
+    {
+      "nome": "San Faustiniano",
+      "titolo": "Vescovo di Bologna",
+      "bio": "San Faustiniano, vescovo di Bologna."
+    },
+    {
+      "nome": "San Porfirio di Gaza",
+      "titolo": "Vescovo di Gaza",
+      "bio": "San Porfirio di Gaza, vescovo di Gaza."
+    },
+    {
+      "nome": "Sant'Agricola",
+      "titolo": "Vescovo di Nevers",
+      "bio": "Sant'Agricola, vescovo di Nevers."
+    },
+    {
+      "nome": "San Vittore",
+      "titolo": "Eremita",
+      "bio": "San Vittore, eremita."
+    },
+    {
+      "nome": "Sant'Andrea di Firenze",
+      "titolo": "Vescovo di Firenze",
+      "bio": "Sant'Andrea di Firenze, vescovo di Firenze."
+    },
+    {
+      "nome": "Beato Roberto Drurj",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Roberto Drurj, sacerdote e martire."
+    },
+    {
+      "nome": "Santa Paola di San Giuseppe di Calasanzio",
+      "titolo": "Vergine, fondatrice delle Religiose delle scuole pie",
+      "bio": "Santa Paola di San Giuseppe di Calasanzio, vergine, fondatrice delle Religiose delle scuole pie."
+    },
+    {
+      "nome": "Beata Pietà della Croce (Tommasina Ortiz Real)",
+      "titolo": "Fondatrice delle Suore salesiane del Sacro Cuore di Gesù",
+      "bio": "Beata Pietà della Croce (Tommasina Ortiz Real), fondatrice delle Suore salesiane del Sacro Cuore di Gesù."
+    }
+  ],
+  "02-27": [
+    {
+      "nome": "San Giuliano di Alessandria",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "San Giuliano di Alessandria."
+    },
+    {
+      "nome": "San Besa",
+      "titolo": "Soldato e martire",
+      "bio": "San Besa, soldato e martire."
+    },
+    {
+      "nome": "Sant'Onorina",
+      "titolo": "Vergine e martire",
+      "bio": "Sant'Onorina, vergine e martire."
+    },
+    {
+      "nome": "San Baldomero di Lione",
+      "titolo": "Suddiacono",
+      "bio": "San Baldomero di Lione, suddiacono."
+    },
+    {
+      "nome": "San Basilio e San Procopio il Decapolita",
+      "titolo": "Monaci",
+      "bio": "San Basilio e San Procopio il Decapolita, monaci."
+    },
+    {
+      "nome": "Sant'Ippolito",
+      "titolo": "Abate e vescovo",
+      "bio": "Sant'Ippolito, abate e vescovo."
+    },
+    {
+      "nome": "San Gregorio di Narek",
+      "titolo": "Monaco, dottore degli Armeni",
+      "bio": "San Gregorio di Narek, monaco, dottore degli Armeni."
+    },
+    {
+      "nome": "San Luca di Messina",
+      "titolo": "Abate del Monastero del Santissimo Salvatore",
+      "bio": "San Luca di Messina, abate del Monastero del Santissimo Salvatore."
+    },
+    {
+      "nome": "Sant'Anna Line",
+      "titolo": "Vedova e martire, e beati Marco Barkworth, benedettino, e Ruggero Filcock, gesuita, sacerd",
+      "bio": "Sant'Anna Line, vedova e martire, e beati Marco Barkworth, benedettino, e Ruggero Filcock, gesuita, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beato Guglielmo Richardson",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Guglielmo Richardson, sacerdote e martire."
+    },
+    {
+      "nome": "Beata Francinaina Cirer Carbonell",
+      "titolo": "Fondatrice delle Suore della carità",
+      "bio": "Beata Francinaina Cirer Carbonell, fondatrice delle Suore della carità."
+    },
+    {
+      "nome": "San Gabriele dell'Addolorata",
+      "titolo": "Accolito, passionista",
+      "bio": "San Gabriele dell'Addolorata, accolito, passionista."
+    },
+    {
+      "nome": "Beata Maria di Gesù Deluil-Martiny",
+      "titolo": "Fondatrice delle Figlie del Cuore di Gesù",
+      "bio": "Beata Maria di Gesù Deluil-Martiny, fondatrice delle Figlie del Cuore di Gesù."
+    },
+    {
+      "nome": "Beata Maria Carità dello Spirito Santo",
+      "titolo": "Fondatrice delle Suore Francescane di Maria Immacolata",
+      "bio": "Beata Maria Carità dello Spirito Santo, fondatrice delle Suore Francescane di Maria Immacolata."
+    }
+  ],
+  "02-28": [
+    {
+      "nome": "Santi martiri di Alessandria",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri di Alessandria."
+    },
+    {
+      "nome": "San Romano di Condat",
+      "titolo": "Eremita e abate di Condat",
+      "bio": "San Romano di Condat, eremita e abate di Condat."
+    },
+    {
+      "nome": "Sante Marana e Cira",
+      "titolo": "Vergini",
+      "bio": "Sante Marana e Cira, vergini."
+    },
+    {
+      "nome": "Beato Daniel Brottier",
+      "titolo": "Sacerdote spiritano",
+      "bio": "Beato Daniel Brottier, sacerdote spiritano."
+    },
+    {
+      "nome": "Beato Timoteo Trojanowski",
+      "titolo": "Frate minore conventuale, martire ad Auschwitz",
+      "bio": "Beato Timoteo Trojanowski, frate minore conventuale, martire ad Auschwitz."
+    }
+  ],
+  "02-29": [
+    {
+      "nome": "Sant'Ilario",
+      "titolo": "Papa e confessore",
+      "bio": "Sant'Ilario, papa e confessore."
+    },
+    {
+      "nome": "Sant'Osvaldo di Worcester",
+      "titolo": "Vescovo di Worcester",
+      "bio": "Sant'Osvaldo di Worcester, vescovo di Worcester."
+    },
+    {
+      "nome": "Beata Antonia da Firenze",
+      "titolo": "Vedova, fondatrice e prima badessa del monastero del Corpus Domini",
+      "bio": "Beata Antonia da Firenze, vedova, fondatrice e prima badessa del monastero del Corpus Domini."
+    },
+    {
+      "nome": "Sant'Agostino Chapdelaine (M.E.P.)",
+      "titolo": "Sacerdote e martire in Cina",
+      "bio": "Sant'Agostino Chapdelaine (M.E.P.), sacerdote e martire in Cina."
+    }
+  ],
+  "03-01": [
+    {
+      "nome": "San Felice III",
+      "titolo": "Papa",
+      "bio": "San Felice III, papa."
+    },
+    {
+      "nome": "Sant'Albino di Angers",
+      "titolo": "Vescovo di Angers",
+      "bio": "Sant'Albino di Angers, vescovo di Angers."
+    },
+    {
+      "nome": "San Davide di Menevia",
+      "titolo": "Vescovo di Saint David's",
+      "bio": "San Davide di Menevia, vescovo di Saint David's."
+    },
+    {
+      "nome": "San Siviardo",
+      "titolo": "Abate",
+      "bio": "San Siviardo, abate."
+    },
+    {
+      "nome": "San Suitberto di Kaiserswerth (O.S.B.)",
+      "titolo": "Vescovo",
+      "bio": "San Suitberto di Kaiserswerth (O.S.B.), vescovo."
+    },
+    {
+      "nome": "San Leone di Bayonne",
+      "titolo": "Vescovo di Bayonne e martire nei paesi Baschi",
+      "bio": "San Leone di Bayonne, vescovo di Bayonne e martire nei paesi Baschi."
+    },
+    {
+      "nome": "San Leoluca di Corleone",
+      "titolo": "Abate",
+      "bio": "San Leoluca di Corleone, abate."
+    },
+    {
+      "nome": "San Rudesindo",
+      "titolo": "Vescovo, abate di Cella Nova",
+      "bio": "San Rudesindo, vescovo, abate di Cella Nova."
+    },
+    {
+      "nome": "Beato Cristoforo da Milano",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Cristoforo da Milano, sacerdote domenicano."
+    },
+    {
+      "nome": "Beata Giovanna Maria Bonomo",
+      "titolo": "Badessa benedettina",
+      "bio": "Beata Giovanna Maria Bonomo, badessa benedettina."
+    },
+    {
+      "nome": "Sant'Agnese Cao Kuiying",
+      "titolo": "Martire in Cina",
+      "bio": "Sant'Agnese Cao Kuiying, martire in Cina."
+    }
+  ],
+  "03-02": [
+    {
+      "nome": "San Troadio",
+      "titolo": "Martire",
+      "bio": "San Troadio, martire."
+    },
+    {
+      "nome": "San Chad di Mercia",
+      "titolo": "Vescovo di Mercia e Lindsey",
+      "bio": "San Chad di Mercia, vescovo di Mercia e Lindsey."
+    },
+    {
+      "nome": "Beato Luca Casali da Nicosia",
+      "titolo": "Monaco",
+      "bio": "Beato Luca Casali da Nicosia, monaco."
+    },
+    {
+      "nome": "Sant'Agnese di Boemia (O.S.C.)",
+      "titolo": "Principessa di Boemia, fondatrice e prima badessa del monastero delle clarisse di Praga",
+      "bio": "Sant'Agnese di Boemia (O.S.C.), principessa di Boemia, fondatrice e prima badessa del monastero delle clarisse di Praga."
+    },
+    {
+      "nome": "Beato Carlo I delle Fiandre",
+      "titolo": "Martire danese",
+      "bio": "Beato Carlo I delle Fiandre, martire danese."
+    },
+    {
+      "nome": "Sant'Angela della Croce Guerrero González (H.C.C.)",
+      "titolo": "Religiosa e fondatrice delle Sorelle della compagnia della Croce",
+      "bio": "Sant'Angela della Croce Guerrero González (H.C.C.), religiosa e fondatrice delle Sorelle della compagnia della Croce."
+    }
+  ],
+  "03-03": [
+    {
+      "nome": "San Marino di Cesarea",
+      "titolo": "Soldato, e Sant'Austerio, senatore, martiri",
+      "bio": "San Marino di Cesarea, soldato, e Sant'Austerio, senatore, martiri."
+    },
+    {
+      "nome": "Santi Emeterio e Cheledonio",
+      "titolo": "Fratelli soldati, martiri",
+      "bio": "Santi Emeterio e Cheledonio, fratelli soldati, martiri."
+    },
+    {
+      "nome": "Santi Cleonico ed Eutropio",
+      "titolo": "Martiri",
+      "bio": "Santi Cleonico ed Eutropio, martiri."
+    },
+    {
+      "nome": "San Tiziano",
+      "titolo": "Vescovo di Brescia",
+      "bio": "San Tiziano, vescovo di Brescia."
+    },
+    {
+      "nome": "San Vinvaleo di Landévennec",
+      "titolo": "Primo abate di Landévennec",
+      "bio": "San Vinvaleo di Landévennec, primo abate di Landévennec."
+    },
+    {
+      "nome": "Sant'Artelaide di Benevento",
+      "titolo": "Vergine",
+      "bio": "Sant'Artelaide di Benevento, vergine."
+    },
+    {
+      "nome": "Sant'Anselmo di Nonantola (O.S.B.)",
+      "titolo": "Fondatore e primo abate di Nonantola",
+      "bio": "Sant'Anselmo di Nonantola (O.S.B.), fondatore e primo abate di Nonantola."
+    },
+    {
+      "nome": "Santa Cunegonda",
+      "titolo": "Imperatrice",
+      "bio": "Santa Cunegonda, imperatrice."
+    },
+    {
+      "nome": "Beato Federico",
+      "titolo": "Sacerdote premostratense",
+      "bio": "Beato Federico, sacerdote premostratense."
+    },
+    {
+      "nome": "Beato Pietro Geremia",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Pietro Geremia, sacerdote domenicano."
+    },
+    {
+      "nome": "Beato Giacomino de' Canepacci",
+      "titolo": "Religioso carmelitano",
+      "bio": "Beato Giacomino de' Canepacci, religioso carmelitano."
+    },
+    {
+      "nome": "Beati Liberato Weiss",
+      "titolo": "Samuele Marzorati e Michele Pio Fasoli, francescani, martiri",
+      "bio": "Beati Liberato Weiss, Samuele Marzorati e Michele Pio Fasoli, francescani, martiri."
+    },
+    {
+      "nome": "Beato Pierre-René Rogue",
+      "titolo": "Sacerdote lazzarista e martire",
+      "bio": "Beato Pierre-René Rogue, sacerdote lazzarista e martire."
+    },
+    {
+      "nome": "Beata Teresa Eustochio Verzeri",
+      "titolo": "Fondatrice delle Figlie del Sacro Cuore",
+      "bio": "Beata Teresa Eustochio Verzeri, fondatrice delle Figlie del Sacro Cuore."
+    },
+    {
+      "nome": "Beato Innocenzo da Berzo",
+      "titolo": "Sacerdote cappuccino",
+      "bio": "Beato Innocenzo da Berzo, sacerdote cappuccino."
+    },
+    {
+      "nome": "Santa Katharine Mary Drexel",
+      "titolo": "Vergine, fondatrice delle Suore del Santissimo Sacramento",
+      "bio": "Santa Katharine Mary Drexel, vergine, fondatrice delle Suore del Santissimo Sacramento."
+    }
+  ],
+  "03-04": [
+    {
+      "nome": "San Casimiro di Cracovia",
+      "titolo": "Laico, figlio del re di Polonia",
+      "bio": "San Casimiro di Cracovia, laico, figlio del re di Polonia."
+    },
+    {
+      "nome": "Santi Fozio",
+      "titolo": "Archelao, Quirino e altri diciassette compagni, martiri",
+      "bio": "Santi Fozio, Archelao, Quirino e altri diciassette compagni, martiri."
+    },
+    {
+      "nome": "San Basino",
+      "titolo": "Vescovo di Treviri",
+      "bio": "San Basino, vescovo di Treviri."
+    },
+    {
+      "nome": "Sant'Appiano",
+      "titolo": "Monaco",
+      "bio": "Sant'Appiano, monaco."
+    },
+    {
+      "nome": "San Pietro Pappacarbone",
+      "titolo": "Abate di Cava e vescovo di Policastro",
+      "bio": "San Pietro Pappacarbone, abate di Cava e vescovo di Policastro."
+    },
+    {
+      "nome": "Beato Umberto III di Savoia",
+      "titolo": "Conte di Savoia",
+      "bio": "Beato Umberto III di Savoia, conte di Savoia."
+    },
+    {
+      "nome": "Beati Cristoforo Bales",
+      "titolo": "Sacerdote, Alessandro Blake e Nicola Horner, martiri",
+      "bio": "Beati Cristoforo Bales, sacerdote, Alessandro Blake e Nicola Horner, martiri."
+    },
+    {
+      "nome": "Beata Placida Viel (Eulalie-Victoire)",
+      "titolo": "Vergine, superiora delle Suore delle Scuole Cristiane della Misericordia",
+      "bio": "Beata Placida Viel (Eulalie-Victoire), vergine, superiora delle Suore delle Scuole Cristiane della Misericordia."
+    },
+    {
+      "nome": "San Giovanni Antonio Farina",
+      "titolo": "Vescovo di Vicenza, fondatore delle Suore maestre di Santa Dorotea, figlie dei Sacri Cuori",
+      "bio": "San Giovanni Antonio Farina, vescovo di Vicenza, fondatore delle Suore maestre di Santa Dorotea, figlie dei Sacri Cuori."
+    },
+    {
+      "nome": "Beati Miecislao Bohatkewicz",
+      "titolo": "Ladislao Mackowiak e Stanislao Pyrtek, sacerdoti e martiri",
+      "bio": "Beati Miecislao Bohatkewicz, Ladislao Mackowiak e Stanislao Pyrtek, sacerdoti e martiri."
+    }
+  ],
+  "03-05": [
+    {
+      "nome": "San Teofilo di Cesarea in Palestina",
+      "titolo": "Vescovo di Cesarea di Palestina",
+      "bio": "San Teofilo di Cesarea in Palestina, vescovo di Cesarea di Palestina."
+    },
+    {
+      "nome": "San Conone l'ortolano",
+      "titolo": "Martire",
+      "bio": "San Conone l'ortolano, martire."
+    },
+    {
+      "nome": "San Lucio I",
+      "titolo": "Papa",
+      "bio": "San Lucio I, papa."
+    },
+    {
+      "nome": "San Foca di Sinope",
+      "titolo": "Martire",
+      "bio": "San Foca di Sinope, martire."
+    },
+    {
+      "nome": "Sant'Adriano",
+      "titolo": "Martire",
+      "bio": "Sant'Adriano, martire."
+    },
+    {
+      "nome": "San Gerasimo",
+      "titolo": "Monaco, anacoreta e fondatore",
+      "bio": "San Gerasimo, monaco, anacoreta e fondatore."
+    },
+    {
+      "nome": "San Ciarano di Saighir",
+      "titolo": "Vescovo di Ossory e abate",
+      "bio": "San Ciarano di Saighir, vescovo di Ossory e abate."
+    },
+    {
+      "nome": "San Virgilio di Arles",
+      "titolo": "Vescovo di Arles",
+      "bio": "San Virgilio di Arles, vescovo di Arles."
+    },
+    {
+      "nome": "Beato Cristoforo Macassoli",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Cristoforo Macassoli, sacerdote francescano."
+    },
+    {
+      "nome": "Beato Geremia da Valacchia",
+      "titolo": "Religioso",
+      "bio": "Beato Geremia da Valacchia, religioso."
+    },
+    {
+      "nome": "San Giovanni Giuseppe della Croce (O.F.M. Alc.)",
+      "titolo": "Sacerdote e confessore",
+      "bio": "San Giovanni Giuseppe della Croce (O.F.M. Alc.), sacerdote e confessore."
+    }
+  ],
+  "03-06": [
+    {
+      "nome": "San Marziano di Tortona",
+      "titolo": "Vescovo di Tortona e martire",
+      "bio": "San Marziano di Tortona, vescovo di Tortona e martire."
+    },
+    {
+      "nome": "San Vittorino",
+      "titolo": "Martire",
+      "bio": "San Vittorino, martire."
+    },
+    {
+      "nome": "San Quiriaco",
+      "titolo": "Sacerdote",
+      "bio": "San Quiriaco, sacerdote."
+    },
+    {
+      "nome": "Sant'Evagrio",
+      "titolo": "Vescovo di Costantinopoli",
+      "bio": "Sant'Evagrio, vescovo di Costantinopoli."
+    },
+    {
+      "nome": "San Giuliano di Toledo",
+      "titolo": "Vescovo di Toledo",
+      "bio": "San Giuliano di Toledo, vescovo di Toledo."
+    },
+    {
+      "nome": "San Fridolino di Säckingen",
+      "titolo": "Sacerdote, abate di Säckingen e missionario",
+      "bio": "San Fridolino di Säckingen, sacerdote, abate di Säckingen e missionario."
+    },
+    {
+      "nome": "San Crodegango di Metz",
+      "titolo": "Vescovo di Metz",
+      "bio": "San Crodegango di Metz, vescovo di Metz."
+    },
+    {
+      "nome": "Santi quarantadue martiri di Amorio",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi quarantadue martiri di Amorio."
+    },
+    {
+      "nome": "Sant'Ollegario di Tarragona",
+      "titolo": "Vescovo di Barcellona e di Tarragona",
+      "bio": "Sant'Ollegario di Tarragona, vescovo di Barcellona e di Tarragona."
+    },
+    {
+      "nome": "Beata Rosa da Viterbo",
+      "titolo": "Vergine del Terz'ordine francescano",
+      "bio": "Beata Rosa da Viterbo, vergine del Terz'ordine francescano."
+    },
+    {
+      "nome": "Santa Coletta di Corbie",
+      "titolo": "Vergine, riformatrice di molti monasteri di clarisse",
+      "bio": "Santa Coletta di Corbie, vergine, riformatrice di molti monasteri di clarisse."
+    }
+  ],
+  "03-07": [
+    {
+      "nome": "Sante Perpetua e Felicita",
+      "titolo": "Martiri",
+      "bio": "Sante Perpetua e Felicita, martiri."
+    },
+    {
+      "nome": "Santi Saturo",
+      "titolo": "Saturnino, Revocato e Secondino, martiri",
+      "bio": "Santi Saturo, Saturnino, Revocato e Secondino, martiri."
+    },
+    {
+      "nome": "Sant'Eubolo",
+      "titolo": "Martire",
+      "bio": "Sant'Eubolo, martire."
+    },
+    {
+      "nome": "Santi Basilio",
+      "titolo": "Eugenio, Agatodoro, Elpidio, Etereo, Capitone ed Efrem, vescovi di Chersoneso, martiri",
+      "bio": "Santi Basilio, Eugenio, Agatodoro, Elpidio, Etereo, Capitone ed Efrem, vescovi di Chersoneso, martiri."
+    },
+    {
+      "nome": "San Paolo il Semplice",
+      "titolo": "Eremita",
+      "bio": "San Paolo il Semplice, eremita."
+    },
+    {
+      "nome": "San Gaudioso di Brescia",
+      "titolo": "Vescovo di Brescia",
+      "bio": "San Gaudioso di Brescia, vescovo di Brescia."
+    },
+    {
+      "nome": "Sant'Ardone Smaragdo",
+      "titolo": "Sacerdote, monaco di Aniane",
+      "bio": "Sant'Ardone Smaragdo, sacerdote, monaco di Aniane."
+    },
+    {
+      "nome": "San Paolo",
+      "titolo": "Vescovo",
+      "bio": "San Paolo, vescovo."
+    },
+    {
+      "nome": "transito di San Tommaso d'Aquino",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "transito di San Tommaso d'Aquino."
+    },
+    {
+      "nome": "Beati Giovanni Larke e Giovanni Ireland",
+      "titolo": "Sacerdoti, e Germano Gardiner, martiri",
+      "bio": "Beati Giovanni Larke e Giovanni Ireland, sacerdoti, e Germano Gardiner, martiri."
+    },
+    {
+      "nome": "Santa Teresa Margherita Redi",
+      "titolo": "Vergine carmelitana",
+      "bio": "Santa Teresa Margherita Redi, vergine carmelitana."
+    },
+    {
+      "nome": "San Giovanni Battista Nam Chong-Sam",
+      "titolo": "Martire coreano",
+      "bio": "San Giovanni Battista Nam Chong-Sam, martire coreano."
+    },
+    {
+      "nome": "San Simeone Berneux",
+      "titolo": "Vescovo di Capso, San Giusto Ranger de Bretenières, San Ludovico Beaulieu e San Pietro Enr",
+      "bio": "San Simeone Berneux, vescovo di Capso, San Giusto Ranger de Bretenières, San Ludovico Beaulieu e San Pietro Enrico Dorie, sacerdoti delle Missioni Estere di Parigi, martiri in Corea."
+    },
+    {
+      "nome": "Beato Leonid Ivanovič Fëdorov",
+      "titolo": "Studita, esarca apostolico di Russia e martire",
+      "bio": "Beato Leonid Ivanovič Fëdorov, studita, esarca apostolico di Russia e martire."
+    }
+  ],
+  "03-08": [
+    {
+      "nome": "San Giovanni di Dio",
+      "titolo": "Religioso, fondatore dei fratelli ospedalieri",
+      "bio": "San Giovanni di Dio, religioso, fondatore dei fratelli ospedalieri."
+    },
+    {
+      "nome": "San Ponzio",
+      "titolo": "Diacono di Cartagine",
+      "bio": "San Ponzio, diacono di Cartagine."
+    },
+    {
+      "nome": "Santi Apollonio e Filemone",
+      "titolo": "Martiri",
+      "bio": "Santi Apollonio e Filemone, martiri."
+    },
+    {
+      "nome": "San Provino di Como",
+      "titolo": "Vescovo di Como",
+      "bio": "San Provino di Como, vescovo di Como."
+    },
+    {
+      "nome": "San Senano di Inis Cathaigh",
+      "titolo": "Abate",
+      "bio": "San Senano di Inis Cathaigh, abate."
+    },
+    {
+      "nome": "San Felice di Dunwich",
+      "titolo": "Vescovo di Dunwich",
+      "bio": "San Felice di Dunwich, vescovo di Dunwich."
+    },
+    {
+      "nome": "San Teofilatto",
+      "titolo": "Arcivescovo di Nicomedia",
+      "bio": "San Teofilatto, arcivescovo di Nicomedia."
+    },
+    {
+      "nome": "Sant'Unfrido",
+      "titolo": "Vescovo di Thérouanne",
+      "bio": "Sant'Unfrido, vescovo di Thérouanne."
+    },
+    {
+      "nome": "San Litifredo I di Pavia",
+      "titolo": "Vescovo di Pavia",
+      "bio": "San Litifredo I di Pavia, vescovo di Pavia."
+    },
+    {
+      "nome": "San Duthac",
+      "titolo": "Vescovo di Ross",
+      "bio": "San Duthac, vescovo di Ross."
+    },
+    {
+      "nome": "San Veremondo",
+      "titolo": "Abate di Hirache",
+      "bio": "San Veremondo, abate di Hirache."
+    },
+    {
+      "nome": "Santo Stefano",
+      "titolo": "Abate",
+      "bio": "Santo Stefano, abate."
+    },
+    {
+      "nome": "Beato Vincenzo Kadłubek",
+      "titolo": "Vescovo di Cracovia",
+      "bio": "Beato Vincenzo Kadłubek, vescovo di Cracovia."
+    },
+    {
+      "nome": "San Faustino dell'Incarnazione (S.P.) (Manuel Míguez González)",
+      "titolo": "Sacerdote E fondatore del Pio istituto calaSanziano",
+      "bio": "San Faustino dell'Incarnazione (S.P.) (Manuel Míguez González), sacerdote E fondatore del Pio istituto calaSanziano."
+    }
+  ],
+  "03-09": [
+    {
+      "nome": "Santa Francesca Romana",
+      "titolo": "Vedova, fondatrice delle Oblate di Tor de' Specchi",
+      "bio": "Santa Francesca Romana, vedova, fondatrice delle Oblate di Tor de' Specchi."
+    },
+    {
+      "nome": "Santi quaranta martiri di Sebaste",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi quaranta martiri di Sebaste."
+    },
+    {
+      "nome": "San Paciano di Barcellona",
+      "titolo": "Vescovo di Barcellona",
+      "bio": "San Paciano di Barcellona, vescovo di Barcellona."
+    },
+    {
+      "nome": "San Vitale di Castronovo",
+      "titolo": "Monaco",
+      "bio": "San Vitale di Castronovo, monaco."
+    },
+    {
+      "nome": "San Brunone Bonifacio di Querfurt (San Bruno di Querfurt)",
+      "titolo": "Vescovo e martire",
+      "bio": "San Brunone Bonifacio di Querfurt (San Bruno di Querfurt), vescovo e martire."
+    },
+    {
+      "nome": "Santa Caterina da Bologna",
+      "titolo": "Vergine, fondatrice e prima badessa del monastero delle clarisse del Corpus Domini a Bolog",
+      "bio": "Santa Caterina da Bologna, vergine, fondatrice e prima badessa del monastero delle clarisse del Corpus Domini a Bologna."
+    },
+    {
+      "nome": "San Domenico Savio",
+      "titolo": "Allievo salesiano",
+      "bio": "San Domenico Savio, allievo salesiano."
+    },
+    {
+      "nome": "Santi Pietro Ch'oe Hyong e Giovanni Battista Chong-Chang-Un",
+      "titolo": "Martiri coreani",
+      "bio": "Santi Pietro Ch'oe Hyong e Giovanni Battista Chong-Chang-Un, martiri coreani."
+    }
+  ],
+  "03-10": [
+    {
+      "nome": "Santi Caio e Alessandro",
+      "titolo": "Martiri",
+      "bio": "Santi Caio e Alessandro, martiri."
+    },
+    {
+      "nome": "San Vittore",
+      "titolo": "Martire",
+      "bio": "San Vittore, martire."
+    },
+    {
+      "nome": "San Macario di Gerusalemme",
+      "titolo": "Vescovo di Gerusalemme",
+      "bio": "San Macario di Gerusalemme, vescovo di Gerusalemme."
+    },
+    {
+      "nome": "San Simplicio",
+      "titolo": "Papa",
+      "bio": "San Simplicio, papa."
+    },
+    {
+      "nome": "San Drottoveo di Parigi",
+      "titolo": "Abate di Saint-Germain-des-Prés",
+      "bio": "San Drottoveo di Parigi, abate di Saint-Germain-des-Prés."
+    },
+    {
+      "nome": "Sant'Attala abate",
+      "titolo": "Abate di Bobbio",
+      "bio": "Sant'Attala abate, abate di Bobbio."
+    },
+    {
+      "nome": "San Giovanni Ogilvie (S.J.)",
+      "titolo": "Sacerdote, missionario e martire",
+      "bio": "San Giovanni Ogilvie (S.J.), sacerdote, missionario e martire."
+    },
+    {
+      "nome": "Santa Maria Eugenia Milleret de Brou",
+      "titolo": "Vergine e fondatrice delle Religiose dell'Assunzione",
+      "bio": "Santa Maria Eugenia Milleret de Brou, vergine e fondatrice delle Religiose dell'Assunzione."
+    },
+    {
+      "nome": "Beato Matteo Nieves",
+      "titolo": "Sacerdote agostiniano e martire",
+      "bio": "Beato Matteo Nieves, sacerdote agostiniano e martire."
+    }
+  ],
+  "03-11": [
+    {
+      "nome": "San Pione",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Pione, sacerdote e martire."
+    },
+    {
+      "nome": "Santi Trofimo e Talo",
+      "titolo": "Martiri",
+      "bio": "Santi Trofimo e Talo, martiri."
+    },
+    {
+      "nome": "San Costantino",
+      "titolo": "III di Britannia e martire",
+      "bio": "San Costantino, III di Britannia e martire."
+    },
+    {
+      "nome": "San Vincenzo",
+      "titolo": "Abate del monastero di San Claudio",
+      "bio": "San Vincenzo, abate del monastero di San Claudio."
+    },
+    {
+      "nome": "San Sofronio di Gerusalemme",
+      "titolo": "Patriarca di Gerusalemme",
+      "bio": "San Sofronio di Gerusalemme, patriarca di Gerusalemme."
+    },
+    {
+      "nome": "San Vindiciano",
+      "titolo": "Vescovo di Cambrai e Arras",
+      "bio": "San Vindiciano, vescovo di Cambrai e Arras."
+    },
+    {
+      "nome": "San Benedetto di Milano",
+      "titolo": "Vescovo di Milano",
+      "bio": "San Benedetto di Milano, vescovo di Milano."
+    },
+    {
+      "nome": "Sant'Oengus",
+      "titolo": "Detto il Culdeo, monaco",
+      "bio": "Sant'Oengus, detto il Culdeo, monaco."
+    },
+    {
+      "nome": "Sant'Eulogio",
+      "titolo": "Sacerdote e martire",
+      "bio": "Sant'Eulogio, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Giovanni Battista Righi da Fabriano",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Giovanni Battista Righi da Fabriano, sacerdote francescano."
+    },
+    {
+      "nome": "Beato Tommaso Atkinson",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Tommaso Atkinson, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Giovanni Kearney",
+      "titolo": "Sacerdote francescano e martire",
+      "bio": "Beato Giovanni Kearney, sacerdote francescano e martire."
+    },
+    {
+      "nome": "San Domenico Cẩm",
+      "titolo": "Sacerdote e martire del Vietnam",
+      "bio": "San Domenico Cẩm, sacerdote e martire del Vietnam."
+    },
+    {
+      "nome": "Santi Marco Chong Ui-Bae",
+      "titolo": "Catechista, e Alessio U Se-Yong",
+      "bio": "Santi Marco Chong Ui-Bae, catechista, e Alessio U Se-Yong."
+    }
+  ],
+  "03-12": [
+    {
+      "nome": "San Massimiliano di Tebessa",
+      "titolo": "Martire di Tebessa",
+      "bio": "San Massimiliano di Tebessa, martire di Tebessa."
+    },
+    {
+      "nome": "Santi Egduno",
+      "titolo": "Sacerdote, Eugenio, Massimo, Domna, Mardonio, Pietro, Smaragdo e Ilario",
+      "bio": "Santi Egduno, sacerdote, Eugenio, Massimo, Domna, Mardonio, Pietro, Smaragdo e Ilario."
+    },
+    {
+      "nome": "Santi Pietro",
+      "titolo": "Doroteo e Gorgonio, martiri",
+      "bio": "Santi Pietro, Doroteo e Gorgonio, martiri."
+    },
+    {
+      "nome": "Sant'Innocenzo I",
+      "titolo": "Papa",
+      "bio": "Sant'Innocenzo I, papa."
+    },
+    {
+      "nome": "San Paolo Aureliano",
+      "titolo": "Primo vescovo di Saint-Pol-de-Léon",
+      "bio": "San Paolo Aureliano, primo vescovo di Saint-Pol-de-Léon."
+    },
+    {
+      "nome": "natale di San Gregorio Magno",
+      "titolo": "Papa",
+      "bio": "natale di San Gregorio Magno, papa."
+    },
+    {
+      "nome": "San Teofane il Cronografo o il Confessore",
+      "titolo": "Monaco, storico e asceta",
+      "bio": "San Teofane il Cronografo o il Confessore, monaco, storico e asceta."
+    },
+    {
+      "nome": "Sant'Elfego il Vecchio",
+      "titolo": "Vescovo di Winchester",
+      "bio": "Sant'Elfego il Vecchio, vescovo di Winchester."
+    },
+    {
+      "nome": "Santa Fina da San Gimignano",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santa Fina da San Gimignano."
+    },
+    {
+      "nome": "San Simeone il Nuovo Teologo",
+      "titolo": "Abate, sacerdote e mistico",
+      "bio": "San Simeone il Nuovo Teologo, abate, sacerdote e mistico."
+    },
+    {
+      "nome": "Beato Girolamo Gherarducci",
+      "titolo": "Sacerdote agostiniano",
+      "bio": "Beato Girolamo Gherarducci, sacerdote agostiniano."
+    },
+    {
+      "nome": "Beata Giustina Francucci Bezzoli",
+      "titolo": "Vergine benedettina",
+      "bio": "Beata Giustina Francucci Bezzoli, vergine benedettina."
+    },
+    {
+      "nome": "San Giuseppe Zhang Dapeng",
+      "titolo": "Martire",
+      "bio": "San Giuseppe Zhang Dapeng, martire."
+    },
+    {
+      "nome": "Beata Aniela Salawa",
+      "titolo": "Vergine del Terz'ordine francescano",
+      "bio": "Beata Aniela Salawa, vergine del Terz'ordine francescano."
+    },
+    {
+      "nome": "San Luigi Orione (F.D.P.)",
+      "titolo": "Sacerdote, fondatore della Piccola opera della Divina Provvidenza",
+      "bio": "San Luigi Orione (F.D.P.), sacerdote, fondatore della Piccola opera della Divina Provvidenza."
+    },
+    {
+      "nome": "Beato Rutilio Grande García (S.J.)",
+      "titolo": "Arcivescovo martire",
+      "bio": "Beato Rutilio Grande García (S.J.), arcivescovo martire."
+    }
+  ],
+  "03-13": [
+    {
+      "nome": "Santi Macedonio",
+      "titolo": "Sacerdote, Patrizia, sua moglie e Modesta, loro figlia, martiri a Nicomedia",
+      "bio": "Santi Macedonio, sacerdote, Patrizia, sua moglie e Modesta, loro figlia, martiri a Nicomedia."
+    },
+    {
+      "nome": "San Sabino",
+      "titolo": "Martire",
+      "bio": "San Sabino, martire."
+    },
+    {
+      "nome": "Santa Cristina",
+      "titolo": "Martire",
+      "bio": "Santa Cristina, martire."
+    },
+    {
+      "nome": "San Pienzo di Poitiers",
+      "titolo": "Vescovo di Poitiers",
+      "bio": "San Pienzo di Poitiers, vescovo di Poitiers."
+    },
+    {
+      "nome": "San Leandro di Siviglia",
+      "titolo": "Vescovo di Siviglia",
+      "bio": "San Leandro di Siviglia, vescovo di Siviglia."
+    },
+    {
+      "nome": "Sant'Eldrado di Novalesa (O.S.B.)",
+      "titolo": "Abate di Novalesa",
+      "bio": "Sant'Eldrado di Novalesa (O.S.B.), abate di Novalesa."
+    },
+    {
+      "nome": "San Ruderico di Cordova",
+      "titolo": "Sacerdote martire",
+      "bio": "San Ruderico di Cordova, sacerdote martire."
+    },
+    {
+      "nome": "Sant'Ansovino di Camerino",
+      "titolo": "Vescovo di Camerino",
+      "bio": "Sant'Ansovino di Camerino, vescovo di Camerino."
+    },
+    {
+      "nome": "San Pietro II",
+      "titolo": "Abate",
+      "bio": "San Pietro II, abate."
+    },
+    {
+      "nome": "Beato Agnello da Pisa",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Agnello da Pisa, sacerdote francescano."
+    },
+    {
+      "nome": "Beata Francesca Tréhet",
+      "titolo": "Vergine della Congregazione della carità e martire",
+      "bio": "Beata Francesca Tréhet, vergine della Congregazione della carità e martire."
+    }
+  ],
+  "03-14": [
+    {
+      "nome": "Sant'Alessandro",
+      "titolo": "Martire",
+      "bio": "Sant'Alessandro, martire."
+    },
+    {
+      "nome": "San Lazzaro di Milano",
+      "titolo": "Arcivescovo di Milano",
+      "bio": "San Lazzaro di Milano, arcivescovo di Milano."
+    },
+    {
+      "nome": "San Leobino",
+      "titolo": "Vescovo di Chartres",
+      "bio": "San Leobino, vescovo di Chartres."
+    },
+    {
+      "nome": "Santa Matilde di Ringelheim",
+      "titolo": "Regina",
+      "bio": "Santa Matilde di Ringelheim, regina."
+    },
+    {
+      "nome": "Santa Paolina",
+      "titolo": "Religiosa",
+      "bio": "Santa Paolina, religiosa."
+    },
+    {
+      "nome": "Beata Eva di Cornillon",
+      "titolo": "Reclusa",
+      "bio": "Beata Eva di Cornillon, reclusa."
+    },
+    {
+      "nome": "Beato Giacomo Cusmano",
+      "titolo": "Fondatore delle Suore e dei Missionari servi dei poveri",
+      "bio": "Beato Giacomo Cusmano, fondatore delle Suore e dei Missionari servi dei poveri."
+    },
+    {
+      "nome": "Beato Placido Riccardi",
+      "titolo": "Sacerdote benedettino",
+      "bio": "Beato Placido Riccardi, sacerdote benedettino."
+    }
+  ],
+  "03-15": [
+    {
+      "nome": "San Menigno",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "San Menigno."
+    },
+    {
+      "nome": "San Zaccaria",
+      "titolo": "Papa",
+      "bio": "San Zaccaria, papa."
+    },
+    {
+      "nome": "Santa Leocrizia",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Leocrizia, vergine e martire."
+    },
+    {
+      "nome": "San Sisebuto",
+      "titolo": "Abate di Cardeña",
+      "bio": "San Sisebuto, abate di Cardeña."
+    },
+    {
+      "nome": "Beato Guglielmo Hart",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Guglielmo Hart, sacerdote e martire."
+    },
+    {
+      "nome": "Santa Luisa di Marillac",
+      "titolo": "Vedova, fondatrice delle Figlie della carità",
+      "bio": "Santa Luisa di Marillac, vedova, fondatrice delle Figlie della carità."
+    },
+    {
+      "nome": "San Clemente Maria Hofbauer",
+      "titolo": "Sacerdote redentorista",
+      "bio": "San Clemente Maria Hofbauer, sacerdote redentorista."
+    },
+    {
+      "nome": "Beato Jan Balicki",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Jan Balicki, sacerdote e martire."
+    },
+    {
+      "nome": "Sant'Artemide Zatti (S.D.B.)",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Sant'Artemide Zatti (S.D.B.)."
+    }
+  ],
+  "03-16": [
+    {
+      "nome": "Santi Ilario e Taziano",
+      "titolo": "Vescovo di Aquileia, e Taziano, diacono, martiri",
+      "bio": "Santi Ilario e Taziano, vescovo di Aquileia, e Taziano, diacono, martiri."
+    },
+    {
+      "nome": "San Papa",
+      "titolo": "Martire",
+      "bio": "San Papa, martire."
+    },
+    {
+      "nome": "San Giuliano",
+      "titolo": "Martire",
+      "bio": "San Giuliano, martire."
+    },
+    {
+      "nome": "Santa Eusebia",
+      "titolo": "Badessa di Hamage",
+      "bio": "Santa Eusebia, badessa di Hamage."
+    },
+    {
+      "nome": "Sant'Eriberto",
+      "titolo": "Vescovo di Colonia",
+      "bio": "Sant'Eriberto, vescovo di Colonia."
+    },
+    {
+      "nome": "Beato Giovanni Cacciafronte de Sordi",
+      "titolo": "Vescovo di Mantova e di Vicenza e martire",
+      "bio": "Beato Giovanni Cacciafronte de Sordi, vescovo di Mantova e di Vicenza e martire."
+    },
+    {
+      "nome": "Beati Giovanni Amias e Roberto Dalby",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Beati Giovanni Amias e Roberto Dalby, sacerdoti e martiri."
+    },
+    {
+      "nome": "passione di San Giovanni di Brébeuf (S.J.)",
+      "titolo": "Sacerdote martire",
+      "bio": "passione di San Giovanni di Brébeuf (S.J.), sacerdote martire."
+    }
+  ],
+  "03-17": [
+    {
+      "nome": "San Patrizio",
+      "titolo": "Vescovo",
+      "bio": "San Patrizio, vescovo."
+    },
+    {
+      "nome": "Santi martiri di Alessandria d'Egitto",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri di Alessandria d'Egitto."
+    },
+    {
+      "nome": "Sant'Agricola di Chalon-sur-Saône",
+      "titolo": "Vescovo di Chalon",
+      "bio": "Sant'Agricola di Chalon-sur-Saône, vescovo di Chalon."
+    },
+    {
+      "nome": "Santa Gertrude di Nivelles",
+      "titolo": "Badessa di Nivelles",
+      "bio": "Santa Gertrude di Nivelles, badessa di Nivelles."
+    },
+    {
+      "nome": "San Paolo",
+      "titolo": "Monaco",
+      "bio": "San Paolo, monaco."
+    },
+    {
+      "nome": "Beato Corrado di Baviera",
+      "titolo": "Eremita",
+      "bio": "Beato Corrado di Baviera, eremita."
+    },
+    {
+      "nome": "San Giovanni Sarkander",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Giovanni Sarkander, sacerdote e martire."
+    },
+    {
+      "nome": "San Gabriele Lalemant",
+      "titolo": "Sacerdote della Compagnia di Gesù",
+      "bio": "San Gabriele Lalemant, sacerdote della Compagnia di Gesù."
+    },
+    {
+      "nome": "Beato Giovanni Nepomuceno Zegrí y Moreno",
+      "titolo": "Sacerdote, fondatore delle Mercedarie della carità",
+      "bio": "Beato Giovanni Nepomuceno Zegrí y Moreno, sacerdote, fondatore delle Mercedarie della carità."
+    }
+  ],
+  "03-18": [
+    {
+      "nome": "San Cirillo di Gerusalemme",
+      "titolo": "Vescovo di Gerusalemme e dottore della Chiesa",
+      "bio": "San Cirillo di Gerusalemme, vescovo di Gerusalemme e dottore della Chiesa."
+    },
+    {
+      "nome": "Sant'Alessandro di Gerusalemme",
+      "titolo": "Vescovo di Gerusalemme e martire",
+      "bio": "Sant'Alessandro di Gerusalemme, vescovo di Gerusalemme e martire."
+    },
+    {
+      "nome": "San Frediano di Lucca",
+      "titolo": "Vescovo di Lucca",
+      "bio": "San Frediano di Lucca, vescovo di Lucca."
+    },
+    {
+      "nome": "San Leopardo",
+      "titolo": "Eremita",
+      "bio": "San Leopardo, eremita."
+    },
+    {
+      "nome": "San Braulione di Saragozza",
+      "titolo": "Vescovo di Saragozza",
+      "bio": "San Braulione di Saragozza, vescovo di Saragozza."
+    },
+    {
+      "nome": "Sant'Edoardo il Martire",
+      "titolo": "Re degli Inglesi",
+      "bio": "Sant'Edoardo il Martire, re degli Inglesi."
+    },
+    {
+      "nome": "Sant'Anselmo da Baggio (O.S.B. Clun.) (Anselmo II di Lucca)",
+      "titolo": "Cardinale e vescovo di Lucca",
+      "bio": "Sant'Anselmo da Baggio (O.S.B. Clun.) (Anselmo II di Lucca), cardinale e vescovo di Lucca."
+    },
+    {
+      "nome": "San Salvatore da Horta (O.F.M.) (Salvador Pladevall i Bien)",
+      "titolo": "Religioso",
+      "bio": "San Salvatore da Horta (O.F.M.) (Salvador Pladevall i Bien), religioso."
+    },
+    {
+      "nome": "Beati Giovanni Thules",
+      "titolo": "Sacerdote e Ruggero Wrenno, martiri",
+      "bio": "Beati Giovanni Thules, sacerdote e Ruggero Wrenno, martiri."
+    },
+    {
+      "nome": "Beata Marta Le Bouteiller",
+      "titolo": "Vergine, suora delle Scuole Cristiane della Misericordia",
+      "bio": "Beata Marta Le Bouteiller, vergine, suora delle Scuole Cristiane della Misericordia."
+    },
+    {
+      "nome": "Beata Maria Anna Donati",
+      "titolo": "Fondatrice delle Figlie povere di San Giuseppe CalaSanzio",
+      "bio": "Beata Maria Anna Donati, fondatrice delle Figlie povere di San Giuseppe CalaSanzio."
+    }
+  ],
+  "03-19": [
+    {
+      "nome": "solennità di San Giuseppe",
+      "titolo": "Sposo della Beata Vergine Maria",
+      "bio": "solennità di San Giuseppe, sposo della Beata Vergine Maria."
+    },
+    {
+      "nome": "San Giovanni",
+      "titolo": "Abate",
+      "bio": "San Giovanni, abate."
+    },
+    {
+      "nome": "Beato Isnardo da Chiampo",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Isnardo da Chiampo, sacerdote domenicano."
+    },
+    {
+      "nome": "Beato Andrea Gallerani",
+      "titolo": "Fondatore della confraternita della Misericordia",
+      "bio": "Beato Andrea Gallerani, fondatore della confraternita della Misericordia."
+    },
+    {
+      "nome": "Beato Giovanni da Parma",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Giovanni da Parma, sacerdote francescano."
+    },
+    {
+      "nome": "Beata Sibillina Biscossi",
+      "titolo": "Vergine",
+      "bio": "Beata Sibillina Biscossi, vergine."
+    },
+    {
+      "nome": "Beato Marco da Montegallo",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Marco da Montegallo, sacerdote francescano."
+    },
+    {
+      "nome": "Beato Narciso Turchan",
+      "titolo": "Sacerdote francescano e martire",
+      "bio": "Beato Narciso Turchan, sacerdote francescano e martire."
+    },
+    {
+      "nome": "Beato Marcel Callo",
+      "titolo": "Martire a Mauthausen",
+      "bio": "Beato Marcel Callo, martire a Mauthausen."
+    }
+  ],
+  "03-20": [
+    {
+      "nome": "Sant'Archippo di Colossi",
+      "titolo": "Compagno dell'apostolo Paolo",
+      "bio": "Sant'Archippo di Colossi, compagno dell'apostolo Paolo."
+    },
+    {
+      "nome": "Santi Paolo",
+      "titolo": "Cirillo, Eugenio e quattro compagni, martiri",
+      "bio": "Santi Paolo, Cirillo, Eugenio e quattro compagni, martiri."
+    },
+    {
+      "nome": "Sant'Urbicio",
+      "titolo": "Vescovo di Metz",
+      "bio": "Sant'Urbicio, vescovo di Metz."
+    },
+    {
+      "nome": "San Martino di Braga",
+      "titolo": "Filosofo e vescovo di Braga",
+      "bio": "San Martino di Braga, filosofo e vescovo di Braga."
+    },
+    {
+      "nome": "San Cutberto di Lindisfarne",
+      "titolo": "Vescovo di Lindisfarne",
+      "bio": "San Cutberto di Lindisfarne, vescovo di Lindisfarne."
+    },
+    {
+      "nome": "San Vulfranno di Sens",
+      "titolo": "Vescovo di Sens",
+      "bio": "San Vulfranno di Sens, vescovo di Sens."
+    },
+    {
+      "nome": "San Niceta",
+      "titolo": "Vescovo di Apolloniade",
+      "bio": "San Niceta, vescovo di Apolloniade."
+    },
+    {
+      "nome": "Santi martiri di San Saba",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri di San Saba."
+    },
+    {
+      "nome": "Beato Ambrogio Sansedoni",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Ambrogio Sansedoni, sacerdote domenicano."
+    },
+    {
+      "nome": "San Giovanni Nepomuceno",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Giovanni Nepomuceno, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Battista Spagnoli",
+      "titolo": "Sacerdote carmelitano",
+      "bio": "Beato Battista Spagnoli, sacerdote carmelitano."
+    },
+    {
+      "nome": "Beato Ippolito Galantini",
+      "titolo": "Fondatore della Congregazione della Dottrina Cristiana",
+      "bio": "Beato Ippolito Galantini, fondatore della Congregazione della Dottrina Cristiana."
+    },
+    {
+      "nome": "Beate martiri di Laval",
+      "titolo": "Vergine delle Suore della carità di Nostra Signora e martire",
+      "bio": "Beate martiri di Laval, vergine delle Suore della carità di Nostra Signora e martire."
+    },
+    {
+      "nome": "San Francisco Palau y Quer",
+      "titolo": "Sacerdote carmelitano scalzo, fondatore delle Suore carmelitane missionarie e delle Suore ",
+      "bio": "San Francisco Palau y Quer, sacerdote carmelitano scalzo, fondatore delle Suore carmelitane missionarie e delle Suore carmelitane missionarie teresiane."
+    },
+    {
+      "nome": "Santa Maria Josefa Sancho de Guerra",
+      "titolo": "Vergine, fondatrice delle Serve di Gesù della carità",
+      "bio": "Santa Maria Josefa Sancho de Guerra, vergine, fondatrice delle Serve di Gesù della carità."
+    },
+    {
+      "nome": "San Giuseppe Bilczewski",
+      "titolo": "Arcivescovo di Leopoli",
+      "bio": "San Giuseppe Bilczewski, arcivescovo di Leopoli."
+    }
+  ],
+  "03-21": [
+    {
+      "nome": "San Serapione",
+      "titolo": "Anacoreta",
+      "bio": "San Serapione, anacoreta."
+    },
+    {
+      "nome": "Santi martiri alessandrini",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri alessandrini."
+    },
+    {
+      "nome": "San Lupicino",
+      "titolo": "Abate e fondatore",
+      "bio": "San Lupicino, abate e fondatore."
+    },
+    {
+      "nome": "Sant'Edneo",
+      "titolo": "Abate",
+      "bio": "Sant'Edneo, abate."
+    },
+    {
+      "nome": "natale di San Benedetto da Norcia",
+      "titolo": "Abate",
+      "bio": "natale di San Benedetto da Norcia, abate."
+    },
+    {
+      "nome": "San Giacomo",
+      "titolo": "Chiamato il Confessore",
+      "bio": "San Giacomo, chiamato il Confessore."
+    },
+    {
+      "nome": "San Giovanni di Valence",
+      "titolo": "Vescovo di Valence",
+      "bio": "San Giovanni di Valence, vescovo di Valence."
+    },
+    {
+      "nome": "San Nicola di Flüe",
+      "titolo": "Eremita",
+      "bio": "San Nicola di Flüe, eremita."
+    },
+    {
+      "nome": "Beato Tommaso Pilchard",
+      "titolo": "Sacerdote e martire, Beato Guglielmo Pike, martire",
+      "bio": "Beato Tommaso Pilchard, sacerdote e martire, Beato Guglielmo Pike, martire."
+    },
+    {
+      "nome": "Beato Matteo Flathers",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Matteo Flathers, sacerdote e martire."
+    },
+    {
+      "nome": "Sant'Agostino Zhao Rong",
+      "titolo": "Sacerdote e martire",
+      "bio": "Sant'Agostino Zhao Rong, sacerdote e martire."
+    },
+    {
+      "nome": "Santa Benedetta Cambiagio Frassinello",
+      "titolo": "Fondatrice delle Suore benedettine della Provvidenza",
+      "bio": "Santa Benedetta Cambiagio Frassinello, fondatrice delle Suore benedettine della Provvidenza."
+    },
+    {
+      "nome": "Beato Michele Gomez Loza",
+      "titolo": "Laico avvocato martire",
+      "bio": "Beato Michele Gomez Loza, laico avvocato martire."
+    }
+  ],
+  "03-22": [
+    {
+      "nome": "Sant'Epafrodito",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Sant'Epafrodito."
+    },
+    {
+      "nome": "San Paolo di Narbona",
+      "titolo": "Vescovo di Narbona e martire",
+      "bio": "San Paolo di Narbona, vescovo di Narbona e martire."
+    },
+    {
+      "nome": "Santi Callinico e Basilissa",
+      "titolo": "Martiri",
+      "bio": "Santi Callinico e Basilissa, martiri."
+    },
+    {
+      "nome": "San Basilio di Ancira",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Basilio di Ancira, sacerdote e martire."
+    },
+    {
+      "nome": "Santa Lea",
+      "titolo": "Vedova romana",
+      "bio": "Santa Lea, vedova romana."
+    },
+    {
+      "nome": "San Benvenuto Scotivoli",
+      "titolo": "Vescovo di Osimo",
+      "bio": "San Benvenuto Scotivoli, vescovo di Osimo."
+    },
+    {
+      "nome": "San Nicola Owen (S.J.)",
+      "titolo": "Religioso e martire",
+      "bio": "San Nicola Owen (S.J.), religioso e martire."
+    },
+    {
+      "nome": "Beati Martiri di Angers",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beati Martiri di Angers, sacerdote e martire."
+    },
+    {
+      "nome": "Beati Mariano Górecki e Bronislao Komorowski",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Beati Mariano Górecki e Bronislao Komorowski, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beato Clemens August von Galen",
+      "titolo": "Vescovo di Münster",
+      "bio": "Beato Clemens August von Galen, vescovo di Münster."
+    }
+  ],
+  "03-23": [
+    {
+      "nome": "San Turibio de Mogrovejo",
+      "titolo": "Arcivescovo di Lima",
+      "bio": "San Turibio de Mogrovejo, arcivescovo di Lima."
+    },
+    {
+      "nome": "San Fingar o Guignero",
+      "titolo": "Martire",
+      "bio": "San Fingar o Guignero, martire."
+    },
+    {
+      "nome": "Santi Vittoriano",
+      "titolo": "Proconsole, Frumenziano e un altro Frumenziano, martiri",
+      "bio": "Santi Vittoriano, proconsole, Frumenziano e un altro Frumenziano, martiri."
+    },
+    {
+      "nome": "San Walter di San Martino di Pontoise",
+      "titolo": "Primo abate di San Martino a Pontoise",
+      "bio": "San Walter di San Martino di Pontoise, primo abate di San Martino a Pontoise."
+    },
+    {
+      "nome": "Sant'Ottone Frangipane",
+      "titolo": "Eremita",
+      "bio": "Sant'Ottone Frangipane, eremita."
+    },
+    {
+      "nome": "Beato Pietro da Gubbio",
+      "titolo": "Sacerdote agostiniano",
+      "bio": "Beato Pietro da Gubbio, sacerdote agostiniano."
+    },
+    {
+      "nome": "Beato Edmondo Sykes",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Edmondo Sykes, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Pietro Higgins",
+      "titolo": "Sacerdote domenicano e martire",
+      "bio": "Beato Pietro Higgins, sacerdote domenicano e martire."
+    },
+    {
+      "nome": "San Giuseppe Oriol",
+      "titolo": "Sacerdote",
+      "bio": "San Giuseppe Oriol, sacerdote."
+    },
+    {
+      "nome": "Beata Annunciata Cocchetti",
+      "titolo": "Vergine, fondatrice della Suore di Santa Dorotea di Cemmo",
+      "bio": "Beata Annunciata Cocchetti, vergine, fondatrice della Suore di Santa Dorotea di Cemmo."
+    },
+    {
+      "nome": "Santa Rebecca Ar-Rayès",
+      "titolo": "Vergine dell'Ordine Libanese Maronita",
+      "bio": "Santa Rebecca Ar-Rayès, vergine dell'Ordine Libanese Maronita."
+    },
+    {
+      "nome": "Beato Metod Dominik Trčka",
+      "titolo": "Sacerdote redentorista, martire",
+      "bio": "Beato Metod Dominik Trčka, sacerdote redentorista, martire."
+    }
+  ],
+  "03-24": [
+    {
+      "nome": "Santi Timolao",
+      "titolo": "Dionigi, Pauside, Alessandro, Romolo e Alessandro",
+      "bio": "Santi Timolao, Dionigi, Pauside, Alessandro, Romolo e Alessandro."
+    },
+    {
+      "nome": "San Mac Cairthind",
+      "titolo": "Vescovo di Clogher",
+      "bio": "San Mac Cairthind, vescovo di Clogher."
+    },
+    {
+      "nome": "San Severo",
+      "titolo": "Vescovo di Catania",
+      "bio": "San Severo, vescovo di Catania."
+    },
+    {
+      "nome": "San Giovanni del Bastone",
+      "titolo": "Sacerdote e monaco",
+      "bio": "San Giovanni del Bastone, sacerdote e monaco."
+    },
+    {
+      "nome": "Santa Caterina di Svezia",
+      "titolo": "Vergine",
+      "bio": "Santa Caterina di Svezia, vergine."
+    },
+    {
+      "nome": "Beato Diego Giuseppe da Cadice",
+      "titolo": "Cappuccino",
+      "bio": "Beato Diego Giuseppe da Cadice, cappuccino."
+    },
+    {
+      "nome": "Beata Clotilde Micheli",
+      "titolo": "Fondatrice delle Suore degli Angeli",
+      "bio": "Beata Clotilde Micheli, fondatrice delle Suore degli Angeli."
+    },
+    {
+      "nome": "Beata Maria Karłowska",
+      "titolo": "Vergine, fondatrice delle Suore del Divin Pastore della Provvidenza Divina",
+      "bio": "Beata Maria Karłowska, vergine, fondatrice delle Suore del Divin Pastore della Provvidenza Divina."
+    }
+  ],
+  "03-25": [
+    {
+      "nome": "Annunciazione del Signore",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Annunciazione del Signore."
+    },
+    {
+      "nome": "San Disma",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "San Disma."
+    },
+    {
+      "nome": "San Pelagio di Laodicea",
+      "titolo": "Arcivescovo di Laodicea di Siria",
+      "bio": "San Pelagio di Laodicea, arcivescovo di Laodicea di Siria."
+    },
+    {
+      "nome": "San Dula",
+      "titolo": "Martire",
+      "bio": "San Dula, martire."
+    },
+    {
+      "nome": "San Quirino",
+      "titolo": "Martire",
+      "bio": "San Quirino, martire."
+    },
+    {
+      "nome": "Santa Matrona",
+      "titolo": "Martire",
+      "bio": "Santa Matrona, martire."
+    },
+    {
+      "nome": "San Mona di Milano",
+      "titolo": "Vescovo di Milano",
+      "bio": "San Mona di Milano, vescovo di Milano."
+    },
+    {
+      "nome": "Sant'Ermelando",
+      "titolo": "Monaco a Fontanelle",
+      "bio": "Sant'Ermelando, monaco a Fontanelle."
+    },
+    {
+      "nome": "San Nicodemo da Cirò",
+      "titolo": "Eremita",
+      "bio": "San Nicodemo da Cirò, eremita."
+    },
+    {
+      "nome": "San Procopio di Sázava",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "San Procopio di Sázava."
+    },
+    {
+      "nome": "Beato Everardo",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Beato Everardo."
+    },
+    {
+      "nome": "Beato Tommaso",
+      "titolo": "Eremita",
+      "bio": "Beato Tommaso, eremita."
+    },
+    {
+      "nome": "Santa Margherita Clitherow e Santi quaranta martiri d'Inghilterra e Galles",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santa Margherita Clitherow e Santi quaranta martiri d'Inghilterra e Galles."
+    },
+    {
+      "nome": "Beato Giacomo Bird",
+      "titolo": "Martire",
+      "bio": "Beato Giacomo Bird, martire."
+    },
+    {
+      "nome": "Santa Lucia Filippini",
+      "titolo": "Fondatrice delle Maestre pie",
+      "bio": "Santa Lucia Filippini, fondatrice delle Maestre pie."
+    },
+    {
+      "nome": "Beata Maria Rosa Flesch",
+      "titolo": "Fondatrice delle Francescane di Santa Maria degli Angeli",
+      "bio": "Beata Maria Rosa Flesch, fondatrice delle Francescane di Santa Maria degli Angeli."
+    },
+    {
+      "nome": "Beata Giosafata Hordaševska",
+      "titolo": "Vergine, fondatrice delle Ancelle della Beata Vergine Maria Immacolata",
+      "bio": "Beata Giosafata Hordaševska, vergine, fondatrice delle Ancelle della Beata Vergine Maria Immacolata."
+    },
+    {
+      "nome": "Beato Omeljan Kovč",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Omeljan Kovč, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Ilario Januszewski",
+      "titolo": "Sacerdote carmelitano scalzo",
+      "bio": "Beato Ilario Januszewski, sacerdote carmelitano scalzo."
+    }
+  ],
+  "03-26": [
+    {
+      "nome": "San Castulo",
+      "titolo": "Martire",
+      "bio": "San Castulo, martire."
+    },
+    {
+      "nome": "Sant'Emanuele di Anatolia",
+      "titolo": "San Sabino, San Quadrato e San Teodosio, martiri",
+      "bio": "Sant'Emanuele di Anatolia, San Sabino, San Quadrato e San Teodosio, martiri."
+    },
+    {
+      "nome": "Santi Montano",
+      "titolo": "Sacerdote, e Massima, coniugi, martiri",
+      "bio": "Santi Montano, sacerdote, e Massima, coniugi, martiri."
+    },
+    {
+      "nome": "Sant'Eutichio",
+      "titolo": "Suddiacono di Alessandria e martire",
+      "bio": "Sant'Eutichio, suddiacono di Alessandria e martire."
+    },
+    {
+      "nome": "San Pietro di Sebaste",
+      "titolo": "Vescovo di Sebastea, fratello di San Basilio",
+      "bio": "San Pietro di Sebaste, vescovo di Sebastea, fratello di San Basilio."
+    },
+    {
+      "nome": "San Bercario",
+      "titolo": "Primo abate del monastero di Hautvilliers",
+      "bio": "San Bercario, primo abate del monastero di Hautvilliers."
+    },
+    {
+      "nome": "Santi Baronzio e Desiderio",
+      "titolo": "Eremiti",
+      "bio": "Santi Baronzio e Desiderio, eremiti."
+    },
+    {
+      "nome": "San Ludgero di Münster",
+      "titolo": "Vescovo di Münster",
+      "bio": "San Ludgero di Münster, vescovo di Münster."
+    },
+    {
+      "nome": "Beata Maddalena Morano",
+      "titolo": "Vergine delle Figlie di Maria Ausiliatrice",
+      "bio": "Beata Maddalena Morano, vergine delle Figlie di Maria Ausiliatrice."
+    }
+  ],
+  "03-27": [
+    {
+      "nome": "San Ruperto di Salisburgo",
+      "titolo": "Vescovo di Salisburgo",
+      "bio": "San Ruperto di Salisburgo, vescovo di Salisburgo."
+    },
+    {
+      "nome": "Beato Pellegrino da Falerone",
+      "titolo": "Sacerdote, francescano",
+      "bio": "Beato Pellegrino da Falerone, sacerdote, francescano."
+    },
+    {
+      "nome": "Beata Panacea De' Muzzi",
+      "titolo": "Vergine e martire",
+      "bio": "Beata Panacea De' Muzzi, vergine e martire."
+    },
+    {
+      "nome": "Beato Francesco Faà di Bruno",
+      "titolo": "Sacerdote, fondatore delle Suore minime di Nostra Signora del Suffragio",
+      "bio": "Beato Francesco Faà di Bruno, sacerdote, fondatore delle Suore minime di Nostra Signora del Suffragio."
+    }
+  ],
+  "03-28": [
+    {
+      "nome": "San Castore",
+      "titolo": "Martire",
+      "bio": "San Castore, martire."
+    },
+    {
+      "nome": "Santi Prisco",
+      "titolo": "Malco e Alessandro, martiri",
+      "bio": "Santi Prisco, Malco e Alessandro, martiri."
+    },
+    {
+      "nome": "San Cirillo",
+      "titolo": "Diacono e martire",
+      "bio": "San Cirillo, diacono e martire."
+    },
+    {
+      "nome": "San Proterio di Alessandria",
+      "titolo": "Vescovo di Alessandria",
+      "bio": "San Proterio di Alessandria, vescovo di Alessandria."
+    },
+    {
+      "nome": "San Gontrano",
+      "titolo": "Re dei Franchi",
+      "bio": "San Gontrano, re dei Franchi."
+    },
+    {
+      "nome": "Sant'Ilarione di Pelecete",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Sant'Ilarione di Pelecete."
+    },
+    {
+      "nome": "Santo Stefano Harding",
+      "titolo": "Abate",
+      "bio": "Santo Stefano Harding, abate."
+    },
+    {
+      "nome": "Beato Cono di Naso",
+      "titolo": "Monaco",
+      "bio": "Beato Cono di Naso, monaco."
+    },
+    {
+      "nome": "Beato Antonio Patrizi",
+      "titolo": "Sacerdote agostiniano",
+      "bio": "Beato Antonio Patrizi, sacerdote agostiniano."
+    },
+    {
+      "nome": "Beata Giovanna Maria de Maillé",
+      "titolo": "Vedova",
+      "bio": "Beata Giovanna Maria de Maillé, vedova."
+    },
+    {
+      "nome": "Beato Cristoforo Wharton",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Cristoforo Wharton, sacerdote e martire."
+    },
+    {
+      "nome": "Beate martiri di Angers",
+      "titolo": "Martire",
+      "bio": "Beate martiri di Angers, martire."
+    },
+    {
+      "nome": "San Giuseppe Sebastiano Pelczar",
+      "titolo": "Vescovo di Przemyśl e fondatore delle Ancelle del Sacro Cuore di Gesù",
+      "bio": "San Giuseppe Sebastiano Pelczar, vescovo di Przemyśl e fondatore delle Ancelle del Sacro Cuore di Gesù."
+    }
+  ],
+  "03-29": [
+    {
+      "nome": "Sant'Eustasio di Napoli",
+      "titolo": "Vescovo di Napoli",
+      "bio": "Sant'Eustasio di Napoli, vescovo di Napoli."
+    },
+    {
+      "nome": "San Marco",
+      "titolo": "Vescovo di Aretusa",
+      "bio": "San Marco, vescovo di Aretusa."
+    },
+    {
+      "nome": "Santi Armogasto",
+      "titolo": "Archinimo e Saturnino, martiri",
+      "bio": "Santi Armogasto, Archinimo e Saturnino, martiri."
+    },
+    {
+      "nome": "Beato Bertoldo di Calabria",
+      "titolo": "Fondatore dei carmelitani",
+      "bio": "Beato Bertoldo di Calabria, fondatore dei carmelitani."
+    },
+    {
+      "nome": "San Guglielmo Tempier",
+      "titolo": "Vescovo di Poitiers",
+      "bio": "San Guglielmo Tempier, vescovo di Poitiers."
+    },
+    {
+      "nome": "San Ludolfo di Ratzeburg",
+      "titolo": "Vescovo di Ratzeburg e martire",
+      "bio": "San Ludolfo di Ratzeburg, vescovo di Ratzeburg e martire."
+    },
+    {
+      "nome": "Beato Giovanni Hambey",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giovanni Hambey, sacerdote e martire."
+    }
+  ],
+  "03-30": [
+    {
+      "nome": "San Secondo di Asti",
+      "titolo": "Martire",
+      "bio": "San Secondo di Asti, martire."
+    },
+    {
+      "nome": "San Donnino",
+      "titolo": "Martire di Tessalonica",
+      "bio": "San Donnino, martire di Tessalonica."
+    },
+    {
+      "nome": "San Regolo",
+      "titolo": "Vescovo di Arles",
+      "bio": "San Regolo, vescovo di Arles."
+    },
+    {
+      "nome": "Santi martiri di Costantinopoli",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri di Costantinopoli."
+    },
+    {
+      "nome": "San Giovanni Climaco",
+      "titolo": "Abate",
+      "bio": "San Giovanni Climaco, abate."
+    },
+    {
+      "nome": "San Zosimo",
+      "titolo": "Vescovo di Siracusa",
+      "bio": "San Zosimo, vescovo di Siracusa."
+    },
+    {
+      "nome": "Sant'Osburga",
+      "titolo": "Prima badessa di Coventry",
+      "bio": "Sant'Osburga, prima badessa di Coventry."
+    },
+    {
+      "nome": "San Clinio",
+      "titolo": "Abate",
+      "bio": "San Clinio, abate."
+    },
+    {
+      "nome": "San Pietro Regalado (O.F.M. Conv.)",
+      "titolo": "Sacerdote",
+      "bio": "San Pietro Regalado (O.F.M. Conv.), sacerdote."
+    },
+    {
+      "nome": "Beato Amedeo IX di Savoia",
+      "titolo": "Duca di Savoia",
+      "bio": "Beato Amedeo IX di Savoia, duca di Savoia."
+    },
+    {
+      "nome": "Santi Marie-Nicolas-Antoine Daveluy",
+      "titolo": "Vescovo di Acone, Pietro Aumaitre, Martino Luca Huin, sacerdoti, Giuseppe Chang Chu-gi, To",
+      "bio": "Santi Marie-Nicolas-Antoine Daveluy, vescovo di Acone, Pietro Aumaitre, Martino Luca Huin, sacerdoti, Giuseppe Chang Chu-gi, Tommaso son Cha-son e Luca Hwang Sok-tu, catechisti, martiri coreani."
+    },
+    {
+      "nome": "San Ludovico da Casoria",
+      "titolo": "Sacerdote francescano, fondatore dei Frati Bigi e delle Suore francescane elisabettine",
+      "bio": "San Ludovico da Casoria, sacerdote francescano, fondatore dei Frati Bigi e delle Suore francescane elisabettine."
+    },
+    {
+      "nome": "San Leonardo Murialdo",
+      "titolo": "Sacerdote, fondatore della Congregazione di San Giuseppe",
+      "bio": "San Leonardo Murialdo, sacerdote, fondatore della Congregazione di San Giuseppe."
+    },
+    {
+      "nome": "San Giulio Alvarez",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Giulio Alvarez, sacerdote e martire."
+    },
+    {
+      "nome": "Beata Maria Restituta Kafka",
+      "titolo": "Vergine delle Francescane della carità cristiana",
+      "bio": "Beata Maria Restituta Kafka, vergine delle Francescane della carità cristiana."
+    },
+    {
+      "nome": "Beato Gioacchino da Fiore",
+      "titolo": "Sacerdote religioso dell'Ordine cistercense",
+      "bio": "Beato Gioacchino da Fiore, sacerdote religioso dell'Ordine cistercense."
+    }
+  ],
+  "03-31": [
+    {
+      "nome": "San Beniamino",
+      "titolo": "Diacono e martire",
+      "bio": "San Beniamino, diacono e martire."
+    },
+    {
+      "nome": "Santa Balbina da Roma",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santa Balbina da Roma."
+    },
+    {
+      "nome": "Sant'Agilulfo di Colonia",
+      "titolo": "Vescovo di Colonia",
+      "bio": "Sant'Agilulfo di Colonia, vescovo di Colonia."
+    },
+    {
+      "nome": "San Guido di Pomposa",
+      "titolo": "Abate di Pomposa",
+      "bio": "San Guido di Pomposa, abate di Pomposa."
+    },
+    {
+      "nome": "Beata Giovanna di Tolosa",
+      "titolo": "Vergine del terz'ordine carmelitano",
+      "bio": "Beata Giovanna di Tolosa, vergine del terz'ordine carmelitano."
+    },
+    {
+      "nome": "Beato Bonaventura da Forlì",
+      "titolo": "Sacerdote dei Servi di Maria",
+      "bio": "Beato Bonaventura da Forlì, sacerdote dei Servi di Maria."
+    },
+    {
+      "nome": "Beato Cristoforo Robinson",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Cristoforo Robinson, sacerdote e martire."
+    },
+    {
+      "nome": "Beata Natalia Tulasiewicz",
+      "titolo": "Martire",
+      "bio": "Beata Natalia Tulasiewicz, martire."
+    }
+  ],
+  "04-01": [
+    {
+      "nome": "San Venanzio",
+      "titolo": "Vescovo di Salona, e compagni, martiri in Dalmazia e in Istria",
+      "bio": "San Venanzio, vescovo di Salona, e compagni, martiri in Dalmazia e in Istria."
+    },
+    {
+      "nome": "Sante Agape e Chionia",
+      "titolo": "Vergini e martiri",
+      "bio": "Sante Agape e Chionia, vergini e martiri."
+    },
+    {
+      "nome": "Santa Maria Egiziaca",
+      "titolo": "Penitente",
+      "bio": "Santa Maria Egiziaca, penitente."
+    },
+    {
+      "nome": "San Valerico di Leuconay",
+      "titolo": "Sacerdote",
+      "bio": "San Valerico di Leuconay, sacerdote."
+    },
+    {
+      "nome": "San Celso",
+      "titolo": "Vescovo di Armagh",
+      "bio": "San Celso, vescovo di Armagh."
+    },
+    {
+      "nome": "Sant'Ugo di Grenoble",
+      "titolo": "Vescovo di Grenoble",
+      "bio": "Sant'Ugo di Grenoble, vescovo di Grenoble."
+    },
+    {
+      "nome": "San Melitone di Sardi",
+      "titolo": "Vescovo, martire e Padre della Chiesa",
+      "bio": "San Melitone di Sardi, vescovo, martire e Padre della Chiesa."
+    },
+    {
+      "nome": "Beato Ugo di Bonnevaux",
+      "titolo": "Abate di Bonnevaux",
+      "bio": "Beato Ugo di Bonnevaux, abate di Bonnevaux."
+    },
+    {
+      "nome": "San Gilberto",
+      "titolo": "Vescovo di Caithness",
+      "bio": "San Gilberto, vescovo di Caithness."
+    },
+    {
+      "nome": "Beato Giovanni Bretton",
+      "titolo": "Padre di famiglia martire",
+      "bio": "Beato Giovanni Bretton, padre di famiglia martire."
+    },
+    {
+      "nome": "San Lodovico Pavoni F.M.I.",
+      "titolo": "Sacerdote, fondatore dei Figli di Maria Immacolata",
+      "bio": "San Lodovico Pavoni F.M.I., sacerdote, fondatore dei Figli di Maria Immacolata."
+    },
+    {
+      "nome": "Beato Anacleto Gonzalez Flores",
+      "titolo": "Avvocato martire",
+      "bio": "Beato Anacleto Gonzalez Flores, avvocato martire."
+    },
+    {
+      "nome": "Beato Giuseppe Girotti",
+      "titolo": "Sacerdote, biblista martire della carità",
+      "bio": "Beato Giuseppe Girotti, sacerdote, biblista martire della carità."
+    }
+  ],
+  "04-02": [
+    {
+      "nome": "San Francesco da Paola",
+      "titolo": "Eremita, fondatore dell'Ordine dei Minimi",
+      "bio": "San Francesco da Paola, eremita, fondatore dell'Ordine dei Minimi."
+    },
+    {
+      "nome": "Sant'Appiano di Cesarea marittima",
+      "titolo": "Martire",
+      "bio": "Sant'Appiano di Cesarea marittima, martire."
+    },
+    {
+      "nome": "Santa Teodosia di Cesarea",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Teodosia di Cesarea, vergine e martire."
+    },
+    {
+      "nome": "Sant'Abbondio di Como",
+      "titolo": "Vescovo di Como",
+      "bio": "Sant'Abbondio di Como, vescovo di Como."
+    },
+    {
+      "nome": "San Vittore di Capua",
+      "titolo": "Vescovo di Capua",
+      "bio": "San Vittore di Capua, vescovo di Capua."
+    },
+    {
+      "nome": "San Nicezio di Lione",
+      "titolo": "Vescovo di Lione",
+      "bio": "San Nicezio di Lione, vescovo di Lione."
+    },
+    {
+      "nome": "Sant'Eustasio",
+      "titolo": "Abate",
+      "bio": "Sant'Eustasio, abate."
+    },
+    {
+      "nome": "San John Payne (martire)",
+      "titolo": "Sacerdote e martire",
+      "bio": "San John Payne (martire), sacerdote e martire."
+    },
+    {
+      "nome": "Beato Diego Luis de San Vitores",
+      "titolo": "Sacerdote gesuita, e San Pietro Calungsod, catechista, martiri",
+      "bio": "Beato Diego Luis de San Vitores, sacerdote gesuita, e San Pietro Calungsod, catechista, martiri."
+    },
+    {
+      "nome": "Beato Leopoldo da Gaiche",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Leopoldo da Gaiche, sacerdote francescano."
+    },
+    {
+      "nome": "San Domenico Tuoc",
+      "titolo": "Prete domenicano e martire",
+      "bio": "San Domenico Tuoc, prete domenicano e martire."
+    },
+    {
+      "nome": "Beata Elisabetta Vendramini",
+      "titolo": "Vergine, fondatrice delle Suore terziarie francescane elisabettine",
+      "bio": "Beata Elisabetta Vendramini, vergine, fondatrice delle Suore terziarie francescane elisabettine."
+    },
+    {
+      "nome": "San Francesco Coll Guitart",
+      "titolo": "Sacerdote domenicano, fondatore delle Religiose domenicane dell'Annunziata",
+      "bio": "San Francesco Coll Guitart, sacerdote domenicano, fondatore delle Religiose domenicane dell'Annunziata."
+    },
+    {
+      "nome": "Beato Vilmos Apor",
+      "titolo": "Vescovo di Győr e martire",
+      "bio": "Beato Vilmos Apor, vescovo di Győr e martire."
+    },
+    {
+      "nome": "Beato Mykola Čarnec'kyj",
+      "titolo": "Vescovo di Lebedo e martire",
+      "bio": "Beato Mykola Čarnec'kyj, vescovo di Lebedo e martire."
+    },
+    {
+      "nome": "Beata María Alvarado Cardozo",
+      "titolo": "Vergine, fondatrice delle Suore agostiniane recollette del Sacro Cuore di Gesù",
+      "bio": "Beata María Alvarado Cardozo, vergine, fondatrice delle Suore agostiniane recollette del Sacro Cuore di Gesù."
+    }
+  ],
+  "04-03": [
+    {
+      "nome": "San Sisto I",
+      "titolo": "Papa",
+      "bio": "San Sisto I, papa."
+    },
+    {
+      "nome": "Santi Cresto e Pappo",
+      "titolo": "Martiri",
+      "bio": "Santi Cresto e Pappo, martiri."
+    },
+    {
+      "nome": "Sant'Ulpiano",
+      "titolo": "Martire",
+      "bio": "Sant'Ulpiano, martire."
+    },
+    {
+      "nome": "San Giovanni",
+      "titolo": "Vescovo di Napoli",
+      "bio": "San Giovanni, vescovo di Napoli."
+    },
+    {
+      "nome": "San Niceta",
+      "titolo": "Egumeno di Medikion",
+      "bio": "San Niceta, egumeno di Medikion."
+    },
+    {
+      "nome": "San Giuseppe l'Innografo",
+      "titolo": "Sacerdote",
+      "bio": "San Giuseppe l'Innografo, sacerdote."
+    },
+    {
+      "nome": "San Riccardo di Chichester",
+      "titolo": "Vescovo di Chichester",
+      "bio": "San Riccardo di Chichester, vescovo di Chichester."
+    },
+    {
+      "nome": "San Gandolfo Sacchi",
+      "titolo": "Sacerdote dell'Ordine dei Minori",
+      "bio": "San Gandolfo Sacchi, sacerdote dell'Ordine dei Minori."
+    },
+    {
+      "nome": "Beato Giovanni da Penna San Giovanni",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Giovanni da Penna San Giovanni, sacerdote francescano."
+    },
+    {
+      "nome": "Beati Roberto Middleton",
+      "titolo": "Gesuita, e Thurston Hunt, sacerdote, martiri",
+      "bio": "Beati Roberto Middleton, gesuita, e Thurston Hunt, sacerdote, martiri."
+    },
+    {
+      "nome": "San Luigi Scrosoppi (C.O.)",
+      "titolo": "Sacerdote e fondatore delle Suore della Provvidenza di San Gaetano da Thiene",
+      "bio": "San Luigi Scrosoppi (C.O.), sacerdote e fondatore delle Suore della Provvidenza di San Gaetano da Thiene."
+    },
+    {
+      "nome": "Beato Edoardo Dankowski",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Edoardo Dankowski, sacerdote e martire."
+    }
+  ],
+  "04-04": [
+    {
+      "nome": "Sant'Isidoro di Siviglia",
+      "titolo": "Vescovo di Siviglia e dottore della Chiesa",
+      "bio": "Sant'Isidoro di Siviglia, vescovo di Siviglia e dottore della Chiesa."
+    },
+    {
+      "nome": "Santi Agatopodo e Teodulo",
+      "titolo": "Martiri",
+      "bio": "Santi Agatopodo e Teodulo, martiri."
+    },
+    {
+      "nome": "deposizione di Sant'Ambrogio",
+      "titolo": "Vescovo di Milano",
+      "bio": "deposizione di Sant'Ambrogio, vescovo di Milano."
+    },
+    {
+      "nome": "San Platone",
+      "titolo": "Egumeno",
+      "bio": "San Platone, egumeno."
+    },
+    {
+      "nome": "San Pietro di Poitiers (vescovo)",
+      "titolo": "Vescovo di Poitiers",
+      "bio": "San Pietro di Poitiers (vescovo), vescovo di Poitiers."
+    },
+    {
+      "nome": "Beato Guglielmo Cuffitelli",
+      "titolo": "Eremita",
+      "bio": "Beato Guglielmo Cuffitelli, eremita."
+    },
+    {
+      "nome": "San Benedetto Massarari (O.F.M.) (detto San Benedetto il Moro o San Benedeto da Fratello o San Benito de Palermo)",
+      "titolo": "Religioso ed eremita",
+      "bio": "San Benedetto Massarari (O.F.M.) (detto San Benedetto il Moro o San Benedeto da Fratello o San Benito de Palermo), religioso ed eremita."
+    },
+    {
+      "nome": "Beato Giuseppe Benedetto Dusmet",
+      "titolo": "Benedettino, arcivescovo di Catania",
+      "bio": "Beato Giuseppe Benedetto Dusmet, benedettino, arcivescovo di Catania."
+    },
+    {
+      "nome": "San Francesco Marto",
+      "titolo": "Laico veggente di Fatima",
+      "bio": "San Francesco Marto, laico veggente di Fatima."
+    },
+    {
+      "nome": "San Gaetano Catanoso",
+      "titolo": "Sacerdote, fondatore delle Suore veroniche del Volto Santo",
+      "bio": "San Gaetano Catanoso, sacerdote, fondatore delle Suore veroniche del Volto Santo."
+    },
+    {
+      "nome": "Beato Mario Ciceri",
+      "titolo": "Sacerdote",
+      "bio": "Beato Mario Ciceri, sacerdote."
+    }
+  ],
+  "04-05": [
+    {
+      "nome": "San Vincenzo Ferrer (O.P.)",
+      "titolo": "Sacerdote",
+      "bio": "San Vincenzo Ferrer (O.P.), sacerdote."
+    },
+    {
+      "nome": "Sant'Irene",
+      "titolo": "Vergine e martire",
+      "bio": "Sant'Irene, vergine e martire."
+    },
+    {
+      "nome": "Santa Ferbrita",
+      "titolo": "Vedova e martire",
+      "bio": "Santa Ferbrita, vedova e martire."
+    },
+    {
+      "nome": "Santi Martiri persiani",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi Martiri persiani."
+    },
+    {
+      "nome": "Santi martiri di Aquae Regiae",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri di Aquae Regiae."
+    },
+    {
+      "nome": "San Geraldo di Sauve-Majeure",
+      "titolo": "Abate di La Sauve-Majeure",
+      "bio": "San Geraldo di Sauve-Majeure, abate di La Sauve-Majeure."
+    },
+    {
+      "nome": "Sant'Alberto di Montecorvino",
+      "titolo": "Vescovo di Montecorvino",
+      "bio": "Sant'Alberto di Montecorvino, vescovo di Montecorvino."
+    },
+    {
+      "nome": "Santa Giuliana di Cornillon",
+      "titolo": "Vergine agostiniana, badessa di Mont-Cornillon",
+      "bio": "Santa Giuliana di Cornillon, vergine agostiniana, badessa di Mont-Cornillon."
+    },
+    {
+      "nome": "Santa Caterina Tomás",
+      "titolo": "Vergine, canonichessa",
+      "bio": "Santa Caterina Tomás, vergine, canonichessa."
+    },
+    {
+      "nome": "Santa Maria Crescentia Höss",
+      "titolo": "Vergine del Terz'ordine regolare francescano",
+      "bio": "Santa Maria Crescentia Höss, vergine del Terz'ordine regolare francescano."
+    }
+  ],
+  "04-06": [
+    {
+      "nome": "Sant'Ireneo",
+      "titolo": "Vescovo di Sirmio e martire",
+      "bio": "Sant'Ireneo, vescovo di Sirmio e martire."
+    },
+    {
+      "nome": "Sant'Eutichio di Costantinopoli",
+      "titolo": "Vescovo di Costantinopoli",
+      "bio": "Sant'Eutichio di Costantinopoli, vescovo di Costantinopoli."
+    },
+    {
+      "nome": "Santa Galla",
+      "titolo": "Vedova",
+      "bio": "Santa Galla, vedova."
+    },
+    {
+      "nome": "San Vinebaldo",
+      "titolo": "Abate di Saint-Loup a Troyes",
+      "bio": "San Vinebaldo, abate di Saint-Loup a Troyes."
+    },
+    {
+      "nome": "San Prudenzio",
+      "titolo": "Vescovo di Troyes",
+      "bio": "San Prudenzio, vescovo di Troyes."
+    },
+    {
+      "nome": "Beato Notker I di San Gallo",
+      "titolo": "Monaco",
+      "bio": "Beato Notker I di San Gallo, monaco."
+    },
+    {
+      "nome": "San Filarete di Calabria",
+      "titolo": "Monaco",
+      "bio": "San Filarete di Calabria, monaco."
+    },
+    {
+      "nome": "San Guglielmo abate",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "San Guglielmo abate."
+    },
+    {
+      "nome": "San Pietro da Verona (O.P.)",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Pietro da Verona (O.P.), sacerdote e martire."
+    },
+    {
+      "nome": "Beata Caterina Moriggi",
+      "titolo": "Vergine dell'Ordine di Sant'Ambrogio ad Nemus",
+      "bio": "Beata Caterina Moriggi, vergine dell'Ordine di Sant'Ambrogio ad Nemus."
+    },
+    {
+      "nome": "San Paolo Lê Bảo TỊnh",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Paolo Lê Bảo TỊnh, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Zefirino Agostini",
+      "titolo": "Sacerdote, fondatore delle Suore orsoline figlie di Maria Immacolata",
+      "bio": "Beato Zefirino Agostini, sacerdote, fondatore delle Suore orsoline figlie di Maria Immacolata."
+    },
+    {
+      "nome": "Beato Michele Rua",
+      "titolo": "Sacerdote salesiano",
+      "bio": "Beato Michele Rua, sacerdote salesiano."
+    },
+    {
+      "nome": "Beato Michele Czartorjski",
+      "titolo": "Sacerdote domenicano e martire",
+      "bio": "Beato Michele Czartorjski, sacerdote domenicano e martire."
+    },
+    {
+      "nome": "Beata Pierina Morosini",
+      "titolo": "Vergine e martire",
+      "bio": "Beata Pierina Morosini, vergine e martire."
+    }
+  ],
+  "04-07": [
+    {
+      "nome": "San Giovanni Battista de La Salle",
+      "titolo": "Sacerdote, fondatore dei Fratelli delle scuole cristiane",
+      "bio": "San Giovanni Battista de La Salle, sacerdote, fondatore dei Fratelli delle scuole cristiane."
+    },
+    {
+      "nome": "Sant'Egesippo",
+      "titolo": "Scrittore laico",
+      "bio": "Sant'Egesippo, scrittore laico."
+    },
+    {
+      "nome": "San Pelusio",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Pelusio, sacerdote e martire."
+    },
+    {
+      "nome": "Santi Teodoro",
+      "titolo": "Vescovo di Cirene, Ireneo, diacono, Serapione e Ammonio, lettori, martiri",
+      "bio": "Santi Teodoro, vescovo di Cirene, Ireneo, diacono, Serapione e Ammonio, lettori, martiri."
+    },
+    {
+      "nome": "San Callopio",
+      "titolo": "Martire",
+      "bio": "San Callopio, martire."
+    },
+    {
+      "nome": "Santi martiri di Sinope",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri di Sinope."
+    },
+    {
+      "nome": "San Giorgio",
+      "titolo": "Vescovo di Mitilene",
+      "bio": "San Giorgio, vescovo di Mitilene."
+    },
+    {
+      "nome": "Sant'Aiberto",
+      "titolo": "Sacerdote e monaco",
+      "bio": "Sant'Aiberto, sacerdote e monaco."
+    },
+    {
+      "nome": "Sant'Ermanno Giuseppe di Colonia",
+      "titolo": "Sacerdote premostratense",
+      "bio": "Sant'Ermanno Giuseppe di Colonia, sacerdote premostratense."
+    },
+    {
+      "nome": "Sant'Enrico Walpole",
+      "titolo": "Gesuita, e Beato Alessandro Rawlins, sacerdoti e martiri",
+      "bio": "Sant'Enrico Walpole, gesuita, e Beato Alessandro Rawlins, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beati martiri Edoardo Oldcorne",
+      "titolo": "Sacerdote, e Rodolfo Ashley, gesuiti, martiri",
+      "bio": "Beati martiri Edoardo Oldcorne, sacerdote, e Rodolfo Ashley, gesuiti, martiri."
+    },
+    {
+      "nome": "San Pietro Nguyễn Văn Lựu",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Pietro Nguyễn Văn Lựu, sacerdote e martire."
+    },
+    {
+      "nome": "Beata Maria Assunta Pallotta",
+      "titolo": "Vergine delle Suore francescane missionarie di Maria",
+      "bio": "Beata Maria Assunta Pallotta, vergine delle Suore francescane missionarie di Maria."
+    }
+  ],
+  "04-08": [
+    {
+      "nome": "Sant'Agabo",
+      "titolo": "Profeta",
+      "bio": "Sant'Agabo, profeta."
+    },
+    {
+      "nome": "Santi Erodione",
+      "titolo": "Asincrito e Flegone, martiri",
+      "bio": "Santi Erodione, Asincrito e Flegone, martiri."
+    },
+    {
+      "nome": "San Dionigi di Corinto",
+      "titolo": "Vescovo di Corinto",
+      "bio": "San Dionigi di Corinto, vescovo di Corinto."
+    },
+    {
+      "nome": "Santi Timoteo",
+      "titolo": "Diogene, Macario e Massimo, martiri",
+      "bio": "Santi Timoteo, Diogene, Macario e Massimo, martiri."
+    },
+    {
+      "nome": "San Dionisio di Alessandria",
+      "titolo": "Vescovo di Alessandria",
+      "bio": "San Dionisio di Alessandria, vescovo di Alessandria."
+    },
+    {
+      "nome": "Sant'Amanzio di Como",
+      "titolo": "Vescovo di Como",
+      "bio": "Sant'Amanzio di Como, vescovo di Como."
+    },
+    {
+      "nome": "Beato Clemente da Osimo",
+      "titolo": "Sacerdote agostiniano",
+      "bio": "Beato Clemente da Osimo, sacerdote agostiniano."
+    },
+    {
+      "nome": "Beato Giuliano di Sant'Agostino",
+      "titolo": "Francescano scalzo",
+      "bio": "Beato Giuliano di Sant'Agostino, francescano scalzo."
+    },
+    {
+      "nome": "Santa Giulia Billiart",
+      "titolo": "Vergine, fondatrice delle Suore di Nostra Signora di Namur",
+      "bio": "Santa Giulia Billiart, vergine, fondatrice delle Suore di Nostra Signora di Namur."
+    },
+    {
+      "nome": "Beato August Czartoryski",
+      "titolo": "Sacerdote salesiano",
+      "bio": "Beato August Czartoryski, sacerdote salesiano."
+    },
+    {
+      "nome": "Beato Domenico del Santissimo Sacramento",
+      "titolo": "Sacerdote trinitario",
+      "bio": "Beato Domenico del Santissimo Sacramento, sacerdote trinitario."
+    }
+  ],
+  "04-09": [
+    {
+      "nome": "San Massimo",
+      "titolo": "Vescovo di Alessandria",
+      "bio": "San Massimo, vescovo di Alessandria."
+    },
+    {
+      "nome": "Sant'Edesio di Alessandria",
+      "titolo": "Martire",
+      "bio": "Sant'Edesio di Alessandria, martire."
+    },
+    {
+      "nome": "San Demetrio di Tessalonica",
+      "titolo": "Martire",
+      "bio": "San Demetrio di Tessalonica, martire."
+    },
+    {
+      "nome": "Sant'Eupsichio",
+      "titolo": "Martire",
+      "bio": "Sant'Eupsichio, martire."
+    },
+    {
+      "nome": "San Liborio",
+      "titolo": "Vescovo di Le Mans",
+      "bio": "San Liborio, vescovo di Le Mans."
+    },
+    {
+      "nome": "Sant'Acacio di Amida",
+      "titolo": "Vescovo di Amida",
+      "bio": "Sant'Acacio di Amida, vescovo di Amida."
+    },
+    {
+      "nome": "Santa Valdetrude di Mons",
+      "titolo": "Religiosa",
+      "bio": "Santa Valdetrude di Mons, religiosa."
+    },
+    {
+      "nome": "Sant'Ugo di Rouen",
+      "titolo": "Vescovo di Rouen",
+      "bio": "Sant'Ugo di Rouen, vescovo di Rouen."
+    },
+    {
+      "nome": "Santa Casilda da Toledo",
+      "titolo": "Vergine",
+      "bio": "Santa Casilda da Toledo, vergine."
+    },
+    {
+      "nome": "San Gaucherio",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "San Gaucherio."
+    },
+    {
+      "nome": "Beato Ubaldo Adimari",
+      "titolo": "Sacerdote servita",
+      "bio": "Beato Ubaldo Adimari, sacerdote servita."
+    },
+    {
+      "nome": "Beato Tommaso da Tolentino",
+      "titolo": "Sacerdote francescano e martire",
+      "bio": "Beato Tommaso da Tolentino, sacerdote francescano e martire."
+    },
+    {
+      "nome": "Beato Antonio Pavoni",
+      "titolo": "Sacerdote domenicano e martire",
+      "bio": "Beato Antonio Pavoni, sacerdote domenicano e martire."
+    },
+    {
+      "nome": "Beata Celestina Faron",
+      "titolo": "Vergine delle Piccole ancelle dell'Immacolata Concezione e martire",
+      "bio": "Beata Celestina Faron, vergine delle Piccole ancelle dell'Immacolata Concezione e martire."
+    }
+  ],
+  "04-10": [
+    {
+      "nome": "Santi Terenzio",
+      "titolo": "Africano, Massimo, Pompeo, Alessandro, Teodoro e quaranta compagni, martiri",
+      "bio": "Santi Terenzio, Africano, Massimo, Pompeo, Alessandro, Teodoro e quaranta compagni, martiri."
+    },
+    {
+      "nome": "Sant'Apollonio",
+      "titolo": "Sacerdote e martire",
+      "bio": "Sant'Apollonio, sacerdote e martire."
+    },
+    {
+      "nome": "San Palladio di Auxerre",
+      "titolo": "Vescovo di Auxerre",
+      "bio": "San Palladio di Auxerre, vescovo di Auxerre."
+    },
+    {
+      "nome": "San Beda il Giovane",
+      "titolo": "Monaco",
+      "bio": "San Beda il Giovane, monaco."
+    },
+    {
+      "nome": "San Macario",
+      "titolo": "Pellegrino",
+      "bio": "San Macario, pellegrino."
+    },
+    {
+      "nome": "San Fulberto",
+      "titolo": "Vescovo di Chartres",
+      "bio": "San Fulberto, vescovo di Chartres."
+    },
+    {
+      "nome": "Beato Antonio Neirotti",
+      "titolo": "Sacerdote domenicano e martire",
+      "bio": "Beato Antonio Neirotti, sacerdote domenicano e martire."
+    },
+    {
+      "nome": "Beato Marco Fantuzzi da Bologna",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Marco Fantuzzi da Bologna, sacerdote francescano."
+    },
+    {
+      "nome": "San Michele dei Santi",
+      "titolo": "Sacerdote trinitario",
+      "bio": "San Michele dei Santi, sacerdote trinitario."
+    },
+    {
+      "nome": "Santa Maddalena di Canossa",
+      "titolo": "Vergine, fondatrice delle Figlie e dei Figli della carità",
+      "bio": "Santa Maddalena di Canossa, vergine, fondatrice delle Figlie e dei Figli della carità."
+    },
+    {
+      "nome": "Beato Bonifacio Zukowski",
+      "titolo": "Sacerdote conventuale e martire",
+      "bio": "Beato Bonifacio Zukowski, sacerdote conventuale e martire."
+    }
+  ],
+  "04-11": [
+    {
+      "nome": "San Stanislao di Cracovia",
+      "titolo": "Vescovo di Cracovia e martire",
+      "bio": "San Stanislao di Cracovia, vescovo di Cracovia e martire."
+    },
+    {
+      "nome": "Sant'Antipa di Pergamo",
+      "titolo": "Martire personaggio del Nuovo Testamento",
+      "bio": "Sant'Antipa di Pergamo, martire personaggio del Nuovo Testamento."
+    },
+    {
+      "nome": "San Filippo",
+      "titolo": "Vescovo di Gortina",
+      "bio": "San Filippo, vescovo di Gortina."
+    },
+    {
+      "nome": "San Doimo",
+      "titolo": "Vescovo di Salona e martire",
+      "bio": "San Doimo, vescovo di Salona e martire."
+    },
+    {
+      "nome": "San Barsanofio",
+      "titolo": "Anacoreta",
+      "bio": "San Barsanofio, anacoreta."
+    },
+    {
+      "nome": "Sant'Isacco di Monteluco",
+      "titolo": "Monaco, fondatore del monastero di Monteluco",
+      "bio": "Sant'Isacco di Monteluco, monaco, fondatore del monastero di Monteluco."
+    },
+    {
+      "nome": "Beato Lanuino",
+      "titolo": "Certosino",
+      "bio": "Beato Lanuino, certosino."
+    },
+    {
+      "nome": "Beata Sancia",
+      "titolo": "Vergine cistercense",
+      "bio": "Beata Sancia, vergine cistercense."
+    },
+    {
+      "nome": "Beato Angelo Carletti da Chivasso (Antonio)",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Angelo Carletti da Chivasso (Antonio), sacerdote francescano."
+    },
+    {
+      "nome": "Beato Giorgio Gervase",
+      "titolo": "Sacerdote benedettino e martire",
+      "bio": "Beato Giorgio Gervase, sacerdote benedettino e martire."
+    },
+    {
+      "nome": "Santa Gemma Galgani",
+      "titolo": "Vergine",
+      "bio": "Santa Gemma Galgani, vergine."
+    },
+    {
+      "nome": "Beata Elena Guerra",
+      "titolo": "Vergine, fondatrice delle Suore oblate dello Spirito Santo",
+      "bio": "Beata Elena Guerra, vergine, fondatrice delle Suore oblate dello Spirito Santo."
+    },
+    {
+      "nome": "Beato Semproniano Ducki",
+      "titolo": "Cappuccino e martire",
+      "bio": "Beato Semproniano Ducki, cappuccino e martire."
+    }
+  ],
+  "04-12": [
+    {
+      "nome": "San Vittore",
+      "titolo": "Martire",
+      "bio": "San Vittore, martire."
+    },
+    {
+      "nome": "Santa Vissia di Fermo e Santa Sofia",
+      "titolo": "Vergini e martiri",
+      "bio": "Santa Vissia di Fermo e Santa Sofia, vergini e martiri."
+    },
+    {
+      "nome": "San Giulio I",
+      "titolo": "Papa",
+      "bio": "San Giulio I, papa."
+    },
+    {
+      "nome": "San Zeno",
+      "titolo": "Vescovo di Verona",
+      "bio": "San Zeno, vescovo di Verona."
+    },
+    {
+      "nome": "San Saba il Goto",
+      "titolo": "Martire",
+      "bio": "San Saba il Goto, martire."
+    },
+    {
+      "nome": "San Costantino di Gap",
+      "titolo": "Vescovo di Gap",
+      "bio": "San Costantino di Gap, vescovo di Gap."
+    },
+    {
+      "nome": "San Damiano di Pavia",
+      "titolo": "Vescovo di Pavia",
+      "bio": "San Damiano di Pavia, vescovo di Pavia."
+    },
+    {
+      "nome": "San Basilio",
+      "titolo": "Vescovo di Pario",
+      "bio": "San Basilio, vescovo di Pario."
+    },
+    {
+      "nome": "Sant'Erchembodone",
+      "titolo": "Abate di Sithin e vescovo di Thérouanne",
+      "bio": "Sant'Erchembodone, abate di Sithin e vescovo di Thérouanne."
+    },
+    {
+      "nome": "Sant'Alferio Pappacarbone",
+      "titolo": "Sacerdote, fondatore e primo abate di Cava",
+      "bio": "Sant'Alferio Pappacarbone, sacerdote, fondatore e primo abate di Cava."
+    },
+    {
+      "nome": "Beato Lorenzo Lusitano",
+      "titolo": "Sacerdote dell'Ordine di San Girolamo",
+      "bio": "Beato Lorenzo Lusitano, sacerdote dell'Ordine di San Girolamo."
+    },
+    {
+      "nome": "Santa Teresa di Gesù di Los Andes",
+      "titolo": "Vergine carmelitana scalza",
+      "bio": "Santa Teresa di Gesù di Los Andes, vergine carmelitana scalza."
+    },
+    {
+      "nome": "San Giuseppe Moscati",
+      "titolo": "Medico",
+      "bio": "San Giuseppe Moscati, medico."
+    },
+    {
+      "nome": "San Davide Uribe",
+      "titolo": "Sacerdote e martire messicano",
+      "bio": "San Davide Uribe, sacerdote e martire messicano."
+    }
+  ],
+  "04-13": [
+    {
+      "nome": "San Martino I",
+      "titolo": "Papa e martire",
+      "bio": "San Martino I, papa e martire."
+    },
+    {
+      "nome": "Santi Carpo",
+      "titolo": "Papilo, Agatonica e compagni, martiri",
+      "bio": "Santi Carpo, Papilo, Agatonica e compagni, martiri."
+    },
+    {
+      "nome": "Sant'Orso di Ravenna",
+      "titolo": "Vescovo di Ravenna",
+      "bio": "Sant'Orso di Ravenna, vescovo di Ravenna."
+    },
+    {
+      "nome": "Sant'Ermenegildo",
+      "titolo": "Martire",
+      "bio": "Sant'Ermenegildo, martire."
+    },
+    {
+      "nome": "Beata Ida di Boulogne",
+      "titolo": "Vedova",
+      "bio": "Beata Ida di Boulogne, vedova."
+    },
+    {
+      "nome": "San Caradoco",
+      "titolo": "Sacerdote e monaco",
+      "bio": "San Caradoco, sacerdote e monaco."
+    },
+    {
+      "nome": "Beato Albertino da Montone",
+      "titolo": "Eremita e priore di Fonte Avellana",
+      "bio": "Beato Albertino da Montone, eremita e priore di Fonte Avellana."
+    },
+    {
+      "nome": "Beata Ida di Lovanio",
+      "titolo": "Monaca",
+      "bio": "Beata Ida di Lovanio, monaca."
+    },
+    {
+      "nome": "Beata Margherita da Città di Castello",
+      "titolo": "Vergine domenicana",
+      "bio": "Beata Margherita da Città di Castello, vergine domenicana."
+    },
+    {
+      "nome": "Beati Francesco Dickenson e Milone Gerard",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Beati Francesco Dickenson e Milone Gerard, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beati Giovanni Lockwood e Edoardo Catherick",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Beati Giovanni Lockwood e Edoardo Catherick, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beato Scubilione Rousseau",
+      "titolo": "Lasalliano",
+      "bio": "Beato Scubilione Rousseau, lasalliano."
+    },
+    {
+      "nome": "San Sabas Reyes Salazar",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Sabas Reyes Salazar, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Rolando Rivi (Maria)",
+      "titolo": "Seminarista martire",
+      "bio": "Beato Rolando Rivi (Maria), seminarista martire."
+    }
+  ],
+  "04-14": [
+    {
+      "nome": "San Tiburzio",
+      "titolo": "San Valeriano da Roma e San Massimo, martiri",
+      "bio": "San Tiburzio, San Valeriano da Roma e San Massimo, martiri."
+    },
+    {
+      "nome": "Sante Bernice e Prosdoca",
+      "titolo": "Vergini e martiri",
+      "bio": "Sante Bernice e Prosdoca, vergini e martiri."
+    },
+    {
+      "nome": "San Frontone",
+      "titolo": "Abate",
+      "bio": "San Frontone, abate."
+    },
+    {
+      "nome": "San Tassac di Elphin",
+      "titolo": "Vescovo di Elphin",
+      "bio": "San Tassac di Elphin, vescovo di Elphin."
+    },
+    {
+      "nome": "Santa Tomaide",
+      "titolo": "Martire",
+      "bio": "Santa Tomaide, martire."
+    },
+    {
+      "nome": "San Pretestato di Rouen",
+      "titolo": "Vescovo di Rouen",
+      "bio": "San Pretestato di Rouen, vescovo di Rouen."
+    },
+    {
+      "nome": "San Lamberto di Lione",
+      "titolo": "Vescovo di Lione, abate di Fontenelle",
+      "bio": "San Lamberto di Lione, vescovo di Lione, abate di Fontenelle."
+    },
+    {
+      "nome": "San Giovanni di Montemarano",
+      "titolo": "Vescovo di Montemarano",
+      "bio": "San Giovanni di Montemarano, vescovo di Montemarano."
+    },
+    {
+      "nome": "San Bernardo di Tiron",
+      "titolo": "Abate",
+      "bio": "San Bernardo di Tiron, abate."
+    },
+    {
+      "nome": "San Benedetto di Hermillon",
+      "titolo": "Pastorello",
+      "bio": "San Benedetto di Hermillon, pastorello."
+    },
+    {
+      "nome": "Beato Pietro González",
+      "titolo": "Detto Telmo, sacerdote domenicano",
+      "bio": "Beato Pietro González, detto Telmo, sacerdote domenicano."
+    },
+    {
+      "nome": "Santa Liduina di Schiedam",
+      "titolo": "Vergine",
+      "bio": "Santa Liduina di Schiedam, vergine."
+    },
+    {
+      "nome": "Beata Isabella Calduch Rovira",
+      "titolo": "Vergine e martire cappuccina",
+      "bio": "Beata Isabella Calduch Rovira, vergine e martire cappuccina."
+    }
+  ],
+  "04-15": [
+    {
+      "nome": "Santi Teodoro e Pausilipo",
+      "titolo": "Martiri",
+      "bio": "Santi Teodoro e Pausilipo, martiri."
+    },
+    {
+      "nome": "San Crescente",
+      "titolo": "Martire",
+      "bio": "San Crescente, martire."
+    },
+    {
+      "nome": "San Marone martire laico",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "San Marone martire laico."
+    },
+    {
+      "nome": "Sant'Abbondio",
+      "titolo": "Missionario",
+      "bio": "Sant'Abbondio, missionario."
+    },
+    {
+      "nome": "San Paterno di Avranches",
+      "titolo": "Vescovo di Avranches",
+      "bio": "San Paterno di Avranches, vescovo di Avranches."
+    },
+    {
+      "nome": "Sant'Ortario",
+      "titolo": "Abate",
+      "bio": "Sant'Ortario, abate."
+    },
+    {
+      "nome": "Beato César de Bus",
+      "titolo": "Sacerdote, fondatore dei Padri della Dottrina Cristiana",
+      "bio": "Beato César de Bus, sacerdote, fondatore dei Padri della Dottrina Cristiana."
+    },
+    {
+      "nome": "San Damiano de Veuster",
+      "titolo": "Sacerdote picpusiano",
+      "bio": "San Damiano de Veuster, sacerdote picpusiano."
+    },
+    {
+      "nome": "San Cesare De Bus (D.C.)",
+      "titolo": "Sacerdote e fondatore",
+      "bio": "San Cesare De Bus (D.C.), sacerdote e fondatore."
+    }
+  ],
+  "04-16": [
+    {
+      "nome": "Santi Leonida e sette compagni",
+      "titolo": "Martiri",
+      "bio": "Santi Leonida e sette compagni, martiri."
+    },
+    {
+      "nome": "Santi martiri di Saragozza",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri di Saragozza."
+    },
+    {
+      "nome": "Santa Engrazia",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Engrazia, vergine e martire."
+    },
+    {
+      "nome": "Santi Caio e Crescenzio",
+      "titolo": "Martiri",
+      "bio": "Santi Caio e Crescenzio, martiri."
+    },
+    {
+      "nome": "San Turibio",
+      "titolo": "Vescovo di Astorga",
+      "bio": "San Turibio, vescovo di Astorga."
+    },
+    {
+      "nome": "San Fruttuoso di Braga",
+      "titolo": "Vescovo di Braga",
+      "bio": "San Fruttuoso di Braga, vescovo di Braga."
+    },
+    {
+      "nome": "San Magnus Erlendsson",
+      "titolo": "Martire",
+      "bio": "San Magnus Erlendsson, martire."
+    },
+    {
+      "nome": "San Drogone",
+      "titolo": "Pellegrino",
+      "bio": "San Drogone, pellegrino."
+    },
+    {
+      "nome": "San Contardo d'Este",
+      "titolo": "Pellegrino",
+      "bio": "San Contardo d'Este, pellegrino."
+    },
+    {
+      "nome": "San Benedetto Giuseppe Labre",
+      "titolo": "Pellegrino",
+      "bio": "San Benedetto Giuseppe Labre, pellegrino."
+    },
+    {
+      "nome": "Beati Pietro Delépine",
+      "titolo": "Giovanni Ménard e ventiquattro compagne, martiri",
+      "bio": "Beati Pietro Delépine, Giovanni Ménard e ventiquattro compagne, martiri."
+    },
+    {
+      "nome": "Santa Bernadette Soubirous",
+      "titolo": "Vergine delle dame di Nevers, veggente di Lourdes",
+      "bio": "Santa Bernadette Soubirous, vergine delle dame di Nevers, veggente di Lourdes."
+    },
+    {
+      "nome": "Beato Gioacchino da Siena (Gioacchino Piccolomini)",
+      "titolo": "Religioso dell'Ordine dei Servi di Maria",
+      "bio": "Beato Gioacchino da Siena (Gioacchino Piccolomini), religioso dell'Ordine dei Servi di Maria."
+    }
+  ],
+  "04-17": [
+    {
+      "nome": "Santi Pietro",
+      "titolo": "Diacono, ed Ermogene, martiri",
+      "bio": "Santi Pietro, diacono, ed Ermogene, martiri."
+    },
+    {
+      "nome": "San Simone bar Sabbae",
+      "titolo": "Vescovo di Seleucia e Ctesifonte, martire",
+      "bio": "San Simone bar Sabbae, vescovo di Seleucia e Ctesifonte, martire."
+    },
+    {
+      "nome": "Sant'Ustazade",
+      "titolo": "Eunuco, e compagni martiri persiani",
+      "bio": "Sant'Ustazade, eunuco, e compagni martiri persiani."
+    },
+    {
+      "nome": "Sant'Innocenzo di Tortona",
+      "titolo": "Vescovo di Tortona",
+      "bio": "Sant'Innocenzo di Tortona, vescovo di Tortona."
+    },
+    {
+      "nome": "Sant'Acacio di Melitene",
+      "titolo": "Vescovo di Melitene",
+      "bio": "Sant'Acacio di Melitene, vescovo di Melitene."
+    },
+    {
+      "nome": "San Pantagato di Vienne",
+      "titolo": "Vescovo di Vienne",
+      "bio": "San Pantagato di Vienne, vescovo di Vienne."
+    },
+    {
+      "nome": "San Donnano di Eigg",
+      "titolo": "Abate, e compagni, martiri",
+      "bio": "San Donnano di Eigg, abate, e compagni, martiri."
+    },
+    {
+      "nome": "Santi Elia",
+      "titolo": "Paolo e Isidoro, martiri",
+      "bio": "Santi Elia, Paolo e Isidoro, martiri."
+    },
+    {
+      "nome": "San Roberto di La Chaise-Dieu",
+      "titolo": "Abate di La Chaise-Dieu",
+      "bio": "San Roberto di La Chaise-Dieu, abate di La Chaise-Dieu."
+    },
+    {
+      "nome": "San Roberto di Molesme (O.Cist.)",
+      "titolo": "Religioso abate di Molesme e fondatore",
+      "bio": "San Roberto di Molesme (O.Cist.), religioso abate di Molesme e fondatore."
+    },
+    {
+      "nome": "Beato Giacomo da Cerqueto",
+      "titolo": "Sacerdote agostiniano",
+      "bio": "Beato Giacomo da Cerqueto, sacerdote agostiniano."
+    },
+    {
+      "nome": "Beata Chiara Gambacorti",
+      "titolo": "Vedova",
+      "bio": "Beata Chiara Gambacorti, vedova."
+    },
+    {
+      "nome": "Beata Maria Anna di Gesù Navarro",
+      "titolo": "Vergine mercedaria",
+      "bio": "Beata Maria Anna di Gesù Navarro, vergine mercedaria."
+    },
+    {
+      "nome": "Beato Enrico Heat",
+      "titolo": "Sacerdote francescano e martire",
+      "bio": "Beato Enrico Heat, sacerdote francescano e martire."
+    },
+    {
+      "nome": "Santa Kateri Tekakwitha",
+      "titolo": "Vergine",
+      "bio": "Santa Kateri Tekakwitha, vergine."
+    }
+  ],
+  "04-18": [
+    {
+      "nome": "Santi Ermogene ed Elpidio",
+      "titolo": "Martiri",
+      "bio": "Santi Ermogene ed Elpidio, martiri."
+    },
+    {
+      "nome": "San Pusicio",
+      "titolo": "Martire",
+      "bio": "San Pusicio, martire."
+    },
+    {
+      "nome": "Sant'Eusebio",
+      "titolo": "Vescovo di Fano",
+      "bio": "Sant'Eusebio, vescovo di Fano."
+    },
+    {
+      "nome": "San Laisren di Leighlin",
+      "titolo": "Abate di Leighlin",
+      "bio": "San Laisren di Leighlin, abate di Leighlin."
+    },
+    {
+      "nome": "Sant'Ursmaro di Lobbes",
+      "titolo": "Vescovo-abate di Lobbes",
+      "bio": "Sant'Ursmaro di Lobbes, vescovo-abate di Lobbes."
+    },
+    {
+      "nome": "Sant'Antusa",
+      "titolo": "Vergine",
+      "bio": "Sant'Antusa, vergine."
+    },
+    {
+      "nome": "Sant'Atanasia",
+      "titolo": "Vedova",
+      "bio": "Sant'Atanasia, vedova."
+    },
+    {
+      "nome": "San Giovanni Isauro",
+      "titolo": "Monaco",
+      "bio": "San Giovanni Isauro, monaco."
+    },
+    {
+      "nome": "San Perfetto",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Perfetto, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Idesbaldo delle Dune",
+      "titolo": "Abate",
+      "bio": "Beato Idesbaldo delle Dune, abate."
+    },
+    {
+      "nome": "San Galdino della Sala",
+      "titolo": "Cardinale e vescovo di Milano",
+      "bio": "San Galdino della Sala, cardinale e vescovo di Milano."
+    },
+    {
+      "nome": "San Calogero di Brescia",
+      "titolo": "Soldato martire",
+      "bio": "San Calogero di Brescia, soldato martire."
+    },
+    {
+      "nome": "Beato Andrea da Montereale",
+      "titolo": "Sacerdote agostiniano",
+      "bio": "Beato Andrea da Montereale, sacerdote agostiniano."
+    },
+    {
+      "nome": "Beato Andrés Hibernón",
+      "titolo": "Religioso francescano",
+      "bio": "Beato Andrés Hibernón, religioso francescano."
+    },
+    {
+      "nome": "Beata Maria dell'Incarnazione (Barbe Acarie Avrillot)",
+      "titolo": "Vedova, carmelitana",
+      "bio": "Beata Maria dell'Incarnazione (Barbe Acarie Avrillot), vedova, carmelitana."
+    },
+    {
+      "nome": "Beati Martiri di Angers",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beati Martiri di Angers, sacerdote e martire."
+    },
+    {
+      "nome": "Beata Savina Petrilli",
+      "titolo": "Vergine, fondatrice delle Sorelle dei poveri di Santa Caterina da Siena",
+      "bio": "Beata Savina Petrilli, vergine, fondatrice delle Sorelle dei poveri di Santa Caterina da Siena."
+    },
+    {
+      "nome": "Beato Romano Archutowsky",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Romano Archutowsky, sacerdote e martire."
+    }
+  ],
+  "04-19": [
+    {
+      "nome": "San Mappalico e compagni",
+      "titolo": "Martiri",
+      "bio": "San Mappalico e compagni, martiri."
+    },
+    {
+      "nome": "Santa Marta",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Marta, vergine e martire."
+    },
+    {
+      "nome": "San Giorgio d'Antiochia",
+      "titolo": "Vescovo di Antiochia di Pisidia",
+      "bio": "San Giorgio d'Antiochia, vescovo di Antiochia di Pisidia."
+    },
+    {
+      "nome": "San Geroldo",
+      "titolo": "Eremita",
+      "bio": "San Geroldo, eremita."
+    },
+    {
+      "nome": "Sant'Elfego di Canterbury (O.S.B.)",
+      "titolo": "Vescovo di Winchester e di Canterbury e martire",
+      "bio": "Sant'Elfego di Canterbury (O.S.B.), vescovo di Winchester e di Canterbury e martire."
+    },
+    {
+      "nome": "San Leone IX",
+      "titolo": "Papa",
+      "bio": "San Leone IX, papa."
+    },
+    {
+      "nome": "Beato Bernardo",
+      "titolo": "Penitente",
+      "bio": "Beato Bernardo, penitente."
+    },
+    {
+      "nome": "Beato Giacomo Duckett",
+      "titolo": "Martire",
+      "bio": "Beato Giacomo Duckett, martire."
+    }
+  ],
+  "04-20": [
+    {
+      "nome": "Sant'Aniceto",
+      "titolo": "Papa",
+      "bio": "Sant'Aniceto, papa."
+    },
+    {
+      "nome": "Santi Sulpicio e Seviziano",
+      "titolo": "Martiri",
+      "bio": "Santi Sulpicio e Seviziano, martiri."
+    },
+    {
+      "nome": "San Secondino",
+      "titolo": "Martire",
+      "bio": "San Secondino, martire."
+    },
+    {
+      "nome": "San Marcellino",
+      "titolo": "Primo vescovo di Embrun",
+      "bio": "San Marcellino, primo vescovo di Embrun."
+    },
+    {
+      "nome": "San Marciano",
+      "titolo": "Monaco",
+      "bio": "San Marciano, monaco."
+    },
+    {
+      "nome": "San Teodoro",
+      "titolo": "Detto il Villoso, penitente",
+      "bio": "San Teodoro, detto il Villoso, penitente."
+    },
+    {
+      "nome": "Sant'Anastasio",
+      "titolo": "Vescovo di Antiochia e martire",
+      "bio": "Sant'Anastasio, vescovo di Antiochia e martire."
+    },
+    {
+      "nome": "San Vione",
+      "titolo": "Vescovo di Osnabrück",
+      "bio": "San Vione, vescovo di Osnabrück."
+    },
+    {
+      "nome": "Beato Geraldo de Salis",
+      "titolo": "Canonico e poi eremita",
+      "bio": "Beato Geraldo de Salis, canonico e poi eremita."
+    },
+    {
+      "nome": "Beato Domenico Vernagalli",
+      "titolo": "Sacerdote camaldolese",
+      "bio": "Beato Domenico Vernagalli, sacerdote camaldolese."
+    },
+    {
+      "nome": "Sant'Agnese da Montepulciano",
+      "titolo": "Vergine, priora del monastero domenicano di Montepulciano",
+      "bio": "Sant'Agnese da Montepulciano, vergine, priora del monastero domenicano di Montepulciano."
+    },
+    {
+      "nome": "Beato Simone da Todi",
+      "titolo": "Sacerdote agostiniano",
+      "bio": "Beato Simone da Todi, sacerdote agostiniano."
+    },
+    {
+      "nome": "Beati Giacomo Bell e Giovanni Finch",
+      "titolo": "Martiri",
+      "bio": "Beati Giacomo Bell e Giovanni Finch, martiri."
+    },
+    {
+      "nome": "Beati Riccardo Sargeant e Guglielmo Thomson",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Beati Riccardo Sargeant e Guglielmo Thomson, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beato Maurizio Mackenraghty",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Maurizio Mackenraghty, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Antonio Page",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Antonio Page, sacerdote e martire."
+    },
+    {
+      "nome": "Beati Francesco Page e Roberto Watkinson",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Beati Francesco Page e Roberto Watkinson, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beata Chiara Bosatta",
+      "titolo": "Vergine, fondatrice delle Figlie di Santa Maria della Divina Provvidenza",
+      "bio": "Beata Chiara Bosatta, vergine, fondatrice delle Figlie di Santa Maria della Divina Provvidenza."
+    },
+    {
+      "nome": "Beato Anastasio Pankiewicz",
+      "titolo": "Sacerdote francescano e martire",
+      "bio": "Beato Anastasio Pankiewicz, sacerdote francescano e martire."
+    }
+  ],
+  "04-21": [
+    {
+      "nome": "Sant'Anselmo d'Aosta (O.S.B.)",
+      "titolo": "Vescovo di Canterbury",
+      "bio": "Sant'Anselmo d'Aosta (O.S.B.), vescovo di Canterbury."
+    },
+    {
+      "nome": "Sant'Apollonio di Roma",
+      "titolo": "Filosofo e martire",
+      "bio": "Sant'Apollonio di Roma, filosofo e martire."
+    },
+    {
+      "nome": "Sant'Aristo",
+      "titolo": "Sacerdote e martire",
+      "bio": "Sant'Aristo, sacerdote e martire."
+    },
+    {
+      "nome": "Sant'Anastasio il Sinaita",
+      "titolo": "Egumeno",
+      "bio": "Sant'Anastasio il Sinaita, egumeno."
+    },
+    {
+      "nome": "San Melrubio",
+      "titolo": "Abate di Applecross",
+      "bio": "San Melrubio, abate di Applecross."
+    },
+    {
+      "nome": "Beato Bartolomeo Cerveri",
+      "titolo": "Sacerdote domenicano e martire",
+      "bio": "Beato Bartolomeo Cerveri, sacerdote domenicano e martire."
+    },
+    {
+      "nome": "San Corrado Birndorfer da Parzham (O.F.M. Cap.)",
+      "titolo": "Religioso",
+      "bio": "San Corrado Birndorfer da Parzham (O.F.M. Cap.), religioso."
+    },
+    {
+      "nome": "San Romano Adame",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Romano Adame, sacerdote e martire."
+    }
+  ],
+  "04-22": [
+    {
+      "nome": "San Sotero",
+      "titolo": "Papa",
+      "bio": "San Sotero, papa."
+    },
+    {
+      "nome": "Sant'Epipodio",
+      "titolo": "Martire",
+      "bio": "Sant'Epipodio, martire."
+    },
+    {
+      "nome": "San Leonida",
+      "titolo": "Martire, il quale",
+      "bio": "San Leonida, martire, il quale."
+    },
+    {
+      "nome": "San Caio",
+      "titolo": "Papa",
+      "bio": "San Caio, papa."
+    },
+    {
+      "nome": "San Maryahb",
+      "titolo": "Corepiscopo e martire",
+      "bio": "San Maryahb, corepiscopo e martire."
+    },
+    {
+      "nome": "Sant'Agapito I",
+      "titolo": "Papa",
+      "bio": "Sant'Agapito I, papa."
+    },
+    {
+      "nome": "San Leone di Sens",
+      "titolo": "Vescovo di Sens",
+      "bio": "San Leone di Sens, vescovo di Sens."
+    },
+    {
+      "nome": "San Teodoro",
+      "titolo": "Vescovo di Anastasiopoli ed egumeno",
+      "bio": "San Teodoro, vescovo di Anastasiopoli ed egumeno."
+    },
+    {
+      "nome": "Santa Opportuna",
+      "titolo": "Badessa",
+      "bio": "Santa Opportuna, badessa."
+    },
+    {
+      "nome": "Santa Senorina",
+      "titolo": "Badessa",
+      "bio": "Santa Senorina, badessa."
+    },
+    {
+      "nome": "Beato Francesco Venimbeni",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Francesco Venimbeni, sacerdote francescano."
+    }
+  ],
+  "04-23": [
+    {
+      "nome": "San Giorgio",
+      "titolo": "Martire",
+      "bio": "San Giorgio, martire."
+    },
+    {
+      "nome": "Sant'Adalberto di Praga (O.S.B.)",
+      "titolo": "Vescovo di Praga e martire",
+      "bio": "Sant'Adalberto di Praga (O.S.B.), vescovo di Praga e martire."
+    },
+    {
+      "nome": "Sant'Eulogio",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Sant'Eulogio."
+    },
+    {
+      "nome": "San Marolo",
+      "titolo": "Vescovo di Milano",
+      "bio": "San Marolo, vescovo di Milano."
+    },
+    {
+      "nome": "San Gerardo di Toul",
+      "titolo": "Vescovo di Toul",
+      "bio": "San Gerardo di Toul, vescovo di Toul."
+    },
+    {
+      "nome": "San Giorgio di Suelli",
+      "titolo": "Vescovo di Suelli",
+      "bio": "San Giorgio di Suelli, vescovo di Suelli."
+    },
+    {
+      "nome": "Beato Egidio d'Assisi",
+      "titolo": "Religioso francescano",
+      "bio": "Beato Egidio d'Assisi, religioso francescano."
+    },
+    {
+      "nome": "Beata Elena Valentinis",
+      "titolo": "Vedova",
+      "bio": "Beata Elena Valentinis, vedova."
+    },
+    {
+      "nome": "Beata Teresa Maria della Croce (Teresa Adelaide Cesira Manetti)",
+      "titolo": "Vergine, fondatrice delle Carmelitane di Santa Teresa",
+      "bio": "Beata Teresa Maria della Croce (Teresa Adelaide Cesira Manetti), vergine, fondatrice delle Carmelitane di Santa Teresa."
+    },
+    {
+      "nome": "Beata Maria Gabriella Sagheddu",
+      "titolo": "Vergine",
+      "bio": "Beata Maria Gabriella Sagheddu, vergine."
+    }
+  ],
+  "04-24": [
+    {
+      "nome": "San Fedele da Sigmaringen",
+      "titolo": "Sacerdote cappuccino e martire",
+      "bio": "San Fedele da Sigmaringen, sacerdote cappuccino e martire."
+    },
+    {
+      "nome": "Sante Maria di Cleofa e Salome",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Sante Maria di Cleofa e Salome."
+    },
+    {
+      "nome": "Sant'Alessandro",
+      "titolo": "Martire",
+      "bio": "Sant'Alessandro, martire."
+    },
+    {
+      "nome": "Sant'Antimo di Nicomedia",
+      "titolo": "Vescovo di Nicomedia, e compagni, martiri",
+      "bio": "Sant'Antimo di Nicomedia, vescovo di Nicomedia, e compagni, martiri."
+    },
+    {
+      "nome": "San Gregorio",
+      "titolo": "Vescovo di Elvira",
+      "bio": "San Gregorio, vescovo di Elvira."
+    },
+    {
+      "nome": "San Deodato",
+      "titolo": "Diacono e abate",
+      "bio": "San Deodato, diacono e abate."
+    },
+    {
+      "nome": "San Mellito di Canterbury",
+      "titolo": "Vescovo di Canterbury",
+      "bio": "San Mellito di Canterbury, vescovo di Canterbury."
+    },
+    {
+      "nome": "San Vilfrido di York",
+      "titolo": "Vescovo di York",
+      "bio": "San Vilfrido di York, vescovo di York."
+    },
+    {
+      "nome": "Sant'Egberto",
+      "titolo": "Sacerdote e monaco",
+      "bio": "Sant'Egberto, sacerdote e monaco."
+    },
+    {
+      "nome": "San Guglielmo",
+      "titolo": "Eremita",
+      "bio": "San Guglielmo, eremita."
+    },
+    {
+      "nome": "Santa Maria di Sant'Eufrasia Pelletier",
+      "titolo": "Vergine, fondatrice delle Suore del Buon Pastore",
+      "bio": "Santa Maria di Sant'Eufrasia Pelletier, vergine, fondatrice delle Suore del Buon Pastore."
+    },
+    {
+      "nome": "San Benedetto Menni",
+      "titolo": "Sacerdote dei fatebenefratelli, fondatore delle Suore ospedaliere del Sacro Cuore di Gesù",
+      "bio": "San Benedetto Menni, sacerdote dei fatebenefratelli, fondatore delle Suore ospedaliere del Sacro Cuore di Gesù."
+    },
+    {
+      "nome": "Santa Maria Elisabeth Hesselblad",
+      "titolo": "Vergine, restauratrice dell'Ordine di Santa Brigida",
+      "bio": "Santa Maria Elisabeth Hesselblad, vergine, restauratrice dell'Ordine di Santa Brigida."
+    }
+  ],
+  "04-25": [
+    {
+      "nome": "San Marco evangelista",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "San Marco evangelista."
+    },
+    {
+      "nome": "Sant'Aniano di Alessandria",
+      "titolo": "Vescovo di Alessandria",
+      "bio": "Sant'Aniano di Alessandria, vescovo di Alessandria."
+    },
+    {
+      "nome": "Santi Pasicrate e Valenzione",
+      "titolo": "Martiri",
+      "bio": "Santi Pasicrate e Valenzione, martiri."
+    },
+    {
+      "nome": "San Febadio di Agen",
+      "titolo": "Vescovo di Agen",
+      "bio": "San Febadio di Agen, vescovo di Agen."
+    },
+    {
+      "nome": "Santo Stefano",
+      "titolo": "Vescovo e martire",
+      "bio": "Santo Stefano, vescovo e martire."
+    },
+    {
+      "nome": "San Clarenzio",
+      "titolo": "Vescovo di Vienne",
+      "bio": "San Clarenzio, vescovo di Vienne."
+    },
+    {
+      "nome": "Sant'Erminio",
+      "titolo": "Vescovo-abate di Lobbes",
+      "bio": "Sant'Erminio, vescovo-abate di Lobbes."
+    },
+    {
+      "nome": "San Gerasimo di San Lorenzo",
+      "titolo": "Asceta",
+      "bio": "San Gerasimo di San Lorenzo, asceta."
+    },
+    {
+      "nome": "Santa Franca da Vitalta",
+      "titolo": "Badessa cistercense",
+      "bio": "Santa Franca da Vitalta, badessa cistercense."
+    },
+    {
+      "nome": "Beato Bonifacio di Valperga",
+      "titolo": "Vescovo di Aosta",
+      "bio": "Beato Bonifacio di Valperga, vescovo di Aosta."
+    },
+    {
+      "nome": "Beati Roberto Anderton e Guglielmo Marsden",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Beati Roberto Anderton e Guglielmo Marsden, sacerdoti e martiri."
+    },
+    {
+      "nome": "San Pedro de San José de Betancurt",
+      "titolo": "Religioso del Terz'Ordine francescano, fondatore dei Fratelli di Betlemme",
+      "bio": "San Pedro de San José de Betancurt, religioso del Terz'Ordine francescano, fondatore dei Fratelli di Betlemme."
+    },
+    {
+      "nome": "San Giovanni Battista Piamarta",
+      "titolo": "Sacerdote, fondatore della Congregazione della Sacra Famiglia di Nazareth",
+      "bio": "San Giovanni Battista Piamarta, sacerdote, fondatore della Congregazione della Sacra Famiglia di Nazareth."
+    },
+    {
+      "nome": "Beato Mario Borzaga (O.M.I.)",
+      "titolo": "Sacerdote missionario",
+      "bio": "Beato Mario Borzaga (O.M.I.), sacerdote missionario."
+    }
+  ],
+  "04-26": [
+    {
+      "nome": "San Cleto",
+      "titolo": "Papa",
+      "bio": "San Cleto, papa."
+    },
+    {
+      "nome": "San Primitivo",
+      "titolo": "Martire",
+      "bio": "San Primitivo, martire."
+    },
+    {
+      "nome": "San Basileo di Amasea",
+      "titolo": "Vescovo di Amasea e martire",
+      "bio": "San Basileo di Amasea, vescovo di Amasea e martire."
+    },
+    {
+      "nome": "San Ricario di Centule",
+      "titolo": "Sacerdote",
+      "bio": "San Ricario di Centule, sacerdote."
+    },
+    {
+      "nome": "San Pascasio Radberto",
+      "titolo": "Abate",
+      "bio": "San Pascasio Radberto, abate."
+    },
+    {
+      "nome": "Santi Guglielmo e Pellegrino",
+      "titolo": "Eremiti",
+      "bio": "Santi Guglielmo e Pellegrino, eremiti."
+    },
+    {
+      "nome": "Beati Domenico e Gregorio",
+      "titolo": "Sacerdoti domenicani",
+      "bio": "Beati Domenico e Gregorio, sacerdoti domenicani."
+    },
+    {
+      "nome": "Santo Stefano di Perm'",
+      "titolo": "Vescovo di Perm'",
+      "bio": "Santo Stefano di Perm', vescovo di Perm'."
+    },
+    {
+      "nome": "San Raffaele Arnaiz Baron (O.C.S.O.)",
+      "titolo": "Religioso",
+      "bio": "San Raffaele Arnaiz Baron (O.C.S.O.), religioso."
+    },
+    {
+      "nome": "Beato Giulio Junjer Padern",
+      "titolo": "Sacerdote salesiano e martire",
+      "bio": "Beato Giulio Junjer Padern, sacerdote salesiano e martire."
+    },
+    {
+      "nome": "Beato Stanislao Kubista",
+      "titolo": "Sacerdote verbita, e Ladislao Goral, vescovo ausiliare di Lublino, martiri",
+      "bio": "Beato Stanislao Kubista, sacerdote verbita, e Ladislao Goral, vescovo ausiliare di Lublino, martiri."
+    }
+  ],
+  "04-27": [
+    {
+      "nome": "San Simeone I di Gerusalemme",
+      "titolo": "Vescovo di Gerusalemme e martire",
+      "bio": "San Simeone I di Gerusalemme, vescovo di Gerusalemme e martire."
+    },
+    {
+      "nome": "San Pollione di Cibali",
+      "titolo": "Lettore e martire",
+      "bio": "San Pollione di Cibali, lettore e martire."
+    },
+    {
+      "nome": "San Teodoro di Tabennesi",
+      "titolo": "Abate",
+      "bio": "San Teodoro di Tabennesi, abate."
+    },
+    {
+      "nome": "San Liberale d'Altino",
+      "titolo": "Eremita",
+      "bio": "San Liberale d'Altino, eremita."
+    },
+    {
+      "nome": "San Macaldo",
+      "titolo": "Vescovo di Man",
+      "bio": "San Macaldo, vescovo di Man."
+    },
+    {
+      "nome": "San Giovanni",
+      "titolo": "Egumeno",
+      "bio": "San Giovanni, egumeno."
+    },
+    {
+      "nome": "Santa Zita di Lucca",
+      "titolo": "Vergine",
+      "bio": "Santa Zita di Lucca, vergine."
+    },
+    {
+      "nome": "Beato Pietro Armengol",
+      "titolo": "Mercedario",
+      "bio": "Beato Pietro Armengol, mercedario."
+    },
+    {
+      "nome": "Beato Giacomo Illirico",
+      "titolo": "Religioso francescano",
+      "bio": "Beato Giacomo Illirico, religioso francescano."
+    },
+    {
+      "nome": "Beata Osanna di Cattaro",
+      "titolo": "Vergine, terziaria domenicana",
+      "bio": "Beata Osanna di Cattaro, vergine, terziaria domenicana."
+    },
+    {
+      "nome": "Beato Nicolas Roland",
+      "titolo": "Sacerdote, fondatore delle Suore del Santo Bambino Gesù",
+      "bio": "Beato Nicolas Roland, sacerdote, fondatore delle Suore del Santo Bambino Gesù."
+    },
+    {
+      "nome": "San Lorenzo Nguyễn Văn Hưởng",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Lorenzo Nguyễn Văn Hưởng, sacerdote e martire."
+    },
+    {
+      "nome": "Beata María Antonia Bandrés y Elósegui",
+      "titolo": "Vergine delle Figlie di Gesù",
+      "bio": "Beata María Antonia Bandrés y Elósegui, vergine delle Figlie di Gesù."
+    }
+  ],
+  "04-28": [
+    {
+      "nome": "San Pietro Chanel (S.M.)",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Pietro Chanel (S.M.), sacerdote e martire."
+    },
+    {
+      "nome": "San Luigi Maria Grignion de Montfort",
+      "titolo": "Sacerdote, fondatore della Compagnia di Maria e delle Figlie della Sapienza",
+      "bio": "San Luigi Maria Grignion de Montfort, sacerdote, fondatore della Compagnia di Maria e delle Figlie della Sapienza."
+    },
+    {
+      "nome": "Sant'Afrodisio di Béziers",
+      "titolo": "Primo vescovo di Béziers",
+      "bio": "Sant'Afrodisio di Béziers, primo vescovo di Béziers."
+    },
+    {
+      "nome": "Santi Eusebio",
+      "titolo": "Caralampo e compagni, martiri",
+      "bio": "Santi Eusebio, Caralampo e compagni, martiri."
+    },
+    {
+      "nome": "San Vitale di Milano",
+      "titolo": "Laico martire",
+      "bio": "San Vitale di Milano, laico martire."
+    },
+    {
+      "nome": "Santi Massimo",
+      "titolo": "Dada e Quintiliano, martiri",
+      "bio": "Santi Massimo, Dada e Quintiliano, martiri."
+    },
+    {
+      "nome": "San Prudenzio",
+      "titolo": "Vescovo di Tarazona",
+      "bio": "San Prudenzio, vescovo di Tarazona."
+    },
+    {
+      "nome": "San Panfilo di Sulmona",
+      "titolo": "Vescovo di Corfinio",
+      "bio": "San Panfilo di Sulmona, vescovo di Corfinio."
+    },
+    {
+      "nome": "Beato Lucchese da Poggibonsi",
+      "titolo": "Terziario francescano",
+      "bio": "Beato Lucchese da Poggibonsi, terziario francescano."
+    },
+    {
+      "nome": "Beata Marie-Louise Trichet",
+      "titolo": "Vergine, primo membro delle Figlie della Sapienza",
+      "bio": "Beata Marie-Louise Trichet, vergine, primo membro delle Figlie della Sapienza."
+    },
+    {
+      "nome": "San Paolo Phạm Khắc Khoan",
+      "titolo": "Sacerdote, San Giovanni Battista Ðinh Văn Thành e San Pietro Nguyễn Văn Hiển, catechisti e",
+      "bio": "San Paolo Phạm Khắc Khoan, sacerdote, San Giovanni Battista Ðinh Văn Thành e San Pietro Nguyễn Văn Hiển, catechisti e martiri."
+    },
+    {
+      "nome": "Beato Giuseppe Cerula",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giuseppe Cerula, sacerdote e martire."
+    },
+    {
+      "nome": "Santa Gianna Beretta Molla",
+      "titolo": "Madre di famiglia",
+      "bio": "Santa Gianna Beretta Molla, madre di famiglia."
+    },
+    {
+      "nome": "Beato Carino Pietro da Balsamo (O.P.)",
+      "titolo": "Religioso",
+      "bio": "Beato Carino Pietro da Balsamo (O.P.), religioso."
+    }
+  ],
+  "04-29": [
+    {
+      "nome": "Santa Caterina da Siena",
+      "titolo": "Vergine del terz'ordine domenicano e dottore della Chiesa",
+      "bio": "Santa Caterina da Siena, vergine del terz'ordine domenicano e dottore della Chiesa."
+    },
+    {
+      "nome": "San Tichico",
+      "titolo": "Discepolo di San Paolo",
+      "bio": "San Tichico, discepolo di San Paolo."
+    },
+    {
+      "nome": "San Torpete",
+      "titolo": "Martire",
+      "bio": "San Torpete, martire."
+    },
+    {
+      "nome": "San Severo di Napoli",
+      "titolo": "Vescovo di Napoli",
+      "bio": "San Severo di Napoli, vescovo di Napoli."
+    },
+    {
+      "nome": "Sant'Ugo di Cluny",
+      "titolo": "Abate di Cluny",
+      "bio": "Sant'Ugo di Cluny, abate di Cluny."
+    },
+    {
+      "nome": "Sant'Acardo di San Vittore (C.R.S.V.)",
+      "titolo": "Vescovo di Avranches",
+      "bio": "Sant'Acardo di San Vittore (C.R.S.V.), vescovo di Avranches."
+    },
+    {
+      "nome": "Sant'Antonio Kim Song-U",
+      "titolo": "Martire",
+      "bio": "Sant'Antonio Kim Song-U, martire."
+    },
+    {
+      "nome": "Beata Itala Mela",
+      "titolo": "Mistica, teologa e religiosa oblata benedettina",
+      "bio": "Beata Itala Mela, mistica, teologa e religiosa oblata benedettina."
+    }
+  ],
+  "04-30": [
+    {
+      "nome": "San Pio V",
+      "titolo": "Papa",
+      "bio": "San Pio V, papa."
+    },
+    {
+      "nome": "San Quirino di Neuss",
+      "titolo": "Tribuno e martire",
+      "bio": "San Quirino di Neuss, tribuno e martire."
+    },
+    {
+      "nome": "Sant'Eutropio di Saintes",
+      "titolo": "Primo vescovo di Saintes",
+      "bio": "Sant'Eutropio di Saintes, primo vescovo di Saintes."
+    },
+    {
+      "nome": "Santi Diodoro e Rodopiano",
+      "titolo": "Martiri",
+      "bio": "Santi Diodoro e Rodopiano, martiri."
+    },
+    {
+      "nome": "San Donato di Eurea",
+      "titolo": "Vescovo di Eurea di Epiro",
+      "bio": "San Donato di Eurea, vescovo di Eurea di Epiro."
+    },
+    {
+      "nome": "San Lorenzo di Novara",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Lorenzo di Novara, sacerdote e martire."
+    },
+    {
+      "nome": "San Mercuriale",
+      "titolo": "Primo vescovo di Forlì",
+      "bio": "San Mercuriale, primo vescovo di Forlì."
+    },
+    {
+      "nome": "San Pomponio",
+      "titolo": "Vescovo di Napoli",
+      "bio": "San Pomponio, vescovo di Napoli."
+    },
+    {
+      "nome": "San Pietro Levita",
+      "titolo": "Diacono",
+      "bio": "San Pietro Levita, diacono."
+    },
+    {
+      "nome": "Sant'Augulo di Viviers",
+      "titolo": "Vescovo di Viviers",
+      "bio": "Sant'Augulo di Viviers, vescovo di Viviers."
+    },
+    {
+      "nome": "Sant'Earconvaldo di Londra",
+      "titolo": "Vescovo di Londra",
+      "bio": "Sant'Earconvaldo di Londra, vescovo di Londra."
+    },
+    {
+      "nome": "Sant'Amatore",
+      "titolo": "Sacerdote, San Pietro, monaco, e SAN Luigi, laico, martiri",
+      "bio": "Sant'Amatore, sacerdote, San Pietro, monaco, e SAN Luigi, laico, martiri."
+    },
+    {
+      "nome": "San Gualfardo di Verona",
+      "titolo": "Eremita",
+      "bio": "San Gualfardo di Verona, eremita."
+    },
+    {
+      "nome": "Sant'Adiutore",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Sant'Adiutore."
+    },
+    {
+      "nome": "Beato Guglielmo Southerne",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Guglielmo Southerne, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Benedetto Passionei (Marco Passionei)",
+      "titolo": "Conosciuto anche come Beato Benedetto da Urbino, sacerdote religioso dei Frati cappuccini",
+      "bio": "Beato Benedetto Passionei (Marco Passionei), conosciuto anche come Beato Benedetto da Urbino, sacerdote religioso dei Frati cappuccini."
+    },
+    {
+      "nome": "Santa Maria dell'Incarnazione Guyart",
+      "titolo": "Vedova, fondatrice delle Orsoline del Canada",
+      "bio": "Santa Maria dell'Incarnazione Guyart, vedova, fondatrice delle Orsoline del Canada."
+    },
+    {
+      "nome": "San Giuseppe Benedetto Cottolengo",
+      "titolo": "Sacerdote, fondatore di Fratelli, Suore e Padri della Piccola casa della Divina Provvidenz",
+      "bio": "San Giuseppe Benedetto Cottolengo, sacerdote, fondatore di Fratelli, Suore e Padri della Piccola casa della Divina Provvidenza."
+    },
+    {
+      "nome": "San Giuseppe Tuân",
+      "titolo": "Sacerdote domenicano e martire",
+      "bio": "San Giuseppe Tuân, sacerdote domenicano e martire."
+    },
+    {
+      "nome": "Beata Pauline von Mallinckrodt",
+      "titolo": "Vergine, fondatrice delle Suore della carità cristiana",
+      "bio": "Beata Pauline von Mallinckrodt, vergine, fondatrice delle Suore della carità cristiana."
+    }
+  ],
+  "05-01": [
+    {
+      "nome": "San Giuseppe",
+      "titolo": "Lavoratore",
+      "bio": "San Giuseppe, lavoratore."
+    },
+    {
+      "nome": "San Geremia",
+      "titolo": "Profeta",
+      "bio": "San Geremia, profeta."
+    },
+    {
+      "nome": "Sant'Andeolo del Vivarais",
+      "titolo": "Martire",
+      "bio": "Sant'Andeolo del Vivarais, martire."
+    },
+    {
+      "nome": "Santi Torquato",
+      "titolo": "Vescovo di Guadix, e altri sei vescovi, martiri",
+      "bio": "Santi Torquato, vescovo di Guadix, e altri sei vescovi, martiri."
+    },
+    {
+      "nome": "Sant'Amatore di Auxerre",
+      "titolo": "Vescovo di Auxerre",
+      "bio": "Sant'Amatore di Auxerre, vescovo di Auxerre."
+    },
+    {
+      "nome": "Sant'Orenzio vescovo di Auch",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Sant'Orenzio vescovo di Auch."
+    },
+    {
+      "nome": "San Brioco",
+      "titolo": "Vescovo e abate",
+      "bio": "San Brioco, vescovo e abate."
+    },
+    {
+      "nome": "San Sigismondo (re dei Burgundi)",
+      "titolo": "Re dei Burgundi",
+      "bio": "San Sigismondo (re dei Burgundi), re dei Burgundi."
+    },
+    {
+      "nome": "San Marculfo",
+      "titolo": "Eremita",
+      "bio": "San Marculfo, eremita."
+    },
+    {
+      "nome": "Sant'Aredio di Gap",
+      "titolo": "Vescovo di Gap",
+      "bio": "Sant'Aredio di Gap, vescovo di Gap."
+    },
+    {
+      "nome": "San Teodardo di Narbona",
+      "titolo": "Vescovo di Narbona",
+      "bio": "San Teodardo di Narbona, vescovo di Narbona."
+    },
+    {
+      "nome": "Beato Aldebrando di Fossombrone",
+      "titolo": "Vescovo di Fossombrone",
+      "bio": "Beato Aldebrando di Fossombrone, vescovo di Fossombrone."
+    },
+    {
+      "nome": "Beata Mafalda del Portogallo",
+      "titolo": "Vergine",
+      "bio": "Beata Mafalda del Portogallo, vergine."
+    },
+    {
+      "nome": "Beato Vivaldo da San Gimignano",
+      "titolo": "Eremita del terzo ordine di San Francesco",
+      "bio": "Beato Vivaldo da San Gimignano, eremita del terzo ordine di San Francesco."
+    },
+    {
+      "nome": "Beato Giuliano da Valle",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Giuliano da Valle, sacerdote francescano."
+    },
+    {
+      "nome": "San Pellegrino Laziosi (O.S.M.)",
+      "titolo": "Religioso",
+      "bio": "San Pellegrino Laziosi (O.S.M.), religioso."
+    },
+    {
+      "nome": "Beata Petronilla",
+      "titolo": "Vergine, badessa clarisse",
+      "bio": "Beata Petronilla, vergine, badessa clarisse."
+    },
+    {
+      "nome": "natale di San Pio V",
+      "titolo": "Papa",
+      "bio": "natale di San Pio V, papa."
+    },
+    {
+      "nome": "Santi Agostino Schoeffler e Giovanni Luigi Bonnard",
+      "titolo": "Sacerdoti delle Missioni Estere di Parigi e martiri",
+      "bio": "Santi Agostino Schoeffler e Giovanni Luigi Bonnard, sacerdoti delle Missioni Estere di Parigi e martiri."
+    },
+    {
+      "nome": "San Riccardo Pampuri",
+      "titolo": "Dell'Ordine dei Fatebenefratelli",
+      "bio": "San Riccardo Pampuri, dell'Ordine dei Fatebenefratelli."
+    },
+    {
+      "nome": "Beato Clemente Šeptyc'kyj",
+      "titolo": "Studita, sacerdote e martire",
+      "bio": "Beato Clemente Šeptyc'kyj, studita, sacerdote e martire."
+    }
+  ],
+  "05-02": [
+    {
+      "nome": "Sant'Atanasio di Alessandria",
+      "titolo": "Vescovo di Alessandria e Padre e Dottore della Chiesa",
+      "bio": "Sant'Atanasio di Alessandria, vescovo di Alessandria e Padre e Dottore della Chiesa."
+    },
+    {
+      "nome": "Santi Espero e Zoe",
+      "titolo": "Coniugi, e i figli Ciriaco e Teodulo, martiri",
+      "bio": "Santi Espero e Zoe, coniugi, e i figli Ciriaco e Teodulo, martiri."
+    },
+    {
+      "nome": "San Felice",
+      "titolo": "Diacono e martire",
+      "bio": "San Felice, diacono e martire."
+    },
+    {
+      "nome": "San Vendemiale e San Longino",
+      "titolo": "Vescovi e martiri",
+      "bio": "San Vendemiale e San Longino, vescovi e martiri."
+    },
+    {
+      "nome": "Santa Viborada di San Gallo",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Viborada di San Gallo, vergine e martire."
+    },
+    {
+      "nome": "Beato Nicola Hermansson",
+      "titolo": "Vescovo di Linköping",
+      "bio": "Beato Nicola Hermansson, vescovo di Linköping."
+    },
+    {
+      "nome": "Sant'Antonino Pierozzi (O.P.)",
+      "titolo": "Vescovo di Firenze e teologo",
+      "bio": "Sant'Antonino Pierozzi (O.P.), vescovo di Firenze e teologo."
+    },
+    {
+      "nome": "Beato Guglielmo Tyrri",
+      "titolo": "Sacerdote agostiniano martire",
+      "bio": "Beato Guglielmo Tyrri, sacerdote agostiniano martire."
+    },
+    {
+      "nome": "San Giuseppe Nguyễn Văn Lựu",
+      "titolo": "Catechista e martire",
+      "bio": "San Giuseppe Nguyễn Văn Lựu, catechista e martire."
+    },
+    {
+      "nome": "San Giuseppe Maria Rubio Peralta (S.J.)",
+      "titolo": "Sacerdote",
+      "bio": "San Giuseppe Maria Rubio Peralta (S.J.), sacerdote."
+    },
+    {
+      "nome": "Beato Boleslao Strzeleki",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Boleslao Strzeleki, sacerdote e martire."
+    }
+  ],
+  "05-03": [
+    {
+      "nome": "Santi Filippo e Giacomo]",
+      "titolo": "Apostoli",
+      "bio": "Santi Filippo e Giacomo], apostoli."
+    },
+    {
+      "nome": "Santi Timoteo e Maura",
+      "titolo": "Martiri",
+      "bio": "Santi Timoteo e Maura, martiri."
+    },
+    {
+      "nome": "Santi Evenzio",
+      "titolo": "Alessandro e Teodulo, martiri",
+      "bio": "Santi Evenzio, Alessandro e Teodulo, martiri."
+    },
+    {
+      "nome": "San Giovenale di Narni",
+      "titolo": "Primo vescovo di Narni",
+      "bio": "San Giovenale di Narni, primo vescovo di Narni."
+    },
+    {
+      "nome": "San Conlaedo",
+      "titolo": "Vescovo di Kildare",
+      "bio": "San Conlaedo, vescovo di Kildare."
+    },
+    {
+      "nome": "San Pietro",
+      "titolo": "Vescovo di Argo",
+      "bio": "San Pietro, vescovo di Argo."
+    },
+    {
+      "nome": "Sant'Ansfrido di Utrecht",
+      "titolo": "Vescovo di Utrecht",
+      "bio": "Sant'Ansfrido di Utrecht, vescovo di Utrecht."
+    },
+    {
+      "nome": "San Teodosio di Pečers'k",
+      "titolo": "Abate",
+      "bio": "San Teodosio di Pečers'k, abate."
+    },
+    {
+      "nome": "Beata Emilia Bicchieri",
+      "titolo": "Vergine domenicana",
+      "bio": "Beata Emilia Bicchieri, vergine domenicana."
+    },
+    {
+      "nome": "Santo Stanislao Casimiritano",
+      "titolo": "Sacerdote e canonico regolare",
+      "bio": "Santo Stanislao Casimiritano, sacerdote e canonico regolare."
+    },
+    {
+      "nome": "Beato Edoardo Giuseppe Rosaz",
+      "titolo": "Vescovo di Susa, fondatore delle Suore francescane missionarie di Susa",
+      "bio": "Beato Edoardo Giuseppe Rosaz, vescovo di Susa, fondatore delle Suore francescane missionarie di Susa."
+    },
+    {
+      "nome": "Beata Marie-Léonie Paradis",
+      "titolo": "Vergine, fondatrice delle Piccole suore della Sacra Famiglia",
+      "bio": "Beata Marie-Léonie Paradis, vergine, fondatrice delle Piccole suore della Sacra Famiglia."
+    }
+  ],
+  "05-04": [
+    {
+      "nome": "Santi Agapio e Secondino",
+      "titolo": "Vescovi, e compagni, martiri",
+      "bio": "Santi Agapio e Secondino, vescovi, e compagni, martiri."
+    },
+    {
+      "nome": "Sant'Antonina",
+      "titolo": "Martire",
+      "bio": "Sant'Antonina, martire."
+    },
+    {
+      "nome": "San Floriano di Lorch",
+      "titolo": "Laico martire",
+      "bio": "San Floriano di Lorch, laico martire."
+    },
+    {
+      "nome": "San Silvano di Gaza",
+      "titolo": "Vescovo di Gaza, e trentanove compagni, martiri",
+      "bio": "San Silvano di Gaza, vescovo di Gaza, e trentanove compagni, martiri."
+    },
+    {
+      "nome": "Beato Ladislao da Gielniów",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Ladislao da Gielniów, sacerdote francescano."
+    },
+    {
+      "nome": "San John Houghton",
+      "titolo": "San Roberto Lawrence e Sant'Agostino Webster, priori certosini, e San Riccardo Reynolds, b",
+      "bio": "San John Houghton, San Roberto Lawrence e Sant'Agostino Webster, priori certosini, e San Riccardo Reynolds, brigidino, sacerdoti e Santi quaranta martiri di Inghilterra e Galles."
+    },
+    {
+      "nome": "San Ciriaco di Gerusalemme",
+      "titolo": "Vescovo di Ancona e martire",
+      "bio": "San Ciriaco di Gerusalemme, vescovo di Ancona e martire."
+    },
+    {
+      "nome": "Beato Giovanni Haile",
+      "titolo": "Sacerdote, parroco di Isleworth, martire",
+      "bio": "Beato Giovanni Haile, sacerdote, parroco di Isleworth, martire."
+    },
+    {
+      "nome": "Beato Jean-Martin Moyë",
+      "titolo": "Sacerdote delle Missioni Estere di Parigi, fondatore delle Suore della Provvidenza di Port",
+      "bio": "Beato Jean-Martin Moyë, sacerdote delle Missioni Estere di Parigi, fondatore delle Suore della Provvidenza di Portieux e Saint-Jean."
+    }
+  ],
+  "05-05": [
+    {
+      "nome": "San Gioviniano",
+      "titolo": "Lettore e martire",
+      "bio": "San Gioviniano, lettore e martire."
+    },
+    {
+      "nome": "Sant'Eutimio",
+      "titolo": "Diacono e martire",
+      "bio": "Sant'Eutimio, diacono e martire."
+    },
+    {
+      "nome": "San Massimo",
+      "titolo": "Vescovo di Gerusalemme",
+      "bio": "San Massimo, vescovo di Gerusalemme."
+    },
+    {
+      "nome": "San Brittone",
+      "titolo": "Vescovo di Treviri",
+      "bio": "San Brittone, vescovo di Treviri."
+    },
+    {
+      "nome": "Sant'Ilario di Arles",
+      "titolo": "Vescovo di Arles",
+      "bio": "Sant'Ilario di Arles, vescovo di Arles."
+    },
+    {
+      "nome": "San Niceto",
+      "titolo": "Vescovo di Vienne",
+      "bio": "San Niceto, vescovo di Vienne."
+    },
+    {
+      "nome": "San Geronzio di Milano",
+      "titolo": "Vescovo di Milano",
+      "bio": "San Geronzio di Milano, vescovo di Milano."
+    },
+    {
+      "nome": "San Mauronto di Douai",
+      "titolo": "Abate e diacono",
+      "bio": "San Mauronto di Douai, abate e diacono."
+    },
+    {
+      "nome": "San Sacerdote",
+      "titolo": "Abate e poi vescovo di Limoges",
+      "bio": "San Sacerdote, abate e poi vescovo di Limoges."
+    },
+    {
+      "nome": "San Gottardo di Hildesheim",
+      "titolo": "Vescovo di Hildesheim",
+      "bio": "San Gottardo di Hildesheim, vescovo di Hildesheim."
+    },
+    {
+      "nome": "Sant'Avertino",
+      "titolo": "Diacono",
+      "bio": "Sant'Avertino, diacono."
+    },
+    {
+      "nome": "Sant'Angelo da Gerusalemme (O.C.)",
+      "titolo": "Sacerdote e martire",
+      "bio": "Sant'Angelo da Gerusalemme (O.C.), sacerdote e martire."
+    },
+    {
+      "nome": "Beato Benvenuto Mareni da Recanati",
+      "titolo": "Religioso francescano",
+      "bio": "Beato Benvenuto Mareni da Recanati, religioso francescano."
+    },
+    {
+      "nome": "Beato Nunzio Sulprizio",
+      "titolo": "Orfano",
+      "bio": "Beato Nunzio Sulprizio, orfano."
+    },
+    {
+      "nome": "Beata Caterina Cittadini",
+      "titolo": "Vergine, fondatrice delle Suore orsoline di San Girolamo",
+      "bio": "Beata Caterina Cittadini, vergine, fondatrice delle Suore orsoline di San Girolamo."
+    },
+    {
+      "nome": "Beato Gregorio Frąckowiak",
+      "titolo": "Religioso verbita e martire",
+      "bio": "Beato Gregorio Frąckowiak, religioso verbita e martire."
+    }
+  ],
+  "05-06": [
+    {
+      "nome": "San Lucio di Cirene",
+      "titolo": "Profeta personaggio del Nuovo Testamento",
+      "bio": "San Lucio di Cirene, profeta personaggio del Nuovo Testamento."
+    },
+    {
+      "nome": "Santi Mariano e Giacomo",
+      "titolo": "Martiri",
+      "bio": "Santi Mariano e Giacomo, martiri."
+    },
+    {
+      "nome": "San Venerio di Milano",
+      "titolo": "Vescovo di Milano",
+      "bio": "San Venerio di Milano, vescovo di Milano."
+    },
+    {
+      "nome": "San Pietro Nolasco (O. de M.)",
+      "titolo": "Sacerdote, fondatore dei mercedari",
+      "bio": "San Pietro Nolasco (O. de M.), sacerdote, fondatore dei mercedari."
+    },
+    {
+      "nome": "Santa Benedetta",
+      "titolo": "Vergine",
+      "bio": "Santa Benedetta, vergine."
+    },
+    {
+      "nome": "Sant'Ealberto",
+      "titolo": "Vescovo di Lindisfarne",
+      "bio": "Sant'Ealberto, vescovo di Lindisfarne."
+    },
+    {
+      "nome": "Beato Bartolomeo Pucci-Franceschi",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Bartolomeo Pucci-Franceschi, sacerdote francescano."
+    },
+    {
+      "nome": "Beati Edoardo Jones e Antonio Middleton",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Beati Edoardo Jones e Antonio Middleton, sacerdoti e martiri."
+    },
+    {
+      "nome": "San François de Montmorency-Laval",
+      "titolo": "Primo vescovo di Québec",
+      "bio": "San François de Montmorency-Laval, primo vescovo di Québec."
+    },
+    {
+      "nome": "Beata Costanza Troiani",
+      "titolo": "Vergine, fondatrice delle Suore francescane missionarie del Cuore Immacolato di Maria",
+      "bio": "Beata Costanza Troiani, vergine, fondatrice delle Suore francescane missionarie del Cuore Immacolato di Maria."
+    },
+    {
+      "nome": "Beata Anna Rosa Gattorno",
+      "titolo": "Vedova, fondatrice delle Figlie di Sant'Anna",
+      "bio": "Beata Anna Rosa Gattorno, vedova, fondatrice delle Figlie di Sant'Anna."
+    },
+    {
+      "nome": "Beato Enrico Kaczorowski e Casimiro Gostynski",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Beato Enrico Kaczorowski e Casimiro Gostynski, sacerdoti e martiri."
+    }
+  ],
+  "05-07": [
+    {
+      "nome": "Santa Domitilla",
+      "titolo": "Martire",
+      "bio": "Santa Domitilla, martire."
+    },
+    {
+      "nome": "Santi Flavio e quattro compagni martiri",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi Flavio e quattro compagni martiri."
+    },
+    {
+      "nome": "San Serenico",
+      "titolo": "Diacono e monaco",
+      "bio": "San Serenico, diacono e monaco."
+    },
+    {
+      "nome": "San Giovanni di Beverley",
+      "titolo": "Vescovo prima di Hexham e poi di York",
+      "bio": "San Giovanni di Beverley, vescovo prima di Hexham e poi di York."
+    },
+    {
+      "nome": "Beata Gisella di Baviera",
+      "titolo": "Vedova",
+      "bio": "Beata Gisella di Baviera, vedova."
+    },
+    {
+      "nome": "Sant'Antonio di Kiev",
+      "titolo": "Monaco eremita",
+      "bio": "Sant'Antonio di Kiev, monaco eremita."
+    },
+    {
+      "nome": "Beato Alberto da Bergamo",
+      "titolo": "Terziario domenicano",
+      "bio": "Beato Alberto da Bergamo, terziario domenicano."
+    },
+    {
+      "nome": "Santa Rosa Venerini",
+      "titolo": "Vergine, fondatrice delle Maestre pie",
+      "bio": "Santa Rosa Venerini, vergine, fondatrice delle Maestre pie."
+    },
+    {
+      "nome": "Sant'Agostino Roscelli",
+      "titolo": "Sacerdote, fondatore delle Suore dell'Immacolata",
+      "bio": "Sant'Agostino Roscelli, sacerdote, fondatore delle Suore dell'Immacolata."
+    },
+    {
+      "nome": "Beato Antonio Bajewski",
+      "titolo": "Sacerdote francescano conventuale e martire",
+      "bio": "Beato Antonio Bajewski, sacerdote francescano conventuale e martire."
+    }
+  ],
+  "05-08": [
+    {
+      "nome": "San Vittore il Moro",
+      "titolo": "Laico martire",
+      "bio": "San Vittore il Moro, laico martire."
+    },
+    {
+      "nome": "Sant'Acacio di BiSanzio",
+      "titolo": "Soldato e martire",
+      "bio": "Sant'Acacio di BiSanzio, soldato e martire."
+    },
+    {
+      "nome": "Sant'Elladio di Auxerre",
+      "titolo": "Vescovo di Auxerre",
+      "bio": "Sant'Elladio di Auxerre, vescovo di Auxerre."
+    },
+    {
+      "nome": "Sant'Arsenio il Grande",
+      "titolo": "Monaco eremita",
+      "bio": "Sant'Arsenio il Grande, monaco eremita."
+    },
+    {
+      "nome": "San Gibriano",
+      "titolo": "Sacerdote pellegrino",
+      "bio": "San Gibriano, sacerdote pellegrino."
+    },
+    {
+      "nome": "San Desiderato di Bourges",
+      "titolo": "Vescovo di Bourges",
+      "bio": "San Desiderato di Bourges, vescovo di Bourges."
+    },
+    {
+      "nome": "San Bonifacio IV",
+      "titolo": "Papa",
+      "bio": "San Bonifacio IV, papa."
+    },
+    {
+      "nome": "San Benedetto II",
+      "titolo": "Papa",
+      "bio": "San Benedetto II, papa."
+    },
+    {
+      "nome": "San Matrone",
+      "titolo": "Eremita",
+      "bio": "San Matrone, eremita."
+    },
+    {
+      "nome": "San Wirone di Roerdalen",
+      "titolo": "Missionario",
+      "bio": "San Wirone di Roerdalen, missionario."
+    },
+    {
+      "nome": "Sant'Amato Ronconi",
+      "titolo": "Ospedaliere",
+      "bio": "Sant'Amato Ronconi, ospedaliere."
+    },
+    {
+      "nome": "Beato Angelo da Massaccio",
+      "titolo": "Sacerdote camaldolese e martire",
+      "bio": "Beato Angelo da Massaccio, sacerdote camaldolese e martire."
+    },
+    {
+      "nome": "Beato Luigi Rabatà",
+      "titolo": "Sacerdote carmelitano",
+      "bio": "Beato Luigi Rabatà, sacerdote carmelitano."
+    },
+    {
+      "nome": "Beata Maria Caterina di Sant'Agostino Simon de Longpré",
+      "titolo": "Vergine delle Religiose ospedaliere della misericordia di Gesù",
+      "bio": "Beata Maria Caterina di Sant'Agostino Simon de Longpré, vergine delle Religiose ospedaliere della misericordia di Gesù."
+    },
+    {
+      "nome": "Beata Ulrica Nisch",
+      "titolo": "Vergine delle Suore di carità della Santa Croce",
+      "bio": "Beata Ulrica Nisch, vergine delle Suore di carità della Santa Croce."
+    },
+    {
+      "nome": "Beato Raymond de Montfort (O. de M.)",
+      "titolo": "Cardinale",
+      "bio": "Beato Raymond de Montfort (O. de M.), cardinale."
+    }
+  ],
+  "05-09": [
+    {
+      "nome": "Isaia (profeta)",
+      "titolo": "Profeta",
+      "bio": "Isaia (profeta), profeta."
+    },
+    {
+      "nome": "Sant'Erma di Roma",
+      "titolo": "Padre della Chiesa",
+      "bio": "Sant'Erma di Roma, padre della Chiesa."
+    },
+    {
+      "nome": "San Pacomio",
+      "titolo": "Abate",
+      "bio": "San Pacomio, abate."
+    },
+    {
+      "nome": "Santi trecentodieci martiri persiani",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi trecentodieci martiri persiani."
+    },
+    {
+      "nome": "San Dionigi di Vienne",
+      "titolo": "Vescovo di Vienne",
+      "bio": "San Dionigi di Vienne, vescovo di Vienne."
+    },
+    {
+      "nome": "San Geronzio di Cervia",
+      "titolo": "Vescovo di Cervia",
+      "bio": "San Geronzio di Cervia, vescovo di Cervia."
+    },
+    {
+      "nome": "San Beato di Vendôme",
+      "titolo": "Sacerdote ed eremita",
+      "bio": "San Beato di Vendôme, sacerdote ed eremita."
+    },
+    {
+      "nome": "Beato Forte Gabrielli",
+      "titolo": "Eremita",
+      "bio": "Beato Forte Gabrielli, eremita."
+    },
+    {
+      "nome": "Beato Benincasa da Montepulciano",
+      "titolo": "Religioso servita",
+      "bio": "Beato Benincasa da Montepulciano, religioso servita."
+    },
+    {
+      "nome": "Beato Tommaso Pickering",
+      "titolo": "Martire benedettino",
+      "bio": "Beato Tommaso Pickering, martire benedettino."
+    },
+    {
+      "nome": "San Giuseppe Hiên",
+      "titolo": "Sacerdote domenicano e martire",
+      "bio": "San Giuseppe Hiên, sacerdote domenicano e martire."
+    },
+    {
+      "nome": "Beata Maria Teresa di Gesù (Karolina Gerhardinger)",
+      "titolo": "Vergine, fondatrice delle Suore scolastiche di Nostra Signora",
+      "bio": "Beata Maria Teresa di Gesù (Karolina Gerhardinger), vergine, fondatrice delle Suore scolastiche di Nostra Signora."
+    },
+    {
+      "nome": "Beato Stefan Grelewski",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Stefan Grelewski, sacerdote e martire."
+    }
+  ],
+  "05-10": [
+    {
+      "nome": "San Giobbe",
+      "titolo": "Uomo di grandissima pazienza",
+      "bio": "San Giobbe, uomo di grandissima pazienza."
+    },
+    {
+      "nome": "San Dioscoride",
+      "titolo": "Martire",
+      "bio": "San Dioscoride, martire."
+    },
+    {
+      "nome": "Santi Alfio",
+      "titolo": "Filadelfo e Cirino, martiri",
+      "bio": "Santi Alfio, Filadelfo e Cirino, martiri."
+    },
+    {
+      "nome": "San Gordiano ed Epimaco",
+      "titolo": "Martire",
+      "bio": "San Gordiano ed Epimaco, martire."
+    },
+    {
+      "nome": "San Frodoino (O.S.B.)",
+      "titolo": "Ottavo abate di Novalesa",
+      "bio": "San Frodoino (O.S.B.), ottavo abate di Novalesa."
+    },
+    {
+      "nome": "Santi Quarto e Quinto",
+      "titolo": "Martiri",
+      "bio": "Santi Quarto e Quinto, martiri."
+    },
+    {
+      "nome": "San Comgall di Bangor",
+      "titolo": "Abate, fondatore del monastero di Bangor",
+      "bio": "San Comgall di Bangor, abate, fondatore del monastero di Bangor."
+    },
+    {
+      "nome": "San Cataldo",
+      "titolo": "Vescovo di Taranto",
+      "bio": "San Cataldo, vescovo di Taranto."
+    },
+    {
+      "nome": "Santa Solangia",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Solangia, vergine e martire."
+    },
+    {
+      "nome": "San Guglielmo",
+      "titolo": "Sacerdote",
+      "bio": "San Guglielmo, sacerdote."
+    },
+    {
+      "nome": "Beata Beatrice I d'Este",
+      "titolo": "Vergine",
+      "bio": "Beata Beatrice I d'Este, vergine."
+    },
+    {
+      "nome": "Beato Niccolò Albergati",
+      "titolo": "Certosino vescovo di Bologna",
+      "bio": "Beato Niccolò Albergati, certosino vescovo di Bologna."
+    },
+    {
+      "nome": "San Giovanni d'Avila",
+      "titolo": "Sacerdote",
+      "bio": "San Giovanni d'Avila, sacerdote."
+    },
+    {
+      "nome": "Beato Ivan Merz",
+      "titolo": "Educatore",
+      "bio": "Beato Ivan Merz, educatore."
+    },
+    {
+      "nome": "Beato Enrico Rebuschini",
+      "titolo": "Sacerdote camilliano",
+      "bio": "Beato Enrico Rebuschini, sacerdote camilliano."
+    }
+  ],
+  "05-11": [
+    {
+      "nome": "San Maiulo di Adrumeto",
+      "titolo": "Martire",
+      "bio": "San Maiulo di Adrumeto, martire."
+    },
+    {
+      "nome": "Sant'Antimo di Roma",
+      "titolo": "Martire",
+      "bio": "Sant'Antimo di Roma, martire."
+    },
+    {
+      "nome": "San Mozio",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Mozio, sacerdote e martire."
+    },
+    {
+      "nome": "San Mamerto di Vienne",
+      "titolo": "Vescovo di Vienne",
+      "bio": "San Mamerto di Vienne, vescovo di Vienne."
+    },
+    {
+      "nome": "San Gengolfo",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "San Gengolfo."
+    },
+    {
+      "nome": "San Maiolo di Cluny ( O.S.B. Clun.)",
+      "titolo": "Abate di Cluny",
+      "bio": "San Maiolo di Cluny ( O.S.B. Clun.), abate di Cluny."
+    },
+    {
+      "nome": "San Gualterio",
+      "titolo": "Sacerdote",
+      "bio": "San Gualterio, sacerdote."
+    },
+    {
+      "nome": "Beato Gregorio Celli",
+      "titolo": "Sacerdote agostiniano",
+      "bio": "Beato Gregorio Celli, sacerdote agostiniano."
+    },
+    {
+      "nome": "Beati Giovanni Rochester e Giacomo Walworth",
+      "titolo": "Sacerdoti certosini, martiri",
+      "bio": "Beati Giovanni Rochester e Giacomo Walworth, sacerdoti certosini, martiri."
+    },
+    {
+      "nome": "San Francesco de Geronimo (S.J.)",
+      "titolo": "Sacerdote",
+      "bio": "San Francesco de Geronimo (S.J.), sacerdote."
+    },
+    {
+      "nome": "Sant'Ignazio da Laconi",
+      "titolo": "Cappuccino",
+      "bio": "Sant'Ignazio da Laconi, cappuccino."
+    },
+    {
+      "nome": "San Matteo Lê Văn Gẫm",
+      "titolo": "Martire",
+      "bio": "San Matteo Lê Văn Gẫm, martire."
+    },
+    {
+      "nome": "Beate Paschalina Jahn e 9 compagne",
+      "titolo": "Suore martiri",
+      "bio": "Beate Paschalina Jahn e 9 compagne, suore martiri."
+    },
+    {
+      "nome": "Beato Zefferino Namuncurá",
+      "titolo": "Giovane laico",
+      "bio": "Beato Zefferino Namuncurá, giovane laico."
+    }
+  ],
+  "05-12": [
+    {
+      "nome": "Santi Nereo e Achilleo",
+      "titolo": "Martiri",
+      "bio": "Santi Nereo e Achilleo, martiri."
+    },
+    {
+      "nome": "San Pancrazio",
+      "titolo": "Laico martire",
+      "bio": "San Pancrazio, laico martire."
+    },
+    {
+      "nome": "Santi Cirillo e sei compagni",
+      "titolo": "Martiri",
+      "bio": "Santi Cirillo e sei compagni, martiri."
+    },
+    {
+      "nome": "Sant'Epifanio di Salamina",
+      "titolo": "Vescovo di Salamina",
+      "bio": "Sant'Epifanio di Salamina, vescovo di Salamina."
+    },
+    {
+      "nome": "San Filippo di Agira",
+      "titolo": "Sacerdote",
+      "bio": "San Filippo di Agira, sacerdote."
+    },
+    {
+      "nome": "San Modoaldo",
+      "titolo": "Vescovo di Treviri",
+      "bio": "San Modoaldo, vescovo di Treviri."
+    },
+    {
+      "nome": "Santa Rictrude di Marchiennes",
+      "titolo": "Badessa di Marchiennes",
+      "bio": "Santa Rictrude di Marchiennes, badessa di Marchiennes."
+    },
+    {
+      "nome": "San Germano I",
+      "titolo": "Vescovo di Costantinopoli",
+      "bio": "San Germano I, vescovo di Costantinopoli."
+    },
+    {
+      "nome": "San Domenico della Calzada",
+      "titolo": "Eremita",
+      "bio": "San Domenico della Calzada, eremita."
+    },
+    {
+      "nome": "Beata Imelda Lambertini",
+      "titolo": "Vergine domenicana",
+      "bio": "Beata Imelda Lambertini, vergine domenicana."
+    },
+    {
+      "nome": "Beata Giovanna d'Aviz",
+      "titolo": "Vergine",
+      "bio": "Beata Giovanna d'Aviz, vergine."
+    }
+  ],
+  "05-13": [
+    {
+      "nome": "Nostra Signora di Fatima",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Nostra Signora di Fatima."
+    },
+    {
+      "nome": "Santi martiri alessandrini",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri alessandrini."
+    },
+    {
+      "nome": "San Servazio",
+      "titolo": "Vescovo di Tongres",
+      "bio": "San Servazio, vescovo di Tongres."
+    },
+    {
+      "nome": "Sant'Agnese di Poitiers",
+      "titolo": "Badessa di Santa Croce a Poitiers",
+      "bio": "Sant'Agnese di Poitiers, badessa di Santa Croce a Poitiers."
+    },
+    {
+      "nome": "Beata Gemma di Goriano Sicoli",
+      "titolo": "Vergine",
+      "bio": "Beata Gemma di Goriano Sicoli, vergine."
+    },
+    {
+      "nome": "Beata Maddalena Albrici",
+      "titolo": "Badessa agostiniana",
+      "bio": "Beata Maddalena Albrici, badessa agostiniana."
+    },
+    {
+      "nome": "Sant'Andrea Uberto Fournet",
+      "titolo": "Sacerdote, fondatore delle Figlie della Croce",
+      "bio": "Sant'Andrea Uberto Fournet, sacerdote, fondatore delle Figlie della Croce."
+    },
+    {
+      "nome": "Beata Giuliana di Norwich",
+      "titolo": "Laica, mistica e anacoreta",
+      "bio": "Beata Giuliana di Norwich, laica, mistica e anacoreta."
+    }
+  ],
+  "05-14": [
+    {
+      "nome": "San Mattia",
+      "titolo": "Apostolo",
+      "bio": "San Mattia, apostolo."
+    },
+    {
+      "nome": "San Massimo",
+      "titolo": "Martire",
+      "bio": "San Massimo, martire."
+    },
+    {
+      "nome": "San Ponzio",
+      "titolo": "Martire",
+      "bio": "San Ponzio, martire."
+    },
+    {
+      "nome": "Santi Vittore e Corona",
+      "titolo": "Martiri",
+      "bio": "Santi Vittore e Corona, martiri."
+    },
+    {
+      "nome": "Sant'Isidoro di Chio",
+      "titolo": "Martire",
+      "bio": "Sant'Isidoro di Chio, martire."
+    },
+    {
+      "nome": "Santi Felice e Fortunato",
+      "titolo": "Martiri",
+      "bio": "Santi Felice e Fortunato, martiri."
+    },
+    {
+      "nome": "Sante Giusta ed Enedina",
+      "titolo": "Martiri",
+      "bio": "Sante Giusta ed Enedina, martiri."
+    },
+    {
+      "nome": "Sant'Abruncolo",
+      "titolo": "Vescovo di Langres e di Clermont",
+      "bio": "Sant'Abruncolo, vescovo di Langres e di Clermont."
+    },
+    {
+      "nome": "San Gallo",
+      "titolo": "Vescovo di Clermont",
+      "bio": "San Gallo, vescovo di Clermont."
+    },
+    {
+      "nome": "San Cartaco di Lismore",
+      "titolo": "Vescovo di Lismore e abate",
+      "bio": "San Cartaco di Lismore, vescovo di Lismore e abate."
+    },
+    {
+      "nome": "Sant'Eremberto di Tolosa",
+      "titolo": "Vescovo di Tolosa",
+      "bio": "Sant'Eremberto di Tolosa, vescovo di Tolosa."
+    },
+    {
+      "nome": "Beato Egidio da Vouzela",
+      "titolo": "Sacerdote",
+      "bio": "Beato Egidio da Vouzela, sacerdote."
+    },
+    {
+      "nome": "Santa Théodore Guérin",
+      "titolo": "Vergine, fondatrice delle Suore della Provvidenza",
+      "bio": "Santa Théodore Guérin, vergine, fondatrice delle Suore della Provvidenza."
+    },
+    {
+      "nome": "San Michele Garicoïts",
+      "titolo": "Sacerdote, fondatore dei Preti del Sacro Cuore di Gesù di Bétharram",
+      "bio": "San Michele Garicoïts, sacerdote, fondatore dei Preti del Sacro Cuore di Gesù di Bétharram."
+    },
+    {
+      "nome": "Santa Maria Domenica Mazzarello",
+      "titolo": "Fondatrice delle Figlie di Maria Ausiliatrice",
+      "bio": "Santa Maria Domenica Mazzarello, fondatrice delle Figlie di Maria Ausiliatrice."
+    }
+  ],
+  "05-15": [
+    {
+      "nome": "Santi Pietro",
+      "titolo": "Andrea, Paolo e Dionisia, martiri",
+      "bio": "Santi Pietro, Andrea, Paolo e Dionisia, martiri."
+    },
+    {
+      "nome": "Santi Cassio e Vittorino",
+      "titolo": "Martiri",
+      "bio": "Santi Cassio e Vittorino, martiri."
+    },
+    {
+      "nome": "San Simplicio di Olbia",
+      "titolo": "Vescovo martire",
+      "bio": "San Simplicio di Olbia, vescovo martire."
+    },
+    {
+      "nome": "Sant'Achilleo di Larissa",
+      "titolo": "Vescovo di Larissa",
+      "bio": "Sant'Achilleo di Larissa, vescovo di Larissa."
+    },
+    {
+      "nome": "San Reticio di Autun",
+      "titolo": "Vescovo di Autun",
+      "bio": "San Reticio di Autun, vescovo di Autun."
+    },
+    {
+      "nome": "San Kaleb di Axum",
+      "titolo": "Re d'Etiopia",
+      "bio": "San Kaleb di Axum, re d'Etiopia."
+    },
+    {
+      "nome": "San Severino di Settempeda",
+      "titolo": "Vescovo di Settempeda",
+      "bio": "San Severino di Settempeda, vescovo di Settempeda."
+    },
+    {
+      "nome": "San Ruperto di Bingen",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "San Ruperto di Bingen."
+    },
+    {
+      "nome": "San Witesindo",
+      "titolo": "Martire",
+      "bio": "San Witesindo, martire."
+    },
+    {
+      "nome": "Sant'Isidoro l'agricoltore",
+      "titolo": "Agricoltore",
+      "bio": "Sant'Isidoro l'agricoltore, agricoltore."
+    },
+    {
+      "nome": "Sant'Ellero",
+      "titolo": "Abate fondatore",
+      "bio": "Sant'Ellero, abate fondatore."
+    },
+    {
+      "nome": "Beato Andrea Abellon",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Andrea Abellon, sacerdote domenicano."
+    }
+  ],
+  "05-16": [
+    {
+      "nome": "Santi Felice e Gennadio",
+      "titolo": "Martiri",
+      "bio": "Santi Felice e Gennadio, martiri."
+    },
+    {
+      "nome": "Santi Fiorenzo e Diocleziano",
+      "titolo": "Martiri",
+      "bio": "Santi Fiorenzo e Diocleziano, martiri."
+    },
+    {
+      "nome": "Santi Martiri persiani",
+      "titolo": "Vescovo di Kaskar, Ebedieso e compagni",
+      "bio": "Santi Martiri persiani, vescovo di Kaskar, Ebedieso e compagni."
+    },
+    {
+      "nome": "San Pellegrino di Auxerre",
+      "titolo": "Primo vescovo di Auxerre e martire",
+      "bio": "San Pellegrino di Auxerre, primo vescovo di Auxerre e martire."
+    },
+    {
+      "nome": "San Possidio",
+      "titolo": "Vescovo di Calama",
+      "bio": "San Possidio, vescovo di Calama."
+    },
+    {
+      "nome": "San Fidolo",
+      "titolo": "Sacerdote",
+      "bio": "San Fidolo, sacerdote."
+    },
+    {
+      "nome": "San Brendano di Cluain Ferta",
+      "titolo": "Abate di Clonfert",
+      "bio": "San Brendano di Cluain Ferta, abate di Clonfert."
+    },
+    {
+      "nome": "Sant'Onorato di Amiens",
+      "titolo": "Vescovo di Amiens",
+      "bio": "Sant'Onorato di Amiens, vescovo di Amiens."
+    },
+    {
+      "nome": "San Carantoco",
+      "titolo": "Vescovo e abate di Cardigan",
+      "bio": "San Carantoco, vescovo e abate di Cardigan."
+    },
+    {
+      "nome": "quarantaquattro Santi martiri di Palestina",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "quarantaquattro Santi martiri di Palestina."
+    },
+    {
+      "nome": "San Germerio di Tolosa",
+      "titolo": "Vescovo di Tolosa",
+      "bio": "San Germerio di Tolosa, vescovo di Tolosa."
+    },
+    {
+      "nome": "Sant'Ubaldo Baldassini",
+      "titolo": "Vescovo di Gubbio",
+      "bio": "Sant'Ubaldo Baldassini, vescovo di Gubbio."
+    },
+    {
+      "nome": "Sant'Adamo",
+      "titolo": "Abate del monastero di San Sabino",
+      "bio": "Sant'Adamo, abate del monastero di San Sabino."
+    },
+    {
+      "nome": "San Simone Stock (O.Carm.)",
+      "titolo": "Sacerdote, priore generale",
+      "bio": "San Simone Stock (O.Carm.), sacerdote, priore generale."
+    },
+    {
+      "nome": "Sant'Andrea Bobola (S.J.)",
+      "titolo": "Sacerdote, missionario e martire",
+      "bio": "Sant'Andrea Bobola (S.J.), sacerdote, missionario e martire."
+    },
+    {
+      "nome": "Beato Michele Wozniak",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Michele Wozniak, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Vitalij Bajrak",
+      "titolo": "Sacerdote basiliano e martire",
+      "bio": "Beato Vitalij Bajrak, sacerdote basiliano e martire."
+    }
+  ],
+  "05-17": [
+    {
+      "nome": "Sant'Adrione",
+      "titolo": "Martire",
+      "bio": "Sant'Adrione, martire."
+    },
+    {
+      "nome": "San Vittore",
+      "titolo": "Martire",
+      "bio": "San Vittore, martire."
+    },
+    {
+      "nome": "Santi Eradio e Paolo",
+      "titolo": "Martiri",
+      "bio": "Santi Eradio e Paolo, martiri."
+    },
+    {
+      "nome": "Santa Restituta d'Africa",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Restituta d'Africa, vergine e martire."
+    },
+    {
+      "nome": "San Pasquale Baylón",
+      "titolo": "Francescano",
+      "bio": "San Pasquale Baylón, francescano."
+    },
+    {
+      "nome": "San Pietro Liu Wenyuan",
+      "titolo": "Martire e catechista",
+      "bio": "San Pietro Liu Wenyuan, martire e catechista."
+    },
+    {
+      "nome": "Beata Antonia Mesina",
+      "titolo": "Vergine e martire",
+      "bio": "Beata Antonia Mesina, vergine e martire."
+    },
+    {
+      "nome": "Beato Ivano Ziatyk",
+      "titolo": "Sacerdote redentorista e martire",
+      "bio": "Beato Ivano Ziatyk, sacerdote redentorista e martire."
+    }
+  ],
+  "05-18": [
+    {
+      "nome": "San Giovanni I",
+      "titolo": "Papa e martire",
+      "bio": "San Giovanni I, papa e martire."
+    },
+    {
+      "nome": "San Felice",
+      "titolo": "Martire",
+      "bio": "San Felice, martire."
+    },
+    {
+      "nome": "San Dioscuro",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "San Dioscuro."
+    },
+    {
+      "nome": "Santi Potamone",
+      "titolo": "Ortasio e Serapione, sacerdoti e martiri",
+      "bio": "Santi Potamone, Ortasio e Serapione, sacerdoti e martiri."
+    },
+    {
+      "nome": "Santi Teodoto e Tecusa",
+      "titolo": "Alessandra, Claudia, Faina, Eufrasia, Matrona e Giulitta, vergini e martiri",
+      "bio": "Santi Teodoto e Tecusa, Alessandra, Claudia, Faina, Eufrasia, Matrona e Giulitta, vergini e martiri."
+    },
+    {
+      "nome": "Beato Burcardo",
+      "titolo": "Sacerdote",
+      "bio": "Beato Burcardo, sacerdote."
+    },
+    {
+      "nome": "Sant'Erik IX di Svezia",
+      "titolo": "Re e martire",
+      "bio": "Sant'Erik IX di Svezia, re e martire."
+    },
+    {
+      "nome": "Beato Gerardo Mecatti",
+      "titolo": "Terziario francescano",
+      "bio": "Beato Gerardo Mecatti, terziario francescano."
+    },
+    {
+      "nome": "Beato Guglielmo da Tolosa",
+      "titolo": "Sacerdote agostiniano",
+      "bio": "Beato Guglielmo da Tolosa, sacerdote agostiniano."
+    },
+    {
+      "nome": "San Felice da Cantalice",
+      "titolo": "Religioso cappuccino",
+      "bio": "San Felice da Cantalice, religioso cappuccino."
+    },
+    {
+      "nome": "Beata Blandina del Sacro Cuore Merten",
+      "titolo": "Vergine dell'Ordine di Sant'Orsola",
+      "bio": "Beata Blandina del Sacro Cuore Merten, vergine dell'Ordine di Sant'Orsola."
+    },
+    {
+      "nome": "Beato Stanislao Kubski",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Stanislao Kubski, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Martino Oprzadek",
+      "titolo": "Sacerdote francescano e martire",
+      "bio": "Beato Martino Oprzadek, sacerdote francescano e martire."
+    }
+  ],
+  "05-19": [
+    {
+      "nome": "Sant'Urbano I",
+      "titolo": "Papa",
+      "bio": "Sant'Urbano I, papa."
+    },
+    {
+      "nome": "Santi Partenio e Calogero",
+      "titolo": "Martiri",
+      "bio": "Santi Partenio e Calogero, martiri."
+    },
+    {
+      "nome": "Sant'Adolfo di Cambrai",
+      "titolo": "Vescovo di Cambrai",
+      "bio": "Sant'Adolfo di Cambrai, vescovo di Cambrai."
+    },
+    {
+      "nome": "San Dunstano di Canterbury",
+      "titolo": "Abate a Glastonbury e poi vescovo di Worcester, di Londra e infine di Canterbury",
+      "bio": "San Dunstano di Canterbury, abate a Glastonbury e poi vescovo di Worcester, di Londra e infine di Canterbury."
+    },
+    {
+      "nome": "Sant'Umiliana de' Cerchi",
+      "titolo": "Del Terz'ordine francescano",
+      "bio": "Sant'Umiliana de' Cerchi, del Terz'ordine francescano."
+    },
+    {
+      "nome": "San Celestino V",
+      "titolo": "Papa",
+      "bio": "San Celestino V, papa."
+    },
+    {
+      "nome": "Sant'Ivo Hélory",
+      "titolo": "Prete",
+      "bio": "Sant'Ivo Hélory, prete."
+    },
+    {
+      "nome": "Beato Agostino Novello",
+      "titolo": "Sacerdote agostiniano",
+      "bio": "Beato Agostino Novello, sacerdote agostiniano."
+    },
+    {
+      "nome": "Beato Giovanni da San Domenico Martinez",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Giovanni da San Domenico Martinez, sacerdote domenicano."
+    },
+    {
+      "nome": "Beato Pietro Wright",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Pietro Wright, sacerdote e martire."
+    },
+    {
+      "nome": "San Teofilo da Corte (O.F.M.)",
+      "titolo": "Sacerdote",
+      "bio": "San Teofilo da Corte (O.F.M.), sacerdote."
+    },
+    {
+      "nome": "San Crispino da Viterbo",
+      "titolo": "Religioso cappuccino",
+      "bio": "San Crispino da Viterbo, religioso cappuccino."
+    },
+    {
+      "nome": "Beato Giacomo Luigi da Besançon Loir",
+      "titolo": "Sacerdote cappuccino e martire",
+      "bio": "Beato Giacomo Luigi da Besançon Loir, sacerdote cappuccino e martire."
+    },
+    {
+      "nome": "Santa Maria Bernarda Bütler",
+      "titolo": "Vergine, fondatrice delle Suore francescane missionarie di Maria Ausiliatrice",
+      "bio": "Santa Maria Bernarda Bütler, vergine, fondatrice delle Suore francescane missionarie di Maria Ausiliatrice."
+    },
+    {
+      "nome": "Beato Giuseppe Czempiel",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giuseppe Czempiel, sacerdote e martire."
+    },
+    {
+      "nome": "Beata Pina Suriano",
+      "titolo": "Laica",
+      "bio": "Beata Pina Suriano, laica."
+    }
+  ],
+  "05-20": [
+    {
+      "nome": "San Bernardino da Siena",
+      "titolo": "Sacerdote francescano",
+      "bio": "San Bernardino da Siena, sacerdote francescano."
+    },
+    {
+      "nome": "Santa Lidia",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santa Lidia."
+    },
+    {
+      "nome": "Sant'Aura",
+      "titolo": "Martire",
+      "bio": "Sant'Aura, martire."
+    },
+    {
+      "nome": "San Baudilio di Nîmes",
+      "titolo": "Martire",
+      "bio": "San Baudilio di Nîmes, martire."
+    },
+    {
+      "nome": "San Talaleo",
+      "titolo": "Martire",
+      "bio": "San Talaleo, martire."
+    },
+    {
+      "nome": "San Lucifero di Cagliari",
+      "titolo": "Vescovo di Cagliari",
+      "bio": "San Lucifero di Cagliari, vescovo di Cagliari."
+    },
+    {
+      "nome": "Sant'Ilario",
+      "titolo": "Vescovo di Tolosa",
+      "bio": "Sant'Ilario, vescovo di Tolosa."
+    },
+    {
+      "nome": "Sant'Austregesilio di Bourges",
+      "titolo": "Vescovo di Bourges",
+      "bio": "Sant'Austregesilio di Bourges, vescovo di Bourges."
+    },
+    {
+      "nome": "Sant'Atanasio",
+      "titolo": "Vescovo di Brescia",
+      "bio": "Sant'Atanasio, vescovo di Brescia."
+    },
+    {
+      "nome": "San Teodoro di Pavia",
+      "titolo": "Vescovo di Pavia",
+      "bio": "San Teodoro di Pavia, vescovo di Pavia."
+    },
+    {
+      "nome": "Beato Guido della Gherardesca",
+      "titolo": "Eremita",
+      "bio": "Beato Guido della Gherardesca, eremita."
+    },
+    {
+      "nome": "Beata Colomba da Rieti",
+      "titolo": "Vergine del terz'ordine domenicano",
+      "bio": "Beata Colomba da Rieti, vergine del terz'ordine domenicano."
+    },
+    {
+      "nome": "San Protasio Chong Kuk-bo",
+      "titolo": "Martire",
+      "bio": "San Protasio Chong Kuk-bo, martire."
+    },
+    {
+      "nome": "Sant'Arcangelo Tadini",
+      "titolo": "Sacerdote, fondatore delle Suore operaie della Santa Casa di Nazareth",
+      "bio": "Sant'Arcangelo Tadini, sacerdote, fondatore delle Suore operaie della Santa Casa di Nazareth."
+    },
+    {
+      "nome": "Beato Luigi Talamoni",
+      "titolo": "Sacerdote, fondatore delle Suore misericordine di San Gerardo",
+      "bio": "Beato Luigi Talamoni, sacerdote, fondatore delle Suore misericordine di San Gerardo."
+    }
+  ],
+  "05-21": [
+    {
+      "nome": "San Cristóbal Magallanes Jara e compagni",
+      "titolo": "Martiri messicani",
+      "bio": "San Cristóbal Magallanes Jara e compagni, martiri messicani."
+    },
+    {
+      "nome": "San Timoteo",
+      "titolo": "Diacono e martire",
+      "bio": "San Timoteo, diacono e martire."
+    },
+    {
+      "nome": "San Polieuto",
+      "titolo": "Martire",
+      "bio": "San Polieuto, martire."
+    },
+    {
+      "nome": "Santi martiri di Pentecoste ad Alessandria",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri di Pentecoste ad Alessandria."
+    },
+    {
+      "nome": "San Paterno",
+      "titolo": "Vescovo di Vannes",
+      "bio": "San Paterno, vescovo di Vannes."
+    },
+    {
+      "nome": "Sant'Ospizio",
+      "titolo": "Recluso",
+      "bio": "Sant'Ospizio, recluso."
+    },
+    {
+      "nome": "San Mancio",
+      "titolo": "Martire",
+      "bio": "San Mancio, martire."
+    },
+    {
+      "nome": "San Teobaldo di Vienne",
+      "titolo": "Vescovo di Vienne",
+      "bio": "San Teobaldo di Vienne, vescovo di Vienne."
+    },
+    {
+      "nome": "Sant'Hemming",
+      "titolo": "Vescovo di Åbo",
+      "bio": "Sant'Hemming, vescovo di Åbo."
+    },
+    {
+      "nome": "Beato Leone Mopinot",
+      "titolo": "Dei Fratelli delle Scuole Cristiane, martire",
+      "bio": "Beato Leone Mopinot, dei Fratelli delle Scuole Cristiane, martire."
+    },
+    {
+      "nome": "San Carlo Eugenio de Mazenod",
+      "titolo": "Vescovo di Marsiglia, fondatore dei Missionari Oblati di Maria Immacolata",
+      "bio": "San Carlo Eugenio de Mazenod, vescovo di Marsiglia, fondatore dei Missionari Oblati di Maria Immacolata."
+    }
+  ],
+  "05-22": [
+    {
+      "nome": "Santa Rita da Cascia",
+      "titolo": "Vedova, monaca agostiniana",
+      "bio": "Santa Rita da Cascia, vedova, monaca agostiniana."
+    },
+    {
+      "nome": "Santi Casto ed Emilio",
+      "titolo": "Martiri",
+      "bio": "Santi Casto ed Emilio, martiri."
+    },
+    {
+      "nome": "San Basilisco",
+      "titolo": "Vescovo di Comana Pontica e martire",
+      "bio": "San Basilisco, vescovo di Comana Pontica e martire."
+    },
+    {
+      "nome": "Santa Giulia di Corsica",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Giulia di Corsica, vergine e martire."
+    },
+    {
+      "nome": "Santa Quiteria",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Quiteria, vergine e martire."
+    },
+    {
+      "nome": "San Lupicino di Verona",
+      "titolo": "Vescovo di Verona",
+      "bio": "San Lupicino di Verona, vescovo di Verona."
+    },
+    {
+      "nome": "Sant'Ausonio di Angoulême",
+      "titolo": "Primo vescovo di Angoulême",
+      "bio": "Sant'Ausonio di Angoulême, primo vescovo di Angoulême."
+    },
+    {
+      "nome": "San Lupo",
+      "titolo": "Vescovo di Limoges",
+      "bio": "San Lupo, vescovo di Limoges."
+    },
+    {
+      "nome": "San Giovanni da Parma",
+      "titolo": "Abate di Parma",
+      "bio": "San Giovanni da Parma, abate di Parma."
+    },
+    {
+      "nome": "Sant'Atto di Pistoia",
+      "titolo": "Abate vallombroSano, vescovo di Pistoia",
+      "bio": "Sant'Atto di Pistoia, abate vallombroSano, vescovo di Pistoia."
+    },
+    {
+      "nome": "Santa Umiltà",
+      "titolo": "Badessa vallombroSana",
+      "bio": "Santa Umiltà, badessa vallombroSana."
+    },
+    {
+      "nome": "Beato John Forest",
+      "titolo": "Sacerdote francescano e martire",
+      "bio": "Beato John Forest, sacerdote francescano e martire."
+    },
+    {
+      "nome": "Beati Pietro da Asuncion",
+      "titolo": "Francescano, e Giovanni Battista Machado, sacerdoti e martiri",
+      "bio": "Beati Pietro da Asuncion, francescano, e Giovanni Battista Machado, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beata Maria Domenica Brun Barbantini",
+      "titolo": "Religiosa, fondatrice delle Suore ministre degli infermi di San Camillo",
+      "bio": "Beata Maria Domenica Brun Barbantini, religiosa, fondatrice delle Suore ministre degli infermi di San Camillo."
+    },
+    {
+      "nome": "Beato Mattia de Arima",
+      "titolo": "Catechista e martire",
+      "bio": "Beato Mattia de Arima, catechista e martire."
+    },
+    {
+      "nome": "San Michele Hô Ðình Hy",
+      "titolo": "Catechista, e San Domenico Ngôn, martire",
+      "bio": "San Michele Hô Ðình Hy, catechista, e San Domenico Ngôn, martire."
+    }
+  ],
+  "05-23": [
+    {
+      "nome": "Santi Lucio",
+      "titolo": "Montano e compagni, martiri",
+      "bio": "Santi Lucio, Montano e compagni, martiri."
+    },
+    {
+      "nome": "Santi martiri di Cappadocia",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri di Cappadocia."
+    },
+    {
+      "nome": "Santi martiri di Mesopotamia",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri di Mesopotamia."
+    },
+    {
+      "nome": "San Desiderio di Langres",
+      "titolo": "Vescovo di Langres e martire",
+      "bio": "San Desiderio di Langres, vescovo di Langres e martire."
+    },
+    {
+      "nome": "Sant'Efebo di Napoli",
+      "titolo": "Vescovo di Napoli",
+      "bio": "Sant'Efebo di Napoli, vescovo di Napoli."
+    },
+    {
+      "nome": "Santi Eutizio e Fiorenzo",
+      "titolo": "Abate di Norcia",
+      "bio": "Santi Eutizio e Fiorenzo, abate di Norcia."
+    },
+    {
+      "nome": "Santo Spes",
+      "titolo": "Abate",
+      "bio": "Santo Spes, abate."
+    },
+    {
+      "nome": "Sant'Onorato",
+      "titolo": "Abate di Subiaco",
+      "bio": "Sant'Onorato, abate di Subiaco."
+    },
+    {
+      "nome": "San Siagrio di Nizza",
+      "titolo": "Vescovo di Nizza",
+      "bio": "San Siagrio di Nizza, vescovo di Nizza."
+    },
+    {
+      "nome": "San Michele",
+      "titolo": "Vescovo di Sinnada di Frigia",
+      "bio": "San Michele, vescovo di Sinnada di Frigia."
+    },
+    {
+      "nome": "San Guiberto di Gembloux",
+      "titolo": "Monaco",
+      "bio": "San Guiberto di Gembloux, monaco."
+    },
+    {
+      "nome": "San Giovanni Battista de' Rossi",
+      "titolo": "Sacerdote",
+      "bio": "San Giovanni Battista de' Rossi, sacerdote."
+    },
+    {
+      "nome": "Beati Giuseppe Kurzawa e Vincenzo Matuszewski",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Beati Giuseppe Kurzawa e Vincenzo Matuszewski, sacerdoti e martiri."
+    }
+  ],
+  "05-24": [
+    {
+      "nome": "San Manaen",
+      "titolo": "Dottore e profeta della Chiesa di Antiochia, personaggio del Nuovo Testamento",
+      "bio": "San Manaen, dottore e profeta della Chiesa di Antiochia, personaggio del Nuovo Testamento."
+    },
+    {
+      "nome": "Santa Giovanna la Mirofora",
+      "titolo": "Moglie di Cusa, pia donna",
+      "bio": "Santa Giovanna la Mirofora, moglie di Cusa, pia donna."
+    },
+    {
+      "nome": "San Zoello",
+      "titolo": "Martire",
+      "bio": "San Zoello, martire."
+    },
+    {
+      "nome": "Santi Donaziano e Rogaziano",
+      "titolo": "Martiri",
+      "bio": "Santi Donaziano e Rogaziano, martiri."
+    },
+    {
+      "nome": "Santi martiri di Plovdiv",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri di Plovdiv."
+    },
+    {
+      "nome": "San Vincenzo di Lerino",
+      "titolo": "Sacerdote e abate di Lerins",
+      "bio": "San Vincenzo di Lerino, sacerdote e abate di Lerins."
+    },
+    {
+      "nome": "San Simeone Stilita il Giovane",
+      "titolo": "Sacerdote e anacoreta",
+      "bio": "San Simeone Stilita il Giovane, sacerdote e anacoreta."
+    },
+    {
+      "nome": "Beato Filippo da Piacenza",
+      "titolo": "Sacerdote agostiniano",
+      "bio": "Beato Filippo da Piacenza, sacerdote agostiniano."
+    },
+    {
+      "nome": "Beato Juan de Prado",
+      "titolo": "Sacerdote francescano e martire",
+      "bio": "Beato Juan de Prado, sacerdote francescano e martire."
+    },
+    {
+      "nome": "Santa Agata Kim Agi",
+      "titolo": "Madre di famiglia e martire",
+      "bio": "Santa Agata Kim Agi, madre di famiglia e martire."
+    },
+    {
+      "nome": "Beato Louis-Zéphirin Moreau",
+      "titolo": "Vescovo di Saint-Hyacinthe",
+      "bio": "Beato Louis-Zéphirin Moreau, vescovo di Saint-Hyacinthe."
+    }
+  ],
+  "05-25": [
+    {
+      "nome": "San Beda il Venerabile",
+      "titolo": "Sacerdote e dottore della Chiesa",
+      "bio": "San Beda il Venerabile, sacerdote e dottore della Chiesa."
+    },
+    {
+      "nome": "San Gregorio VII",
+      "titolo": "Papa",
+      "bio": "San Gregorio VII, papa."
+    },
+    {
+      "nome": "Santa Maria Maddalena de' Pazzi",
+      "titolo": "Vergine carmelitana",
+      "bio": "Santa Maria Maddalena de' Pazzi, vergine carmelitana."
+    },
+    {
+      "nome": "San Canio di Atella",
+      "titolo": "Vescovo di Atella e martire",
+      "bio": "San Canio di Atella, vescovo di Atella e martire."
+    },
+    {
+      "nome": "San Dionigi di Milano",
+      "titolo": "Vescovo di Milano",
+      "bio": "San Dionigi di Milano, vescovo di Milano."
+    },
+    {
+      "nome": "San Zenobio",
+      "titolo": "Vescovo di Firenze",
+      "bio": "San Zenobio, vescovo di Firenze."
+    },
+    {
+      "nome": "San Leone",
+      "titolo": "Abate",
+      "bio": "San Leone, abate."
+    },
+    {
+      "nome": "Sant'Aldelmo di Malmesbury",
+      "titolo": "Abate di Malmesbury e poi vescovo di Sherborne",
+      "bio": "Sant'Aldelmo di Malmesbury, abate di Malmesbury e poi vescovo di Sherborne."
+    },
+    {
+      "nome": "San Gennadio di Astorga",
+      "titolo": "Abate e poi vescovo di Astorga",
+      "bio": "San Gennadio di Astorga, abate e poi vescovo di Astorga."
+    },
+    {
+      "nome": "San Cristoforo Magallanes",
+      "titolo": "Presbitero martire",
+      "bio": "San Cristoforo Magallanes, presbitero martire."
+    },
+    {
+      "nome": "Beato Girio",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Beato Girio."
+    },
+    {
+      "nome": "Beato Giacomo Filippo Bertoni",
+      "titolo": "Sacerdote servita",
+      "bio": "Beato Giacomo Filippo Bertoni, sacerdote servita."
+    },
+    {
+      "nome": "San Pietro Ðoàn Văn Vân",
+      "titolo": "Catechista e martire",
+      "bio": "San Pietro Ðoàn Văn Vân, catechista e martire."
+    },
+    {
+      "nome": "Santa Maddalena Sofia Barat",
+      "titolo": "Vergine, fondatrice della Società del Sacro Cuore di Gesù",
+      "bio": "Santa Maddalena Sofia Barat, vergine, fondatrice della Società del Sacro Cuore di Gesù."
+    },
+    {
+      "nome": "San Dionigi Ssebuggwawo",
+      "titolo": "Martire ugandese",
+      "bio": "San Dionigi Ssebuggwawo, martire ugandese."
+    },
+    {
+      "nome": "Santi Cristóbal Magallanes Jara e Agostino Caloca",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Santi Cristóbal Magallanes Jara e Agostino Caloca, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beato Nicola Cehelskyj",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Nicola Cehelskyj, sacerdote e martire."
+    }
+  ],
+  "05-26": [
+    {
+      "nome": "San Filippo Neri",
+      "titolo": "Prete, fondatore della congregazione dell'oratorio",
+      "bio": "San Filippo Neri, prete, fondatore della congregazione dell'oratorio."
+    },
+    {
+      "nome": "Sant'Eleuterio",
+      "titolo": "Papa",
+      "bio": "Sant'Eleuterio, papa."
+    },
+    {
+      "nome": "Santa Felicissima di Todi",
+      "titolo": "Martire",
+      "bio": "Santa Felicissima di Todi, martire."
+    },
+    {
+      "nome": "San Prisco",
+      "titolo": "Martire",
+      "bio": "San Prisco, martire."
+    },
+    {
+      "nome": "deposizione di Sant'Agostino di Canterbury",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "deposizione di Sant'Agostino di Canterbury."
+    },
+    {
+      "nome": "passione di San Desiderio di Vienne",
+      "titolo": "Vescovo di Vienne e martire",
+      "bio": "passione di San Desiderio di Vienne, vescovo di Vienne e martire."
+    },
+    {
+      "nome": "San Berengario",
+      "titolo": "Monaco",
+      "bio": "San Berengario, monaco."
+    },
+    {
+      "nome": "San Lamberto di Bauduen",
+      "titolo": "Vescovo di Vence",
+      "bio": "San Lamberto di Bauduen, vescovo di Vence."
+    },
+    {
+      "nome": "Beato Francesco Patrizi (servita)",
+      "titolo": "Sacerdote servita",
+      "bio": "Beato Francesco Patrizi (servita), sacerdote servita."
+    },
+    {
+      "nome": "Beato Andrea Franchi",
+      "titolo": "Domenicano, vescovo di Pistoia",
+      "bio": "Beato Andrea Franchi, domenicano, vescovo di Pistoia."
+    },
+    {
+      "nome": "Santa Maria Anna di Gesù de Paredes",
+      "titolo": "Vergine del terz'ordine francescano",
+      "bio": "Santa Maria Anna di Gesù de Paredes, vergine del terz'ordine francescano."
+    },
+    {
+      "nome": "San Pere Sans Jordà",
+      "titolo": "Domenicano, vescovo di Mauricastro, vicario apostolico del Fujian e martire",
+      "bio": "San Pere Sans Jordà, domenicano, vescovo di Mauricastro, vicario apostolico del Fujian e martire."
+    },
+    {
+      "nome": "San Giuseppe Chang Song-jib",
+      "titolo": "Martire",
+      "bio": "San Giuseppe Chang Song-jib, martire."
+    },
+    {
+      "nome": "San Giovanni Ðoàn Trinh Hoan",
+      "titolo": "Sacerdote, e San Matteo Nguyễn Văn Phượng, padre di famiglia e catechista, martiri",
+      "bio": "San Giovanni Ðoàn Trinh Hoan, sacerdote, e San Matteo Nguyễn Văn Phượng, padre di famiglia e catechista, martiri."
+    },
+    {
+      "nome": "Sant'Andrea Kaggwa e San Ponziano Ngondwe",
+      "titolo": "Martiri ugandesi",
+      "bio": "Sant'Andrea Kaggwa e San Ponziano Ngondwe, martiri ugandesi."
+    }
+  ],
+  "05-27": [
+    {
+      "nome": "Sant'Agostino di Canterbury (O.S.B.)",
+      "titolo": "Vescovo di Canterbury",
+      "bio": "Sant'Agostino di Canterbury (O.S.B.), vescovo di Canterbury."
+    },
+    {
+      "nome": "San Giulio",
+      "titolo": "Martire",
+      "bio": "San Giulio, martire."
+    },
+    {
+      "nome": "San Restituto",
+      "titolo": "Martire",
+      "bio": "San Restituto, martire."
+    },
+    {
+      "nome": "Sant'Eutropio di Orange",
+      "titolo": "Vescovo di Orange",
+      "bio": "Sant'Eutropio di Orange, vescovo di Orange."
+    },
+    {
+      "nome": "San Bruno di Würzburg",
+      "titolo": "Vescovo di Würzburg",
+      "bio": "San Bruno di Würzburg, vescovo di Würzburg."
+    },
+    {
+      "nome": "San Gausberto",
+      "titolo": "Sacerdote ed eremita",
+      "bio": "San Gausberto, sacerdote ed eremita."
+    },
+    {
+      "nome": "Beati Edmondo Duke e Riccardo Hill",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Beati Edmondo Duke e Riccardo Hill, sacerdoti e martiri."
+    },
+    {
+      "nome": "Sante Barbara Kim",
+      "titolo": "Vedova, e Barbara Yi, vergine, martiri",
+      "bio": "Sante Barbara Kim, vedova, e Barbara Yi, vergine, martiri."
+    },
+    {
+      "nome": "Sant'Atanasio Bazzekuketta e San Gonzaga Gonza",
+      "titolo": "Martiri ugandesi",
+      "bio": "Sant'Atanasio Bazzekuketta e San Gonzaga Gonza, martiri ugandesi."
+    },
+    {
+      "nome": "Beata Maria Antonia Samà",
+      "titolo": "Vergine",
+      "bio": "Beata Maria Antonia Samà, vergine."
+    }
+  ],
+  "05-28": [
+    {
+      "nome": "Sant'Eleconide",
+      "titolo": "Martire",
+      "bio": "Sant'Eleconide, martire."
+    },
+    {
+      "nome": "San Caranno",
+      "titolo": "Martire",
+      "bio": "San Caranno, martire."
+    },
+    {
+      "nome": "San Giusto",
+      "titolo": "Vescovo di Urgell",
+      "bio": "San Giusto, vescovo di Urgell."
+    },
+    {
+      "nome": "San Germano di Parigi",
+      "titolo": "Vescovo di Parigi",
+      "bio": "San Germano di Parigi, vescovo di Parigi."
+    },
+    {
+      "nome": "San Guglielmo d'Aquitania",
+      "titolo": "Monaco",
+      "bio": "San Guglielmo d'Aquitania, monaco."
+    },
+    {
+      "nome": "San Lanfranco di Canterbury",
+      "titolo": "Vescovo di Canterbury",
+      "bio": "San Lanfranco di Canterbury, vescovo di Canterbury."
+    },
+    {
+      "nome": "Santa Ubaldesca Taccini",
+      "titolo": "Vergine giovannita",
+      "bio": "Santa Ubaldesca Taccini, vergine giovannita."
+    },
+    {
+      "nome": "Beato Ercolano da Piegaro",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Ercolano da Piegaro, sacerdote francescano."
+    },
+    {
+      "nome": "Beata Margaret Pole",
+      "titolo": "Madre di famiglia e martire",
+      "bio": "Beata Margaret Pole, madre di famiglia e martire."
+    },
+    {
+      "nome": "Beata Maria Bartolomea Bagnesi",
+      "titolo": "Vergine del terz'ordine domenicano",
+      "bio": "Beata Maria Bartolomea Bagnesi, vergine del terz'ordine domenicano."
+    },
+    {
+      "nome": "Beati Tommaso Ford",
+      "titolo": "Giovanni Shert e Roberto Johsnon, sacerdoti e martiri",
+      "bio": "Beati Tommaso Ford, Giovanni Shert e Roberto Johsnon, sacerdoti e martiri."
+    },
+    {
+      "nome": "San Paolo Hạnh",
+      "titolo": "Martire",
+      "bio": "San Paolo Hạnh, martire."
+    },
+    {
+      "nome": "Beato Ladislao Demski",
+      "titolo": "Martire",
+      "bio": "Beato Ladislao Demski, martire."
+    },
+    {
+      "nome": "Beato Antoni Julian Nowowiejski",
+      "titolo": "Vescovo di Płock e martire",
+      "bio": "Beato Antoni Julian Nowowiejski, vescovo di Płock e martire."
+    },
+    {
+      "nome": "Beato Lanfranco di Canterbury (Lanfranco di Pavia)",
+      "titolo": "Arcivescovo di Canterbury",
+      "bio": "Beato Lanfranco di Canterbury (Lanfranco di Pavia), arcivescovo di Canterbury."
+    },
+    {
+      "nome": "Beato Luigi Biraghi",
+      "titolo": "Sacerdote e fondatore delle Suore di Santa Marcellina",
+      "bio": "Beato Luigi Biraghi, sacerdote e fondatore delle Suore di Santa Marcellina."
+    },
+    {
+      "nome": "Beato Stefan Wyszyński",
+      "titolo": "Arcivescovo cardinale",
+      "bio": "Beato Stefan Wyszyński, arcivescovo cardinale."
+    }
+  ],
+  "05-29": [
+    {
+      "nome": "Sant'Esichio",
+      "titolo": "Martire",
+      "bio": "Sant'Esichio, martire."
+    },
+    {
+      "nome": "San Massimino di Treviri",
+      "titolo": "Vescovo di Treviri",
+      "bio": "San Massimino di Treviri, vescovo di Treviri."
+    },
+    {
+      "nome": "Santi Sisinnio",
+      "titolo": "Martirio e Alessandro, chierici, fondatori e martiri, rispettivamente diacono, lettore e o",
+      "bio": "Santi Sisinnio, Martirio e Alessandro, chierici, fondatori e martiri, rispettivamente diacono, lettore e ostiario."
+    },
+    {
+      "nome": "Sant'Esuperanzio di Ravenna",
+      "titolo": "Vescovo di Ravenna",
+      "bio": "Sant'Esuperanzio di Ravenna, vescovo di Ravenna."
+    },
+    {
+      "nome": "San Senatore di Milano",
+      "titolo": "Vescovo di Milano",
+      "bio": "San Senatore di Milano, vescovo di Milano."
+    },
+    {
+      "nome": "San Gerardo",
+      "titolo": "Prima monaco e poi vescovo di Mâcon",
+      "bio": "San Gerardo, prima monaco e poi vescovo di Mâcon."
+    },
+    {
+      "nome": "Santa Bona di Pisa",
+      "titolo": "Vergine",
+      "bio": "Santa Bona di Pisa, vergine."
+    },
+    {
+      "nome": "Beati Guglielmo Arnaud e dieci compagni",
+      "titolo": "Martiri",
+      "bio": "Beati Guglielmo Arnaud e dieci compagni, martiri."
+    },
+    {
+      "nome": "Beata Gherardesca di Pisa",
+      "titolo": "Vedova",
+      "bio": "Beata Gherardesca di Pisa, vedova."
+    },
+    {
+      "nome": "Beato Riccardo Thirkeld",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Riccardo Thirkeld, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Joseph Gérard",
+      "titolo": "Sacerdote degli Oblati di Maria Immacolata",
+      "bio": "Beato Joseph Gérard, sacerdote degli Oblati di Maria Immacolata."
+    },
+    {
+      "nome": "Santa Urszula Ledóchowska",
+      "titolo": "Vergine, fondatrice delle Suore orsoline del Sacro Cuore di Gesù Agonizzante",
+      "bio": "Santa Urszula Ledóchowska, vergine, fondatrice delle Suore orsoline del Sacro Cuore di Gesù Agonizzante."
+    },
+    {
+      "nome": "San Paolo VI",
+      "titolo": "Papa",
+      "bio": "San Paolo VI, papa."
+    },
+    {
+      "nome": "Beata Elia di San Clemente Teodora Fracasso",
+      "titolo": "Religiosa, dell'ordine delle Carmelitane Scalze",
+      "bio": "Beata Elia di San Clemente Teodora Fracasso, religiosa, dell'ordine delle Carmelitane Scalze."
+    }
+  ],
+  "05-30": [
+    {
+      "nome": "San Gavino",
+      "titolo": "Martire",
+      "bio": "San Gavino, martire."
+    },
+    {
+      "nome": "Santi Basilio ed Emmelia",
+      "titolo": "Coniugi",
+      "bio": "Santi Basilio ed Emmelia, coniugi."
+    },
+    {
+      "nome": "Sant'Anastasio di Pavia",
+      "titolo": "Vescovo di Pavia",
+      "bio": "Sant'Anastasio di Pavia, vescovo di Pavia."
+    },
+    {
+      "nome": "Santa Dinfna",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Dinfna, vergine e martire."
+    },
+    {
+      "nome": "Sant'Uberto di Liegi",
+      "titolo": "Vescovo di Liegi",
+      "bio": "Sant'Uberto di Liegi, vescovo di Liegi."
+    },
+    {
+      "nome": "San Ferdinando III",
+      "titolo": "Re di Castiglia e di León",
+      "bio": "San Ferdinando III, re di Castiglia e di León."
+    },
+    {
+      "nome": "Santa Giovanna d'Arco",
+      "titolo": "Vergine",
+      "bio": "Santa Giovanna d'Arco, vergine."
+    },
+    {
+      "nome": "San Luca Kirby e Beati Guglielmo Filby",
+      "titolo": "Lorenzo Johnson e Tommaso Cottam sacerdoti e martiri",
+      "bio": "San Luca Kirby e Beati Guglielmo Filby, Lorenzo Johnson e Tommaso Cottam sacerdoti e martiri."
+    },
+    {
+      "nome": "Beati Guglielmo Scott e Riccardo Newport",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Beati Guglielmo Scott e Riccardo Newport, sacerdoti e martiri."
+    },
+    {
+      "nome": "San Mattia Kalemba",
+      "titolo": "Martire dell'Uganda",
+      "bio": "San Mattia Kalemba, martire dell'Uganda."
+    },
+    {
+      "nome": "San Giuseppe Marello",
+      "titolo": "Vescovo di Acqui, fondatore degli Oblati di San Giuseppe",
+      "bio": "San Giuseppe Marello, vescovo di Acqui, fondatore degli Oblati di San Giuseppe."
+    },
+    {
+      "nome": "Beato Otto Neururer",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Otto Neururer, sacerdote e martire."
+    },
+    {
+      "nome": "Beata Lucia dell'Immacolata Ripamonti",
+      "titolo": "Religiosa delle Ancelle della Carità",
+      "bio": "Beata Lucia dell'Immacolata Ripamonti, religiosa delle Ancelle della Carità."
+    },
+    {
+      "nome": "Beata Maria Celina della Presentazione (Jeanne-Germaine Castang)",
+      "titolo": "Religiosa",
+      "bio": "Beata Maria Celina della Presentazione (Jeanne-Germaine Castang), religiosa."
+    },
+    {
+      "nome": "Beato Carlo Liviero",
+      "titolo": "Vescovo e fondatore delle Piccole Ancelle del Sacro Cuore",
+      "bio": "Beato Carlo Liviero, vescovo e fondatore delle Piccole Ancelle del Sacro Cuore."
+    }
+  ],
+  "05-31": [
+    {
+      "nome": "festa della Visitazione della Beata Vergine Maria",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "festa della Visitazione della Beata Vergine Maria."
+    },
+    {
+      "nome": "Santa Petronilla",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Petronilla, vergine e martire."
+    },
+    {
+      "nome": "Sant'Ermia",
+      "titolo": "Legionario e martire",
+      "bio": "Sant'Ermia, legionario e martire."
+    },
+    {
+      "nome": "Santi Canzio",
+      "titolo": "Canziano e Canzianilla, martiri",
+      "bio": "Santi Canzio, Canziano e Canzianilla, martiri."
+    },
+    {
+      "nome": "San Silvio di Tolosa",
+      "titolo": "Vescovo di Tolosa",
+      "bio": "San Silvio di Tolosa, vescovo di Tolosa."
+    },
+    {
+      "nome": "Beato Giacomo Salomoni",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Giacomo Salomoni, sacerdote domenicano."
+    },
+    {
+      "nome": "Santa Camilla Battista da Varano",
+      "titolo": "Badessa del monastero delle clarisse di Camerino",
+      "bio": "Santa Camilla Battista da Varano, badessa del monastero delle clarisse di Camerino."
+    },
+    {
+      "nome": "San Teodoto di Ancira",
+      "titolo": "Vescovo di Ancira",
+      "bio": "San Teodoto di Ancira, vescovo di Ancira."
+    },
+    {
+      "nome": "Beati Robert Thorpe e Tommaso Watkinson",
+      "titolo": "Martiri",
+      "bio": "Beati Robert Thorpe e Tommaso Watkinson, martiri."
+    },
+    {
+      "nome": "Beato Nicolas Barré",
+      "titolo": "Frate minimo, sacerdote, fondatore delle Suore del Bambino Gesù",
+      "bio": "Beato Nicolas Barré, frate minimo, sacerdote, fondatore delle Suore del Bambino Gesù."
+    },
+    {
+      "nome": "San Felice di Nicosia",
+      "titolo": "Cappuccino",
+      "bio": "San Felice di Nicosia, cappuccino."
+    },
+    {
+      "nome": "San Vitale d'Assisi (O.S.B.)",
+      "titolo": "Monaco eremita",
+      "bio": "San Vitale d'Assisi (O.S.B.), monaco eremita."
+    },
+    {
+      "nome": "Beato Mariano da Roccacasale",
+      "titolo": "Religioso francescano",
+      "bio": "Beato Mariano da Roccacasale, religioso francescano."
+    },
+    {
+      "nome": "Santi martiri dell'Uganda",
+      "titolo": "Martire dell'Uganda",
+      "bio": "Santi martiri dell'Uganda, martire dell'Uganda."
+    }
+  ],
+  "06-01": [
+    {
+      "nome": "San Giustino",
+      "titolo": "Filosofo e martire",
+      "bio": "San Giustino, filosofo e martire."
+    },
+    {
+      "nome": "Santi Caritone e compagni",
+      "titolo": "Martiri",
+      "bio": "Santi Caritone e compagni, martiri."
+    },
+    {
+      "nome": "Santi martiri di Alessandria d'Egitto",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri di Alessandria d'Egitto."
+    },
+    {
+      "nome": "Santi martiri di Licopoli",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri di Licopoli."
+    },
+    {
+      "nome": "San Procolo di Bologna",
+      "titolo": "Martire",
+      "bio": "San Procolo di Bologna, martire."
+    },
+    {
+      "nome": "San Fortunato",
+      "titolo": "Prete",
+      "bio": "San Fortunato, prete."
+    },
+    {
+      "nome": "San Caprasio di Lérins",
+      "titolo": "Monaco",
+      "bio": "San Caprasio di Lérins, monaco."
+    },
+    {
+      "nome": "San Floro",
+      "titolo": "Vescovo di Lodève",
+      "bio": "San Floro, vescovo di Lodève."
+    },
+    {
+      "nome": "San Ronano di Quimper",
+      "titolo": "Vescovo",
+      "bio": "San Ronano di Quimper, vescovo."
+    },
+    {
+      "nome": "San Wigstan",
+      "titolo": "Re di Mercia, martire",
+      "bio": "San Wigstan, re di Mercia, martire."
+    },
+    {
+      "nome": "San Simeone di Siracusa",
+      "titolo": "Recluso",
+      "bio": "San Simeone di Siracusa, recluso."
+    },
+    {
+      "nome": "Sant'Enecone di Oña",
+      "titolo": "Abate",
+      "bio": "Sant'Enecone di Oña, abate."
+    },
+    {
+      "nome": "Beato Teobaldo Roggeri",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Beato Teobaldo Roggeri."
+    },
+    {
+      "nome": "Beato Giovanni Pelingotto",
+      "titolo": "Terziario francescano",
+      "bio": "Beato Giovanni Pelingotto, terziario francescano."
+    },
+    {
+      "nome": "Beato Giovanni Storey",
+      "titolo": "Martire",
+      "bio": "Beato Giovanni Storey, martire."
+    },
+    {
+      "nome": "Beati Alfonso Navarrete",
+      "titolo": "Ferdinando di San Giuseppe di Ayala e Leone Tanaka, martiri",
+      "bio": "Beati Alfonso Navarrete, Ferdinando di San Giuseppe di Ayala e Leone Tanaka, martiri."
+    },
+    {
+      "nome": "Beato Giovanni Battista Vernoy de Montjournal",
+      "titolo": "Canonico di Moulins e martire",
+      "bio": "Beato Giovanni Battista Vernoy de Montjournal, canonico di Moulins e martire."
+    },
+    {
+      "nome": "San Giuseppe Túc",
+      "titolo": "Martire",
+      "bio": "San Giuseppe Túc, martire."
+    },
+    {
+      "nome": "San Giovanni Battista Scalabrini",
+      "titolo": "Vescovo di Piacenza, fondatore delle Missionarie e dei Missionari di San Carlo",
+      "bio": "San Giovanni Battista Scalabrini, vescovo di Piacenza, fondatore delle Missionarie e dei Missionari di San Carlo."
+    },
+    {
+      "nome": "Sant'Annibale Maria Di Francia",
+      "titolo": "Sacerdote, fondatore dei Rogazionisti del Cuore di Gesù e delle Figlie del Divino Zelo",
+      "bio": "Sant'Annibale Maria Di Francia, sacerdote, fondatore dei Rogazionisti del Cuore di Gesù e delle Figlie del Divino Zelo."
+    },
+    {
+      "nome": "Beata Ildegarda Burjan",
+      "titolo": "Fondatrice della congregazione delle Suore della Carità Sociale, politica di fede cattolic",
+      "bio": "Beata Ildegarda Burjan, fondatrice della congregazione delle Suore della Carità Sociale, politica di fede cattolica e deputata al parlamento per il Partito Cristiano-sociale."
+    }
+  ],
+  "06-02": [
+    {
+      "nome": "Santi Marcellino e Pietro",
+      "titolo": "Sacerdote ed esorcista, martiri",
+      "bio": "Santi Marcellino e Pietro, sacerdote ed esorcista, martiri."
+    },
+    {
+      "nome": "Santi Potino di Lione",
+      "titolo": "Vescovo di Lione, Blandina e quarantasei compagni, martiri",
+      "bio": "Santi Potino di Lione, vescovo di Lione, Blandina e quarantasei compagni, martiri."
+    },
+    {
+      "nome": "Sant'Erasmo di Formia",
+      "titolo": "Vescovo di Antiochia e martire",
+      "bio": "Sant'Erasmo di Formia, vescovo di Antiochia e martire."
+    },
+    {
+      "nome": "Sant'Eugenio I",
+      "titolo": "Papa",
+      "bio": "Sant'Eugenio I, papa."
+    },
+    {
+      "nome": "San Niceforo I di Costantinopoli",
+      "titolo": "Vescovo di Costantinopoli",
+      "bio": "San Niceforo I di Costantinopoli, vescovo di Costantinopoli."
+    },
+    {
+      "nome": "San Guido d'Acqui",
+      "titolo": "Vescovo di Acqui",
+      "bio": "San Guido d'Acqui, vescovo di Acqui."
+    },
+    {
+      "nome": "San Nicola Pellegrino",
+      "titolo": "Pellegrino",
+      "bio": "San Nicola Pellegrino, pellegrino."
+    },
+    {
+      "nome": "Beato Sadoc",
+      "titolo": "Sacerdote, e compagni, domenicani e martiri",
+      "bio": "Beato Sadoc, sacerdote, e compagni, domenicani e martiri."
+    },
+    {
+      "nome": "San Domenico Ninh",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "San Domenico Ninh."
+    }
+  ],
+  "06-03": [
+    {
+      "nome": "San Carlo Lwanga e dodici compagni",
+      "titolo": "Martiri dell'Uganda",
+      "bio": "San Carlo Lwanga e dodici compagni, martiri dell'Uganda."
+    },
+    {
+      "nome": "San Cecilio",
+      "titolo": "Sacerdote",
+      "bio": "San Cecilio, sacerdote."
+    },
+    {
+      "nome": "Sant'Ilario",
+      "titolo": "Primo vescovo di Carcassonne",
+      "bio": "Sant'Ilario, primo vescovo di Carcassonne."
+    },
+    {
+      "nome": "Santa Clotilde (regina dei Franchi)",
+      "titolo": "Regina",
+      "bio": "Santa Clotilde (regina dei Franchi), regina."
+    },
+    {
+      "nome": "San Lifardo",
+      "titolo": "Sacerdote",
+      "bio": "San Lifardo, sacerdote."
+    },
+    {
+      "nome": "Sant'Oliva di Anagni",
+      "titolo": "Vergine",
+      "bio": "Sant'Oliva di Anagni, vergine."
+    },
+    {
+      "nome": "San Kevin di Glendalough",
+      "titolo": "Fondatore e abate del monastero di Glendalough",
+      "bio": "San Kevin di Glendalough, fondatore e abate del monastero di Glendalough."
+    },
+    {
+      "nome": "San Genesio di Clermont",
+      "titolo": "Vescovo di Clermont",
+      "bio": "San Genesio di Clermont, vescovo di Clermont."
+    },
+    {
+      "nome": "Sant'Isacco",
+      "titolo": "Martire",
+      "bio": "Sant'Isacco, martire."
+    },
+    {
+      "nome": "San Davino",
+      "titolo": "Pellegrino armeno",
+      "bio": "San Davino, pellegrino armeno."
+    },
+    {
+      "nome": "San Morando",
+      "titolo": "Monaco",
+      "bio": "San Morando, monaco."
+    },
+    {
+      "nome": "Beato Andrea Caccioli",
+      "titolo": "Primo sacerdote francescano",
+      "bio": "Beato Andrea Caccioli, primo sacerdote francescano."
+    },
+    {
+      "nome": "San Cono da Teggiano",
+      "titolo": "Monaco",
+      "bio": "San Cono da Teggiano, monaco."
+    },
+    {
+      "nome": "Beato Francesco Ingleby",
+      "titolo": "Prete e martire",
+      "bio": "Beato Francesco Ingleby, prete e martire."
+    },
+    {
+      "nome": "San Juan Grande Román",
+      "titolo": "Religioso dei fatebenefratelli",
+      "bio": "San Juan Grande Román, religioso dei fatebenefratelli."
+    },
+    {
+      "nome": "Beato Carlo Renato Collas du Bignon",
+      "titolo": "Sacerdote sulpiziano e martire",
+      "bio": "Beato Carlo Renato Collas du Bignon, sacerdote sulpiziano e martire."
+    },
+    {
+      "nome": "San Pietro Dong",
+      "titolo": "Martire",
+      "bio": "San Pietro Dong, martire."
+    },
+    {
+      "nome": "Beato Diego Oddi",
+      "titolo": "Religioso francescano",
+      "bio": "Beato Diego Oddi, religioso francescano."
+    },
+    {
+      "nome": "San Giovanni XXIII",
+      "titolo": "Papa",
+      "bio": "San Giovanni XXIII, papa."
+    }
+  ],
+  "06-04": [
+    {
+      "nome": "San Quirino di Siscia",
+      "titolo": "Vescovo di Siscia, martire",
+      "bio": "San Quirino di Siscia, vescovo di Siscia, martire."
+    },
+    {
+      "nome": "San Metrofane",
+      "titolo": "Vescovo di BiSanzio",
+      "bio": "San Metrofane, vescovo di BiSanzio."
+    },
+    {
+      "nome": "Sant'Ottato",
+      "titolo": "Vescovo di Milevi",
+      "bio": "Sant'Ottato, vescovo di Milevi."
+    },
+    {
+      "nome": "San Petroc",
+      "titolo": "Abate",
+      "bio": "San Petroc, abate."
+    },
+    {
+      "nome": "San Gualterio",
+      "titolo": "Abate",
+      "bio": "San Gualterio, abate."
+    },
+    {
+      "nome": "Santi Nicola e Trani",
+      "titolo": "Eremiti",
+      "bio": "Santi Nicola e Trani, eremiti."
+    },
+    {
+      "nome": "Beato Pacifico da Cerano",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Pacifico da Cerano, sacerdote francescano."
+    },
+    {
+      "nome": "San Francesco Caracciolo",
+      "titolo": "Sacerdote, fondatore dei Chierici regolari minori",
+      "bio": "San Francesco Caracciolo, sacerdote, fondatore dei Chierici regolari minori."
+    },
+    {
+      "nome": "San Filippo Smaldone",
+      "titolo": "Sacerdote, fondatore delle Suore salesiane dei Sacri Cuori",
+      "bio": "San Filippo Smaldone, sacerdote, fondatore delle Suore salesiane dei Sacri Cuori."
+    },
+    {
+      "nome": "Beati Antonio Zawistowski",
+      "titolo": "Sacerdote, e Stanislao Starowieyski, martiri",
+      "bio": "Beati Antonio Zawistowski, sacerdote, e Stanislao Starowieyski, martiri."
+    },
+    {
+      "nome": "Beato Francesco Ronci",
+      "titolo": "Cardinale",
+      "bio": "Beato Francesco Ronci, cardinale."
+    }
+  ],
+  "06-05": [
+    {
+      "nome": "San Bonifacio vescovo",
+      "titolo": "Vescovo di Magonza e martire",
+      "bio": "San Bonifacio vescovo, vescovo di Magonza e martire."
+    },
+    {
+      "nome": "Santi Marciano",
+      "titolo": "Nicandro, Apollonio e compagni, martiri",
+      "bio": "Santi Marciano, Nicandro, Apollonio e compagni, martiri."
+    },
+    {
+      "nome": "San Doroteo di Gaza",
+      "titolo": "Archimandrita",
+      "bio": "San Doroteo di Gaza, archimandrita."
+    },
+    {
+      "nome": "San Doroteo",
+      "titolo": "Vescovo di Tiro",
+      "bio": "San Doroteo, vescovo di Tiro."
+    },
+    {
+      "nome": "Sant'Illidio di Clermont e Legonzio",
+      "titolo": "Vescovi di Clermont",
+      "bio": "Sant'Illidio di Clermont e Legonzio, vescovi di Clermont."
+    },
+    {
+      "nome": "Sant'Eutichio",
+      "titolo": "Vescovo di Como",
+      "bio": "Sant'Eutichio, vescovo di Como."
+    },
+    {
+      "nome": "Santi Eobano di Utrecht",
+      "titolo": "Vescovo di Utrecht, Adelario, vescovo di Erfurt e nove compagni, martiri",
+      "bio": "Santi Eobano di Utrecht, vescovo di Utrecht, Adelario, vescovo di Erfurt e nove compagni, martiri."
+    },
+    {
+      "nome": "Beato Sancio",
+      "titolo": "Martire",
+      "bio": "Beato Sancio, martire."
+    },
+    {
+      "nome": "San Franco da Assergi",
+      "titolo": "Eremita",
+      "bio": "San Franco da Assergi, eremita."
+    },
+    {
+      "nome": "San Luca Vŭ Bá Loan",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Luca Vŭ Bá Loan, sacerdote e martire."
+    },
+    {
+      "nome": "Santi Domenico Toai e Domenico Huyện",
+      "titolo": "Martiri",
+      "bio": "Santi Domenico Toai e Domenico Huyện, martiri."
+    }
+  ],
+  "06-06": [
+    {
+      "nome": "San Norberto",
+      "titolo": "Arcivescovo di Magdeburgo, fondatore dei premostratensi",
+      "bio": "San Norberto, arcivescovo di Magdeburgo, fondatore dei premostratensi."
+    },
+    {
+      "nome": "Santi Artemio",
+      "titolo": "Candida e Paolina, martiri",
+      "bio": "Santi Artemio, Candida e Paolina, martiri."
+    },
+    {
+      "nome": "San Bessarione d'Egitto",
+      "titolo": "Anacoreta",
+      "bio": "San Bessarione d'Egitto, anacoreta."
+    },
+    {
+      "nome": "San Cerazio di Grenoble",
+      "titolo": "Vescovo di Grenoble",
+      "bio": "San Cerazio di Grenoble, vescovo di Grenoble."
+    },
+    {
+      "nome": "Sant'Eustorgio II",
+      "titolo": "Vescovo di Milano",
+      "bio": "Sant'Eustorgio II, vescovo di Milano."
+    },
+    {
+      "nome": "Sant'Iarlath di Tuam",
+      "titolo": "Arcivescovo di Tuam",
+      "bio": "Sant'Iarlath di Tuam, arcivescovo di Tuam."
+    },
+    {
+      "nome": "San Claudio di Condat",
+      "titolo": "Vescovo e abate di Condat",
+      "bio": "San Claudio di Condat, vescovo e abate di Condat."
+    },
+    {
+      "nome": "Sant'Alessandro",
+      "titolo": "Vescovo di Fiesole e martire",
+      "bio": "Sant'Alessandro, vescovo di Fiesole e martire."
+    },
+    {
+      "nome": "Sant'Ilarione",
+      "titolo": "Sacerdote e archimandrita del monastero di Dalmazio",
+      "bio": "Sant'Ilarione, sacerdote e archimandrita del monastero di Dalmazio."
+    },
+    {
+      "nome": "San Colmano",
+      "titolo": "Vescovo di Dromore",
+      "bio": "San Colmano, vescovo di Dromore."
+    },
+    {
+      "nome": "Beato Falcone",
+      "titolo": "Abate",
+      "bio": "Beato Falcone, abate."
+    },
+    {
+      "nome": "San Gilberto",
+      "titolo": "Abate premostratense",
+      "bio": "San Gilberto, abate premostratense."
+    },
+    {
+      "nome": "Beato Bertrando di San Genesio",
+      "titolo": "Vescovo di Aquileia e martire",
+      "bio": "Beato Bertrando di San Genesio, vescovo di Aquileia e martire."
+    },
+    {
+      "nome": "Beato Lorenzo da Villamagna",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Lorenzo da Villamagna, sacerdote francescano."
+    },
+    {
+      "nome": "Beato Guglielmo Greenwood",
+      "titolo": "Martire certosino",
+      "bio": "Beato Guglielmo Greenwood, martire certosino."
+    },
+    {
+      "nome": "San Marcellino Champagnat (F.M.S.)",
+      "titolo": "Sacerdote, fondatore dei Piccoli Fratelli di Maria",
+      "bio": "San Marcellino Champagnat (F.M.S.), sacerdote, fondatore dei Piccoli Fratelli di Maria."
+    },
+    {
+      "nome": "Santi Pietro Dũng",
+      "titolo": "Pietro Thuan e Vincenzo Dương, martiri",
+      "bio": "Santi Pietro Dũng, Pietro Thuan e Vincenzo Dương, martiri."
+    },
+    {
+      "nome": "San Rafael Guízar y Valencia",
+      "titolo": "Vescovo di Veracruz",
+      "bio": "San Rafael Guízar y Valencia, vescovo di Veracruz."
+    },
+    {
+      "nome": "Beato Innocenzo Guz",
+      "titolo": "Sacerdote francescano conventuale e martire",
+      "bio": "Beato Innocenzo Guz, sacerdote francescano conventuale e martire."
+    },
+    {
+      "nome": "Beata Maria Laura Mainetti (Teresina Elsa)",
+      "titolo": "Religiosa, educatrice e martire appartenente all'ordine Figlie della Croce, Suore di Sant'",
+      "bio": "Beata Maria Laura Mainetti (Teresina Elsa), religiosa, educatrice e martire appartenente all'ordine Figlie della Croce, Suore di Sant'Andrea."
+    }
+  ],
+  "06-07": [
+    {
+      "nome": "San Colmano di Dromore",
+      "titolo": "Vescovo e abate del monastero di Dromore",
+      "bio": "San Colmano di Dromore, vescovo e abate del monastero di Dromore."
+    },
+    {
+      "nome": "Santi martiri di Cordoba",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri di Cordoba."
+    },
+    {
+      "nome": "San Roberto di Newminster (O.Cist.)",
+      "titolo": "Fondatore e abate",
+      "bio": "San Roberto di Newminster (O.Cist.), fondatore e abate."
+    },
+    {
+      "nome": "Beata Anna di San Bartolomeo",
+      "titolo": "Vergine carmelitana scalza",
+      "bio": "Beata Anna di San Bartolomeo, vergine carmelitana scalza."
+    },
+    {
+      "nome": "Sant'Antonio Maria Gianelli",
+      "titolo": "Vescovo di Bobbio, fondatore delle Figlie di Maria Santissima dell'Orto",
+      "bio": "Sant'Antonio Maria Gianelli, vescovo di Bobbio, fondatore delle Figlie di Maria Santissima dell'Orto."
+    },
+    {
+      "nome": "Beata Maria Teresa de Soubiran La Louvière",
+      "titolo": "Vergine, fondatrice delle Suore di Maria Ausiliatrice",
+      "bio": "Beata Maria Teresa de Soubiran La Louvière, vergine, fondatrice delle Suore di Maria Ausiliatrice."
+    },
+    {
+      "nome": "San Godescalco",
+      "titolo": "Re dei Vendi, martire",
+      "bio": "San Godescalco, re dei Vendi, martire."
+    }
+  ],
+  "06-08": [
+    {
+      "nome": "San Massimino d'Aix",
+      "titolo": "Primo vescovo di Aix",
+      "bio": "San Massimino d'Aix, primo vescovo di Aix."
+    },
+    {
+      "nome": "San Gildardo di Rouen",
+      "titolo": "Vescovo di Rouen",
+      "bio": "San Gildardo di Rouen, vescovo di Rouen."
+    },
+    {
+      "nome": "San Medardo",
+      "titolo": "Vescovo di Noyon",
+      "bio": "San Medardo, vescovo di Noyon."
+    },
+    {
+      "nome": "San Fortunato",
+      "titolo": "Vescovo di Fano",
+      "bio": "San Fortunato, vescovo di Fano."
+    },
+    {
+      "nome": "San Clodolfo di Metz",
+      "titolo": "Vescovo di Metz",
+      "bio": "San Clodolfo di Metz, vescovo di Metz."
+    },
+    {
+      "nome": "San Guglielmo di York",
+      "titolo": "Vescovo di York",
+      "bio": "San Guglielmo di York, vescovo di York."
+    },
+    {
+      "nome": "Beato Giovanni Davy",
+      "titolo": "Diacono certosino e martire",
+      "bio": "Beato Giovanni Davy, diacono certosino e martire."
+    },
+    {
+      "nome": "San Jacques Berthieu",
+      "titolo": "Sacerdote gesuita e martire",
+      "bio": "San Jacques Berthieu, sacerdote gesuita e martire."
+    },
+    {
+      "nome": "Beata Maria del Divin Cuore Droste zu Vischering",
+      "titolo": "Vergine della congregazione del Buon Pastore",
+      "bio": "Beata Maria del Divin Cuore Droste zu Vischering, vergine della congregazione del Buon Pastore."
+    },
+    {
+      "nome": "Santa Mariam Thresia Chiramel Mankidyan",
+      "titolo": "Vergine, fondatrice delle Suore della Sacra Famiglia di Thrissur",
+      "bio": "Santa Mariam Thresia Chiramel Mankidyan, vergine, fondatrice delle Suore della Sacra Famiglia di Thrissur."
+    },
+    {
+      "nome": "Beato Nicola da Gesturi",
+      "titolo": "Sacerdote cappuccino",
+      "bio": "Beato Nicola da Gesturi, sacerdote cappuccino."
+    }
+  ],
+  "06-09": [
+    {
+      "nome": "Sant'Efrem il Siro",
+      "titolo": "Diacono e dottore della Chiesa",
+      "bio": "Sant'Efrem il Siro, diacono e dottore della Chiesa."
+    },
+    {
+      "nome": "Santi Primo e Feliciano",
+      "titolo": "Martiri",
+      "bio": "Santi Primo e Feliciano, martiri."
+    },
+    {
+      "nome": "San Diomede di Tarso",
+      "titolo": "Martire",
+      "bio": "San Diomede di Tarso, martire."
+    },
+    {
+      "nome": "San Vincenzo",
+      "titolo": "Martire",
+      "bio": "San Vincenzo, martire."
+    },
+    {
+      "nome": "San Massimiano",
+      "titolo": "Vescovo di Siracusa",
+      "bio": "San Massimiano, vescovo di Siracusa."
+    },
+    {
+      "nome": "San Columba di Iona",
+      "titolo": "Sacerdote e abate di Iona",
+      "bio": "San Columba di Iona, sacerdote e abate di Iona."
+    },
+    {
+      "nome": "San Riccardo di Andria",
+      "titolo": "Vescovo di Andria",
+      "bio": "San Riccardo di Andria, vescovo di Andria."
+    },
+    {
+      "nome": "Beato Roberto Salt",
+      "titolo": "Monaco certosino e martire",
+      "bio": "Beato Roberto Salt, monaco certosino e martire."
+    },
+    {
+      "nome": "San José de Anchieta (S.J.)",
+      "titolo": "Sacerdote, linguuista e missionario",
+      "bio": "San José de Anchieta (S.J.), sacerdote, linguuista e missionario."
+    },
+    {
+      "nome": "Beato Giuseppe Imbert",
+      "titolo": "Sacerdote gesuita e martire",
+      "bio": "Beato Giuseppe Imbert, sacerdote gesuita e martire."
+    },
+    {
+      "nome": "Beata Anna Maria Taigi",
+      "titolo": "Madre di famiglia, terziaria trinitaria",
+      "bio": "Beata Anna Maria Taigi, madre di famiglia, terziaria trinitaria."
+    },
+    {
+      "nome": "Beato Luigi Boccardo",
+      "titolo": "Sacerdote e fondatore italiano delle Figlie di Gesù Re",
+      "bio": "Beato Luigi Boccardo, sacerdote e fondatore italiano delle Figlie di Gesù Re."
+    },
+    {
+      "nome": "Beato Mosè Tovini",
+      "titolo": "Sacerdote",
+      "bio": "Beato Mosè Tovini, sacerdote."
+    }
+  ],
+  "06-10": [
+    {
+      "nome": "San Censurio di Auxerre",
+      "titolo": "Vescovo di Auxerre",
+      "bio": "San Censurio di Auxerre, vescovo di Auxerre."
+    },
+    {
+      "nome": "San Landerico di Parigi",
+      "titolo": "Vescovo di Parigi",
+      "bio": "San Landerico di Parigi, vescovo di Parigi."
+    },
+    {
+      "nome": "Sant'Itamaro",
+      "titolo": "Vescovo",
+      "bio": "Sant'Itamaro, vescovo."
+    },
+    {
+      "nome": "San Bogumilo di Gniezno",
+      "titolo": "Vescovo di Gniezno",
+      "bio": "San Bogumilo di Gniezno, vescovo di Gniezno."
+    },
+    {
+      "nome": "San Massimo d'Aveia",
+      "titolo": "Diacono martire",
+      "bio": "San Massimo d'Aveia, diacono martire."
+    },
+    {
+      "nome": "Beata Diana degli Andalò",
+      "titolo": "Vergine, fondatrice del monastero domenicano di Sant'Agnese",
+      "bio": "Beata Diana degli Andalò, vergine, fondatrice del monastero domenicano di Sant'Agnese."
+    },
+    {
+      "nome": "Beato Arrigo da Bolzano",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Beato Arrigo da Bolzano."
+    },
+    {
+      "nome": "Beato Giovanni Dominici",
+      "titolo": "Domenicano, vescovo di Ragusa",
+      "bio": "Beato Giovanni Dominici, domenicano, vescovo di Ragusa."
+    },
+    {
+      "nome": "Beati Tommaso Green e Gualtiero Pierson",
+      "titolo": "Certosini, martiri",
+      "bio": "Beati Tommaso Green e Gualtiero Pierson, certosini, martiri."
+    },
+    {
+      "nome": "Beato Edward Poppe",
+      "titolo": "Sacerdote",
+      "bio": "Beato Edward Poppe, sacerdote."
+    },
+    {
+      "nome": "Beato Leonardo Melki (Yūsuf Habīb)",
+      "titolo": "Sacerdote martire",
+      "bio": "Beato Leonardo Melki (Yūsuf Habīb), sacerdote martire."
+    }
+  ],
+  "06-11": [
+    {
+      "nome": "San Barnaba",
+      "titolo": "Apostolo",
+      "bio": "San Barnaba, apostolo."
+    },
+    {
+      "nome": "San Massimo di Napoli",
+      "titolo": "Vescovo di Napoli",
+      "bio": "San Massimo di Napoli, vescovo di Napoli."
+    },
+    {
+      "nome": "San Remberto",
+      "titolo": "Vescovo di Amburgo e di Brema",
+      "bio": "San Remberto, vescovo di Amburgo e di Brema."
+    },
+    {
+      "nome": "Beato Bardone",
+      "titolo": "Abate e poi vescovo di Magonza",
+      "bio": "Beato Bardone, abate e poi vescovo di Magonza."
+    },
+    {
+      "nome": "Sant'Aleide di Schaerbeek",
+      "titolo": "Vergine cistercense",
+      "bio": "Sant'Aleide di Schaerbeek, vergine cistercense."
+    },
+    {
+      "nome": "San Parisio",
+      "titolo": "Sacerdote camaldolese",
+      "bio": "San Parisio, sacerdote camaldolese."
+    },
+    {
+      "nome": "Beata Iolanda di Polonia",
+      "titolo": "Badessa clarissa di Gniezno",
+      "bio": "Beata Iolanda di Polonia, badessa clarissa di Gniezno."
+    },
+    {
+      "nome": "Beato Stefano Bandelli",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Stefano Bandelli, sacerdote domenicano."
+    },
+    {
+      "nome": "San Giovanni da San Facondo (O.S.A.) (González de Castrillo)",
+      "titolo": "Sacerdote",
+      "bio": "San Giovanni da San Facondo (O.S.A.) (González de Castrillo), sacerdote."
+    },
+    {
+      "nome": "Santa Maria Rosa Molas y Vallvé",
+      "titolo": "Vergine, fondatrice delle Suore di Nostra Signora della Consolazione",
+      "bio": "Santa Maria Rosa Molas y Vallvé, vergine, fondatrice delle Suore di Nostra Signora della Consolazione."
+    },
+    {
+      "nome": "Santa Paola Frassinetti",
+      "titolo": "Vergine, fondatrice delle Suore di Santa Dorotea",
+      "bio": "Santa Paola Frassinetti, vergine, fondatrice delle Suore di Santa Dorotea."
+    },
+    {
+      "nome": "Beata Maria Schininà",
+      "titolo": "Vergine, fondatrice delle Suore del Sacro Cuore",
+      "bio": "Beata Maria Schininà, vergine, fondatrice delle Suore del Sacro Cuore."
+    }
+  ],
+  "06-12": [
+    {
+      "nome": "San Basilide",
+      "titolo": "Martire",
+      "bio": "San Basilide, martire."
+    },
+    {
+      "nome": "Sant'Onofrio (anacoreta)",
+      "titolo": "Eremita",
+      "bio": "Sant'Onofrio (anacoreta), eremita."
+    },
+    {
+      "nome": "San Leone III",
+      "titolo": "Papa",
+      "bio": "San Leone III, papa."
+    },
+    {
+      "nome": "Sant'Odolfo di Stavoren",
+      "titolo": "Sacerdote, apostolo dei Frisi",
+      "bio": "Sant'Odolfo di Stavoren, sacerdote, apostolo dei Frisi."
+    },
+    {
+      "nome": "Sant'Eskil",
+      "titolo": "Vescovo di Strängnäs e martire",
+      "bio": "Sant'Eskil, vescovo di Strängnäs e martire."
+    },
+    {
+      "nome": "Beato Guido Vagnottelli",
+      "titolo": "Sacerdote, discepolo di San Francesco",
+      "bio": "Beato Guido Vagnottelli, sacerdote, discepolo di San Francesco."
+    },
+    {
+      "nome": "Beato Placido",
+      "titolo": "Abate",
+      "bio": "Beato Placido, abate."
+    },
+    {
+      "nome": "Beata Florida Cevoli",
+      "titolo": "Vergine clarissa",
+      "bio": "Beata Florida Cevoli, vergine clarissa."
+    },
+    {
+      "nome": "San Gaspare Bertoni (C.S.S.)",
+      "titolo": "Sacerdote, fondatore",
+      "bio": "San Gaspare Bertoni (C.S.S.), sacerdote, fondatore."
+    },
+    {
+      "nome": "Beato Lorenzo Maria di San Francesco Saverio (Lorenzo Maria Salvi)",
+      "titolo": "Sacerdote, missionario passionista",
+      "bio": "Beato Lorenzo Maria di San Francesco Saverio (Lorenzo Maria Salvi), sacerdote, missionario passionista."
+    },
+    {
+      "nome": "Beata Mercedes Molina y Ayala",
+      "titolo": "Vergine, fondatrice dell'Istituto di Santa Marianna di Gesù",
+      "bio": "Beata Mercedes Molina y Ayala, vergine, fondatrice dell'Istituto di Santa Marianna di Gesù."
+    }
+  ],
+  "06-13": [
+    {
+      "nome": "Sant'Antonio di Padova (O.Min.)",
+      "titolo": "Sacerdote e dottore della Chiesa",
+      "bio": "Sant'Antonio di Padova (O.Min.), sacerdote e dottore della Chiesa."
+    },
+    {
+      "nome": "Santa Felicola",
+      "titolo": "Martire",
+      "bio": "Santa Felicola, martire."
+    },
+    {
+      "nome": "Sant'Achilla di Alessandria",
+      "titolo": "Vescovo di Alessandria",
+      "bio": "Sant'Achilla di Alessandria, vescovo di Alessandria."
+    },
+    {
+      "nome": "San Trifilio",
+      "titolo": "Vescovo di Nicosia",
+      "bio": "San Trifilio, vescovo di Nicosia."
+    },
+    {
+      "nome": "San Cetteo di Amiterno",
+      "titolo": "Vescovo di Amiterno",
+      "bio": "San Cetteo di Amiterno, vescovo di Amiterno."
+    },
+    {
+      "nome": "San Salmodio",
+      "titolo": "Eremita",
+      "bio": "San Salmodio, eremita."
+    },
+    {
+      "nome": "San Ragneberto",
+      "titolo": "Martire",
+      "bio": "San Ragneberto, martire."
+    },
+    {
+      "nome": "Sant'Aventino",
+      "titolo": "Eremita e martire",
+      "bio": "Sant'Aventino, eremita e martire."
+    },
+    {
+      "nome": "San Fandila",
+      "titolo": "Sacerdote e monaco",
+      "bio": "San Fandila, sacerdote e monaco."
+    },
+    {
+      "nome": "Beato Gerardo di Chiaravalle",
+      "titolo": "Monaco di Chiaravalle",
+      "bio": "Beato Gerardo di Chiaravalle, monaco di Chiaravalle."
+    },
+    {
+      "nome": "Sant'Agostino Phan Viết Huy e San Nicola Bùi Ðức Thể",
+      "titolo": "Martiri",
+      "bio": "Sant'Agostino Phan Viết Huy e San Nicola Bùi Ðức Thể, martiri."
+    },
+    {
+      "nome": "Beata Marianna Biernacka",
+      "titolo": "Madre di famiglia e martire",
+      "bio": "Beata Marianna Biernacka, madre di famiglia e martire."
+    }
+  ],
+  "06-14": [
+    {
+      "nome": "Sant'Eliseo",
+      "titolo": "Profeta",
+      "bio": "Sant'Eliseo, profeta."
+    },
+    {
+      "nome": "San Proto",
+      "titolo": "Martire",
+      "bio": "San Proto, martire."
+    },
+    {
+      "nome": "Santi Valerio e Rufino",
+      "titolo": "Martiri",
+      "bio": "Santi Valerio e Rufino, martiri."
+    },
+    {
+      "nome": "San Fortunato di Napoli",
+      "titolo": "Vescovo di Napoli",
+      "bio": "San Fortunato di Napoli, vescovo di Napoli."
+    },
+    {
+      "nome": "Sant'Eterio di Vienne",
+      "titolo": "Vescovo di Vienne",
+      "bio": "Sant'Eterio di Vienne, vescovo di Vienne."
+    },
+    {
+      "nome": "San Metodio I",
+      "titolo": "Vescovo di Costantinopoli",
+      "bio": "San Metodio I, vescovo di Costantinopoli."
+    },
+    {
+      "nome": "Santi Anastasio",
+      "titolo": "Felice e Degna, martiri",
+      "bio": "Santi Anastasio, Felice e Degna, martiri."
+    },
+    {
+      "nome": "Beato Cosma Spessotto (Sante)",
+      "titolo": "Sacerdote martire",
+      "bio": "Beato Cosma Spessotto (Sante), sacerdote martire."
+    }
+  ],
+  "06-15": [
+    {
+      "nome": "Sant'Amos",
+      "titolo": "Profeta",
+      "bio": "Sant'Amos, profeta."
+    },
+    {
+      "nome": "Sant'Esichio",
+      "titolo": "Martire",
+      "bio": "Sant'Esichio, martire."
+    },
+    {
+      "nome": "San Vito",
+      "titolo": "Laico martire",
+      "bio": "San Vito, laico martire."
+    },
+    {
+      "nome": "Sant'Abramo",
+      "titolo": "Monaco",
+      "bio": "Sant'Abramo, monaco."
+    },
+    {
+      "nome": "San Landelino di Lobbes",
+      "titolo": "Abate di Lobbes",
+      "bio": "San Landelino di Lobbes, abate di Lobbes."
+    },
+    {
+      "nome": "San Lotario di Séez",
+      "titolo": "Vescovo di Séez",
+      "bio": "San Lotario di Séez, vescovo di Séez."
+    },
+    {
+      "nome": "Santa Benilde",
+      "titolo": "Martire",
+      "bio": "Santa Benilde, martire."
+    },
+    {
+      "nome": "San Bernardo da Mentone",
+      "titolo": "Sacerdote, canonico, arcidiacono di Aosta e fondatore dell'abbazia di Monte Giove",
+      "bio": "San Bernardo da Mentone, sacerdote, canonico, arcidiacono di Aosta e fondatore dell'abbazia di Monte Giove."
+    },
+    {
+      "nome": "Sant'Isfrido",
+      "titolo": "Vescovo di Ratzeburg",
+      "bio": "Sant'Isfrido, vescovo di Ratzeburg."
+    },
+    {
+      "nome": "Beato Tommaso Scryven",
+      "titolo": "Martire certosino",
+      "bio": "Beato Tommaso Scryven, martire certosino."
+    },
+    {
+      "nome": "Beati Pietro Snow e Rodolfo Grimston",
+      "titolo": "Martiri",
+      "bio": "Beati Pietro Snow e Rodolfo Grimston, martiri."
+    },
+    {
+      "nome": "Santa Germana Cousin",
+      "titolo": "Vergine",
+      "bio": "Santa Germana Cousin, vergine."
+    },
+    {
+      "nome": "San Luigi Maria Palazzolo",
+      "titolo": "Sacerdote, fondatore delle Suore delle poverelle e dei Fratelli della Santa Famiglia",
+      "bio": "San Luigi Maria Palazzolo, sacerdote, fondatore delle Suore delle poverelle e dei Fratelli della Santa Famiglia."
+    },
+    {
+      "nome": "Santa Barbara Cui Lianzhi",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santa Barbara Cui Lianzhi."
+    }
+  ],
+  "06-16": [
+    {
+      "nome": "Santi Quirico e Giulitta",
+      "titolo": "Martiri",
+      "bio": "Santi Quirico e Giulitta, martiri."
+    },
+    {
+      "nome": "San Ferreolo di Besançon e San Ferruccio di Besançon",
+      "titolo": "Martiri",
+      "bio": "San Ferreolo di Besançon e San Ferruccio di Besançon, martiri."
+    },
+    {
+      "nome": "San Similiano",
+      "titolo": "Vescovo di Nantes e confessore",
+      "bio": "San Similiano, vescovo di Nantes e confessore."
+    },
+    {
+      "nome": "San Ticone di Amato",
+      "titolo": "Vescovo di Cipro",
+      "bio": "San Ticone di Amato, vescovo di Cipro."
+    },
+    {
+      "nome": "Santi Aureo",
+      "titolo": "Vescovo di Magonza, Giustina, sua sorella, e compagni, martiri",
+      "bio": "Santi Aureo, vescovo di Magonza, Giustina, sua sorella, e compagni, martiri."
+    },
+    {
+      "nome": "Sant'Aureliano di Arles",
+      "titolo": "Vescovo di Arles",
+      "bio": "Sant'Aureliano di Arles, vescovo di Arles."
+    },
+    {
+      "nome": "San Ceccardo di Luni",
+      "titolo": "Vescovo di Luni",
+      "bio": "San Ceccardo di Luni, vescovo di Luni."
+    },
+    {
+      "nome": "San Bennone",
+      "titolo": "Vescovo di Meißen",
+      "bio": "San Bennone, vescovo di Meißen."
+    },
+    {
+      "nome": "Santa Lutgarda",
+      "titolo": "Vergine",
+      "bio": "Santa Lutgarda, vergine."
+    },
+    {
+      "nome": "Beato Tommaso Reding",
+      "titolo": "Martire certosino",
+      "bio": "Beato Tommaso Reding, martire certosino."
+    },
+    {
+      "nome": "Beato Antonio Costanzo Auriel",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Antonio Costanzo Auriel, sacerdote e martire."
+    },
+    {
+      "nome": "Santi Domenico Nguyễn",
+      "titolo": "Domenico Nguyễn Đức Mạo, Domenico Nhi, Domenico Mao, Vincenzo e Andrea Tường, martiri",
+      "bio": "Santi Domenico Nguyễn, Domenico Nguyễn Đức Mạo, Domenico Nhi, Domenico Mao, Vincenzo e Andrea Tường, martiri."
+    },
+    {
+      "nome": "Beata Maria Theresia Scherer",
+      "titolo": "Vergine, cofondatrice delle Suore di carità della Santa Croce",
+      "bio": "Beata Maria Theresia Scherer, vergine, cofondatrice delle Suore di carità della Santa Croce."
+    }
+  ],
+  "06-17": [
+    {
+      "nome": "Santi Blasto e Diogene",
+      "titolo": "Martiri",
+      "bio": "Santi Blasto e Diogene, martiri."
+    },
+    {
+      "nome": "Santi Isauro",
+      "titolo": "Innocenzo, Felice, Ermia, Pellegrino e Basilio, martiri",
+      "bio": "Santi Isauro, Innocenzo, Felice, Ermia, Pellegrino e Basilio, martiri."
+    },
+    {
+      "nome": "Santi Nicandro",
+      "titolo": "Marciano e Daria, martiri",
+      "bio": "Santi Nicandro, Marciano e Daria, martiri."
+    },
+    {
+      "nome": "Sant'Antidio di Besançon",
+      "titolo": "Vescovo di Besançon e martire",
+      "bio": "Sant'Antidio di Besançon, vescovo di Besançon e martire."
+    },
+    {
+      "nome": "Santi Leonzio",
+      "titolo": "Ipazio e Teodulo, egumeno",
+      "bio": "Santi Leonzio, Ipazio e Teodulo, egumeno."
+    },
+    {
+      "nome": "Sant'Hervè",
+      "titolo": "Eremita",
+      "bio": "Sant'Hervè, eremita."
+    },
+    {
+      "nome": "Sant'Avito",
+      "titolo": "Abate",
+      "bio": "Sant'Avito, abate."
+    },
+    {
+      "nome": "San Ranieri Scacceri",
+      "titolo": "Pellegrino",
+      "bio": "San Ranieri Scacceri, pellegrino."
+    },
+    {
+      "nome": "Santa Teresa del Portogallo",
+      "titolo": "Regina di Castiglia",
+      "bio": "Santa Teresa del Portogallo, regina di Castiglia."
+    },
+    {
+      "nome": "Beato Pietro Gambacorta",
+      "titolo": "Fondatore dei Poveri eremiti di San Girolamo",
+      "bio": "Beato Pietro Gambacorta, fondatore dei Poveri eremiti di San Girolamo."
+    },
+    {
+      "nome": "Beato Paolo Burali d'Arezzo",
+      "titolo": "Religioso teatino, vescovo di Piacenza e poi di Napoli",
+      "bio": "Beato Paolo Burali d'Arezzo, religioso teatino, vescovo di Piacenza e poi di Napoli."
+    },
+    {
+      "nome": "Beato Filippo Papon",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Filippo Papon, sacerdote e martire."
+    },
+    {
+      "nome": "San Pietro Đa",
+      "titolo": "Martire",
+      "bio": "San Pietro Đa, martire."
+    }
+  ],
+  "06-18": [
+    {
+      "nome": "Santi Marco e Marcelliano",
+      "titolo": "Martiri",
+      "bio": "Santi Marco e Marcelliano, martiri."
+    },
+    {
+      "nome": "San Leonzio",
+      "titolo": "Ipazio e Teodulo, legionario martire",
+      "bio": "San Leonzio, Ipazio e Teodulo, legionario martire."
+    },
+    {
+      "nome": "Santi Ciriaco e Paola",
+      "titolo": "Martiri",
+      "bio": "Santi Ciriaco e Paola, martiri."
+    },
+    {
+      "nome": "Sant'Amando di Bordeaux",
+      "titolo": "Vescovo di Bordeaux",
+      "bio": "Sant'Amando di Bordeaux, vescovo di Bordeaux."
+    },
+    {
+      "nome": "San Calogero di Sicilia",
+      "titolo": "Eremita",
+      "bio": "San Calogero di Sicilia, eremita."
+    },
+    {
+      "nome": "Sant'Elisabetta di Schönau (O.S.B.)",
+      "titolo": "Vergine",
+      "bio": "Sant'Elisabetta di Schönau (O.S.B.), vergine."
+    },
+    {
+      "nome": "Beata Osanna Andreasi",
+      "titolo": "Vergine, terziaria domenicana",
+      "bio": "Beata Osanna Andreasi, vergine, terziaria domenicana."
+    },
+    {
+      "nome": "San Gregorio Barbarigo",
+      "titolo": "Vescovo di Bergamo e poi di Padova",
+      "bio": "San Gregorio Barbarigo, vescovo di Bergamo e poi di Padova."
+    }
+  ],
+  "06-19": [
+    {
+      "nome": "San Romualdo (O.S.B. Cam.)",
+      "titolo": "Abate, eremita e fondatore dei monaci camaldolesi",
+      "bio": "San Romualdo (O.S.B. Cam.), abate, eremita e fondatore dei monaci camaldolesi."
+    },
+    {
+      "nome": "Santi Gervasio e Protasio",
+      "titolo": "Martiri",
+      "bio": "Santi Gervasio e Protasio, martiri."
+    },
+    {
+      "nome": "San Deodato di Nevers",
+      "titolo": "Vescovo di Nevers",
+      "bio": "San Deodato di Nevers, vescovo di Nevers."
+    },
+    {
+      "nome": "Santa Childomarca",
+      "titolo": "Badessa",
+      "bio": "Santa Childomarca, badessa."
+    },
+    {
+      "nome": "San Lamberto",
+      "titolo": "Martire",
+      "bio": "San Lamberto, martire."
+    },
+    {
+      "nome": "Beato Gerlando",
+      "titolo": "Ospedaliere di San Giovanni",
+      "bio": "Beato Gerlando, ospedaliere di San Giovanni."
+    },
+    {
+      "nome": "Santa Giuliana Falconieri",
+      "titolo": "Vergine, fondatrice delle Serve di Maria",
+      "bio": "Santa Giuliana Falconieri, vergine, fondatrice delle Serve di Maria."
+    },
+    {
+      "nome": "Beata Michelina da Pesaro",
+      "titolo": "Vedova, terziaria francescana",
+      "bio": "Beata Michelina da Pesaro, vedova, terziaria francescana."
+    },
+    {
+      "nome": "Beati Sebastiano Newdigate",
+      "titolo": "Humphrey Middlemore e Guglielmo Exmew, sacerdoti certosini e martiri",
+      "bio": "Beati Sebastiano Newdigate, Humphrey Middlemore e Guglielmo Exmew, sacerdoti certosini e martiri."
+    },
+    {
+      "nome": "Beato Tommaso Woodhouse",
+      "titolo": "Sacerdote della Compagnia di Gesù e martire",
+      "bio": "Beato Tommaso Woodhouse, sacerdote della Compagnia di Gesù e martire."
+    },
+    {
+      "nome": "Santi Remigio Isoré e Modesto Andlauer (S.J.)",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Santi Remigio Isoré e Modesto Andlauer (S.J.), sacerdoti e martiri."
+    },
+    {
+      "nome": "Beata Elena Aiello",
+      "titolo": "Vergine, mistica e fondatrice delle Suore Minime della Passione di Nostro Signore Gesù Cri",
+      "bio": "Beata Elena Aiello, vergine, mistica e fondatrice delle Suore Minime della Passione di Nostro Signore Gesù Cristo."
+    }
+  ],
+  "06-20": [
+    {
+      "nome": "San Metodio di Olimpo",
+      "titolo": "Vescovo di Olimpo e martire",
+      "bio": "San Metodio di Olimpo, vescovo di Olimpo e martire."
+    },
+    {
+      "nome": "San Gobano d'Irlanda",
+      "titolo": "Sacerdote",
+      "bio": "San Gobano d'Irlanda, sacerdote."
+    },
+    {
+      "nome": "San Giovanni da Matera",
+      "titolo": "Fondatore e abate del monastero di PulSano",
+      "bio": "San Giovanni da Matera, fondatore e abate del monastero di PulSano."
+    },
+    {
+      "nome": "Beata Margherita Ebner",
+      "titolo": "Vergine domenicana",
+      "bio": "Beata Margherita Ebner, vergine domenicana."
+    },
+    {
+      "nome": "Beato Dermot O'Hurley",
+      "titolo": "Arcivescovo di Cashel e martire",
+      "bio": "Beato Dermot O'Hurley, arcivescovo di Cashel e martire."
+    },
+    {
+      "nome": "Beata Margherita Ball",
+      "titolo": "Martire",
+      "bio": "Beata Margherita Ball, martire."
+    },
+    {
+      "nome": "Beati Francesco Pacheco",
+      "titolo": "Sacerdote, e otto compagni gesuiti, martiri",
+      "bio": "Beati Francesco Pacheco, sacerdote, e otto compagni gesuiti, martiri."
+    },
+    {
+      "nome": "Beati Tommaso Whitbread",
+      "titolo": "Guglielmo Harcourt, Giovanni Fenwich, Giovanni Gavan e Antonio Turner, sacerdoti gesuiti, ",
+      "bio": "Beati Tommaso Whitbread, Guglielmo Harcourt, Giovanni Fenwich, Giovanni Gavan e Antonio Turner, sacerdoti gesuiti, martiri."
+    }
+  ],
+  "06-21": [
+    {
+      "nome": "San Luigi Gonzaga (S.J.)",
+      "titolo": "Religioso",
+      "bio": "San Luigi Gonzaga (S.J.), religioso."
+    },
+    {
+      "nome": "San Lazzaro mendicante",
+      "titolo": "Personaggio del Nuovo Testamento",
+      "bio": "San Lazzaro mendicante, Personaggio del Nuovo Testamento."
+    },
+    {
+      "nome": "San Mevenno",
+      "titolo": "Fondatore e abate del monastero di Brocéliande",
+      "bio": "San Mevenno, fondatore e abate del monastero di Brocéliande."
+    },
+    {
+      "nome": "San Leutfrido",
+      "titolo": "Fondatore e abate del monastero di Santa Croce presso Evreux",
+      "bio": "San Leutfrido, fondatore e abate del monastero di Santa Croce presso Evreux."
+    },
+    {
+      "nome": "San Raoul di Bourges",
+      "titolo": "Vescovo di Bourges",
+      "bio": "San Raoul di Bourges, vescovo di Bourges."
+    },
+    {
+      "nome": "San Raimondo",
+      "titolo": "Vescovo di Roda e Barbastro",
+      "bio": "San Raimondo, vescovo di Roda e Barbastro."
+    },
+    {
+      "nome": "Beato Tommaso da Orvieto",
+      "titolo": "Servita",
+      "bio": "Beato Tommaso da Orvieto, servita."
+    },
+    {
+      "nome": "San Giovanni Rigby",
+      "titolo": "Laico e martire",
+      "bio": "San Giovanni Rigby, laico e martire."
+    },
+    {
+      "nome": "Beato Giacomo Morelle Dupas",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giacomo Morelle Dupas, sacerdote e martire."
+    },
+    {
+      "nome": "San Giuseppe Isabel Flores",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Giuseppe Isabel Flores, sacerdote e martire."
+    }
+  ],
+  "06-22": [
+    {
+      "nome": "San Paolino di Nola",
+      "titolo": "Vescovo di Nola",
+      "bio": "San Paolino di Nola, vescovo di Nola."
+    },
+    {
+      "nome": "San Giovanni Fisher",
+      "titolo": "Cardinale e vescovo di Rochester, e San Tommaso Moro (T.O.F.) laico, martiri",
+      "bio": "San Giovanni Fisher, cardinale e vescovo di Rochester, e San Tommaso Moro (T.O.F.) laico, martiri."
+    },
+    {
+      "nome": "San Flavio Clemente",
+      "titolo": "Martire",
+      "bio": "San Flavio Clemente, martire."
+    },
+    {
+      "nome": "Sant'Albano d'Inghilterra",
+      "titolo": "Laico, soldato e martire",
+      "bio": "Sant'Albano d'Inghilterra, laico, soldato e martire."
+    },
+    {
+      "nome": "Santi Giulio e Aaron",
+      "titolo": "Martiri",
+      "bio": "Santi Giulio e Aaron, martiri."
+    },
+    {
+      "nome": "Sant'Eusebio",
+      "titolo": "Vescovo di Samosata",
+      "bio": "Sant'Eusebio, vescovo di Samosata."
+    },
+    {
+      "nome": "San Niceta",
+      "titolo": "Vescovo di Ramesiana in Dacia",
+      "bio": "San Niceta, vescovo di Ramesiana in Dacia."
+    },
+    {
+      "nome": "Beato Innocenzo V",
+      "titolo": "Papa domenicano",
+      "bio": "Beato Innocenzo V, papa domenicano."
+    },
+    {
+      "nome": "Beata Maria Lhuillier",
+      "titolo": "Vergine e martire",
+      "bio": "Beata Maria Lhuillier, vergine e martire."
+    }
+  ],
+  "06-23": [
+    {
+      "nome": "Santi martiri di Nicomedia",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri di Nicomedia."
+    },
+    {
+      "nome": "Sant'Eteldreda di Ely",
+      "titolo": "Abbadessa di Ely",
+      "bio": "Sant'Eteldreda di Ely, abbadessa di Ely."
+    },
+    {
+      "nome": "San Bilio",
+      "titolo": "Vescovo di Vannes e martire",
+      "bio": "San Bilio, vescovo di Vannes e martire."
+    },
+    {
+      "nome": "San Lanfranco Beccari",
+      "titolo": "Vescovo di Pavia",
+      "bio": "San Lanfranco Beccari, vescovo di Pavia."
+    },
+    {
+      "nome": "San Valero di Bouvignes",
+      "titolo": "Sacerdote",
+      "bio": "San Valero di Bouvignes, sacerdote."
+    },
+    {
+      "nome": "Beata Maria",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Beata Maria."
+    },
+    {
+      "nome": "Beato Pietro Giacomo da Pesaro",
+      "titolo": "Sacerdote agostiniano",
+      "bio": "Beato Pietro Giacomo da Pesaro, sacerdote agostiniano."
+    },
+    {
+      "nome": "San Tommaso Garnet (S.J.)",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Tommaso Garnet (S.J.), sacerdote e martire."
+    },
+    {
+      "nome": "San Giuseppe Cafasso",
+      "titolo": "Sacerdote",
+      "bio": "San Giuseppe Cafasso, sacerdote."
+    },
+    {
+      "nome": "Beata Maria Raffaella Cimatti",
+      "titolo": "Vergine delle Suore ospedaliere della misericordia",
+      "bio": "Beata Maria Raffaella Cimatti, vergine delle Suore ospedaliere della misericordia."
+    }
+  ],
+  "06-24": [
+    {
+      "nome": "natività di San Giovanni Battista",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "natività di San Giovanni Battista."
+    },
+    {
+      "nome": "Santi Giovanni e Festo",
+      "titolo": "Martiri",
+      "bio": "Santi Giovanni e Festo, martiri."
+    },
+    {
+      "nome": "San Simplicio di Autun",
+      "titolo": "Vescovo di Autun",
+      "bio": "San Simplicio di Autun, vescovo di Autun."
+    },
+    {
+      "nome": "Santi Agoardo",
+      "titolo": "Agliberto e compagni, martiri",
+      "bio": "Santi Agoardo, Agliberto e compagni, martiri."
+    },
+    {
+      "nome": "San Rumoldo di Mechelen",
+      "titolo": "Missionario, eremita e martire",
+      "bio": "San Rumoldo di Mechelen, missionario, eremita e martire."
+    },
+    {
+      "nome": "San Teodolfo",
+      "titolo": "Vescovo-abate di Lobbes",
+      "bio": "San Teodolfo, vescovo-abate di Lobbes."
+    },
+    {
+      "nome": "San Gontrano",
+      "titolo": "Vescovo di Nantes e martire",
+      "bio": "San Gontrano, vescovo di Nantes e martire."
+    },
+    {
+      "nome": "San Teogaro",
+      "titolo": "Sacerdote",
+      "bio": "San Teogaro, sacerdote."
+    },
+    {
+      "nome": "San Giuseppe Yuan Zaide",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Giuseppe Yuan Zaide, sacerdote e martire."
+    }
+  ],
+  "06-25": [
+    {
+      "nome": "San Massimo di Torino",
+      "titolo": "Primo vescovo di Torino",
+      "bio": "San Massimo di Torino, primo vescovo di Torino."
+    },
+    {
+      "nome": "San Prospero d'Aquitania",
+      "titolo": "Monaco e teologo",
+      "bio": "San Prospero d'Aquitania, monaco e teologo."
+    },
+    {
+      "nome": "San Prospero di Reggio Emilia",
+      "titolo": "Vescovo di Reggio Emilia",
+      "bio": "San Prospero di Reggio Emilia, vescovo di Reggio Emilia."
+    },
+    {
+      "nome": "Santa Tigre",
+      "titolo": "Vergine",
+      "bio": "Santa Tigre, vergine."
+    },
+    {
+      "nome": "San San Moloc",
+      "titolo": "Vescovo",
+      "bio": "San San Moloc, vescovo."
+    },
+    {
+      "nome": "Sant'Eurosia di Jaca",
+      "titolo": "Vergine e martire",
+      "bio": "Sant'Eurosia di Jaca, vergine e martire."
+    },
+    {
+      "nome": "Sant'Adalberto di Egmond",
+      "titolo": "Diacono e abate",
+      "bio": "Sant'Adalberto di Egmond, diacono e abate."
+    },
+    {
+      "nome": "San Salomone",
+      "titolo": "Martire",
+      "bio": "San Salomone, martire."
+    },
+    {
+      "nome": "San Guglielmo da Vercelli",
+      "titolo": "Fondatore e abate di Montevergine",
+      "bio": "San Guglielmo da Vercelli, fondatore e abate di Montevergine."
+    },
+    {
+      "nome": "Beato Giovanni di Spagna",
+      "titolo": "Monaco certosino",
+      "bio": "Beato Giovanni di Spagna, monaco certosino."
+    },
+    {
+      "nome": "Beata Dorotea di Montau",
+      "titolo": "Vedova",
+      "bio": "Beata Dorotea di Montau, vedova."
+    },
+    {
+      "nome": "San Domenico Henares de Zafra Cubero",
+      "titolo": "Domenicano, vescovo titolare di Fessei e vicario apostolico del Tonchino orientale, e Fran",
+      "bio": "San Domenico Henares de Zafra Cubero, domenicano, vescovo titolare di Fessei e vicario apostolico del Tonchino orientale, e Francesco Ðỗ Văn Chiểu, martiri."
+    }
+  ],
+  "06-26": [
+    {
+      "nome": "Santi Giovanni e Paolo",
+      "titolo": "Martiri",
+      "bio": "Santi Giovanni e Paolo, martiri."
+    },
+    {
+      "nome": "San Vigilio di Trento",
+      "titolo": "Vescovo di Trento martire",
+      "bio": "San Vigilio di Trento, vescovo di Trento martire."
+    },
+    {
+      "nome": "San Deodato",
+      "titolo": "Vescovo di Nola",
+      "bio": "San Deodato, vescovo di Nola."
+    },
+    {
+      "nome": "San Massenzio",
+      "titolo": "Abate",
+      "bio": "San Massenzio, abate."
+    },
+    {
+      "nome": "San David",
+      "titolo": "Eremita",
+      "bio": "San David, eremita."
+    },
+    {
+      "nome": "San Salvio",
+      "titolo": "Vescovo di Valence e martire",
+      "bio": "San Salvio, vescovo di Valence e martire."
+    },
+    {
+      "nome": "San Pelagio di Cordova",
+      "titolo": "Laico martire",
+      "bio": "San Pelagio di Cordova, laico martire."
+    },
+    {
+      "nome": "Sant'Antelmo di Chignin (O.Cart.)",
+      "titolo": "Vescovo di Belley",
+      "bio": "Sant'Antelmo di Chignin (O.Cart.), vescovo di Belley."
+    },
+    {
+      "nome": "Beato Raimondo Petiniaud de Jourgnac",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Raimondo Petiniaud de Jourgnac, sacerdote e martire."
+    },
+    {
+      "nome": "Beate martiri di Cambrai Maria Maddalena Fontaine",
+      "titolo": "Maria Francesca Lanel, Teresa Maddalena Fantou e Giovanna Gérard, vergini Figlie della Car",
+      "bio": "Beate martiri di Cambrai Maria Maddalena Fontaine, Maria Francesca Lanel, Teresa Maddalena Fantou e Giovanna Gérard, vergini Figlie della Carità e martiri."
+    },
+    {
+      "nome": "San Giuseppe Ma Taishun",
+      "titolo": "Martire",
+      "bio": "San Giuseppe Ma Taishun, martire."
+    },
+    {
+      "nome": "San José María Robles Hurtado",
+      "titolo": "Sacerdote, fondatore delle Suore del Cuore di Gesù Sacramentato e martire",
+      "bio": "San José María Robles Hurtado, sacerdote, fondatore delle Suore del Cuore di Gesù Sacramentato e martire."
+    },
+    {
+      "nome": "Beato Andrea Iscak",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Andrea Iscak, sacerdote e martire."
+    },
+    {
+      "nome": "San Josemaría Escrivá de Balaguer",
+      "titolo": "Sacerdote, fondatore dell'Opus Dei",
+      "bio": "San Josemaría Escrivá de Balaguer, sacerdote, fondatore dell'Opus Dei."
+    },
+    {
+      "nome": "Beato Andrea Giacinto Longhin (Giacinto Bonaventura)",
+      "titolo": "Arcivescovo dell'Ordine dei Frati Cappuccini",
+      "bio": "Beato Andrea Giacinto Longhin (Giacinto Bonaventura), arcivescovo dell'Ordine dei Frati Cappuccini."
+    }
+  ],
+  "06-27": [
+    {
+      "nome": "San Cirillo di Alessandria",
+      "titolo": "Vescovo di Alessandria e dottore della Chiesa",
+      "bio": "San Cirillo di Alessandria, vescovo di Alessandria e dottore della Chiesa."
+    },
+    {
+      "nome": "Santa Guddene",
+      "titolo": "Martire",
+      "bio": "Santa Guddene, martire."
+    },
+    {
+      "nome": "San Zoilo",
+      "titolo": "Martire",
+      "bio": "San Zoilo, martire."
+    },
+    {
+      "nome": "San Sansone",
+      "titolo": "Sacerdote",
+      "bio": "San Sansone, sacerdote."
+    },
+    {
+      "nome": "San Giovanni",
+      "titolo": "Sacerdote",
+      "bio": "San Giovanni, sacerdote."
+    },
+    {
+      "nome": "Sant'Arialdo",
+      "titolo": "Diacono e martire",
+      "bio": "Sant'Arialdo, diacono e martire."
+    },
+    {
+      "nome": "Beato Benvenuto da Gubbio",
+      "titolo": "Religioso francescano",
+      "bio": "Beato Benvenuto da Gubbio, religioso francescano."
+    },
+    {
+      "nome": "San Tommaso Toán",
+      "titolo": "Catechista e martire",
+      "bio": "San Tommaso Toán, catechista e martire."
+    },
+    {
+      "nome": "Beata Margherita Bays",
+      "titolo": "Vergine",
+      "bio": "Beata Margherita Bays, vergine."
+    },
+    {
+      "nome": "Beata Louise-Thérèse de Montaignac de Chauvance",
+      "titolo": "Vergine, fondatrice delle Oblate del Cuore di Gesù",
+      "bio": "Beata Louise-Thérèse de Montaignac de Chauvance, vergine, fondatrice delle Oblate del Cuore di Gesù."
+    }
+  ],
+  "06-28": [
+    {
+      "nome": "Sant'Ireneo di Lione",
+      "titolo": "Vescovo di Lione e martire",
+      "bio": "Sant'Ireneo di Lione, vescovo di Lione e martire."
+    },
+    {
+      "nome": "Santi martiri di Alessandria d'Egitto",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri di Alessandria d'Egitto."
+    },
+    {
+      "nome": "San Paolo I",
+      "titolo": "Papa",
+      "bio": "San Paolo I, papa."
+    },
+    {
+      "nome": "Sant'Argimiro",
+      "titolo": "Martire",
+      "bio": "Sant'Argimiro, martire."
+    },
+    {
+      "nome": "Sant'Eimerardo",
+      "titolo": "Sacerdote ed eremita",
+      "bio": "Sant'Eimerardo, sacerdote ed eremita."
+    },
+    {
+      "nome": "San Giovanni Southworth",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Giovanni Southworth, sacerdote e martire."
+    },
+    {
+      "nome": "Santa Vincenza Gerosa",
+      "titolo": "Vergine, fondatrice delle Suore di Maria Bambina",
+      "bio": "Santa Vincenza Gerosa, vergine, fondatrice delle Suore di Maria Bambina."
+    },
+    {
+      "nome": "Sante Lucia Wang Cheng",
+      "titolo": "Maria Fan Kun, Maria Qi, Maria Fan Kun, Maria Qi Yu e Maria Zheng Xu, martiri",
+      "bio": "Sante Lucia Wang Cheng, Maria Fan Kun, Maria Qi, Maria Fan Kun, Maria Qi Yu e Maria Zheng Xu, martiri."
+    },
+    {
+      "nome": "Santa Maria Du Zhauzhi",
+      "titolo": "Martire",
+      "bio": "Santa Maria Du Zhauzhi, martire."
+    },
+    {
+      "nome": "Beati Severiano Baranyk e Gioacchino Sen'kivs'kyj",
+      "titolo": "Sacerdoti basiliani di San Giosafat e martiri",
+      "bio": "Beati Severiano Baranyk e Gioacchino Sen'kivs'kyj, sacerdoti basiliani di San Giosafat e martiri."
+    },
+    {
+      "nome": "Beata Maria Pia Mastena",
+      "titolo": "Religiosa e fondatrice italiana dell'Istituto delle Suore del Santo Volto",
+      "bio": "Beata Maria Pia Mastena, religiosa e fondatrice italiana dell'Istituto delle Suore del Santo Volto."
+    }
+  ],
+  "06-29": [
+    {
+      "nome": "Santi Apostoli Pietro e Paolo",
+      "titolo": "Apostoli",
+      "bio": "Santi Apostoli Pietro e Paolo, apostoli."
+    },
+    {
+      "nome": "San Siro di Genova",
+      "titolo": "Vescovo di Genova",
+      "bio": "San Siro di Genova, vescovo di Genova."
+    },
+    {
+      "nome": "San Cassio di Narni",
+      "titolo": "Vescovo di Narni",
+      "bio": "San Cassio di Narni, vescovo di Narni."
+    },
+    {
+      "nome": "Sant'Emma di Gurk",
+      "titolo": "Vedova",
+      "bio": "Sant'Emma di Gurk, vedova."
+    },
+    {
+      "nome": "Beato Raimondo Lullo",
+      "titolo": "Terziario francescano e martire",
+      "bio": "Beato Raimondo Lullo, terziario francescano e martire."
+    },
+    {
+      "nome": "Santi Paolo Wu Juan",
+      "titolo": "Giovan Battista Wu Mantang e Paolo Wu Wanshu, martiri",
+      "bio": "Santi Paolo Wu Juan, Giovan Battista Wu Mantang e Paolo Wu Wanshu, martiri."
+    },
+    {
+      "nome": "Sante Maria Du Tianshi e Maddalena Du Fengju",
+      "titolo": "Martiri",
+      "bio": "Sante Maria Du Tianshi e Maddalena Du Fengju, martiri."
+    },
+    {
+      "nome": "Beato Francesco Gaetano Umberto Mottola",
+      "titolo": "Sacerdote",
+      "bio": "Beato Francesco Gaetano Umberto Mottola, sacerdote."
+    },
+    {
+      "nome": "San José Gregorio Hernández Cisneros",
+      "titolo": "Laico, medico e scienziato",
+      "bio": "San José Gregorio Hernández Cisneros, laico, medico e scienziato."
+    }
+  ],
+  "06-30": [
+    {
+      "nome": "Protomartiri di Santa Romana Chiesa",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Protomartiri di Santa Romana Chiesa."
+    },
+    {
+      "nome": "San Basilide di Alessandria",
+      "titolo": "Martire",
+      "bio": "San Basilide di Alessandria, martire."
+    },
+    {
+      "nome": "San Marziale di Limoges",
+      "titolo": "Vescovo di Limoges",
+      "bio": "San Marziale di Limoges, vescovo di Limoges."
+    },
+    {
+      "nome": "San Bertrando di Le Mans",
+      "titolo": "Vescovo di Le Mans",
+      "bio": "San Bertrando di Le Mans, vescovo di Le Mans."
+    },
+    {
+      "nome": "Sant'Erentrude di Salisburgo",
+      "titolo": "Prima badessa di Nonnberg",
+      "bio": "Sant'Erentrude di Salisburgo, prima badessa di Nonnberg."
+    },
+    {
+      "nome": "San Teobaldo di Provins",
+      "titolo": "Prete ed eremita",
+      "bio": "San Teobaldo di Provins, prete ed eremita."
+    },
+    {
+      "nome": "San Ladislao",
+      "titolo": "Re d'Ungheria",
+      "bio": "San Ladislao, re d'Ungheria."
+    },
+    {
+      "nome": "Sant'Adolfo di Osnabrück (O.Cist.)",
+      "titolo": "Vescovo di Osnabrück",
+      "bio": "Sant'Adolfo di Osnabrück (O.Cist.), vescovo di Osnabrück."
+    },
+    {
+      "nome": "Beato Filippo Powell",
+      "titolo": "Sacerdote benedettino e martire",
+      "bio": "Beato Filippo Powell, sacerdote benedettino e martire."
+    },
+    {
+      "nome": "Beato Gennaro Maria Sarnelli",
+      "titolo": "Sacerdote redentorista",
+      "bio": "Beato Gennaro Maria Sarnelli, sacerdote redentorista."
+    },
+    {
+      "nome": "San Vincenzo Ðỗ Yến",
+      "titolo": "Sacerdote domenicano e martire",
+      "bio": "San Vincenzo Ðỗ Yến, sacerdote domenicano e martire."
+    },
+    {
+      "nome": "Santi Raimondo Li Quanzhen e Pietro Li Quanhui",
+      "titolo": "Martiri",
+      "bio": "Santi Raimondo Li Quanzhen e Pietro Li Quanhui, martiri."
+    },
+    {
+      "nome": "Beato Zynovij Kovalyk",
+      "titolo": "Sacerdote redentorista e martire",
+      "bio": "Beato Zynovij Kovalyk, sacerdote redentorista e martire."
+    },
+    {
+      "nome": "Beato Vasyl' Velyčkovs'kyj",
+      "titolo": "Vescovo ausiliare di Leopoli e martire",
+      "bio": "Beato Vasyl' Velyčkovs'kyj, vescovo ausiliare di Leopoli e martire."
+    }
+  ],
+  "07-01": [
+    {
+      "nome": "Sant'Aronne",
+      "titolo": "Levita",
+      "bio": "Sant'Aronne, levita."
+    },
+    {
+      "nome": "San Martino",
+      "titolo": "Vescovo di Vienne",
+      "bio": "San Martino, vescovo di Vienne."
+    },
+    {
+      "nome": "San Domiziano",
+      "titolo": "Abate",
+      "bio": "San Domiziano, abate."
+    },
+    {
+      "nome": "San Teodorico",
+      "titolo": "Prete",
+      "bio": "San Teodorico, prete."
+    },
+    {
+      "nome": "San Eparchio",
+      "titolo": "Sacerdote",
+      "bio": "San Eparchio, sacerdote."
+    },
+    {
+      "nome": "San Golveno",
+      "titolo": "Vescovo di Saint-Pol-de-Léon",
+      "bio": "San Golveno, vescovo di Saint-Pol-de-Léon."
+    },
+    {
+      "nome": "San Carileffo",
+      "titolo": "Abate",
+      "bio": "San Carileffo, abate."
+    },
+    {
+      "nome": "San Nicasio Camuto de Burgio",
+      "titolo": "Cavaliere gerosolimitano e martire",
+      "bio": "San Nicasio Camuto de Burgio, cavaliere gerosolimitano e martire."
+    },
+    {
+      "nome": "Beati Giorgio Beesley e Montford Scott",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Beati Giorgio Beesley e Montford Scott, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beato Tommaso Maxfield",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Tommaso Maxfield, sacerdote e martire."
+    },
+    {
+      "nome": "Sant'Oliver Plunket",
+      "titolo": "Vescovo di Armagh e martire",
+      "bio": "Sant'Oliver Plunket, vescovo di Armagh e martire."
+    },
+    {
+      "nome": "Beato Giovan Battista Duverneuil",
+      "titolo": "Carmelitano scalzo, e Beato Pietro Aredio Labrouhe de Laborderie, canonico di Clermont, sa",
+      "bio": "Beato Giovan Battista Duverneuil, carmelitano scalzo, e Beato Pietro Aredio Labrouhe de Laborderie, canonico di Clermont, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beato Ignazio Falzon",
+      "titolo": "Sacerdote",
+      "bio": "Beato Ignazio Falzon, sacerdote."
+    },
+    {
+      "nome": "San Zhang Huailu",
+      "titolo": "Martire",
+      "bio": "San Zhang Huailu, martire."
+    },
+    {
+      "nome": "Santi Giustino Orona e Atilano Cruz",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Santi Giustino Orona e Atilano Cruz, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beato Giovanni Nepomuceno Chrzan",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giovanni Nepomuceno Chrzan, sacerdote e martire."
+    },
+    {
+      "nome": "Beata Assunta Marchetti",
+      "titolo": "Religiosa e missionaria",
+      "bio": "Beata Assunta Marchetti, religiosa e missionaria."
+    },
+    {
+      "nome": "Beato Antonio Rosmini",
+      "titolo": "Sacerdote e filosofo, fondatore dell'Istituto della Carità e delle Suore della Provvidenza",
+      "bio": "Beato Antonio Rosmini, sacerdote e filosofo, fondatore dell'Istituto della Carità e delle Suore della Provvidenza Rosminiane."
+    }
+  ],
+  "07-02": [
+    {
+      "nome": "Santi Processo e Martiniano",
+      "titolo": "Martiri",
+      "bio": "Santi Processo e Martiniano, martiri."
+    },
+    {
+      "nome": "Santi Liberato",
+      "titolo": "Bonifacio, Servio e Rustico, Rogato, Settimo e Massimo, martiri",
+      "bio": "Santi Liberato, Bonifacio, Servio e Rustico, Rogato, Settimo e Massimo, martiri."
+    },
+    {
+      "nome": "San Monegonda",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "San Monegonda."
+    },
+    {
+      "nome": "San Svitino di Winchester",
+      "titolo": "Vescovo di Winchester",
+      "bio": "San Svitino di Winchester, vescovo di Winchester."
+    },
+    {
+      "nome": "San Lidano da Sezze",
+      "titolo": "Fondatore e abate di Santa Cecilia a Sezze",
+      "bio": "San Lidano da Sezze, fondatore e abate di Santa Cecilia a Sezze."
+    },
+    {
+      "nome": "Beato Pietro di Lussemburgo",
+      "titolo": "Vescovo di Metz",
+      "bio": "Beato Pietro di Lussemburgo, vescovo di Metz."
+    },
+    {
+      "nome": "Beati Giovanni e Pietro Becchetti",
+      "titolo": "Sacerdoti agostiniani",
+      "bio": "Beati Giovanni e Pietro Becchetti, sacerdoti agostiniani."
+    },
+    {
+      "nome": "San Bernardino Realino",
+      "titolo": "Sacerdote della Compagnia di Gesù",
+      "bio": "San Bernardino Realino, sacerdote della Compagnia di Gesù."
+    },
+    {
+      "nome": "Beata Eugénie Joubert",
+      "titolo": "Vergine della congregazione della Sacra Famiglia e del Cuore",
+      "bio": "Beata Eugénie Joubert, vergine della congregazione della Sacra Famiglia e del Cuore."
+    }
+  ],
+  "07-03": [
+    {
+      "nome": "San Tommaso",
+      "titolo": "Apostolo",
+      "bio": "San Tommaso, apostolo."
+    },
+    {
+      "nome": "Sant'Anatolio di Laodicea",
+      "titolo": "Vescovo di Laodicea di Siria",
+      "bio": "Sant'Anatolio di Laodicea, vescovo di Laodicea di Siria."
+    },
+    {
+      "nome": "San Mennone",
+      "titolo": "Centurione, martire",
+      "bio": "San Mennone, centurione, martire."
+    },
+    {
+      "nome": "Santi Marco e Mociano",
+      "titolo": "Martiri",
+      "bio": "Santi Marco e Mociano, martiri."
+    },
+    {
+      "nome": "Sant'Eliodoro di Altino",
+      "titolo": "Vescovo di Altino",
+      "bio": "Sant'Eliodoro di Altino, vescovo di Altino."
+    },
+    {
+      "nome": "Sant'Anatolio di Costantinopoli",
+      "titolo": "Vescovo di Costantinopoli",
+      "bio": "Sant'Anatolio di Costantinopoli, vescovo di Costantinopoli."
+    },
+    {
+      "nome": "San Leone II",
+      "titolo": "Papa",
+      "bio": "San Leone II, papa."
+    },
+    {
+      "nome": "San Raimondo Gayrard",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "San Raimondo Gayrard."
+    },
+    {
+      "nome": "San Giuseppe Nguyến Ðình Uyển",
+      "titolo": "Martire",
+      "bio": "San Giuseppe Nguyến Ðình Uyển, martire."
+    },
+    {
+      "nome": "San Filippo Phan Văn Minh",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Filippo Phan Văn Minh, sacerdote e martire."
+    },
+    {
+      "nome": "Beata María Ana Mogas Fontcuberta",
+      "titolo": "Vergine, fondatrice delle Francescane missionarie della Madre del Divin Pastore",
+      "bio": "Beata María Ana Mogas Fontcuberta, vergine, fondatrice delle Francescane missionarie della Madre del Divin Pastore."
+    },
+    {
+      "nome": "Santi Pietro Zhao Mingzhen e Giovan Battista Zhao Mingxi",
+      "titolo": "Martiri",
+      "bio": "Santi Pietro Zhao Mingzhen e Giovan Battista Zhao Mingxi, martiri."
+    }
+  ],
+  "07-04": [
+    {
+      "nome": "Sant'Elisabetta del Portogallo (T.O.F.)",
+      "titolo": "Regina di Portogallo e fondatrice",
+      "bio": "Sant'Elisabetta del Portogallo (T.O.F.), regina di Portogallo e fondatrice."
+    },
+    {
+      "nome": "San Giocondiano",
+      "titolo": "Martire",
+      "bio": "San Giocondiano, martire."
+    },
+    {
+      "nome": "San Lauriano",
+      "titolo": "Martire",
+      "bio": "San Lauriano, martire."
+    },
+    {
+      "nome": "San Teodoro",
+      "titolo": "Vescovo di Cirene",
+      "bio": "San Teodoro, vescovo di Cirene."
+    },
+    {
+      "nome": "San Fiorenzo di Cahors",
+      "titolo": "Vescovo di Cahors",
+      "bio": "San Fiorenzo di Cahors, vescovo di Cahors."
+    },
+    {
+      "nome": "San Valentino",
+      "titolo": "Sacerdote ed eremita",
+      "bio": "San Valentino, sacerdote ed eremita."
+    },
+    {
+      "nome": "Santa Berta",
+      "titolo": "Abbadessa",
+      "bio": "Santa Berta, abbadessa."
+    },
+    {
+      "nome": "Sant'Andrea di Creta",
+      "titolo": "Vescovo di Gortina",
+      "bio": "Sant'Andrea di Creta, vescovo di Gortina."
+    },
+    {
+      "nome": "Sant'Ulrico di Augusta",
+      "titolo": "Vescovo di Augusta",
+      "bio": "Sant'Ulrico di Augusta, vescovo di Augusta."
+    },
+    {
+      "nome": "Beato Giovanni da Vespignano",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Beato Giovanni da Vespignano."
+    },
+    {
+      "nome": "Beati Giovanni detto Cornelio",
+      "titolo": "Gesuita, Tommaso Bosgrave, Giovanni Carey e Patrizio Salmon, martiri",
+      "bio": "Beati Giovanni detto Cornelio, gesuita, Tommaso Bosgrave, Giovanni Carey e Patrizio Salmon, martiri."
+    },
+    {
+      "nome": "Beati Guglielmo Andleby",
+      "titolo": "Sacerdote, Enrico Abbot, Tommaso Warcop ed Eduardo Fulthorp, martiri",
+      "bio": "Beati Guglielmo Andleby, sacerdote, Enrico Abbot, Tommaso Warcop ed Eduardo Fulthorp, martiri."
+    },
+    {
+      "nome": "Sant'Antonio Daniel",
+      "titolo": "Sacerdote gesuita e martire",
+      "bio": "Sant'Antonio Daniel, sacerdote gesuita e martire."
+    },
+    {
+      "nome": "Beata Caterina Jarrige",
+      "titolo": "Vergine, terziaria domenicana",
+      "bio": "Beata Caterina Jarrige, vergine, terziaria domenicana."
+    },
+    {
+      "nome": "San Cesidio da Fossa",
+      "titolo": "Sacerdote francescano e martire",
+      "bio": "San Cesidio da Fossa, sacerdote francescano e martire."
+    },
+    {
+      "nome": "Beato Pier Giorgio Frassati",
+      "titolo": "Terziario domenicano",
+      "bio": "Beato Pier Giorgio Frassati, terziario domenicano."
+    },
+    {
+      "nome": "Beato Giuseppe Kowalski",
+      "titolo": "Martire",
+      "bio": "Beato Giuseppe Kowalski, martire."
+    },
+    {
+      "nome": "Beata Maria Crocifissa Curcio",
+      "titolo": "Vergine e fondatrice della congregazione delle Carmelitane Missionarie di Santa Teresa del",
+      "bio": "Beata Maria Crocifissa Curcio, vergine e fondatrice della congregazione delle Carmelitane Missionarie di Santa Teresa del Bambin Gesù (Ordine del Carmelo)."
+    },
+    {
+      "nome": "Beata Sandra Sabattini",
+      "titolo": "Studentessa",
+      "bio": "Beata Sandra Sabattini, studentessa."
+    }
+  ],
+  "07-05": [
+    {
+      "nome": "Sant'Antonio Maria Zaccaria (B.)",
+      "titolo": "Sacerdote, fondatore dei Chierici regolari di San Paolo",
+      "bio": "Sant'Antonio Maria Zaccaria (B.), sacerdote, fondatore dei Chierici regolari di San Paolo."
+    },
+    {
+      "nome": "Santa Ciprilla",
+      "titolo": "Martire",
+      "bio": "Santa Ciprilla, martire."
+    },
+    {
+      "nome": "Sant'Atanasio di Gerusalemme",
+      "titolo": "Diacono e martire",
+      "bio": "Sant'Atanasio di Gerusalemme, diacono e martire."
+    },
+    {
+      "nome": "San Guglielmo di Hirsau (O.S.B.)",
+      "titolo": "Sacerdote e abate dell'Abbazia di Hirsau",
+      "bio": "San Guglielmo di Hirsau (O.S.B.), sacerdote e abate dell'Abbazia di Hirsau."
+    },
+    {
+      "nome": "San Domizio detto Medico",
+      "titolo": "Martire, eremita",
+      "bio": "San Domizio detto Medico, martire, eremita."
+    },
+    {
+      "nome": "Santa Marta",
+      "titolo": "Madre di San Simeone Stilita il giovane",
+      "bio": "Santa Marta, madre di San Simeone Stilita il giovane."
+    },
+    {
+      "nome": "Sant'Atanasio l'Atonita",
+      "titolo": "Fondatore ed egumeno della Grande Laura",
+      "bio": "Sant'Atanasio l'Atonita, fondatore ed egumeno della Grande Laura."
+    },
+    {
+      "nome": "Sant'Agatone",
+      "titolo": "Martire",
+      "bio": "Sant'Agatone, martire."
+    },
+    {
+      "nome": "Beati Matteo Lambert",
+      "titolo": "Roberto Meyler, Edoardo Cheevers e Patrizio Cavanagh, martiri",
+      "bio": "Beati Matteo Lambert, Roberto Meyler, Edoardo Cheevers e Patrizio Cavanagh, martiri."
+    },
+    {
+      "nome": "Beati Giorgio Nichols",
+      "titolo": "Riccardo Yaxley, sacerdoti, Tommaso Belson e Humphred Pritchard, martiri",
+      "bio": "Beati Giorgio Nichols, Riccardo Yaxley, sacerdoti, Tommaso Belson e Humphred Pritchard, martiri."
+    },
+    {
+      "nome": "Sante Teresa Chen Jinxie e Rosa Chen Aixie",
+      "titolo": "Vergini e martiri",
+      "bio": "Sante Teresa Chen Jinxie e Rosa Chen Aixie, vergini e martiri."
+    }
+  ],
+  "07-06": [
+    {
+      "nome": "Santa Maria Goretti",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Maria Goretti, vergine e martire."
+    },
+    {
+      "nome": "Santa Domenica di Tropea vergine e martire",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santa Domenica di Tropea vergine e martire."
+    },
+    {
+      "nome": "San Romolo di Fiesole",
+      "titolo": "Primo vescovo di Fiesole e martire",
+      "bio": "San Romolo di Fiesole, primo vescovo di Fiesole e martire."
+    },
+    {
+      "nome": "San Sisoe",
+      "titolo": "Detto il Grande, eremita",
+      "bio": "San Sisoe, detto il Grande, eremita."
+    },
+    {
+      "nome": "San Palladio",
+      "titolo": "Vescovo",
+      "bio": "San Palladio, vescovo."
+    },
+    {
+      "nome": "Santa Monenna",
+      "titolo": "Fondatrice e badessa del monastero di Killeevy",
+      "bio": "Santa Monenna, fondatrice e badessa del monastero di Killeevy."
+    },
+    {
+      "nome": "San Goar",
+      "titolo": "Prete",
+      "bio": "San Goar, prete."
+    },
+    {
+      "nome": "San Giusto di Condat",
+      "titolo": "Monaco a Condat",
+      "bio": "San Giusto di Condat, monaco a Condat."
+    },
+    {
+      "nome": "passione di San Tommaso Moro",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "passione di San Tommaso Moro."
+    },
+    {
+      "nome": "Beato Tommaso Alfield",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Tommaso Alfield, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Elia Desgardin",
+      "titolo": "Monaco trappista e martire",
+      "bio": "Beato Elia Desgardin, monaco trappista e martire."
+    },
+    {
+      "nome": "Beata Maria Rosa de Loye",
+      "titolo": "Vergine benedettina e martire",
+      "bio": "Beata Maria Rosa de Loye, vergine benedettina e martire."
+    },
+    {
+      "nome": "San Pietro Wang Zuolong",
+      "titolo": "Martire",
+      "bio": "San Pietro Wang Zuolong, martire."
+    },
+    {
+      "nome": "Beata Maria Teresa Ledóchowska",
+      "titolo": "Vergine, fondatrice delle Suore missionarie di San Pietro Claver",
+      "bio": "Beata Maria Teresa Ledóchowska, vergine, fondatrice delle Suore missionarie di San Pietro Claver."
+    },
+    {
+      "nome": "Santa Nazaria Ignacia March Mesa",
+      "titolo": "Vergine, fondatrice delle Missionarie crociate della Chiesa",
+      "bio": "Santa Nazaria Ignacia March Mesa, vergine, fondatrice delle Missionarie crociate della Chiesa."
+    }
+  ],
+  "07-07": [
+    {
+      "nome": "San Panteno",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "San Panteno."
+    },
+    {
+      "nome": "Sant'Etelburga di Faremoutiers",
+      "titolo": "Badessa del monastero di Faremoutiers",
+      "bio": "Sant'Etelburga di Faremoutiers, badessa del monastero di Faremoutiers."
+    },
+    {
+      "nome": "Sant'Edda",
+      "titolo": "Vescovo dei Sassoni occidentali",
+      "bio": "Sant'Edda, vescovo dei Sassoni occidentali."
+    },
+    {
+      "nome": "San Villibaldo di Eichstätt (O.S.B.)",
+      "titolo": "Vescovo di Eichstätt",
+      "bio": "San Villibaldo di Eichstätt (O.S.B.), vescovo di Eichstätt."
+    },
+    {
+      "nome": "San Mael Ruain",
+      "titolo": "Vescovo-abate di Tallaght",
+      "bio": "San Mael Ruain, vescovo-abate di Tallaght."
+    },
+    {
+      "nome": "Sant'Oddone",
+      "titolo": "Vescovo di Urgell",
+      "bio": "Sant'Oddone, vescovo di Urgell."
+    },
+    {
+      "nome": "Beato Benedetto XI",
+      "titolo": "Papa domenicano",
+      "bio": "Beato Benedetto XI, papa domenicano."
+    },
+    {
+      "nome": "Beato Odino Barotti",
+      "titolo": "Sacerdote",
+      "bio": "Beato Odino Barotti, sacerdote."
+    },
+    {
+      "nome": "Beati Roger Dickinson",
+      "titolo": "Sacerdote, e Randolph Milner, martiri",
+      "bio": "Beati Roger Dickinson, sacerdote, e Randolph Milner, martiri."
+    },
+    {
+      "nome": "Beato Lorenzo Humphrey",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Beato Lorenzo Humphrey."
+    },
+    {
+      "nome": "Beato Giovanni Giuseppe Juge de Saint-Martin",
+      "titolo": "Sacerdote sulpiziano e martire",
+      "bio": "Beato Giovanni Giuseppe Juge de Saint-Martin, sacerdote sulpiziano e martire."
+    },
+    {
+      "nome": "Beata Ifigenia di San Matteo",
+      "titolo": "Vergine sacramentina e martire",
+      "bio": "Beata Ifigenia di San Matteo, vergine sacramentina e martire."
+    },
+    {
+      "nome": "Sant'Antonino Fantosati (O.F.M.)",
+      "titolo": "Vescovo di Adraa e vicario apostolico dell'Hunan meridionale, e San Giuseppe Maria Gambaro",
+      "bio": "Sant'Antonino Fantosati (O.F.M.), vescovo di Adraa e vicario apostolico dell'Hunan meridionale, e San Giuseppe Maria Gambaro, sacerdote, martiri francescani."
+    },
+    {
+      "nome": "San Marco Ji Tianxiang",
+      "titolo": "Martire",
+      "bio": "San Marco Ji Tianxiang, martire."
+    },
+    {
+      "nome": "San Maria Guo Lizhi",
+      "titolo": "Martire",
+      "bio": "San Maria Guo Lizhi, martire."
+    },
+    {
+      "nome": "Beato Pietro To Rot",
+      "titolo": "Martire",
+      "bio": "Beato Pietro To Rot, martire."
+    },
+    {
+      "nome": "Beata Maria Romero Meneses",
+      "titolo": "Religiosa appartenente all'Istituto delle Figlie di Maria Ausiliatrice",
+      "bio": "Beata Maria Romero Meneses, religiosa appartenente all'Istituto delle Figlie di Maria Ausiliatrice."
+    },
+    {
+      "nome": "Beato Millán Garde Serrano",
+      "titolo": "Sacerdote martire",
+      "bio": "Beato Millán Garde Serrano, sacerdote martire."
+    }
+  ],
+  "07-08": [
+    {
+      "nome": "Santi Aquila e Priscilla",
+      "titolo": "Coniugi",
+      "bio": "Santi Aquila e Priscilla, coniugi."
+    },
+    {
+      "nome": "Santa Eraclea",
+      "titolo": "Martire",
+      "bio": "Santa Eraclea, martire."
+    },
+    {
+      "nome": "San Procopio di Scitopoli",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "San Procopio di Scitopoli."
+    },
+    {
+      "nome": "San Pancrazio di Taormina",
+      "titolo": "Primo vescovo di Taormina e martire",
+      "bio": "San Pancrazio di Taormina, primo vescovo di Taormina e martire."
+    },
+    {
+      "nome": "Sant'Auspicio di Toul",
+      "titolo": "Vescovo di Toul",
+      "bio": "Sant'Auspicio di Toul, vescovo di Toul."
+    },
+    {
+      "nome": "San Disibodo d'Irlanda",
+      "titolo": "Eremita",
+      "bio": "San Disibodo d'Irlanda, eremita."
+    },
+    {
+      "nome": "Santa Landrada",
+      "titolo": "Abbadessa",
+      "bio": "Santa Landrada, abbadessa."
+    },
+    {
+      "nome": "San Chiliano",
+      "titolo": "Martire",
+      "bio": "San Chiliano, martire."
+    },
+    {
+      "nome": "Santi monaci abramiti",
+      "titolo": "Martiri",
+      "bio": "Santi monaci abramiti, martiri."
+    },
+    {
+      "nome": "Sant'Adriano III",
+      "titolo": "Papa",
+      "bio": "Sant'Adriano III, papa."
+    },
+    {
+      "nome": "Sant'Eugenio III",
+      "titolo": "Papa",
+      "bio": "Sant'Eugenio III, papa."
+    },
+    {
+      "nome": "Beato Pierre Vigne",
+      "titolo": "Fondatore delle Religiose del Santissimo Sacramento",
+      "bio": "Beato Pierre Vigne, fondatore delle Religiose del Santissimo Sacramento."
+    },
+    {
+      "nome": "Beato Mancio Araki",
+      "titolo": "Martire",
+      "bio": "Beato Mancio Araki, martire."
+    },
+    {
+      "nome": "San Giovanni Wu Wenyin",
+      "titolo": "Martire",
+      "bio": "San Giovanni Wu Wenyin, martire."
+    },
+    {
+      "nome": "Sant'Alberto da Genova (O.Cist.)",
+      "titolo": "Religioso ed eremita",
+      "bio": "Sant'Alberto da Genova (O.Cist.), religioso ed eremita."
+    }
+  ],
+  "07-09": [
+    {
+      "nome": "Sant'Agostino Zhao Rong",
+      "titolo": "Sacerdote, Pietro Sans i Jordà, vescovo di Mauricastro e vicario apostolico del Fujian, e ",
+      "bio": "Sant'Agostino Zhao Rong, sacerdote, Pietro Sans i Jordà, vescovo di Mauricastro e vicario apostolico del Fujian, e compagni, martiri."
+    },
+    {
+      "nome": "Beata Giovanna Scopelli",
+      "titolo": "Vergine carmelitana",
+      "bio": "Beata Giovanna Scopelli, vergine carmelitana."
+    },
+    {
+      "nome": "Beato Adriano Fortescue",
+      "titolo": "Martire",
+      "bio": "Beato Adriano Fortescue, martire."
+    },
+    {
+      "nome": "San Nicola Pieck e compagni",
+      "titolo": "Martiri di Gorcum",
+      "bio": "San Nicola Pieck e compagni, martiri di Gorcum."
+    },
+    {
+      "nome": "Santa Veronica Giuliani",
+      "titolo": "Badessa clarissa",
+      "bio": "Santa Veronica Giuliani, badessa clarissa."
+    },
+    {
+      "nome": "Beate Martiri di Orange Marianna di Santa Melania de Guilhermier e Margherita degli Angeli de Rocher",
+      "titolo": "Vergini orsoline e martiri",
+      "bio": "Beate Martiri di Orange Marianna di Santa Melania de Guilhermier e Margherita degli Angeli de Rocher, vergini orsoline e martiri."
+    },
+    {
+      "nome": "San Gioacchino He Kaizhi",
+      "titolo": "Catechista e martire",
+      "bio": "San Gioacchino He Kaizhi, catechista e martire."
+    },
+    {
+      "nome": "Santi Gregorio Maria Grassi",
+      "titolo": "Vescovo titolare di Ortosia di Fenicia e vicario apostolico dello Shanxi meridionale, e Fr",
+      "bio": "Santi Gregorio Maria Grassi, vescovo titolare di Ortosia di Fenicia e vicario apostolico dello Shanxi meridionale, e Francesco Fogolla, vescovo titolare di Bagi, francescani, e ventiquattro compagni, martiri."
+    },
+    {
+      "nome": "Santa Paolina del Cuore Agonizzante di Gesù",
+      "titolo": "Fondatrice delle Piccole suore dell'Immacolata Concezione",
+      "bio": "Santa Paolina del Cuore Agonizzante di Gesù, fondatrice delle Piccole suore dell'Immacolata Concezione."
+    },
+    {
+      "nome": "Sant'Elia Facchini (O.F.M.)",
+      "titolo": "Sacerdote, missionario e martire",
+      "bio": "Sant'Elia Facchini (O.F.M.), sacerdote, missionario e martire."
+    },
+    {
+      "nome": "Beato Fedele Chijnacki",
+      "titolo": "Cappuccino e martire",
+      "bio": "Beato Fedele Chijnacki, cappuccino e martire."
+    },
+    {
+      "nome": "Beata Maria di Gesù Crocefisso Petković",
+      "titolo": "Fondatrice delle Figlie della misericordia francescane",
+      "bio": "Beata Maria di Gesù Crocefisso Petković, fondatrice delle Figlie della misericordia francescane."
+    }
+  ],
+  "07-10": [
+    {
+      "nome": "San Paterniano",
+      "titolo": "Vescovo di Fano",
+      "bio": "San Paterniano, vescovo di Fano."
+    },
+    {
+      "nome": "Santi martiri di Damasco",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri di Damasco."
+    },
+    {
+      "nome": "Santi martiri romani",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri romani."
+    },
+    {
+      "nome": "Sante Rufina e Seconda",
+      "titolo": "Martiri",
+      "bio": "Sante Rufina e Seconda, martiri."
+    },
+    {
+      "nome": "Santa Vittoria e Sant'Anatolia",
+      "titolo": "Martiri",
+      "bio": "Santa Vittoria e Sant'Anatolia, martiri."
+    },
+    {
+      "nome": "Santi Gennaro e Marino",
+      "titolo": "Martiri",
+      "bio": "Santi Gennaro e Marino, martiri."
+    },
+    {
+      "nome": "Sant'Apollonio di Sardi",
+      "titolo": "Martire",
+      "bio": "Sant'Apollonio di Sardi, martire."
+    },
+    {
+      "nome": "Santi martiri di Nicopoli",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri di Nicopoli."
+    },
+    {
+      "nome": "Santi Bianore e Silvano",
+      "titolo": "Martiri",
+      "bio": "Santi Bianore e Silvano, martiri."
+    },
+    {
+      "nome": "San Pascario",
+      "titolo": "Vescovo di Nantes",
+      "bio": "San Pascario, vescovo di Nantes."
+    },
+    {
+      "nome": "Santa Amalberga di Maubeuge",
+      "titolo": "Vergine",
+      "bio": "Santa Amalberga di Maubeuge, vergine."
+    },
+    {
+      "nome": "San Pietro Vincioli (O.S.B. Clun.)",
+      "titolo": "Sacerdote, abate e fondatore",
+      "bio": "San Pietro Vincioli (O.S.B. Clun.), sacerdote, abate e fondatore."
+    },
+    {
+      "nome": "San Canuto IV di Danimarca",
+      "titolo": "Re di Danimarca e martire",
+      "bio": "San Canuto IV di Danimarca, re di Danimarca e martire."
+    },
+    {
+      "nome": "Beate Maria Gertrude di Santa Sofia de Ripert d'Alauzier e Agnese di Gesù de Romillon",
+      "titolo": "Vergini orsoline e martiri",
+      "bio": "Beate Maria Gertrude di Santa Sofia de Ripert d'Alauzier e Agnese di Gesù de Romillon, vergini orsoline e martiri."
+    },
+    {
+      "nome": "Sant'Antonio Nguyễn Hữu Quỵnh e San Pietro Nguyễn Khắc Tự",
+      "titolo": "Martiri",
+      "bio": "Sant'Antonio Nguyễn Hữu Quỵnh e San Pietro Nguyễn Khắc Tự, martiri."
+    },
+    {
+      "nome": "Beato Emanuele Ruiz",
+      "titolo": "Sacerdote, e compagni, martiri",
+      "bio": "Beato Emanuele Ruiz, sacerdote, e compagni, martiri."
+    },
+    {
+      "nome": "Beato Bernardo di Quintavalle",
+      "titolo": "Religioso dell'Ordine dei Minimi",
+      "bio": "Beato Bernardo di Quintavalle, religioso dell'Ordine dei Minimi."
+    }
+  ],
+  "07-11": [
+    {
+      "nome": "San Benedetto da Norcia",
+      "titolo": "Abate",
+      "bio": "San Benedetto da Norcia, abate."
+    },
+    {
+      "nome": "Pio I",
+      "titolo": "Papa",
+      "bio": "Pio I, papa."
+    },
+    {
+      "nome": "Santa Marciana",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Marciana, vergine e martire."
+    },
+    {
+      "nome": "San Leonzio II di Bordeaux",
+      "titolo": "Vescovo di Bordeaux",
+      "bio": "San Leonzio II di Bordeaux, vescovo di Bordeaux."
+    },
+    {
+      "nome": "San Drostano",
+      "titolo": "Abate",
+      "bio": "San Drostano, abate."
+    },
+    {
+      "nome": "San Placido",
+      "titolo": "Martire, e San Sigisberto abate",
+      "bio": "San Placido, martire, e San Sigisberto abate."
+    },
+    {
+      "nome": "Sant'Idulfo di Moyenmoutier",
+      "titolo": "Corepiscopo di Treviri, fondatore di Moyenmoutier",
+      "bio": "Sant'Idulfo di Moyenmoutier, corepiscopo di Treviri, fondatore di Moyenmoutier."
+    },
+    {
+      "nome": "Sant'Abbondio",
+      "titolo": "Sacerdote",
+      "bio": "Sant'Abbondio, sacerdote."
+    },
+    {
+      "nome": "Sant'Olga di Kiev",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Sant'Olga di Kiev."
+    },
+    {
+      "nome": "Beato Bertrando",
+      "titolo": "Abate di Grandesilve",
+      "bio": "Beato Bertrando, abate di Grandesilve."
+    },
+    {
+      "nome": "San Chetillo",
+      "titolo": "Sacerdote e canonico regolare",
+      "bio": "San Chetillo, sacerdote e canonico regolare."
+    },
+    {
+      "nome": "Beati Tommaso Benstead e Tommaso Sprott",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Beati Tommaso Benstead e Tommaso Sprott, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beata Rosalia Clotilde di Santa Pelagia Bes",
+      "titolo": "Santa Maria Elisabetta di Santa Teoctisto Pélissier, Santa Maria Chiara di San Martino Bla",
+      "bio": "Beata Rosalia Clotilde di Santa Pelagia Bes, Santa Maria Elisabetta di Santa Teoctisto Pélissier, Santa Maria Chiara di San Martino Blanc e Santa Maria Margherita di Santa Sofia de Barbégie d'Albrède, vergini e martiri."
+    },
+    {
+      "nome": "Sante Anna An Xinzhi",
+      "titolo": "Matia An Guozhi, Anna An Jiaozhi e Maria An Lihua, vergini e martiri",
+      "bio": "Sante Anna An Xinzhi, Matia An Guozhi, Anna An Jiaozhi e Maria An Lihua, vergini e martiri."
+    }
+  ],
+  "07-12": [
+    {
+      "nome": "Santi Proclo e Ilarione",
+      "titolo": "Martiri",
+      "bio": "Santi Proclo e Ilarione, martiri."
+    },
+    {
+      "nome": "Santi Ermagora e Fortunato",
+      "titolo": "Martiri",
+      "bio": "Santi Ermagora e Fortunato, martiri."
+    },
+    {
+      "nome": "Santi Nabore e Felice",
+      "titolo": "Martiri",
+      "bio": "Santi Nabore e Felice, martiri."
+    },
+    {
+      "nome": "San Vivenziolo di Lione",
+      "titolo": "Vescovo di Lione",
+      "bio": "San Vivenziolo di Lione, vescovo di Lione."
+    },
+    {
+      "nome": "San Giovanni Gualberto",
+      "titolo": "Fondatore e abate di Vallombrosa",
+      "bio": "San Giovanni Gualberto, fondatore e abate di Vallombrosa."
+    },
+    {
+      "nome": "San Leone I",
+      "titolo": "Abate di Cava",
+      "bio": "San Leone I, abate di Cava."
+    },
+    {
+      "nome": "San Lucio di Cavargna",
+      "titolo": "Laico, contadino e martire",
+      "bio": "San Lucio di Cavargna, laico, contadino e martire."
+    },
+    {
+      "nome": "Beato Davide Gunston",
+      "titolo": "Martire, cavaliere gerosolimitano",
+      "bio": "Beato Davide Gunston, martire, cavaliere gerosolimitano."
+    },
+    {
+      "nome": "San Giovanni Jones",
+      "titolo": "Sacerdote francescano e martire",
+      "bio": "San Giovanni Jones, sacerdote francescano e martire."
+    },
+    {
+      "nome": "Beati Mattia Araki e sette compagni",
+      "titolo": "Martiri",
+      "bio": "Beati Mattia Araki e sette compagni, martiri."
+    },
+    {
+      "nome": "Beata Rosa di San Saverio Tallien",
+      "titolo": "Beata Marta dell'Angelo Buono Cluse, Beata Maria di Sant'Enrico de Justamond e Beata Giova",
+      "bio": "Beata Rosa di San Saverio Tallien, Beata Marta dell'Angelo Buono Cluse, Beata Maria di Sant'Enrico de Justamond e Beata Giovanna Maria di San Bernardo de Romillon, vergini e martiri."
+    },
+    {
+      "nome": "Sant'Ignazio Clemente Delgado",
+      "titolo": "Vescovo di Milopotamo e vicario apostolico del Tonchino orientale e martire",
+      "bio": "Sant'Ignazio Clemente Delgado, vescovo di Milopotamo e vicario apostolico del Tonchino orientale e martire."
+    },
+    {
+      "nome": "Sant'Agnese Lê ThỊ Thành",
+      "titolo": "Martire",
+      "bio": "Sant'Agnese Lê ThỊ Thành, martire."
+    },
+    {
+      "nome": "San Pietro Khanh",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Pietro Khanh, sacerdote e martire."
+    }
+  ],
+  "07-13": [
+    {
+      "nome": "Sant'Enrico II il Santo",
+      "titolo": "Imperatore",
+      "bio": "Sant'Enrico II il Santo, imperatore."
+    },
+    {
+      "nome": "Sant'Esdra",
+      "titolo": "Sacerdote",
+      "bio": "Sant'Esdra, sacerdote."
+    },
+    {
+      "nome": "San Sila",
+      "titolo": "Evangelizzatore personaggio del Nuovo Testamento",
+      "bio": "San Sila, evangelizzatore personaggio del Nuovo Testamento."
+    },
+    {
+      "nome": "San Serapione di Alessandria",
+      "titolo": "Martire",
+      "bio": "San Serapione di Alessandria, martire."
+    },
+    {
+      "nome": "Santa Mirope di Chio",
+      "titolo": "Martire",
+      "bio": "Santa Mirope di Chio, martire."
+    },
+    {
+      "nome": "Santi Alessandro e trenta compagni",
+      "titolo": "Martiri",
+      "bio": "Santi Alessandro e trenta compagni, martiri."
+    },
+    {
+      "nome": "Sant'Eugenio di Cartagine",
+      "titolo": "Vescovo di Cartagine",
+      "bio": "Sant'Eugenio di Cartagine, vescovo di Cartagine."
+    },
+    {
+      "nome": "San Turiavo",
+      "titolo": "Abate-vescovo di Dol",
+      "bio": "San Turiavo, abate-vescovo di Dol."
+    },
+    {
+      "nome": "Beato Jacopo da Varagine (da Varazze)",
+      "titolo": "Domenicano, vescovo di Genova",
+      "bio": "Beato Jacopo da Varagine (da Varazze), domenicano, vescovo di Genova."
+    },
+    {
+      "nome": "Beato Tommaso Tunstal",
+      "titolo": "Sacerdote benedettino e martire",
+      "bio": "Beato Tommaso Tunstal, sacerdote benedettino e martire."
+    },
+    {
+      "nome": "Beati Ludovico Armando Giuseppe Adam e Bartolomeo Jarrige de la Morelie de Biars",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Beati Ludovico Armando Giuseppe Adam e Bartolomeo Jarrige de la Morelie de Biars, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beata Maddalena della Madre di Dio Verchière e cinque compagne",
+      "titolo": "Vergini e martiri",
+      "bio": "Beata Maddalena della Madre di Dio Verchière e cinque compagne, vergini e martiri."
+    },
+    {
+      "nome": "Sant'Emanuele Le Van Phung",
+      "titolo": "Martire",
+      "bio": "Sant'Emanuele Le Van Phung, martire."
+    },
+    {
+      "nome": "Santa Clelia Barbieri",
+      "titolo": "Fondatrice delle Suore minime dell'Addolorata",
+      "bio": "Santa Clelia Barbieri, fondatrice delle Suore minime dell'Addolorata."
+    },
+    {
+      "nome": "Beato Ferdinando Maria Baccilieri",
+      "titolo": "Sacerdote, fondatore delle Suore serve di Maria di Galeazza",
+      "bio": "Beato Ferdinando Maria Baccilieri, sacerdote, fondatore delle Suore serve di Maria di Galeazza."
+    },
+    {
+      "nome": "San Paolo Liu Jinde",
+      "titolo": "Martire",
+      "bio": "San Paolo Liu Jinde, martire."
+    },
+    {
+      "nome": "San Giuseppe Wang Guiji",
+      "titolo": "Martire",
+      "bio": "San Giuseppe Wang Guiji, martire."
+    },
+    {
+      "nome": "Beato Carlos Manuel Rodríguez Santiago",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Beato Carlos Manuel Rodríguez Santiago."
+    }
+  ],
+  "07-14": [
+    {
+      "nome": "San Camillo de Lellis",
+      "titolo": "Sacerdote, fondatore dei Chierici regolari Ministri degli Infermi",
+      "bio": "San Camillo de Lellis, sacerdote, fondatore dei Chierici regolari Ministri degli Infermi."
+    },
+    {
+      "nome": "Sant'Ottaziano",
+      "titolo": "Vescovo di Brescia",
+      "bio": "Sant'Ottaziano, vescovo di Brescia."
+    },
+    {
+      "nome": "San Vincenzo Madelgario",
+      "titolo": "Monaco",
+      "bio": "San Vincenzo Madelgario, monaco."
+    },
+    {
+      "nome": "San Marchelmo",
+      "titolo": "Sacerdote e monaco",
+      "bio": "San Marchelmo, sacerdote e monaco."
+    },
+    {
+      "nome": "Beato Croznato",
+      "titolo": "Premostratense e martire",
+      "bio": "Beato Croznato, premostratense e martire."
+    },
+    {
+      "nome": "Beato Bonifacio di Savoia",
+      "titolo": "Certosino, vescovo di Belley e poi di Canterbury",
+      "bio": "Beato Bonifacio di Savoia, certosino, vescovo di Belley e poi di Canterbury."
+    },
+    {
+      "nome": "Santa Toscana",
+      "titolo": "Ospedaliera di San Giovanni]",
+      "bio": "Santa Toscana, ospedaliera di San Giovanni]."
+    },
+    {
+      "nome": "Beata Angelina di Marsciano",
+      "titolo": "Fondatrice del monastero delle francescane di Foligno",
+      "bio": "Beata Angelina di Marsciano, fondatrice del monastero delle francescane di Foligno."
+    },
+    {
+      "nome": "Beato Gaspare de Bono",
+      "titolo": "Sacerdote dell'Ordine dei Minimi",
+      "bio": "Beato Gaspare de Bono, sacerdote dell'Ordine dei Minimi."
+    },
+    {
+      "nome": "San Francesco Solano",
+      "titolo": "Sacerdote francescano",
+      "bio": "San Francesco Solano, sacerdote francescano."
+    },
+    {
+      "nome": "Beato Riccardo Langhorne",
+      "titolo": "Martire",
+      "bio": "Beato Riccardo Langhorne, martire."
+    },
+    {
+      "nome": "Beato Ghébrē Michele",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Beato Ghébrē Michele."
+    },
+    {
+      "nome": "San Giovanni Wang Guixin",
+      "titolo": "Martire",
+      "bio": "San Giovanni Wang Guixin, martire."
+    },
+    {
+      "nome": "Beato Mariano di Gesù Euse Hoyos",
+      "titolo": "Sacerdote",
+      "bio": "Beato Mariano di Gesù Euse Hoyos, sacerdote."
+    }
+  ],
+  "07-15": [
+    {
+      "nome": "deposizione di San Bonaventura",
+      "titolo": "Cardinale-vescovo di Albano e dottore della Chiesa",
+      "bio": "deposizione di San Bonaventura, cardinale-vescovo di Albano e dottore della Chiesa."
+    },
+    {
+      "nome": "Santi Eutropio",
+      "titolo": "Zosima e Bonosa, martiri",
+      "bio": "Santi Eutropio, Zosima e Bonosa, martiri."
+    },
+    {
+      "nome": "San Felice di Thibiuca",
+      "titolo": "Vescovo di Tibiuca e martire",
+      "bio": "San Felice di Thibiuca, vescovo di Tibiuca e martire."
+    },
+    {
+      "nome": "San Catulino",
+      "titolo": "Diacono e martire",
+      "bio": "San Catulino, diacono e martire."
+    },
+    {
+      "nome": "Santi Filippo e dieci compagni",
+      "titolo": "Martiri",
+      "bio": "Santi Filippo e dieci compagni, martiri."
+    },
+    {
+      "nome": "Sant'Abudemio",
+      "titolo": "Martire",
+      "bio": "Sant'Abudemio, martire."
+    },
+    {
+      "nome": "San Giacomo di Nisibi",
+      "titolo": "Vescovo di Nisibi",
+      "bio": "San Giacomo di Nisibi, vescovo di Nisibi."
+    },
+    {
+      "nome": "San Plechelmo",
+      "titolo": "Vescovo",
+      "bio": "San Plechelmo, vescovo."
+    },
+    {
+      "nome": "San Gumberto",
+      "titolo": "Fondatore dell'abbazia di Ansbach",
+      "bio": "San Gumberto, fondatore dell'abbazia di Ansbach."
+    },
+    {
+      "nome": "San Giuseppe",
+      "titolo": "Vescovo di Tessalonica",
+      "bio": "San Giuseppe, vescovo di Tessalonica."
+    },
+    {
+      "nome": "Sant'Atanasio",
+      "titolo": "Vescovo di Napoli",
+      "bio": "Sant'Atanasio, vescovo di Napoli."
+    },
+    {
+      "nome": "San Vladimir I di Kiev",
+      "titolo": "Principe di Kiev",
+      "bio": "San Vladimir I di Kiev, principe di Kiev."
+    },
+    {
+      "nome": "Sant'Ansuero",
+      "titolo": "Abate di Ratzeburg e martire",
+      "bio": "Sant'Ansuero, abate di Ratzeburg e martire."
+    },
+    {
+      "nome": "San Davide di Svezia",
+      "titolo": "Vescovo di Västerås",
+      "bio": "San Davide di Svezia, vescovo di Västerås."
+    },
+    {
+      "nome": "Beato Ceslao di Cracovia",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Ceslao di Cracovia, sacerdote domenicano."
+    },
+    {
+      "nome": "Beato Bernardo II di Baden",
+      "titolo": "Principe di Baden",
+      "bio": "Beato Bernardo II di Baden, principe di Baden."
+    },
+    {
+      "nome": "Beati Ignazio de Azevedo",
+      "titolo": "Sacerdote, e trentotto compagni gesuiti, martiri",
+      "bio": "Beati Ignazio de Azevedo, sacerdote, e trentotto compagni gesuiti, martiri."
+    },
+    {
+      "nome": "San Pompilio Maria Pirrotti (S.P.)",
+      "titolo": "Sacerdote",
+      "bio": "San Pompilio Maria Pirrotti (S.P.), sacerdote."
+    },
+    {
+      "nome": "Beato Michele Bernardo Marchand",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Michele Bernardo Marchand, sacerdote e martire."
+    },
+    {
+      "nome": "San Pietro Nguyến Bá Tuần",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Pietro Nguyến Bá Tuần, sacerdote e martire."
+    },
+    {
+      "nome": "Beata Anne-Marie Javouhey",
+      "titolo": "Vergine, fondatrice delle Suore di San Giuseppe di Cluny",
+      "bio": "Beata Anne-Marie Javouhey, vergine, fondatrice delle Suore di San Giuseppe di Cluny."
+    },
+    {
+      "nome": "Sant'Andrea Nguyễn Kim Thông Năm Thuông",
+      "titolo": "Martire",
+      "bio": "Sant'Andrea Nguyễn Kim Thông Năm Thuông, martire."
+    },
+    {
+      "nome": "Beato Antonio Beszta-Borowski",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Antonio Beszta-Borowski, sacerdote e martire."
+    }
+  ],
+  "07-16": [
+    {
+      "nome": "Beata Vergine Maria del Monte Carmelo",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Beata Vergine Maria del Monte Carmelo."
+    },
+    {
+      "nome": "Sant'Antioco",
+      "titolo": "Martire",
+      "bio": "Sant'Antioco, martire."
+    },
+    {
+      "nome": "Sant'Atenogene di Sebaste",
+      "titolo": "Corepiscopo di Pedactoe e martire",
+      "bio": "Sant'Atenogene di Sebaste, corepiscopo di Pedactoe e martire."
+    },
+    {
+      "nome": "Sant'Elerio",
+      "titolo": "Eremita",
+      "bio": "Sant'Elerio, eremita."
+    },
+    {
+      "nome": "Santi Monulfo e Gondulfo",
+      "titolo": "Vescovi di Maastricht",
+      "bio": "Santi Monulfo e Gondulfo, vescovi di Maastricht."
+    },
+    {
+      "nome": "San Reinilde di Saints",
+      "titolo": "Grimoaldo e Gondolfo, martiri",
+      "bio": "San Reinilde di Saints, Grimoaldo e Gondolfo, martiri."
+    },
+    {
+      "nome": "San Sisenando",
+      "titolo": "Diacono e martire",
+      "bio": "San Sisenando, diacono e martire."
+    },
+    {
+      "nome": "Beata Irmengarda I di Frauenwörth",
+      "titolo": "Badessa",
+      "bio": "Beata Irmengarda I di Frauenwörth, badessa."
+    },
+    {
+      "nome": "Beato Simone da Costa",
+      "titolo": "Religioso gesuita e martire",
+      "bio": "Beato Simone da Costa, religioso gesuita e martire."
+    },
+    {
+      "nome": "Beati Giovanni Sugar",
+      "titolo": "Sacerdote, e Roberto Grissold, martiri",
+      "bio": "Beati Giovanni Sugar, sacerdote, e Roberto Grissold, martiri."
+    },
+    {
+      "nome": "Beati Andrea de Soveral",
+      "titolo": "Gesuita, e Domenico Carvalho, martiri",
+      "bio": "Beati Andrea de Soveral, gesuita, e Domenico Carvalho, martiri."
+    },
+    {
+      "nome": "Beati Nicolas Savouret e Claudio Beguignot",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Beati Nicolas Savouret e Claudio Beguignot, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beate Beata Amata da Gesù de Gordon e sei compagne",
+      "titolo": "Vergini e martiri",
+      "bio": "Beate Beata Amata da Gesù de Gordon e sei compagne, vergini e martiri."
+    },
+    {
+      "nome": "Santa Maria Maddalena Postel",
+      "titolo": "Vergine, fondatrice delle Suore delle Scuole Cristiane della Misericordia",
+      "bio": "Santa Maria Maddalena Postel, vergine, fondatrice delle Suore delle Scuole Cristiane della Misericordia."
+    },
+    {
+      "nome": "Santi Lang Yangzhi",
+      "titolo": "Catecumeno, e Paolo Lang Fu, suo figlio, martiri",
+      "bio": "Santi Lang Yangzhi, catecumeno, e Paolo Lang Fu, suo figlio, martiri."
+    },
+    {
+      "nome": "Beato Bartolomeo Fernandes des Martires",
+      "titolo": "Arcivescovo metropolita di Braga",
+      "bio": "Beato Bartolomeo Fernandes des Martires, Arcivescovo metropolita di Braga."
+    }
+  ],
+  "07-17": [
+    {
+      "nome": "Santi martiri scillitani",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri scillitani."
+    },
+    {
+      "nome": "San Giacinto",
+      "titolo": "Martire",
+      "bio": "San Giacinto, martire."
+    },
+    {
+      "nome": "Sante Giusta e Rufina",
+      "titolo": "Vergini",
+      "bio": "Sante Giusta e Rufina, vergini."
+    },
+    {
+      "nome": "Santa Marcellina",
+      "titolo": "Vergine",
+      "bio": "Santa Marcellina, vergine."
+    },
+    {
+      "nome": "Sant'Alessio di Roma",
+      "titolo": "Laico e asceta",
+      "bio": "Sant'Alessio di Roma, laico e asceta."
+    },
+    {
+      "nome": "San Teodosio di Auxerre",
+      "titolo": "Vescovo di Auxerre",
+      "bio": "San Teodosio di Auxerre, vescovo di Auxerre."
+    },
+    {
+      "nome": "San Magno Felice Ennodio",
+      "titolo": "Vescovo di Pavia",
+      "bio": "San Magno Felice Ennodio, vescovo di Pavia."
+    },
+    {
+      "nome": "San Fredegando",
+      "titolo": "Monaco",
+      "bio": "San Fredegando, monaco."
+    },
+    {
+      "nome": "San Cenelm",
+      "titolo": "Martire",
+      "bio": "San Cenelm, martire."
+    },
+    {
+      "nome": "San Leone IV",
+      "titolo": "Papa",
+      "bio": "San Leone IV, papa."
+    },
+    {
+      "nome": "San Colmano di Stockerau",
+      "titolo": "Pellegrino",
+      "bio": "San Colmano di Stockerau, pellegrino."
+    },
+    {
+      "nome": "Santi Andrea e Benedetto",
+      "titolo": "Eremiti",
+      "bio": "Santi Andrea e Benedetto, eremiti."
+    },
+    {
+      "nome": "Sant'Edvige di Polonia",
+      "titolo": "Regina di Polonia",
+      "bio": "Sant'Edvige di Polonia, regina di Polonia."
+    },
+    {
+      "nome": "Beate martiri di Compiègne Teresa di Sant'Agostino Lidoine e quindici compagne",
+      "titolo": "Vergini carmelitane di Compiègne e martiri",
+      "bio": "Beate martiri di Compiègne Teresa di Sant'Agostino Lidoine e quindici compagne, vergini carmelitane di Compiègne e martiri."
+    },
+    {
+      "nome": "San Pietro Liu Ziyu",
+      "titolo": "Martire",
+      "bio": "San Pietro Liu Ziyu, martire."
+    }
+  ],
+  "07-18": [
+    {
+      "nome": "San Sinforosa di Tivoli e sette compagni",
+      "titolo": "Martiri",
+      "bio": "San Sinforosa di Tivoli e sette compagni, martiri."
+    },
+    {
+      "nome": "San Materno di Milano",
+      "titolo": "Vescovo di Milano",
+      "bio": "San Materno di Milano, vescovo di Milano."
+    },
+    {
+      "nome": "Sant'Emiliano",
+      "titolo": "Martire",
+      "bio": "Sant'Emiliano, martire."
+    },
+    {
+      "nome": "San Filastrio",
+      "titolo": "Vescovo di Brescia",
+      "bio": "San Filastrio, vescovo di Brescia."
+    },
+    {
+      "nome": "San Ruffillo di Forlimpopoli",
+      "titolo": "Vescovo di Forlimpopoli",
+      "bio": "San Ruffillo di Forlimpopoli, vescovo di Forlimpopoli."
+    },
+    {
+      "nome": "Sant'Arnolfo di Metz",
+      "titolo": "Vescovo di Metz",
+      "bio": "Sant'Arnolfo di Metz, vescovo di Metz."
+    },
+    {
+      "nome": "Santa Teodosia",
+      "titolo": "Martire",
+      "bio": "Santa Teodosia, martire."
+    },
+    {
+      "nome": "San Federico di Utrecht",
+      "titolo": "Vescovo di Utrecht",
+      "bio": "San Federico di Utrecht, vescovo di Utrecht."
+    },
+    {
+      "nome": "San Bruno di Segni",
+      "titolo": "Vescovo di Segni",
+      "bio": "San Bruno di Segni, vescovo di Segni."
+    },
+    {
+      "nome": "San Simone da Lipnica (O.F.M.)",
+      "titolo": "Sacerdote",
+      "bio": "San Simone da Lipnica (O.F.M.), sacerdote."
+    },
+    {
+      "nome": "Beato Giovanni Battista de Bruxelles",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giovanni Battista de Bruxelles, sacerdote e martire."
+    },
+    {
+      "nome": "San Domenico Nicola Ðinh Ðạt",
+      "titolo": "Martire",
+      "bio": "San Domenico Nicola Ðinh Ðạt, martire."
+    },
+    {
+      "nome": "Beata Tarcisia Mackiv",
+      "titolo": "Vergine delle Ancelle della Beata Vergine Maria Immacolata e martire",
+      "bio": "Beata Tarcisia Mackiv, vergine delle Ancelle della Beata Vergine Maria Immacolata e martire."
+    }
+  ],
+  "07-19": [
+    {
+      "nome": "Sant'Epafra",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Sant'Epafra."
+    },
+    {
+      "nome": "Santi Macedonio",
+      "titolo": "Teodulo e Taziano, martiri",
+      "bio": "Santi Macedonio, Teodulo e Taziano, martiri."
+    },
+    {
+      "nome": "Santa Macrina la Giovane",
+      "titolo": "Vergine",
+      "bio": "Santa Macrina la Giovane, vergine."
+    },
+    {
+      "nome": "San Dio il Taumaturgo",
+      "titolo": "Archimandrita",
+      "bio": "San Dio il Taumaturgo, archimandrita."
+    },
+    {
+      "nome": "San Simmaco",
+      "titolo": "Papa",
+      "bio": "San Simmaco, papa."
+    },
+    {
+      "nome": "Sant'Aurea",
+      "titolo": "Vergine",
+      "bio": "Sant'Aurea, vergine."
+    },
+    {
+      "nome": "San Bernoldo di Utrecht",
+      "titolo": "Vescovo di Utrecht",
+      "bio": "San Bernoldo di Utrecht, vescovo di Utrecht."
+    },
+    {
+      "nome": "Beata Stilla di Abenberg",
+      "titolo": "Vergine",
+      "bio": "Beata Stilla di Abenberg, vergine."
+    },
+    {
+      "nome": "San Pietro Crisci da Foligno",
+      "titolo": "Laico eremita",
+      "bio": "San Pietro Crisci da Foligno, laico eremita."
+    },
+    {
+      "nome": "San Giovanni Plessington",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Giovanni Plessington, sacerdote e martire."
+    },
+    {
+      "nome": "San Giovanni Battista Zhou Wurui",
+      "titolo": "Martire",
+      "bio": "San Giovanni Battista Zhou Wurui, martire."
+    },
+    {
+      "nome": "Santi Elisabetta Qin Bianzhi e Simone Qin Chunfu",
+      "titolo": "Martiri",
+      "bio": "Santi Elisabetta Qin Bianzhi e Simone Qin Chunfu, martiri."
+    },
+    {
+      "nome": "Beati Achille Puchala e Ermanno Stepien",
+      "titolo": "Sacerdoti francescani conventuali e martiri",
+      "bio": "Beati Achille Puchala e Ermanno Stepien, sacerdoti francescani conventuali e martiri."
+    }
+  ],
+  "07-20": [
+    {
+      "nome": "Sant'Apollinare di Ravenna",
+      "titolo": "Vescovo di Classe e martire",
+      "bio": "Sant'Apollinare di Ravenna, vescovo di Classe e martire."
+    },
+    {
+      "nome": "Sant'Elia il Tesbita",
+      "titolo": "Profeta, Personaggio dell'Antico Testamento",
+      "bio": "Sant'Elia il Tesbita, profeta, Personaggio dell'Antico Testamento."
+    },
+    {
+      "nome": "San Giuseppe il Giusto",
+      "titolo": "Chiamato Barsabba",
+      "bio": "San Giuseppe il Giusto, chiamato Barsabba."
+    },
+    {
+      "nome": "Santa Margherita di Antiochia",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Margherita di Antiochia, vergine e martire."
+    },
+    {
+      "nome": "San Frumenzio",
+      "titolo": "Vescovo",
+      "bio": "San Frumenzio, vescovo."
+    },
+    {
+      "nome": "Sant'Aurelio di Cartagine",
+      "titolo": "Vescovo di Cartagine",
+      "bio": "Sant'Aurelio di Cartagine, vescovo di Cartagine."
+    },
+    {
+      "nome": "San Vulmaro",
+      "titolo": "Sacerdote",
+      "bio": "San Vulmaro, sacerdote."
+    },
+    {
+      "nome": "San Paolo",
+      "titolo": "Diacono e martire",
+      "bio": "San Paolo, diacono e martire."
+    },
+    {
+      "nome": "Beato Bernardo",
+      "titolo": "Vescovo di Hildesheim",
+      "bio": "Beato Bernardo, vescovo di Hildesheim."
+    },
+    {
+      "nome": "Santi Maddalena Yi Yong-hui",
+      "titolo": "Teresa Yi Mae-im, Marta Kim Songim, Lucia Kim, Rosa Kim, Anna Kim Chang-gum e Maria Won Kw",
+      "bio": "Santi Maddalena Yi Yong-hui, Teresa Yi Mae-im, Marta Kim Songim, Lucia Kim, Rosa Kim, Anna Kim Chang-gum e Maria Won Kwi-im, vergine, e Giovanni Battista Yi Kwang-nyol, martiri."
+    },
+    {
+      "nome": "San José María Díaz Sanjurjo",
+      "titolo": "Domenicano, vescovo titolare di Platea e vicario apostolico del Tonchino centrale e martir",
+      "bio": "San José María Díaz Sanjurjo, domenicano, vescovo titolare di Platea e vicario apostolico del Tonchino centrale e martire."
+    },
+    {
+      "nome": "San Léon-Ignace Mangin e Paolo Denn",
+      "titolo": "Sacerdoti gesuiti, Santa Maria Zhou Wuzhi, San Pietro Zhou Rixin, martiri",
+      "bio": "San Léon-Ignace Mangin e Paolo Denn, sacerdoti gesuiti, Santa Maria Zhou Wuzhi, San Pietro Zhou Rixin, martiri."
+    },
+    {
+      "nome": "Santa Maria Fu Guilin",
+      "titolo": "Martire",
+      "bio": "Santa Maria Fu Guilin, martire."
+    },
+    {
+      "nome": "Sante Maria Zhao Guozhi",
+      "titolo": "Rosa Zhao e Maria Zhao, martiri",
+      "bio": "Sante Maria Zhao Guozhi, Rosa Zhao e Maria Zhao, martiri."
+    },
+    {
+      "nome": "San Xi Guizi",
+      "titolo": "Martire",
+      "bio": "San Xi Guizi, martire."
+    },
+    {
+      "nome": "Beata Rita Josefa Pujalte Sánchez e Beata Francisca Aldea Araujo",
+      "titolo": "Vergini della congregazione della Carità del Sacro Cuore di Gesù, martiri",
+      "bio": "Beata Rita Josefa Pujalte Sánchez e Beata Francisca Aldea Araujo, vergini della congregazione della Carità del Sacro Cuore di Gesù, martiri."
+    }
+  ],
+  "07-21": [
+    {
+      "nome": "San Lorenzo da Brindisi (O.F.M. Cap.)",
+      "titolo": "Sacerdote e dottore della Chiesa",
+      "bio": "San Lorenzo da Brindisi (O.F.M. Cap.), sacerdote e dottore della Chiesa."
+    },
+    {
+      "nome": "San Vittore di Marsiglia",
+      "titolo": "Martire a Marsiglia",
+      "bio": "San Vittore di Marsiglia, martire a Marsiglia."
+    },
+    {
+      "nome": "San Simeone di Emesa",
+      "titolo": "Detto lo Stolto, e San Giovanni, eremita",
+      "bio": "San Simeone di Emesa, detto lo Stolto, e San Giovanni, eremita."
+    },
+    {
+      "nome": "Santa Prassede",
+      "titolo": "Vergine",
+      "bio": "Santa Prassede, vergine."
+    },
+    {
+      "nome": "Sant'Arbogaste di Strasburgo",
+      "titolo": "Vescovo di Strasburgo",
+      "bio": "Sant'Arbogaste di Strasburgo, vescovo di Strasburgo."
+    },
+    {
+      "nome": "Beato Gabriele Pergaud",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Gabriele Pergaud, sacerdote e martire."
+    },
+    {
+      "nome": "Sant'Alberico Crescitelli",
+      "titolo": "Sacerdote del Pontificio istituto missioni estere e martire",
+      "bio": "Sant'Alberico Crescitelli, sacerdote del Pontificio istituto missioni estere e martire."
+    },
+    {
+      "nome": "San Giuseppe Wang Yumei",
+      "titolo": "Martire",
+      "bio": "San Giuseppe Wang Yumei, martire."
+    },
+    {
+      "nome": "Beato Luigi Lenzini",
+      "titolo": "Sacerdote martire",
+      "bio": "Beato Luigi Lenzini, sacerdote martire."
+    }
+  ],
+  "07-22": [
+    {
+      "nome": "Santa Maria Maddalena",
+      "titolo": "Discepola del Signore",
+      "bio": "Santa Maria Maddalena, discepola del Signore."
+    },
+    {
+      "nome": "San Platone di Ancira",
+      "titolo": "Martire",
+      "bio": "San Platone di Ancira, martire."
+    },
+    {
+      "nome": "Santi martiri massilitani",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri massilitani."
+    },
+    {
+      "nome": "San Cirillo di Antiochia",
+      "titolo": "Vescovo di Antiochia",
+      "bio": "San Cirillo di Antiochia, vescovo di Antiochia."
+    },
+    {
+      "nome": "Sant'Anastasio",
+      "titolo": "Monaco",
+      "bio": "Sant'Anastasio, monaco."
+    },
+    {
+      "nome": "San Vandregisilo",
+      "titolo": "Abate di Fontenelle",
+      "bio": "San Vandregisilo, abate di Fontenelle."
+    },
+    {
+      "nome": "San Meneleo",
+      "titolo": "Abate",
+      "bio": "San Meneleo, abate."
+    },
+    {
+      "nome": "San Girolamo di Pavia",
+      "titolo": "Vescovo di Pavia",
+      "bio": "San Girolamo di Pavia, vescovo di Pavia."
+    },
+    {
+      "nome": "San Gualtero",
+      "titolo": "Frate e fondatore della Casa della Misericordia di Lodi",
+      "bio": "San Gualtero, frate e fondatore della Casa della Misericordia di Lodi."
+    },
+    {
+      "nome": "Beato Agostino de Fango da Biella",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Agostino de Fango da Biella, sacerdote domenicano."
+    },
+    {
+      "nome": "natale di San Lorenzo da Brindisi",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "natale di San Lorenzo da Brindisi."
+    },
+    {
+      "nome": "San Filippo Evans (S.J.) e San Giovanni Lloyd",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "San Filippo Evans (S.J.) e San Giovanni Lloyd, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beato Giacomo Lombardie",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giacomo Lombardie, sacerdote e martire."
+    },
+    {
+      "nome": "Santi Anna Wang",
+      "titolo": "Vergine, Lucia Wang Wangzhi e suo figlio Andrea Wang Tianqing, martiri",
+      "bio": "Santi Anna Wang, vergine, Lucia Wang Wangzhi e suo figlio Andrea Wang Tianqing, martiri."
+    },
+    {
+      "nome": "Santa Maria Wang Lizhi",
+      "titolo": "Martire",
+      "bio": "Santa Maria Wang Lizhi, martire."
+    }
+  ],
+  "07-23": [
+    {
+      "nome": "Santa Brigida di Svezia",
+      "titolo": "Religiosa, fondatrice dell'Ordine del Santissimo Salvatore",
+      "bio": "Santa Brigida di Svezia, religiosa, fondatrice dell'Ordine del Santissimo Salvatore."
+    },
+    {
+      "nome": "Sant'Ezechiele",
+      "titolo": "Profeta",
+      "bio": "Sant'Ezechiele, profeta."
+    },
+    {
+      "nome": "passione di Sant'Apollinare di Ravenna",
+      "titolo": "Vescovo di Classe",
+      "bio": "passione di Sant'Apollinare di Ravenna, vescovo di Classe."
+    },
+    {
+      "nome": "San Severo",
+      "titolo": "Martire",
+      "bio": "San Severo, martire."
+    },
+    {
+      "nome": "San Giovanni Cassiano",
+      "titolo": "Sacerdote",
+      "bio": "San Giovanni Cassiano, sacerdote."
+    },
+    {
+      "nome": "San Valeriano",
+      "titolo": "Vescovo di Cimiez",
+      "bio": "San Valeriano, vescovo di Cimiez."
+    },
+    {
+      "nome": "Beata Giovanna da Orvieto",
+      "titolo": "Vergine del terz'ordine secolare domenicano",
+      "bio": "Beata Giovanna da Orvieto, vergine del terz'ordine secolare domenicano."
+    },
+    {
+      "nome": "Beati Niceforo di Gesù e Maria Diez Tejerina",
+      "titolo": "Sacerdote, e cinque compagni passionisti, martiri",
+      "bio": "Beati Niceforo di Gesù e Maria Diez Tejerina, sacerdote, e cinque compagni passionisti, martiri."
+    },
+    {
+      "nome": "Beati Germano di Gesù e Maria Pérez Giménez",
+      "titolo": "Sacerdote, e otto compagni passionisti, martiri",
+      "bio": "Beati Germano di Gesù e Maria Pérez Giménez, sacerdote, e otto compagni passionisti, martiri."
+    },
+    {
+      "nome": "Beato Pedro Ruiz de los Paños y Ángel",
+      "titolo": "Fondatore delle Discepole di Gesù, e Giuseppe Sala Pico, Sacerdoti operai dioceSani e mart",
+      "bio": "Beato Pedro Ruiz de los Paños y Ángel, fondatore delle Discepole di Gesù, e Giuseppe Sala Pico, Sacerdoti operai dioceSani e martiri."
+    },
+    {
+      "nome": "Beato Cristino Gondek",
+      "titolo": "Sacerdote francescano e martire",
+      "bio": "Beato Cristino Gondek, sacerdote francescano e martire."
+    }
+  ],
+  "07-24": [
+    {
+      "nome": "San Charbel Makhlouf (O.L.M.a)",
+      "titolo": "Sacerdote",
+      "bio": "San Charbel Makhlouf (O.L.M.a), sacerdote."
+    },
+    {
+      "nome": "Santa Cristina di Bolsena",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Cristina di Bolsena, vergine e martire."
+    },
+    {
+      "nome": "San Vittorino di Amiterno",
+      "titolo": "Martire",
+      "bio": "San Vittorino di Amiterno, martire."
+    },
+    {
+      "nome": "San Fantino il Vecchio",
+      "titolo": "Eremita",
+      "bio": "San Fantino il Vecchio, eremita."
+    },
+    {
+      "nome": "Santa Eufrasia",
+      "titolo": "Vergine",
+      "bio": "Santa Eufrasia, vergine."
+    },
+    {
+      "nome": "San Declano di Ardmore",
+      "titolo": "Primo vescovo di Ardmore",
+      "bio": "San Declano di Ardmore, primo vescovo di Ardmore."
+    },
+    {
+      "nome": "Santa Sigolena",
+      "titolo": "Religiosa",
+      "bio": "Santa Sigolena, religiosa."
+    },
+    {
+      "nome": "Santi Boris e Gleb",
+      "titolo": "Martiri",
+      "bio": "Santi Boris e Gleb, martiri."
+    },
+    {
+      "nome": "San Baldovino",
+      "titolo": "Cistercense, fondatore e abate di San Matteo a Rieti",
+      "bio": "San Baldovino, cistercense, fondatore e abate di San Matteo a Rieti."
+    },
+    {
+      "nome": "Beata Cristina l'Ammirabile",
+      "titolo": "Vergine",
+      "bio": "Beata Cristina l'Ammirabile, vergine."
+    },
+    {
+      "nome": "Santa Kinga di Polonia",
+      "titolo": "Principessa d'Ungheria, religiosa clarissa",
+      "bio": "Santa Kinga di Polonia, principessa d'Ungheria, religiosa clarissa."
+    },
+    {
+      "nome": "Beato Giovanni Tavelli",
+      "titolo": "Gesuato, vescovo di Ferrara",
+      "bio": "Beato Giovanni Tavelli, gesuato, vescovo di Ferrara."
+    },
+    {
+      "nome": "traslazione dei Santi Magi a Colonia",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "traslazione dei Santi Magi a Colonia."
+    },
+    {
+      "nome": "Beato Antonio dell'Aquila",
+      "titolo": "Sacerdote agostiniano",
+      "bio": "Beato Antonio dell'Aquila, sacerdote agostiniano."
+    },
+    {
+      "nome": "Beata Ludovica di Savoia",
+      "titolo": "Vedova, clarissa colettina",
+      "bio": "Beata Ludovica di Savoia, vedova, clarissa colettina."
+    },
+    {
+      "nome": "Beati Nicola Garlick",
+      "titolo": "Robert Ludlam e Riccardo Simpson, sacerdoti e martiri",
+      "bio": "Beati Nicola Garlick, Robert Ludlam e Riccardo Simpson, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beato Giuseppe Lambton",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giuseppe Lambton, sacerdote e martire."
+    },
+    {
+      "nome": "San Giovanni Boste",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Giovanni Boste, sacerdote e martire."
+    },
+    {
+      "nome": "San Giuseppe Fernández",
+      "titolo": "Sacerdote domenicano e martire",
+      "bio": "San Giuseppe Fernández, sacerdote domenicano e martire."
+    },
+    {
+      "nome": "Beato Modestino di Gesù e Maria",
+      "titolo": "Francescano",
+      "bio": "Beato Modestino di Gesù e Maria, francescano."
+    },
+    {
+      "nome": "Beate Maria del Pilar di San Francesco Borgia Martínez García",
+      "titolo": "Teresa di Gesù Bambino (Eusebia) García e Maria Angela di San Giuseppe Voltierra Tordesill",
+      "bio": "Beate Maria del Pilar di San Francesco Borgia Martínez García, Teresa di Gesù Bambino (Eusebia) García e Maria Angela di San Giuseppe Voltierra Tordesillas, vergini carmelitane scalze e martiri."
+    },
+    {
+      "nome": "Beata Mercedes Prat",
+      "titolo": "Vergine della Compagnia di Santa Teresa di Gesù e martire",
+      "bio": "Beata Mercedes Prat, vergine della Compagnia di Santa Teresa di Gesù e martire."
+    },
+    {
+      "nome": "Beato Saverio Bordas Piferer",
+      "titolo": "Sacerdote salesiano e martire",
+      "bio": "Beato Saverio Bordas Piferer, sacerdote salesiano e martire."
+    },
+    {
+      "nome": "Beata Maria del Pilar di San Francesco Borgia (Martínez García)",
+      "titolo": "Religiosa e martire appartenente all'Ordine delle Carmelitane Scalze",
+      "bio": "Beata Maria del Pilar di San Francesco Borgia (Martínez García), religiosa e martire appartenente all'Ordine delle Carmelitane Scalze."
+    },
+    {
+      "nome": "Beato Josep Oriol da Barcellona (Jaume Barjau y Martí)",
+      "titolo": "Sacerdote martire",
+      "bio": "Beato Josep Oriol da Barcellona (Jaume Barjau y Martí), sacerdote martire."
+    },
+    {
+      "nome": "Beati Rodolfo Acquaviva",
+      "titolo": "Alfonso Pacheco, Pietro Berno, Antonio Francesco, sacerdoti e Francesco Aranha, religioso,",
+      "bio": "Beati Rodolfo Acquaviva, Alfonso Pacheco, Pietro Berno, Antonio Francesco, sacerdoti e Francesco Aranha, religioso, della Compagnia di Gesù, martiri."
+    }
+  ],
+  "07-25": [
+    {
+      "nome": "San Giacomo il maggiore",
+      "titolo": "Apostolo",
+      "bio": "San Giacomo il maggiore, apostolo."
+    },
+    {
+      "nome": "San Cristoforo",
+      "titolo": "Martire",
+      "bio": "San Cristoforo, martire."
+    },
+    {
+      "nome": "San Cucufate",
+      "titolo": "Martire",
+      "bio": "San Cucufate, martire."
+    },
+    {
+      "nome": "Santi Valentina",
+      "titolo": "Tea e Paolo, martiri",
+      "bio": "Santi Valentina, Tea e Paolo, martiri."
+    },
+    {
+      "nome": "Sant'Olimpiade",
+      "titolo": "Vedova",
+      "bio": "Sant'Olimpiade, vedova."
+    },
+    {
+      "nome": "San Magnerico",
+      "titolo": "Vescovo di Treviri",
+      "bio": "San Magnerico, vescovo di Treviri."
+    },
+    {
+      "nome": "Santi Beato e Banto",
+      "titolo": "Eremiti",
+      "bio": "Santi Beato e Banto, eremiti."
+    },
+    {
+      "nome": "Santa Clodesinda",
+      "titolo": "Abbadessa",
+      "bio": "Santa Clodesinda, abbadessa."
+    },
+    {
+      "nome": "San Teodemiro",
+      "titolo": "Monaco e martire",
+      "bio": "San Teodemiro, monaco e martire."
+    },
+    {
+      "nome": "Beato Giovanni Soreth",
+      "titolo": "Sacerdote carmelitano",
+      "bio": "Beato Giovanni Soreth, sacerdote carmelitano."
+    },
+    {
+      "nome": "Beato Pietro da Mogliano",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Pietro da Mogliano, sacerdote francescano."
+    },
+    {
+      "nome": "Beati Rodolfo Acquaviva",
+      "titolo": "Alfonso Pacheco, Pietro Berna, Antonio Francisco e Francesco Aranha, gesuiti martiri",
+      "bio": "Beati Rodolfo Acquaviva, Alfonso Pacheco, Pietro Berna, Antonio Francisco e Francesco Aranha, gesuiti martiri."
+    },
+    {
+      "nome": "Beato Antonio Lucci",
+      "titolo": "Francescano, vescovo di Bovino",
+      "bio": "Beato Antonio Lucci, francescano, vescovo di Bovino."
+    },
+    {
+      "nome": "Beati Martiri dei pontoni di Rochefort",
+      "titolo": "Sacerdote carmelitano scalzo e martire",
+      "bio": "Beati Martiri dei pontoni di Rochefort, sacerdote carmelitano scalzo e martire."
+    },
+    {
+      "nome": "Santa Carmen Sallés y Barangueras",
+      "titolo": "Vergine, fondatrice delle Religiose concezioniste missionarie dell'insegnamento",
+      "bio": "Santa Carmen Sallés y Barangueras, vergine, fondatrice delle Religiose concezioniste missionarie dell'insegnamento."
+    },
+    {
+      "nome": "Beati Pietro del Cuore Redondo",
+      "titolo": "Felice delle Cinque Piaghe Ugalde Irurzun e Benedetta Solano Ruiz, religiosi passionisti, ",
+      "bio": "Beati Pietro del Cuore Redondo, Felice delle Cinque Piaghe Ugalde Irurzun e Benedetta Solano Ruiz, religiosi passionisti, martiri."
+    },
+    {
+      "nome": "Beati Federico Rubio Álvarez",
+      "titolo": "Primo Martínez Castillo, Gerolamo Ochoa Urdangarín e Giovanni della Croce Delgado Pastor, ",
+      "bio": "Beati Federico Rubio Álvarez, Primo Martínez Castillo, Gerolamo Ochoa Urdangarín e Giovanni della Croce Delgado Pastor, fatebenefratelli, martiri."
+    },
+    {
+      "nome": "Beato Dionigi Pamplona",
+      "titolo": "Sacerdote scolopio, martire",
+      "bio": "Beato Dionigi Pamplona, sacerdote scolopio, martire."
+    },
+    {
+      "nome": "Beati Deogratias Palacios",
+      "titolo": "Leone Inchausti, Giuseppe Rada, Giuliano Moreno e Giuseppe Riccardo Diez, agostiniani reco",
+      "bio": "Beati Deogratias Palacios, Leone Inchausti, Giuseppe Rada, Giuliano Moreno e Giuseppe Riccardo Diez, agostiniani recolletti, martiri."
+    },
+    {
+      "nome": "Beata Maria Teresa di Gesù Bambino Maria Teresa Kowalska (Mieczyslawa Kowalska)",
+      "titolo": "Vergine clarissa cappuccina e martire",
+      "bio": "Beata Maria Teresa di Gesù Bambino Maria Teresa Kowalska (Mieczyslawa Kowalska), vergine clarissa cappuccina e martire."
+    },
+    {
+      "nome": "Beato Cristoforo di Santa Caterina (Cristoforo Fernández Valladolid)",
+      "titolo": "Sacerdote religioso del Terzo Ordine Regolare di San Francesco",
+      "bio": "Beato Cristoforo di Santa Caterina (Cristoforo Fernández Valladolid), sacerdote religioso del Terzo Ordine Regolare di San Francesco."
+    }
+  ],
+  "07-26": [
+    {
+      "nome": "Santi Gioacchino e Anna",
+      "titolo": "Genitori della Vergine Maria",
+      "bio": "Santi Gioacchino e Anna, genitori della Vergine Maria."
+    },
+    {
+      "nome": "Sant'Erasto",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Sant'Erasto."
+    },
+    {
+      "nome": "San Simeone di Polirone",
+      "titolo": "Monaco ed eremita",
+      "bio": "San Simeone di Polirone, monaco ed eremita."
+    },
+    {
+      "nome": "Sant'Austindo",
+      "titolo": "Vescovo di Auch",
+      "bio": "Sant'Austindo, vescovo di Auch."
+    },
+    {
+      "nome": "Beati Evangelista e Pellegrino",
+      "titolo": "Sacerdoti agostiniani",
+      "bio": "Beati Evangelista e Pellegrino, sacerdoti agostiniani."
+    },
+    {
+      "nome": "Beato Ugo degli Atti",
+      "titolo": "Monaco silvestrino",
+      "bio": "Beato Ugo degli Atti, monaco silvestrino."
+    },
+    {
+      "nome": "Beata Camilla Gentili",
+      "titolo": "Martire",
+      "bio": "Beata Camilla Gentili, martire."
+    },
+    {
+      "nome": "Beato Giovanni Ingram",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giovanni Ingram, sacerdote e martire."
+    },
+    {
+      "nome": "Beati Edoardo Thwing",
+      "titolo": "Domenicano",
+      "bio": "Beati Edoardo Thwing, domenicano."
+    },
+    {
+      "nome": "Beati Roberto Nutter",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Beati Roberto Nutter, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beato Guglielmo Webster",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Guglielmo Webster, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Andrea",
+      "titolo": "Martire",
+      "bio": "Beato Andrea, martire."
+    },
+    {
+      "nome": "Beati Marcello Gaucherio Labigne de Reignefort e Pietro Giuseppe Le Groing de La Romagere",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Beati Marcello Gaucherio Labigne de Reignefort e Pietro Giuseppe Le Groing de La Romagere, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beate Santa Maria Margherita di Sant'Agostino Bonnet e quattro compagne",
+      "titolo": "Vergini orsoline, martiri",
+      "bio": "Beate Santa Maria Margherita di Sant'Agostino Bonnet e quattro compagne, vergini orsoline, martiri."
+    },
+    {
+      "nome": "Santa Bartolomea Capitanio",
+      "titolo": "Vergine, fondatrice delle suore della carità di Maria Bambina",
+      "bio": "Santa Bartolomea Capitanio, vergine, fondatrice delle suore della carità di Maria Bambina."
+    },
+    {
+      "nome": "Beati Vincenzo Pinilla",
+      "titolo": "Agostiniano recolletto, ed Emanuele Martín Sierra, sacerdoti e martiri",
+      "bio": "Beati Vincenzo Pinilla, agostiniano recolletto, ed Emanuele Martín Sierra, sacerdoti e martiri."
+    },
+    {
+      "nome": "San Tito Brandsma (O.C.)",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Tito Brandsma (O.C.), sacerdote e martire."
+    },
+    {
+      "nome": "San Giorgio Preca",
+      "titolo": "Sacerdote, fondatore della Società della Dottrina Cristiana",
+      "bio": "San Giorgio Preca, sacerdote, fondatore della Società della Dottrina Cristiana."
+    }
+  ],
+  "07-27": [
+    {
+      "nome": "Santi Sette dormienti di Efeso",
+      "titolo": "Martiri",
+      "bio": "Santi Sette dormienti di Efeso, martiri."
+    },
+    {
+      "nome": "San Pantaleone",
+      "titolo": "Martire",
+      "bio": "San Pantaleone, martire."
+    },
+    {
+      "nome": "Sante Giuliana e Semproniana",
+      "titolo": "Vergini e martiri",
+      "bio": "Sante Giuliana e Semproniana, vergini e martiri."
+    },
+    {
+      "nome": "San Desiderato di Besançon",
+      "titolo": "Vescovo di Besançon",
+      "bio": "San Desiderato di Besançon, vescovo di Besançon."
+    },
+    {
+      "nome": "San Celestino I",
+      "titolo": "Papa",
+      "bio": "San Celestino I, papa."
+    },
+    {
+      "nome": "San Simeone Stilita il Vecchio",
+      "titolo": "Monaco, detto lo Stilita",
+      "bio": "San Simeone Stilita il Vecchio, monaco, detto lo Stilita."
+    },
+    {
+      "nome": "Sant'Orso",
+      "titolo": "Abate",
+      "bio": "Sant'Orso, abate."
+    },
+    {
+      "nome": "San Leobazio",
+      "titolo": "Abate di Sennevières",
+      "bio": "San Leobazio, abate di Sennevières."
+    },
+    {
+      "nome": "Sant'Ecclesio",
+      "titolo": "Vescovo di Ravenna",
+      "bio": "Sant'Ecclesio, vescovo di Ravenna."
+    },
+    {
+      "nome": "San Galattorio di Lescar",
+      "titolo": "Vescovo di Lescar e martire",
+      "bio": "San Galattorio di Lescar, vescovo di Lescar e martire."
+    },
+    {
+      "nome": "Sant'Antusa",
+      "titolo": "Vergine e monaca",
+      "bio": "Sant'Antusa, vergine e monaca."
+    },
+    {
+      "nome": "San Giorgio",
+      "titolo": "Diacono e monaco siro, Sant'Aurelio e San Sabigotone, coniugi, e San Felice e Santa Lilios",
+      "bio": "San Giorgio, diacono e monaco siro, Sant'Aurelio e San Sabigotone, coniugi, e San Felice e Santa Liliosa, coniugi, martiri."
+    },
+    {
+      "nome": "San Clemente di Ocrida",
+      "titolo": "Vescovo di Acrida",
+      "bio": "San Clemente di Ocrida, vescovo di Acrida."
+    },
+    {
+      "nome": "San Bertoldo di Garsten",
+      "titolo": "Abate",
+      "bio": "San Bertoldo di Garsten, abate."
+    },
+    {
+      "nome": "Beato Raimondo Zanfogni",
+      "titolo": "Padre di famiglia",
+      "bio": "Beato Raimondo Zanfogni, padre di famiglia."
+    },
+    {
+      "nome": "Beato Nevolone",
+      "titolo": "Eremita",
+      "bio": "Beato Nevolone, eremita."
+    },
+    {
+      "nome": "Beata Lucia Bufalari",
+      "titolo": "Vergine",
+      "bio": "Beata Lucia Bufalari, vergine."
+    },
+    {
+      "nome": "Beato Roberto Sutton",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Roberto Sutton, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Guglielmo Davies",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Guglielmo Davies, sacerdote e martire."
+    },
+    {
+      "nome": "Beata Maria Maddalena Martinengo",
+      "titolo": "Badessa clarissa cappuccina",
+      "bio": "Beata Maria Maddalena Martinengo, badessa clarissa cappuccina."
+    },
+    {
+      "nome": "Beata Maria Grazia Tarallo",
+      "titolo": "Vergine delle Suore crocifisse adoratrici dell'Eucaristia",
+      "bio": "Beata Maria Grazia Tarallo, vergine delle Suore crocifisse adoratrici dell'Eucaristia."
+    },
+    {
+      "nome": "Beato Gioacchino Vilanova Camallonga",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Gioacchino Vilanova Camallonga, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Modesto Vegas Vegas",
+      "titolo": "Sacerdote francescano conventuale e martire",
+      "bio": "Beato Modesto Vegas Vegas, sacerdote francescano conventuale e martire."
+    },
+    {
+      "nome": "Beati Filippo Hernández Martínez",
+      "titolo": "Zaccaria Abadia Buesa e Giacomo Ortiz Alzueta, salesiani e martiri",
+      "bio": "Beati Filippo Hernández Martínez, Zaccaria Abadia Buesa e Giacomo Ortiz Alzueta, salesiani e martiri."
+    },
+    {
+      "nome": "Beata Maria Clemente di Gesù Crocifisso Staszewska",
+      "titolo": "Vergine orsolina e martire",
+      "bio": "Beata Maria Clemente di Gesù Crocifisso Staszewska, vergine orsolina e martire."
+    },
+    {
+      "nome": "Beato Domènec de Sant Pere de Riudebitllets (Joan Romeu Canadell)",
+      "titolo": "Sacerdote martire",
+      "bio": "Beato Domènec de Sant Pere de Riudebitllets (Joan Romeu Canadell), sacerdote martire."
+    },
+    {
+      "nome": "Beato Filippo Hernández Martínez (Felipe Hernández Martínez)",
+      "titolo": "Religioso martire della Società Salesiana di San Giovanni Bosco",
+      "bio": "Beato Filippo Hernández Martínez (Felipe Hernández Martínez), religioso martire della Società Salesiana di San Giovanni Bosco."
+    },
+    {
+      "nome": "Beato Giacomo Ortíz Alzueta (Jaime Ortiz Alzueta)",
+      "titolo": "Religioso martire appartenente alla Società Salesiana di San Giovanni Bosco",
+      "bio": "Beato Giacomo Ortíz Alzueta (Jaime Ortiz Alzueta), religioso martire appartenente alla Società Salesiana di San Giovanni Bosco."
+    }
+  ],
+  "07-28": [
+    {
+      "nome": "Santi Prócoro",
+      "titolo": "Nicánore, Timone, Parmenas e Nicola, diaconi, personaggi del Nuovo Testamento",
+      "bio": "Santi Prócoro, Nicánore, Timone, Parmenas e Nicola, diaconi, personaggi del Nuovo Testamento."
+    },
+    {
+      "nome": "San Vittore I",
+      "titolo": "Papa",
+      "bio": "San Vittore I, papa."
+    },
+    {
+      "nome": "Santi Martiri della Tebaide in Egitto",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi Martiri della Tebaide in Egitto."
+    },
+    {
+      "nome": "Sant'Acacio di Mileto",
+      "titolo": "Martire",
+      "bio": "Sant'Acacio di Mileto, martire."
+    },
+    {
+      "nome": "Santi Nazario e Celso",
+      "titolo": "Martiri",
+      "bio": "Santi Nazario e Celso, martiri."
+    },
+    {
+      "nome": "San Cameliano",
+      "titolo": "Vescovo di Troyes",
+      "bio": "San Cameliano, vescovo di Troyes."
+    },
+    {
+      "nome": "San Sansone",
+      "titolo": "Abate e vescovo",
+      "bio": "San Sansone, abate e vescovo."
+    },
+    {
+      "nome": "San Botvido di Svezia",
+      "titolo": "Martire",
+      "bio": "San Botvido di Svezia, martire."
+    },
+    {
+      "nome": "San José Melchor García-Sampedro Suárez",
+      "titolo": "Domenicano, vescovo di Tricomia e vicario apostolico del Tonchino centrale e martire",
+      "bio": "San José Melchor García-Sampedro Suárez, domenicano, vescovo di Tricomia e vicario apostolico del Tonchino centrale e martire."
+    },
+    {
+      "nome": "San Pedro Poveda Castroverde",
+      "titolo": "Sacerdote e martire, fondatore dell'Istituzione Teresiana",
+      "bio": "San Pedro Poveda Castroverde, sacerdote e martire, fondatore dell'Istituzione Teresiana."
+    },
+    {
+      "nome": "Beati Emanuele Segura e David Carlos",
+      "titolo": "Martiri",
+      "bio": "Beati Emanuele Segura e David Carlos, martiri."
+    },
+    {
+      "nome": "San Giacomo Ilario Barbal Cosín",
+      "titolo": "Religioso dei Fratelli delle Scuole Cristiane, martire",
+      "bio": "San Giacomo Ilario Barbal Cosín, religioso dei Fratelli delle Scuole Cristiane, martire."
+    },
+    {
+      "nome": "Beati Giuseppe Caselles Moncho e Giuseppe Castell Camps",
+      "titolo": "Sacerdoti salesiani e martiri",
+      "bio": "Beati Giuseppe Caselles Moncho e Giuseppe Castell Camps, sacerdoti salesiani e martiri."
+    },
+    {
+      "nome": "Sant'Alfonsa dell'Immacolata Concezione (F.C.C.)",
+      "titolo": "Religiosa",
+      "bio": "Sant'Alfonsa dell'Immacolata Concezione (F.C.C.), religiosa."
+    }
+  ],
+  "07-29": [
+    {
+      "nome": "Santa Marta di Betania",
+      "titolo": "Discepola del Signore",
+      "bio": "Santa Marta di Betania, discepola del Signore."
+    },
+    {
+      "nome": "San Callinico",
+      "titolo": "Martire",
+      "bio": "San Callinico, martire."
+    },
+    {
+      "nome": "San Felice",
+      "titolo": "Martire",
+      "bio": "San Felice, martire."
+    },
+    {
+      "nome": "Santi Simplicio",
+      "titolo": "Faustino, Viatrice e Rufo, martiri",
+      "bio": "Santi Simplicio, Faustino, Viatrice e Rufo, martiri."
+    },
+    {
+      "nome": "San Lupo di Troyes",
+      "titolo": "Vescovo di Troyes",
+      "bio": "San Lupo di Troyes, vescovo di Troyes."
+    },
+    {
+      "nome": "San Prospero",
+      "titolo": "Vescovo di Orléans",
+      "bio": "San Prospero, vescovo di Orléans."
+    },
+    {
+      "nome": "Sant'Olaf II di Norvegia",
+      "titolo": "Martire",
+      "bio": "Sant'Olaf II di Norvegia, martire."
+    },
+    {
+      "nome": "Beato Urbano II",
+      "titolo": "Papa",
+      "bio": "Beato Urbano II, papa."
+    },
+    {
+      "nome": "San Guglielmo Pinchon",
+      "titolo": "Vescovo di Saint-Brieuc",
+      "bio": "San Guglielmo Pinchon, vescovo di Saint-Brieuc."
+    },
+    {
+      "nome": "Beati Ludovico Bertran",
+      "titolo": "Mancio della Santa Croce e Pietro di Santa Maria, martiri domenicani",
+      "bio": "Beati Ludovico Bertran, Mancio della Santa Croce e Pietro di Santa Maria, martiri domenicani."
+    },
+    {
+      "nome": "Beato Charles-Antoine-Nicolas Ancel",
+      "titolo": "Sacerdote eudista e martire",
+      "bio": "Beato Charles-Antoine-Nicolas Ancel, sacerdote eudista e martire."
+    },
+    {
+      "nome": "Santi Giuseppe Zhang Wenlan",
+      "titolo": "Paolo Chen Changpin, Giovanni Battista Lou Tingyin, Marta Wang Louzhi, martiri",
+      "bio": "Santi Giuseppe Zhang Wenlan, Paolo Chen Changpin, Giovanni Battista Lou Tingyin, Marta Wang Louzhi, martiri."
+    },
+    {
+      "nome": "Beato Giovan Battista Egozcuezábal Aldaz",
+      "titolo": "Religioso fatebenefratelli e martire",
+      "bio": "Beato Giovan Battista Egozcuezábal Aldaz, religioso fatebenefratelli e martire."
+    },
+    {
+      "nome": "Beato Lucio Martínez Mancebo",
+      "titolo": "Sacerdote domenicano, e altri compagni martiri",
+      "bio": "Beato Lucio Martínez Mancebo, sacerdote domenicano, e altri compagni martiri."
+    },
+    {
+      "nome": "Beato Giuseppe Calasanzio Marqués",
+      "titolo": "Sacerdote salesiano e martire",
+      "bio": "Beato Giuseppe Calasanzio Marqués, sacerdote salesiano e martire."
+    }
+  ],
+  "07-30": [
+    {
+      "nome": "San Pietro Crisologo",
+      "titolo": "Vescovo di Ravenna e dottore della Chiesa",
+      "bio": "San Pietro Crisologo, vescovo di Ravenna e dottore della Chiesa."
+    },
+    {
+      "nome": "Santi Abdon e Sennen",
+      "titolo": "Martiri",
+      "bio": "Santi Abdon e Sennen, martiri."
+    },
+    {
+      "nome": "Santa Giulitta",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santa Giulitta."
+    },
+    {
+      "nome": "Sante Massima",
+      "titolo": "Domitilla e Seconda, vergini e martiri",
+      "bio": "Sante Massima, Domitilla e Seconda, vergini e martiri."
+    },
+    {
+      "nome": "Sant'Orso di Auxerre",
+      "titolo": "Vescovo di Auxerre",
+      "bio": "Sant'Orso di Auxerre, vescovo di Auxerre."
+    },
+    {
+      "nome": "San Godeleva",
+      "titolo": "Martire",
+      "bio": "San Godeleva, martire."
+    },
+    {
+      "nome": "Beato Manno Guzmán",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Manno Guzmán, sacerdote domenicano."
+    },
+    {
+      "nome": "Beati Edoardo Powell",
+      "titolo": "Riccardo Featherstone e Tommaso Abel, sacerdoti e martiri",
+      "bio": "Beati Edoardo Powell, Riccardo Featherstone e Tommaso Abel, sacerdoti e martiri."
+    },
+    {
+      "nome": "San Giuseppe Yuan Gengyin",
+      "titolo": "Martire",
+      "bio": "San Giuseppe Yuan Gengyin, martire."
+    },
+    {
+      "nome": "Beati Braulione Maria Corres Díaz de Cerio",
+      "titolo": "Sacerdote, e quattordici compagni fatebenefratelli, martiri",
+      "bio": "Beati Braulione Maria Corres Díaz de Cerio, sacerdote, e quattordici compagni fatebenefratelli, martiri."
+    },
+    {
+      "nome": "Beati Giuseppe Maria Muro Sanmiguel e Gioacchino Prats Baltueña",
+      "titolo": "Domenicani, e Zosimo Izquierdo Gil, martiri",
+      "bio": "Beati Giuseppe Maria Muro Sanmiguel e Gioacchino Prats Baltueña, domenicani, e Zosimo Izquierdo Gil, martiri."
+    },
+    {
+      "nome": "Beato Sergio Cid Pazo",
+      "titolo": "Sacerdoti della Società Salesiana e martire",
+      "bio": "Beato Sergio Cid Pazo, sacerdoti della Società Salesiana e martire."
+    },
+    {
+      "nome": "San Leopoldo da Castelnuovo (O.F.M. Cap.)",
+      "titolo": "Sacerdote",
+      "bio": "San Leopoldo da Castelnuovo (O.F.M. Cap.), sacerdote."
+    },
+    {
+      "nome": "Santa Dorotea Chávez Orozco",
+      "titolo": "Vergine, fondatrice delle Serve della Santissima Trinità e dei poveri",
+      "bio": "Santa Dorotea Chávez Orozco, vergine, fondatrice delle Serve della Santissima Trinità e dei poveri."
+    },
+    {
+      "nome": "Beata María Venegas de la Torre",
+      "titolo": "Vergine, fondatrice delle Figlie del Sacro Cuore di Gesù",
+      "bio": "Beata María Venegas de la Torre, vergine, fondatrice delle Figlie del Sacro Cuore di Gesù."
+    }
+  ],
+  "07-31": [
+    {
+      "nome": "Sant'Ignazio di Loyola",
+      "titolo": "Sacerdote, fondatore della Compagnia di Gesù",
+      "bio": "Sant'Ignazio di Loyola, sacerdote, fondatore della Compagnia di Gesù."
+    },
+    {
+      "nome": "San Calimero di Milano",
+      "titolo": "Vescovo di Milano",
+      "bio": "San Calimero di Milano, vescovo di Milano."
+    },
+    {
+      "nome": "Santi Democrito",
+      "titolo": "Secondo e Dionigi, martiri",
+      "bio": "Santi Democrito, Secondo e Dionigi, martiri."
+    },
+    {
+      "nome": "San Fabio il Vessillifero",
+      "titolo": "Martire",
+      "bio": "San Fabio il Vessillifero, martire."
+    },
+    {
+      "nome": "San Tertullino",
+      "titolo": "Martire",
+      "bio": "San Tertullino, martire."
+    },
+    {
+      "nome": "San Germano d'Auxerre",
+      "titolo": "Vescovo di Auxerre",
+      "bio": "San Germano d'Auxerre, vescovo di Auxerre."
+    },
+    {
+      "nome": "transito di San Pietro Crisologo",
+      "titolo": "Vescovo di Ravenna e dottore della Chiesa",
+      "bio": "transito di San Pietro Crisologo, vescovo di Ravenna e dottore della Chiesa."
+    },
+    {
+      "nome": "Sant'Elena di Skövde",
+      "titolo": "Vedova e martire",
+      "bio": "Sant'Elena di Skövde, vedova e martire."
+    },
+    {
+      "nome": "Beato Giovanni Colombini",
+      "titolo": "Fondatore dei gesuati",
+      "bio": "Beato Giovanni Colombini, fondatore dei gesuati."
+    },
+    {
+      "nome": "Beato Everardo Hanse",
+      "titolo": "Sacerdoti e martire",
+      "bio": "Beato Everardo Hanse, sacerdoti e martire."
+    },
+    {
+      "nome": "Beato Giovanni Francesco Jarrige de la Morelie du Breuil",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giovanni Francesco Jarrige de la Morelie du Breuil, sacerdote e martire."
+    },
+    {
+      "nome": "San Pietro Ðoàn Công Quý e Sant'Emanuele Phụng",
+      "titolo": "Martiri",
+      "bio": "San Pietro Ðoàn Công Quý e Sant'Emanuele Phụng, martiri."
+    },
+    {
+      "nome": "San Giustino de Jacobis",
+      "titolo": "Lazzarista, vescovo di Nilopoli e vicario apostolico dell'Abissinia",
+      "bio": "San Giustino de Jacobis, lazzarista, vescovo di Nilopoli e vicario apostolico dell'Abissinia."
+    },
+    {
+      "nome": "Beati Dionigi Vicente Ramos e Francesco Remón Játiva",
+      "titolo": "Francescani conventuali, martiri",
+      "bio": "Beati Dionigi Vicente Ramos e Francesco Remón Játiva, francescani conventuali, martiri."
+    },
+    {
+      "nome": "Beato Giacomo Buch Canals",
+      "titolo": "Salesiano",
+      "bio": "Beato Giacomo Buch Canals, salesiano."
+    },
+    {
+      "nome": "Beato Michele Oziębłowski",
+      "titolo": "Sacerdoti e martire",
+      "bio": "Beato Michele Oziębłowski, sacerdoti e martire."
+    },
+    {
+      "nome": "Beato Franciszek Stryjas",
+      "titolo": "Martire",
+      "bio": "Beato Franciszek Stryjas, martire."
+    },
+    {
+      "nome": "Beata Zdenka Schelingová",
+      "titolo": "Vergine delle Suore di carità della Santa Croce e martire",
+      "bio": "Beata Zdenka Schelingová, vergine delle Suore di carità della Santa Croce e martire."
+    }
+  ],
+  "08-01": [
+    {
+      "nome": "Sant'Alfonso Maria de' Liguori (C.SS.R.)",
+      "titolo": "Vescovo di Sant'Agata de' Goti e dottore della Chiesa, fondatore della Congregazione del S",
+      "bio": "Sant'Alfonso Maria de' Liguori (C.SS.R.), vescovo di Sant'Agata de' Goti e dottore della Chiesa, fondatore della Congregazione del Santissimo Redentore."
+    },
+    {
+      "nome": "Santi sette fratelli maccabei e Sant'Eleazaro",
+      "titolo": "Martiri personaggi dell'Antico Testamento",
+      "bio": "Santi sette fratelli maccabei e Sant'Eleazaro, martiri personaggi dell'Antico Testamento."
+    },
+    {
+      "nome": "San Secondino",
+      "titolo": "Martire",
+      "bio": "San Secondino, martire."
+    },
+    {
+      "nome": "San Felice",
+      "titolo": "Martire",
+      "bio": "San Felice, martire."
+    },
+    {
+      "nome": "natale di Sant'Eusebio",
+      "titolo": "Vescovo di Vercelli",
+      "bio": "natale di Sant'Eusebio, vescovo di Vercelli."
+    },
+    {
+      "nome": "Sant'Esuperio di Bayeux",
+      "titolo": "Vescovo di Bayeux",
+      "bio": "Sant'Esuperio di Bayeux, vescovo di Bayeux."
+    },
+    {
+      "nome": "San Severo",
+      "titolo": "Sacerdote",
+      "bio": "San Severo, sacerdote."
+    },
+    {
+      "nome": "Santi Friardo e Secondello",
+      "titolo": "Diaconi ed eremiti",
+      "bio": "Santi Friardo e Secondello, diaconi ed eremiti."
+    },
+    {
+      "nome": "San Ionato",
+      "titolo": "Abate",
+      "bio": "San Ionato, abate."
+    },
+    {
+      "nome": "Sant'Ethelwold di Winchester (O.S.B.)",
+      "titolo": "Vescovo di Winchester",
+      "bio": "Sant'Ethelwold di Winchester (O.S.B.), vescovo di Winchester."
+    },
+    {
+      "nome": "Beato Emerico di Quart",
+      "titolo": "Vescovo di Aosta",
+      "bio": "Beato Emerico di Quart, vescovo di Aosta."
+    },
+    {
+      "nome": "Beato Giovanni da Rieti",
+      "titolo": "Eremitano di Sant'Agostino",
+      "bio": "Beato Giovanni da Rieti, eremitano di Sant'Agostino."
+    },
+    {
+      "nome": "San Pietro Favre (S.J.)",
+      "titolo": "Sacerdote e teologo",
+      "bio": "San Pietro Favre (S.J.), sacerdote e teologo."
+    },
+    {
+      "nome": "Beato Tommaso Welbourne",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Beato Tommaso Welbourne."
+    },
+    {
+      "nome": "San Domenico Nguyện Văn Hạnh e San Bernardo Võ Văn Duê",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "San Domenico Nguyện Văn Hạnh e San Bernardo Võ Văn Duê, sacerdoti e martiri."
+    },
+    {
+      "nome": "natale di San Pier Giuliano Eymard",
+      "titolo": "Sacerdote",
+      "bio": "natale di San Pier Giuliano Eymard, sacerdote."
+    },
+    {
+      "nome": "Beato Benvenuto de Miguel Arahal",
+      "titolo": "Sacerdote amigoniano e martire",
+      "bio": "Beato Benvenuto de Miguel Arahal, sacerdote amigoniano e martire."
+    },
+    {
+      "nome": "Beato Alessio Sobaszek",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Alessio Sobaszek, sacerdote e martire."
+    },
+    {
+      "nome": "Beata Maria Stella del Santissimo Sacramento Mardosewicz e dieci compagne della congregazione della Sacra Famiglia di Nazareth",
+      "titolo": "Vergini e martiri",
+      "bio": "Beata Maria Stella del Santissimo Sacramento Mardosewicz e dieci compagne della congregazione della Sacra Famiglia di Nazareth, vergini e martiri."
+    }
+  ],
+  "08-02": [
+    {
+      "nome": "Sant'Eusebio di Vercelli",
+      "titolo": "Primo vescovo di Vercelli",
+      "bio": "Sant'Eusebio di Vercelli, primo vescovo di Vercelli."
+    },
+    {
+      "nome": "San Pietro Giuliano Eymard (S.S.S.m)",
+      "titolo": "Sacerdote, fondatore dei Sacerdoti e delle Ancelle del Santissimo Sacramento",
+      "bio": "San Pietro Giuliano Eymard (S.S.S.m), sacerdote, fondatore dei Sacerdoti e delle Ancelle del Santissimo Sacramento."
+    },
+    {
+      "nome": "San Rutilio",
+      "titolo": "Martire",
+      "bio": "San Rutilio, martire."
+    },
+    {
+      "nome": "Santo Stefano I",
+      "titolo": "Papa",
+      "bio": "Santo Stefano I, papa."
+    },
+    {
+      "nome": "Santa Centolla",
+      "titolo": "Martire",
+      "bio": "Santa Centolla, martire."
+    },
+    {
+      "nome": "San Massimo di Padova",
+      "titolo": "Vescovo di Padova",
+      "bio": "San Massimo di Padova, vescovo di Padova."
+    },
+    {
+      "nome": "San Sereno di Marsiglia",
+      "titolo": "Vescovo di Marsiglia",
+      "bio": "San Sereno di Marsiglia, vescovo di Marsiglia."
+    },
+    {
+      "nome": "San Betario di Chartres",
+      "titolo": "Vescovo di Chartres",
+      "bio": "San Betario di Chartres, vescovo di Chartres."
+    },
+    {
+      "nome": "San Pietro",
+      "titolo": "Vescovo di Osma",
+      "bio": "San Pietro, vescovo di Osma."
+    },
+    {
+      "nome": "San Giustino Russolillo S.D.V. (Giustino Maria della Santissima Trinità)",
+      "titolo": "Presbitero e fondatore",
+      "bio": "San Giustino Russolillo S.D.V. (Giustino Maria della Santissima Trinità), presbitero e fondatore."
+    },
+    {
+      "nome": "Beata Giovanna d'Aza",
+      "titolo": "Madre di San Domenico",
+      "bio": "Beata Giovanna d'Aza, madre di San Domenico."
+    },
+    {
+      "nome": "Beato Filippo di Gesù Munárriz Azcona",
+      "titolo": "Beato Giovanni Díaz Nosti e Beato Leonzio Pérez Ramos, sacerdoti claretiani e martiri",
+      "bio": "Beato Filippo di Gesù Munárriz Azcona, Beato Giovanni Díaz Nosti e Beato Leonzio Pérez Ramos, sacerdoti claretiani e martiri."
+    },
+    {
+      "nome": "Beato Ceferino Giménez Malla",
+      "titolo": "Martire",
+      "bio": "Beato Ceferino Giménez Malla, martire."
+    },
+    {
+      "nome": "Beato Francesco Calvo Burillo",
+      "titolo": "Sacerdote domenicano e martire",
+      "bio": "Beato Francesco Calvo Burillo, sacerdote domenicano e martire."
+    },
+    {
+      "nome": "Beato Francesco Tomás Serer",
+      "titolo": "Sacerdote amigoniano e martire",
+      "bio": "Beato Francesco Tomás Serer, sacerdote amigoniano e martire."
+    }
+  ],
+  "08-03": [
+    {
+      "nome": "Sant'Aspreno di Napoli",
+      "titolo": "Primo vescovo di Napoli",
+      "bio": "Sant'Aspreno di Napoli, primo vescovo di Napoli."
+    },
+    {
+      "nome": "Sant'Eufronio di Autun",
+      "titolo": "Vescovo di Autun",
+      "bio": "Sant'Eufronio di Autun, vescovo di Autun."
+    },
+    {
+      "nome": "San Martino",
+      "titolo": "Eremita",
+      "bio": "San Martino, eremita."
+    },
+    {
+      "nome": "San Pietro di Anagni",
+      "titolo": "Vescovo di Anagni",
+      "bio": "San Pietro di Anagni, vescovo di Anagni."
+    },
+    {
+      "nome": "Beato Agostino Kažotić (Agostino Casotti)",
+      "titolo": "Domenicano, vescovo di Zagabria e poi di Lucera",
+      "bio": "Beato Agostino Kažotić (Agostino Casotti), domenicano, vescovo di Zagabria e poi di Lucera."
+    },
+    {
+      "nome": "Beato Salvatore Ferrandis Seguí",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Salvatore Ferrandis Seguí, sacerdote e martire."
+    },
+    {
+      "nome": "Beati Alfonso López López e Michele Remón Salvador",
+      "titolo": "Francescani conventuali, martiri",
+      "bio": "Beati Alfonso López López e Michele Remón Salvador, francescani conventuali, martiri."
+    },
+    {
+      "nome": "Beato Francesco Bandrés Sánchez",
+      "titolo": "Sacerdote salesiano e martire",
+      "bio": "Beato Francesco Bandrés Sánchez, sacerdote salesiano e martire."
+    }
+  ],
+  "08-04": [
+    {
+      "nome": "San Giovanni Maria Vianney",
+      "titolo": "Sacerdote",
+      "bio": "San Giovanni Maria Vianney, sacerdote."
+    },
+    {
+      "nome": "Sant'Aristarco",
+      "titolo": "Discepolo di San Paolo",
+      "bio": "Sant'Aristarco, discepolo di San Paolo."
+    },
+    {
+      "nome": "Santi Giustino e Crescenzione",
+      "titolo": "Martiri",
+      "bio": "Santi Giustino e Crescenzione, martiri."
+    },
+    {
+      "nome": "San Giacinto",
+      "titolo": "Martire",
+      "bio": "San Giacinto, martire."
+    },
+    {
+      "nome": "Sant'Eleuterio",
+      "titolo": "Martire",
+      "bio": "Sant'Eleuterio, martire."
+    },
+    {
+      "nome": "Santa Ia",
+      "titolo": "Martire",
+      "bio": "Santa Ia, martire."
+    },
+    {
+      "nome": "Sant'Eufronio",
+      "titolo": "Vescovo di Tours",
+      "bio": "Sant'Eufronio, vescovo di Tours."
+    },
+    {
+      "nome": "San Rainerio di Cagli",
+      "titolo": "Vescovo di Cagli e poi di Spalato e martire",
+      "bio": "San Rainerio di Cagli, vescovo di Cagli e poi di Spalato e martire."
+    },
+    {
+      "nome": "Beata Cecilia",
+      "titolo": "Vergine domenicana",
+      "bio": "Beata Cecilia, vergine domenicana."
+    },
+    {
+      "nome": "Beato Guglielmo Horne",
+      "titolo": "Martire certosino",
+      "bio": "Beato Guglielmo Horne, martire certosino."
+    },
+    {
+      "nome": "Beato Federico Janssoone",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Federico Janssoone, sacerdote francescano."
+    },
+    {
+      "nome": "Beato Gundisalvo Gonzalo",
+      "titolo": "Religioso fatebenefratelli e martire",
+      "bio": "Beato Gundisalvo Gonzalo, religioso fatebenefratelli e martire."
+    },
+    {
+      "nome": "Beati Giuseppe Batalla Parramón",
+      "titolo": "Giuseppe Rabasa Bentanachs ed Egidio Gil Rodicio, salesiani, martiri",
+      "bio": "Beati Giuseppe Batalla Parramón, Giuseppe Rabasa Bentanachs ed Egidio Gil Rodicio, salesiani, martiri."
+    },
+    {
+      "nome": "Beato Enrico Krzysztofik",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Enrico Krzysztofik, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Egidio Gil Rodicio (Gil Rodicio y Rodicio)",
+      "titolo": "Coadiutore salesiano e martire",
+      "bio": "Beato Egidio Gil Rodicio (Gil Rodicio y Rodicio), coadiutore salesiano e martire."
+    }
+  ],
+  "08-05": [
+    {
+      "nome": "dedicazione della Basilica di Santa Maria Maggiore",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "dedicazione della Basilica di Santa Maria Maggiore."
+    },
+    {
+      "nome": "San Memmio di Châlons",
+      "titolo": "Primo vescovo di Châlons",
+      "bio": "San Memmio di Châlons, primo vescovo di Châlons."
+    },
+    {
+      "nome": "San Paride di Teano",
+      "titolo": "Primo vescovo di Teano",
+      "bio": "San Paride di Teano, primo vescovo di Teano."
+    },
+    {
+      "nome": "San Cassiano di Autun",
+      "titolo": "Vescovo di Autun",
+      "bio": "San Cassiano di Autun, vescovo di Autun."
+    },
+    {
+      "nome": "Santa Nonna di Nazianzo",
+      "titolo": "Madre di famiglia",
+      "bio": "Santa Nonna di Nazianzo, madre di famiglia."
+    },
+    {
+      "nome": "Sant'Emidio d'Ascoli",
+      "titolo": "Primo vescovo di Ascoli Piceno",
+      "bio": "Sant'Emidio d'Ascoli, primo vescovo di Ascoli Piceno."
+    },
+    {
+      "nome": "San Venanzio di Viviers",
+      "titolo": "Vescovo di Viviers",
+      "bio": "San Venanzio di Viviers, vescovo di Viviers."
+    },
+    {
+      "nome": "San Viatore",
+      "titolo": "Eremita",
+      "bio": "San Viatore, eremita."
+    },
+    {
+      "nome": "Sant'Osvaldo di Northumbria",
+      "titolo": "Re di Northumbria, martire",
+      "bio": "Sant'Osvaldo di Northumbria, re di Northumbria, martire."
+    },
+    {
+      "nome": "Beato Cecco da Pesaro",
+      "titolo": "Terziario francescano",
+      "bio": "Beato Cecco da Pesaro, terziario francescano."
+    },
+    {
+      "nome": "Santa Margherita",
+      "titolo": "Vedova",
+      "bio": "Santa Margherita, vedova."
+    },
+    {
+      "nome": "Beato Pietro Michele Noël",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Pietro Michele Noël, sacerdote e martire."
+    }
+  ],
+  "08-06": [
+    {
+      "nome": "festa della Trasfigurazione di Gesù",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "festa della Trasfigurazione di Gesù."
+    },
+    {
+      "nome": "passione di San Sisto II",
+      "titolo": "Papa, e dei suoi compagni",
+      "bio": "passione di San Sisto II, papa, e dei suoi compagni."
+    },
+    {
+      "nome": "Santi Giusto e Pastore",
+      "titolo": "Martiri",
+      "bio": "Santi Giusto e Pastore, martiri."
+    },
+    {
+      "nome": "Sant'Ormisda",
+      "titolo": "Papa",
+      "bio": "Sant'Ormisda, papa."
+    },
+    {
+      "nome": "Beato Ottaviano di Savona",
+      "titolo": "Vescovo di Savona",
+      "bio": "Beato Ottaviano di Savona, vescovo di Savona."
+    },
+    {
+      "nome": "Beato Gezzelino",
+      "titolo": "Eremita",
+      "bio": "Beato Gezzelino, eremita."
+    },
+    {
+      "nome": "Santa Maria Francesca di Gesù (Francesca Maria Rubatto)",
+      "titolo": "Vergine fondatrice delle Cappuccine di Loano",
+      "bio": "Santa Maria Francesca di Gesù (Francesca Maria Rubatto), vergine fondatrice delle Cappuccine di Loano."
+    },
+    {
+      "nome": "Beato Carlo López Vidal",
+      "titolo": "Martire",
+      "bio": "Beato Carlo López Vidal, martire."
+    },
+    {
+      "nome": "Beato Taddeo Dulny",
+      "titolo": "Martire",
+      "bio": "Beato Taddeo Dulny, martire."
+    },
+    {
+      "nome": "Beato Benedetto da Santa Coloma de Gramenet (Josep Domènech i Bonet)",
+      "titolo": "Sacerdote martire",
+      "bio": "Beato Benedetto da Santa Coloma de Gramenet (Josep Domènech i Bonet), sacerdote martire."
+    },
+    {
+      "nome": "Beato Matteo da Bascio (Serafini) (O.F.M. Cap.)",
+      "titolo": "Sascerdote e fondatore",
+      "bio": "Beato Matteo da Bascio (Serafini) (O.F.M. Cap.), sascerdote e fondatore."
+    },
+    {
+      "nome": "Beato Salvi Huix i Miralpeix (C.O.)",
+      "titolo": "Vescovo martire",
+      "bio": "Beato Salvi Huix i Miralpeix (C.O.), vescovo martire."
+    },
+    {
+      "nome": "San Glisente",
+      "titolo": "Laico, soldato ed eremita",
+      "bio": "San Glisente, laico, soldato ed eremita."
+    }
+  ],
+  "08-07": [
+    {
+      "nome": "San Sisto II",
+      "titolo": "Papa, e compagni, martiri",
+      "bio": "San Sisto II, papa, e compagni, martiri."
+    },
+    {
+      "nome": "San Gaetano di Thiene (C.R.)",
+      "titolo": "Sacerdote, fondatore dei Chierici regolari teatini",
+      "bio": "San Gaetano di Thiene (C.R.), sacerdote, fondatore dei Chierici regolari teatini."
+    },
+    {
+      "nome": "Santa Afra",
+      "titolo": "Martire",
+      "bio": "Santa Afra, martire."
+    },
+    {
+      "nome": "San Donato d'Arezzo",
+      "titolo": "Vescovo di Arezzo",
+      "bio": "San Donato d'Arezzo, vescovo di Arezzo."
+    },
+    {
+      "nome": "San Donaziano di Châlons",
+      "titolo": "Vescovo di Châlons",
+      "bio": "San Donaziano di Châlons, vescovo di Châlons."
+    },
+    {
+      "nome": "San Victricio di Rouen",
+      "titolo": "Vescovo di Rouen",
+      "bio": "San Victricio di Rouen, vescovo di Rouen."
+    },
+    {
+      "nome": "San Donato di BeSsançon",
+      "titolo": "Vescovo di Besançon",
+      "bio": "San Donato di BeSsançon, vescovo di Besançon."
+    },
+    {
+      "nome": "Beato Giordano Forzatè",
+      "titolo": "Abate",
+      "bio": "Beato Giordano Forzatè, abate."
+    },
+    {
+      "nome": "Sant'Alberto degli Abati (O.C.)",
+      "titolo": "Sacerdote",
+      "bio": "Sant'Alberto degli Abati (O.C.), sacerdote."
+    },
+    {
+      "nome": "Beato Alberto da Sassoferrato",
+      "titolo": "Monaco camaldolese",
+      "bio": "Beato Alberto da Sassoferrato, monaco camaldolese."
+    },
+    {
+      "nome": "Beato Vincenzo dell'Aquila",
+      "titolo": "Religioso francescano",
+      "bio": "Beato Vincenzo dell'Aquila, religioso francescano."
+    },
+    {
+      "nome": "Beati Agatangelo da Vendôme e Cassiano da Nantes",
+      "titolo": "Sacerdoti cappuccini e martiri",
+      "bio": "Beati Agatangelo da Vendôme e Cassiano da Nantes, sacerdoti cappuccini e martiri."
+    },
+    {
+      "nome": "Beati Martino di San Felice Woodcock",
+      "titolo": "Edoardo Bamber e Tommaso Whitaker, sacerdoti e martiri",
+      "bio": "Beati Martino di San Felice Woodcock, Edoardo Bamber e Tommaso Whitaker, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beato Nicola Postgate",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Nicola Postgate, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Edmund Bojanowski",
+      "titolo": "Fondatore delle Ancelle dell'Immacolata Concezione della Beata Vergine Maria",
+      "bio": "Beato Edmund Bojanowski, fondatore delle Ancelle dell'Immacolata Concezione della Beata Vergine Maria."
+    },
+    {
+      "nome": "San Michele de la Mora",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Michele de la Mora, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Cruz Laplana y Laguna",
+      "titolo": "Vescovo martire",
+      "bio": "Beato Cruz Laplana y Laguna, vescovo martire."
+    }
+  ],
+  "08-08": [
+    {
+      "nome": "San Domenico di Guzmán",
+      "titolo": "Sacerdote, fondatore dell'Ordine dei Predicatori",
+      "bio": "San Domenico di Guzmán, sacerdote, fondatore dell'Ordine dei Predicatori."
+    },
+    {
+      "nome": "Santi Secondo",
+      "titolo": "Carpoforo, Vittorino e Severiano, martiri",
+      "bio": "Santi Secondo, Carpoforo, Vittorino e Severiano, martiri."
+    },
+    {
+      "nome": "Santi Ciriaco",
+      "titolo": "Largo, Crescenziano, Memmia, Giuliana e Smaragdo, martiri",
+      "bio": "Santi Ciriaco, Largo, Crescenziano, Memmia, Giuliana e Smaragdo, martiri."
+    },
+    {
+      "nome": "San Marino",
+      "titolo": "Martire",
+      "bio": "San Marino, martire."
+    },
+    {
+      "nome": "Sant'Eusebio di Milano",
+      "titolo": "Vescovo di Milano",
+      "bio": "Sant'Eusebio di Milano, vescovo di Milano."
+    },
+    {
+      "nome": "San Severo di Vienne",
+      "titolo": "Prete",
+      "bio": "San Severo di Vienne, prete."
+    },
+    {
+      "nome": "San Mummolo",
+      "titolo": "Abate di Fleury",
+      "bio": "San Mummolo, abate di Fleury."
+    },
+    {
+      "nome": "Sant'Emiliano",
+      "titolo": "Vescovo di Cizico",
+      "bio": "Sant'Emiliano, vescovo di Cizico."
+    },
+    {
+      "nome": "Sant'Altmann di Passavia",
+      "titolo": "Vescovo di Passavia",
+      "bio": "Sant'Altmann di Passavia, vescovo di Passavia."
+    },
+    {
+      "nome": "San Famiano",
+      "titolo": "Eremita",
+      "bio": "San Famiano, eremita."
+    },
+    {
+      "nome": "Beato Giovanni Felton",
+      "titolo": "Martire",
+      "bio": "Beato Giovanni Felton, martire."
+    },
+    {
+      "nome": "Beati Giovanni Fingley",
+      "titolo": "Sacerdote, e Roberto Bickendike, martiri",
+      "bio": "Beati Giovanni Fingley, sacerdote, e Roberto Bickendike, martiri."
+    },
+    {
+      "nome": "San Paolo Ke Tingzhu",
+      "titolo": "Martire",
+      "bio": "San Paolo Ke Tingzhu, martire."
+    },
+    {
+      "nome": "Beata Maria Margherita Caiani",
+      "titolo": "Vergine. fondatrice delle Minime suore del Sacro Cuore",
+      "bio": "Beata Maria Margherita Caiani, vergine. fondatrice delle Minime suore del Sacro Cuore."
+    },
+    {
+      "nome": "Santa Mary MacKillop",
+      "titolo": "Vergine, fondatrice delle Suore di San Giuseppe del Sacro Cuore di Gesù",
+      "bio": "Santa Mary MacKillop, vergine, fondatrice delle Suore di San Giuseppe del Sacro Cuore di Gesù."
+    },
+    {
+      "nome": "Beato Antonio Silvestre Moya",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Antonio Silvestre Moya, sacerdote e martire."
+    },
+    {
+      "nome": "Beate Maria di Gesù Bambino Badillou y Bullit e compagne",
+      "titolo": "Vergini scolopie, martiri",
+      "bio": "Beate Maria di Gesù Bambino Badillou y Bullit e compagne, vergini scolopie, martiri."
+    },
+    {
+      "nome": "Beato Vladimiro Laskowski",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Vladimiro Laskowski, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Cayetano Gimenez Martin e 15 compagni",
+      "titolo": "Sacerdote e martiri",
+      "bio": "Beato Cayetano Gimenez Martin e 15 compagni, sacerdote e martiri."
+    },
+    {
+      "nome": "Beato Fernando Espanol Berdie",
+      "titolo": "Sacerdote martire",
+      "bio": "Beato Fernando Espanol Berdie, sacerdote martire."
+    }
+  ],
+  "08-09": [
+    {
+      "nome": "Santa Teresa Benedetta della Croce",
+      "titolo": "Vergine carmelitana scalza, martire",
+      "bio": "Santa Teresa Benedetta della Croce, vergine carmelitana scalza, martire."
+    },
+    {
+      "nome": "San Romano",
+      "titolo": "Martire",
+      "bio": "San Romano, martire."
+    },
+    {
+      "nome": "San Nateo",
+      "titolo": "Abate-vescovo di Achonry",
+      "bio": "San Nateo, abate-vescovo di Achonry."
+    },
+    {
+      "nome": "San Fedlimino di Kilmore",
+      "titolo": "Vescovo di Kilmore",
+      "bio": "San Fedlimino di Kilmore, vescovo di Kilmore."
+    },
+    {
+      "nome": "Santi martiri di Costantinopoli",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri di Costantinopoli."
+    },
+    {
+      "nome": "Beato Giovanni da Salerno",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Giovanni da Salerno, sacerdote domenicano."
+    },
+    {
+      "nome": "Beato Giovanni della Verna",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Giovanni della Verna, sacerdote francescano."
+    },
+    {
+      "nome": "Beato Falco di Palena",
+      "titolo": "Eremita",
+      "bio": "Beato Falco di Palena, eremita."
+    },
+    {
+      "nome": "Beato Riccardo Bere",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Riccardo Bere, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Claudio Richard",
+      "titolo": "Sacerdote benedettino e martire",
+      "bio": "Beato Claudio Richard, sacerdote benedettino e martire."
+    },
+    {
+      "nome": "Santa Candida Maria di Gesù (Juana Josefain Cipitria y Barriola)",
+      "titolo": "Vergine, fondatrice delle Figlie di Gesù",
+      "bio": "Santa Candida Maria di Gesù (Juana Josefain Cipitria y Barriola), vergine, fondatrice delle Figlie di Gesù."
+    },
+    {
+      "nome": "Beato Florentino Asensio Barroso",
+      "titolo": "Vescovo di Barbastro e martire",
+      "bio": "Beato Florentino Asensio Barroso, vescovo di Barbastro e martire."
+    },
+    {
+      "nome": "Beati Ruben di Gesù López Aguilar e sei compagni",
+      "titolo": "Religiosi fatebenefratelli e martiri",
+      "bio": "Beati Ruben di Gesù López Aguilar e sei compagni, religiosi fatebenefratelli e martiri."
+    },
+    {
+      "nome": "Beati Faustino Oteiza e Florentino Felipe",
+      "titolo": "Scolopi e martiri",
+      "bio": "Beati Faustino Oteiza e Florentino Felipe, scolopi e martiri."
+    },
+    {
+      "nome": "Beato Guglielmo Plaza Hernández",
+      "titolo": "Dei sacerdoti operai dioceSani e martire",
+      "bio": "Beato Guglielmo Plaza Hernández, dei sacerdoti operai dioceSani e martire."
+    },
+    {
+      "nome": "Beato Germano Garrigues Hernández",
+      "titolo": "Sacerdote francescano conventuale e martire",
+      "bio": "Beato Germano Garrigues Hernández, sacerdote francescano conventuale e martire."
+    },
+    {
+      "nome": "Beato Franz Jägerstätter",
+      "titolo": "Laico martire",
+      "bio": "Beato Franz Jägerstätter, laico martire."
+    }
+  ],
+  "08-10": [
+    {
+      "nome": "San Lorenzo",
+      "titolo": "Diacono e martire",
+      "bio": "San Lorenzo, diacono e martire."
+    },
+    {
+      "nome": "Santi martiri di Alessandria d'Egitto",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri di Alessandria d'Egitto."
+    },
+    {
+      "nome": "San Blano di Dunblane",
+      "titolo": "Vescovo",
+      "bio": "San Blano di Dunblane, vescovo."
+    },
+    {
+      "nome": "San Besso",
+      "titolo": "Martire, patrono della città di Ivrea",
+      "bio": "San Besso, martire, patrono della città di Ivrea."
+    },
+    {
+      "nome": "Beato Arcangelo Piacentini",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Arcangelo Piacentini, sacerdote francescano."
+    },
+    {
+      "nome": "Beato Agostino Ota",
+      "titolo": "Gesuita e martire",
+      "bio": "Beato Agostino Ota, gesuita e martire."
+    },
+    {
+      "nome": "Beati Claudio Giuseppe Jouffret de Bonnefont",
+      "titolo": "Francesco François e Lazzaro Tiersot, sacerdoti e martiri",
+      "bio": "Beati Claudio Giuseppe Jouffret de Bonnefont, Francesco François e Lazzaro Tiersot, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beato Giuseppe Toledo Pellicer",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giuseppe Toledo Pellicer, sacerdote e martire."
+    },
+    {
+      "nome": "Beati Giovanni Martorell Soria e Pietro Mesonero Rodríguez",
+      "titolo": "Salesiani e martire",
+      "bio": "Beati Giovanni Martorell Soria e Pietro Mesonero Rodríguez, salesiani e martire."
+    },
+    {
+      "nome": "Beati Francesco Drzewiecki",
+      "titolo": "Della Piccola opera della Divina Provvidenza, ed Edoardo Grzymala, sacerdoti e martiri",
+      "bio": "Beati Francesco Drzewiecki, della Piccola opera della Divina Provvidenza, ed Edoardo Grzymala, sacerdoti e martiri."
+    }
+  ],
+  "08-11": [
+    {
+      "nome": "Santa Chiara d'Assisi",
+      "titolo": "Vergine, fondatrice del second'ordine francescano",
+      "bio": "Santa Chiara d'Assisi, vergine, fondatrice del second'ordine francescano."
+    },
+    {
+      "nome": "Sant'Alessandro di Comana",
+      "titolo": "Detto il Carbonaio, vescovo di Comana Pontica e martire",
+      "bio": "Sant'Alessandro di Comana, detto il Carbonaio, vescovo di Comana Pontica e martire."
+    },
+    {
+      "nome": "San Tiburzio",
+      "titolo": "Martire",
+      "bio": "San Tiburzio, martire."
+    },
+    {
+      "nome": "Santa Susanna di Roma",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Susanna di Roma, vergine e martire."
+    },
+    {
+      "nome": "San Rufino di Assisi",
+      "titolo": "Primo vescovo di Assisi e martire",
+      "bio": "San Rufino di Assisi, primo vescovo di Assisi e martire."
+    },
+    {
+      "nome": "San Taurino di Evreux",
+      "titolo": "Primo vescovo di Évreux",
+      "bio": "San Taurino di Evreux, primo vescovo di Évreux."
+    },
+    {
+      "nome": "Sant'Attracta",
+      "titolo": "Badessa",
+      "bio": "Sant'Attracta, badessa."
+    },
+    {
+      "nome": "Sant'Equizio (abate)",
+      "titolo": "Abate",
+      "bio": "Sant'Equizio (abate), abate."
+    },
+    {
+      "nome": "San Gaugerico di Cambrai",
+      "titolo": "Vescovo di Cambrai",
+      "bio": "San Gaugerico di Cambrai, vescovo di Cambrai."
+    },
+    {
+      "nome": "Santa Rusticola",
+      "titolo": "Badessa",
+      "bio": "Santa Rusticola, badessa."
+    },
+    {
+      "nome": "Beati Giovanni Sandys",
+      "titolo": "Stefano Rowsham e Guglielmo Lampley, martiri",
+      "bio": "Beati Giovanni Sandys, Stefano Rowsham e Guglielmo Lampley, martiri."
+    },
+    {
+      "nome": "Beato Giovanni Giorgio Rhem",
+      "titolo": "Sacerdote domenicano e martire",
+      "bio": "Beato Giovanni Giorgio Rhem, sacerdote domenicano e martire."
+    },
+    {
+      "nome": "Beati Raffaele Alonso Gutiérrez e Carlo Díaz Gandía",
+      "titolo": "Martiri",
+      "bio": "Beati Raffaele Alonso Gutiérrez e Carlo Díaz Gandía, martiri."
+    },
+    {
+      "nome": "Beato Michele Domingo Cendra",
+      "titolo": "Salesiano e martire",
+      "bio": "Beato Michele Domingo Cendra, salesiano e martire."
+    },
+    {
+      "nome": "Beato Maurice Tornay",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Maurice Tornay, sacerdote e martire."
+    }
+  ],
+  "08-12": [
+    {
+      "nome": "Santa Giovanna Francesca Frémiot de Chantal",
+      "titolo": "Vedova, fondatrice dell'Ordine della Visitazione di Santa Maria",
+      "bio": "Santa Giovanna Francesca Frémiot de Chantal, vedova, fondatrice dell'Ordine della Visitazione di Santa Maria."
+    },
+    {
+      "nome": "Sant'Euplio",
+      "titolo": "Martire",
+      "bio": "Sant'Euplio, martire."
+    },
+    {
+      "nome": "Santi Aniceto e Fozio",
+      "titolo": "Martiri",
+      "bio": "Santi Aniceto e Fozio, martiri."
+    },
+    {
+      "nome": "San Muredach",
+      "titolo": "Vescovo di Killala",
+      "bio": "San Muredach, vescovo di Killala."
+    },
+    {
+      "nome": "Santa Lelia",
+      "titolo": "Vergine",
+      "bio": "Santa Lelia, vergine."
+    },
+    {
+      "nome": "Sant'Ercolano",
+      "titolo": "Vescovo di Brescia",
+      "bio": "Sant'Ercolano, vescovo di Brescia."
+    },
+    {
+      "nome": "Santi Porcario",
+      "titolo": "Abate, e numerosi monaci di Lérins, martiri",
+      "bio": "Santi Porcario, abate, e numerosi monaci di Lérins, martiri."
+    },
+    {
+      "nome": "Beato Carlo Meehan",
+      "titolo": "Sacerdote francescano e martire",
+      "bio": "Beato Carlo Meehan, sacerdote francescano e martire."
+    },
+    {
+      "nome": "Beato Innocenzo XI",
+      "titolo": "Papa",
+      "bio": "Beato Innocenzo XI, papa."
+    },
+    {
+      "nome": "Beato Pietro Jarrige de la Morélie de Puyredon",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Pietro Jarrige de la Morélie de Puyredon, sacerdote e martire."
+    },
+    {
+      "nome": "Santi Santi Giacomo Ðỗ Mai Năm",
+      "titolo": "Antonio Nguyện Ðích e Michele Nguyễn Huy Mỹ, martiri",
+      "bio": "Santi Santi Giacomo Ðỗ Mai Năm, Antonio Nguyện Ðích e Michele Nguyễn Huy Mỹ, martiri."
+    },
+    {
+      "nome": "Beata Vittoria Díaz y Bustos de Molina",
+      "titolo": "Vergine e martire",
+      "bio": "Beata Vittoria Díaz y Bustos de Molina, vergine e martire."
+    },
+    {
+      "nome": "Beato Flavio Argüeso González",
+      "titolo": "Religioso fatebenefratelli e martire",
+      "bio": "Beato Flavio Argüeso González, religioso fatebenefratelli e martire."
+    },
+    {
+      "nome": "Beato Sebastiano Calvo Martínez e cinque compagni (Gregorio Chirivás Lacambra",
+      "titolo": "Nicasio Sierra Ucar, Pietro Cunill Padrós, Venceslao Clarís Vilaregut e Giuseppe Pavón Bue",
+      "bio": "Beato Sebastiano Calvo Martínez e cinque compagni (Gregorio Chirivás Lacambra, Nicasio Sierra Ucar, Pietro Cunill Padrós, Venceslao Clarís Vilaregut e Giuseppe Pavón Bueno), claretiani, martiri."
+    },
+    {
+      "nome": "Beato Antonio Perulles Estivill",
+      "titolo": "Sacerdote dei sacerdoti operai dioceSani e martire",
+      "bio": "Beato Antonio Perulles Estivill, sacerdote dei sacerdoti operai dioceSani e martire."
+    },
+    {
+      "nome": "Beati Floriano Stepniak",
+      "titolo": "Cappuccino, e Giuseppe Straszewski, sacerdoti e martiri",
+      "bio": "Beati Floriano Stepniak, cappuccino, e Giuseppe Straszewski, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beato Karl Leisner",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Karl Leisner, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Manuel Basulto Jiménez",
+      "titolo": "Vescovo martire",
+      "bio": "Beato Manuel Basulto Jiménez, vescovo martire."
+    },
+    {
+      "nome": "Beato Manuel Borras y Ferré",
+      "titolo": "Vescovo martire",
+      "bio": "Beato Manuel Borras y Ferré, vescovo martire."
+    }
+  ],
+  "08-13": [
+    {
+      "nome": "San Ponziano",
+      "titolo": "Papa, e Ippolito, martiri",
+      "bio": "San Ponziano, papa, e Ippolito, martiri."
+    },
+    {
+      "nome": "San Cassiano di Imola",
+      "titolo": "Martire",
+      "bio": "San Cassiano di Imola, martire."
+    },
+    {
+      "nome": "Sant'Antioco di Lione",
+      "titolo": "Vescovo di Lione",
+      "bio": "Sant'Antioco di Lione, vescovo di Lione."
+    },
+    {
+      "nome": "Santa Radegonda",
+      "titolo": "Regina dei Franchi",
+      "bio": "Santa Radegonda, regina dei Franchi."
+    },
+    {
+      "nome": "San Massimo il Confessore",
+      "titolo": "Abate",
+      "bio": "San Massimo il Confessore, abate."
+    },
+    {
+      "nome": "San Vigberto di Fritzlar",
+      "titolo": "Prete e abate",
+      "bio": "San Vigberto di Fritzlar, prete e abate."
+    },
+    {
+      "nome": "Beata Gertrude di Altenberg",
+      "titolo": "Badessa premostratense",
+      "bio": "Beata Gertrude di Altenberg, badessa premostratense."
+    },
+    {
+      "nome": "Beato Patrick O'Healy",
+      "titolo": "Vescovo di Mayo, e Connor O'Rourke, sacerdote, martiri francescani",
+      "bio": "Beato Patrick O'Healy, vescovo di Mayo, e Connor O'Rourke, sacerdote, martiri francescani."
+    },
+    {
+      "nome": "Beato Guglielmo Freeman",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Guglielmo Freeman, sacerdote e martire."
+    },
+    {
+      "nome": "San Giovanni Berchmans",
+      "titolo": "Religioso della Compagnia di Gesù",
+      "bio": "San Giovanni Berchmans, religioso della Compagnia di Gesù."
+    },
+    {
+      "nome": "Beato Pietro Gabilhaud",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Pietro Gabilhaud, sacerdote e martire."
+    },
+    {
+      "nome": "Beati Secondino Maria Ortega García e diciannove compagni claretiani",
+      "titolo": "Martiri",
+      "bio": "Beati Secondino Maria Ortega García e diciannove compagni claretiani, martiri."
+    },
+    {
+      "nome": "San Benildo Romançon",
+      "titolo": "Lasalliano",
+      "bio": "San Benildo Romançon, lasalliano."
+    },
+    {
+      "nome": "Beato Giovanni Agramunt",
+      "titolo": "Sacerdote scolopio e martire",
+      "bio": "Beato Giovanni Agramunt, sacerdote scolopio e martire."
+    },
+    {
+      "nome": "Beato Jakob Gapp",
+      "titolo": "Sacerdote marianista e martire",
+      "bio": "Beato Jakob Gapp, sacerdote marianista e martire."
+    },
+    {
+      "nome": "Beato Modesto García Martí",
+      "titolo": "Sacerdote cappuccino e martire",
+      "bio": "Beato Modesto García Martí, sacerdote cappuccino e martire."
+    },
+    {
+      "nome": "Beato Giuseppe Bonet Nadal",
+      "titolo": "Sacerdote salesiano e martire",
+      "bio": "Beato Giuseppe Bonet Nadal, sacerdote salesiano e martire."
+    },
+    {
+      "nome": "Beato Marco d'Aviano Cristofori (Carlo Domenico)",
+      "titolo": "Sacerdote predicatore",
+      "bio": "Beato Marco d'Aviano Cristofori (Carlo Domenico), sacerdote predicatore."
+    }
+  ],
+  "08-14": [
+    {
+      "nome": "San Massimiliano Maria Kolbe (O.F.M. Conv.)",
+      "titolo": "Sacerdote, religioso e martire",
+      "bio": "San Massimiliano Maria Kolbe (O.F.M. Conv.), sacerdote, religioso e martire."
+    },
+    {
+      "nome": "Sant'Ursicino",
+      "titolo": "Martire",
+      "bio": "Sant'Ursicino, martire."
+    },
+    {
+      "nome": "San Marcello",
+      "titolo": "Vescovo di Apamea di Siria e martire",
+      "bio": "San Marcello, vescovo di Apamea di Siria e martire."
+    },
+    {
+      "nome": "Sant'Eusebio",
+      "titolo": "Prete, fondatore della chiesa che porta il suo nome sull'Esquilino",
+      "bio": "Sant'Eusebio, prete, fondatore della chiesa che porta il suo nome sull'Esquilino."
+    },
+    {
+      "nome": "San Fachtna di Ross",
+      "titolo": "Vescovo di Ross e abate",
+      "bio": "San Fachtna di Ross, vescovo di Ross e abate."
+    },
+    {
+      "nome": "Sant'Arnolfo di Soissons",
+      "titolo": "Vescovo di Soissons",
+      "bio": "Sant'Arnolfo di Soissons, vescovo di Soissons."
+    },
+    {
+      "nome": "Beato Sante da Urbino",
+      "titolo": "Frate laico francescano",
+      "bio": "Beato Sante da Urbino, frate laico francescano."
+    },
+    {
+      "nome": "Santi Martiri di Otranto",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi Martiri di Otranto."
+    },
+    {
+      "nome": "Santi Domenico Ibáñez de Erquicia e Francesco Shoyemon",
+      "titolo": "Domenicani martiri",
+      "bio": "Santi Domenico Ibáñez de Erquicia e Francesco Shoyemon, domenicani martiri."
+    },
+    {
+      "nome": "Beata Maria Elisabetta Renzi",
+      "titolo": "Vergine, fondatrice delle Maestre pie dell'Addolorata",
+      "bio": "Beata Maria Elisabetta Renzi, vergine, fondatrice delle Maestre pie dell'Addolorata."
+    },
+    {
+      "nome": "Beato Vincenzo Rubiols Castelló",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Vincenzo Rubiols Castelló, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Felice Yuste Cava",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Felice Yuste Cava, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Giovanni Aguilar Donis e 5 compagni",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Beato Giovanni Aguilar Donis e 5 compagni."
+    }
+  ],
+  "08-15": [
+    {
+      "nome": "Solennità dell'Assunzione della Vergine Maria",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Solennità dell'Assunzione della Vergine Maria."
+    },
+    {
+      "nome": "San Tarcisio",
+      "titolo": "Laico martire",
+      "bio": "San Tarcisio, laico martire."
+    },
+    {
+      "nome": "Santi Stratone",
+      "titolo": "Filippo ed Eutichiano, martiri",
+      "bio": "Santi Stratone, Filippo ed Eutichiano, martiri."
+    },
+    {
+      "nome": "San Simpliciano",
+      "titolo": "Vescovo di Milano",
+      "bio": "San Simpliciano, vescovo di Milano."
+    },
+    {
+      "nome": "Sant'Alipio di Tagaste",
+      "titolo": "Vescovo di Tagaste",
+      "bio": "Sant'Alipio di Tagaste, vescovo di Tagaste."
+    },
+    {
+      "nome": "Sant'Alfredo di Hildesheim (O.S.B.)",
+      "titolo": "Vescovo di Hildesheim",
+      "bio": "Sant'Alfredo di Hildesheim (O.S.B.), vescovo di Hildesheim."
+    },
+    {
+      "nome": "natale di Santo Stefano I d'Ungheria",
+      "titolo": "Re d'Ungheria",
+      "bio": "natale di Santo Stefano I d'Ungheria, re d'Ungheria."
+    },
+    {
+      "nome": "San Giacinto Odrovaz",
+      "titolo": "Sacerdote domenicano",
+      "bio": "San Giacinto Odrovaz, sacerdote domenicano."
+    },
+    {
+      "nome": "Beato Aimone Taparelli",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Aimone Taparelli, sacerdote domenicano."
+    },
+    {
+      "nome": "Beata Giuliana Puricelli da Busto Arsizio",
+      "titolo": "Vergine, fondatrice del monastero ambrosiano del Sacro Monte di Varese",
+      "bio": "Beata Giuliana Puricelli da Busto Arsizio, vergine, fondatrice del monastero ambrosiano del Sacro Monte di Varese."
+    },
+    {
+      "nome": "Santo Stanislao Kostka",
+      "titolo": "Gesuita",
+      "bio": "Santo Stanislao Kostka, gesuita."
+    },
+    {
+      "nome": "Beato Isidoro Bakanja",
+      "titolo": "Martire",
+      "bio": "Beato Isidoro Bakanja, martire."
+    },
+    {
+      "nome": "Santi Luigi Batis Sáinz",
+      "titolo": "Emanuele Morales, Salvatore Lara Puente e Davide Roldán Lara, martiri",
+      "bio": "Santi Luigi Batis Sáinz, Emanuele Morales, Salvatore Lara Puente e Davide Roldán Lara, martiri."
+    },
+    {
+      "nome": "Beato Ludovico Masferrer Vila",
+      "titolo": "Sacerdote, e diciannove compagni, martiri: Beato Giuseppe Maria Peris Polo, dei sacerdoti ",
+      "bio": "Beato Ludovico Masferrer Vila, sacerdote, e diciannove compagni, martiri: Beato Giuseppe Maria Peris Polo, dei sacerdoti operai dioceSani, martire."
+    },
+    {
+      "nome": "Beata Maria del Santuario di San Luigi Gonzaga Moragas Cantarero",
+      "titolo": "Vergine carmelitana scalza e martire",
+      "bio": "Beata Maria del Santuario di San Luigi Gonzaga Moragas Cantarero, vergine carmelitana scalza e martire."
+    },
+    {
+      "nome": "Beato Domenico Hurtado Soler",
+      "titolo": "Sacerdote amigoniano e martire",
+      "bio": "Beato Domenico Hurtado Soler, sacerdote amigoniano e martire."
+    },
+    {
+      "nome": "Beato Vincenzo Soler",
+      "titolo": "Sacerdote agostiniano recolletto e martire",
+      "bio": "Beato Vincenzo Soler, sacerdote agostiniano recolletto e martire."
+    },
+    {
+      "nome": "Beato Carmelo Sastre Sastre",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Carmelo Sastre Sastre, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Giacomo Bonet Nadal",
+      "titolo": "Sacerdote salesiana e martire",
+      "bio": "Beato Giacomo Bonet Nadal, sacerdote salesiana e martire."
+    },
+    {
+      "nome": "Beato Claudio Granzotto",
+      "titolo": "Religioso francescano",
+      "bio": "Beato Claudio Granzotto, religioso francescano."
+    },
+    {
+      "nome": "Beata Armida Barelli",
+      "titolo": "Laica, fondatrice italiana delle Missionarie della Regalità di Nostro Signore Gesù Cristo ",
+      "bio": "Beata Armida Barelli, laica, fondatrice italiana delle Missionarie della Regalità di Nostro Signore Gesù Cristo e co-fondatrice dell'Università Cattolica del Sacro Cuore."
+    },
+    {
+      "nome": "Beato Alberto da Sarteano Berdini",
+      "titolo": "Sacerdote, predicatore e diplomatico francescano",
+      "bio": "Beato Alberto da Sarteano Berdini, sacerdote, predicatore e diplomatico francescano."
+    }
+  ],
+  "08-16": [
+    {
+      "nome": "Santo Stefano I d'Ungheria",
+      "titolo": "Re d'Ungheria",
+      "bio": "Santo Stefano I d'Ungheria, re d'Ungheria."
+    },
+    {
+      "nome": "Sant'Arsacio",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Sant'Arsacio."
+    },
+    {
+      "nome": "San Teodoro di Sion",
+      "titolo": "Primo vescovo di Octodurus",
+      "bio": "San Teodoro di Sion, primo vescovo di Octodurus."
+    },
+    {
+      "nome": "Sant'Armagilo",
+      "titolo": "Eremita",
+      "bio": "Sant'Armagilo, eremita."
+    },
+    {
+      "nome": "San Frambaldo",
+      "titolo": "Monaco",
+      "bio": "San Frambaldo, monaco."
+    },
+    {
+      "nome": "Beato Raoul de la Futaie",
+      "titolo": "Sacerdote, fondatore dell'abbazia di Saint-Sulpice",
+      "bio": "Beato Raoul de la Futaie, sacerdote, fondatore dell'abbazia di Saint-Sulpice."
+    },
+    {
+      "nome": "Beato Lorenzo Loricato",
+      "titolo": "Penitente",
+      "bio": "Beato Lorenzo Loricato, penitente."
+    },
+    {
+      "nome": "San Rocco",
+      "titolo": "Taumaturgo e pellegrino",
+      "bio": "San Rocco, taumaturgo e pellegrino."
+    },
+    {
+      "nome": "Beato Angiolo Agostino Mazzinghi",
+      "titolo": "Sacerdote carmelitano",
+      "bio": "Beato Angiolo Agostino Mazzinghi, sacerdote carmelitano."
+    },
+    {
+      "nome": "Santa Beatrice de Silva",
+      "titolo": "Vergine, fondatrice delle Concezioniste francescane",
+      "bio": "Santa Beatrice de Silva, vergine, fondatrice delle Concezioniste francescane."
+    },
+    {
+      "nome": "Beato Giovanni di Santa Marta",
+      "titolo": "Sacerdote francescano e martire",
+      "bio": "Beato Giovanni di Santa Marta, sacerdote francescano e martire."
+    },
+    {
+      "nome": "Beati Simone Bokusai Kyota",
+      "titolo": "Maddalena, Tommaso Gengoro, Maria e Giacomo, martiri",
+      "bio": "Beati Simone Bokusai Kyota, Maddalena, Tommaso Gengoro, Maria e Giacomo, martiri."
+    },
+    {
+      "nome": "Beato Giovanni Battista Menestrel",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giovanni Battista Menestrel, sacerdote e martire."
+    },
+    {
+      "nome": "Santa Rosa Fan Hui",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Rosa Fan Hui, vergine e martire."
+    },
+    {
+      "nome": "Beata Pietra di San Giuseppe Pérez Florido",
+      "titolo": "Fondatrice delle Madri degli abbandonati",
+      "bio": "Beata Pietra di San Giuseppe Pérez Florido, fondatrice delle Madri degli abbandonati."
+    },
+    {
+      "nome": "Beato Placido García Gilabert",
+      "titolo": "Religioso francescano e martire",
+      "bio": "Beato Placido García Gilabert, religioso francescano e martire."
+    },
+    {
+      "nome": "Beato Enrico García Beltrán",
+      "titolo": "Diacono cappuccino e martire",
+      "bio": "Beato Enrico García Beltrán, diacono cappuccino e martire."
+    },
+    {
+      "nome": "Beato Gabriele Sanchis Mompó",
+      "titolo": "Amigoniano e martire",
+      "bio": "Beato Gabriele Sanchis Mompó, amigoniano e martire."
+    }
+  ],
+  "08-17": [
+    {
+      "nome": "San Mirone",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Mirone, sacerdote e martire."
+    },
+    {
+      "nome": "San Mamete di Cesarea",
+      "titolo": "Martire",
+      "bio": "San Mamete di Cesarea, martire."
+    },
+    {
+      "nome": "Sant'Eusebio",
+      "titolo": "Papa",
+      "bio": "Sant'Eusebio, papa."
+    },
+    {
+      "nome": "San Gerone",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Gerone, sacerdote e martire."
+    },
+    {
+      "nome": "San Elia di Enna",
+      "titolo": "Monaco",
+      "bio": "San Elia di Enna, monaco."
+    },
+    {
+      "nome": "San Nicolò Politi",
+      "titolo": "Eremita",
+      "bio": "San Nicolò Politi, eremita."
+    },
+    {
+      "nome": "Santa Chiara da Montefalco",
+      "titolo": "Vergine agostiniana",
+      "bio": "Santa Chiara da Montefalco, vergine agostiniana."
+    },
+    {
+      "nome": "Santi Giacomo Kyuhei Gorobioye Tomonaga",
+      "titolo": "Sacerdote domenicano, e Michele Kurobioye, martiri",
+      "bio": "Santi Giacomo Kyuhei Gorobioye Tomonaga, sacerdote domenicano, e Michele Kurobioye, martiri."
+    },
+    {
+      "nome": "Santa Jeanne Delanoue",
+      "titolo": "Vergine, fondatrice delle Suore di Sant'Anna della Provvidenza",
+      "bio": "Santa Jeanne Delanoue, vergine, fondatrice delle Suore di Sant'Anna della Provvidenza."
+    },
+    {
+      "nome": "Beato Natale Ilario Le Conte",
+      "titolo": "Martire",
+      "bio": "Beato Natale Ilario Le Conte, martire."
+    },
+    {
+      "nome": "Beato Enrico Canadell",
+      "titolo": "Sacerdote scolopio e martire",
+      "bio": "Beato Enrico Canadell, sacerdote scolopio e martire."
+    },
+    {
+      "nome": "Beato Alberto da Chiatina",
+      "titolo": "Sacerdote",
+      "bio": "Beato Alberto da Chiatina, sacerdote."
+    }
+  ],
+  "08-18": [
+    {
+      "nome": "Sant'Elena imperatrice",
+      "titolo": "Madre di Costantino",
+      "bio": "Sant'Elena imperatrice, madre di Costantino."
+    },
+    {
+      "nome": "Sant'Agapito di Palestrina",
+      "titolo": "Martire",
+      "bio": "Sant'Agapito di Palestrina, martire."
+    },
+    {
+      "nome": "Santi martiri di Utica",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri di Utica."
+    },
+    {
+      "nome": "San Leone",
+      "titolo": "Martire",
+      "bio": "San Leone, martire."
+    },
+    {
+      "nome": "San Firmino di Metz",
+      "titolo": "Vescovo di Metz",
+      "bio": "San Firmino di Metz, vescovo di Metz."
+    },
+    {
+      "nome": "Sant'Eonio di Arles",
+      "titolo": "Vescovo di Arles",
+      "bio": "Sant'Eonio di Arles, vescovo di Arles."
+    },
+    {
+      "nome": "San Macario",
+      "titolo": "Egumeno di Costantinopoli",
+      "bio": "San Macario, egumeno di Costantinopoli."
+    },
+    {
+      "nome": "San Giovanni di Rila",
+      "titolo": "Monaco, anacoreta e fondatore del Monastero di Rila",
+      "bio": "San Giovanni di Rila, monaco, anacoreta e fondatore del Monastero di Rila."
+    },
+    {
+      "nome": "Beato Manés de Guzmán",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Manés de Guzmán, sacerdote domenicano."
+    },
+    {
+      "nome": "Beato Leonardo",
+      "titolo": "Abate di Cava",
+      "bio": "Beato Leonardo, abate di Cava."
+    },
+    {
+      "nome": "Beato Rinaldo da Concorezzo",
+      "titolo": "Vescovo di Vicenza e poi di Ravenna",
+      "bio": "Beato Rinaldo da Concorezzo, vescovo di Vicenza e poi di Ravenna."
+    },
+    {
+      "nome": "Beata Paola Montaldi",
+      "titolo": "Vergine, badessa clarissa",
+      "bio": "Beata Paola Montaldi, vergine, badessa clarissa."
+    },
+    {
+      "nome": "Beato Antonio Banassat",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Antonio Banassat, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Francesco Arias Martín",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Francesco Arias Martín, sacerdote e martire."
+    },
+    {
+      "nome": "Beati Giacomo Falgarona Vilanova e Atanasio Vidaurreta Labra",
+      "titolo": "Religiosi claretiani, martiri",
+      "bio": "Beati Giacomo Falgarona Vilanova e Atanasio Vidaurreta Labra, religiosi claretiani, martiri."
+    },
+    {
+      "nome": "Beato Martino Martínez Pascual",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Martino Martínez Pascual, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Vincenzo Maria Izquierdo Alcón",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Vincenzo Maria Izquierdo Alcón, sacerdote e martire."
+    },
+    {
+      "nome": "Beata Rosa di Nostra Signora del Buon Consiglio Pedret Rull",
+      "titolo": "Vergine carmelitana e martire",
+      "bio": "Beata Rosa di Nostra Signora del Buon Consiglio Pedret Rull, vergine carmelitana e martire."
+    },
+    {
+      "nome": "Beato Martino Martínez Pascual",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Martino Martínez Pascual, sacerdote e martire."
+    },
+    {
+      "nome": "Sant'Alberto Hurtado (S.J.) (Luis Alberto Hurtado Cruchaga)",
+      "titolo": "Sacerdote e fondatore",
+      "bio": "Sant'Alberto Hurtado (S.J.) (Luis Alberto Hurtado Cruchaga), sacerdote e fondatore."
+    }
+  ],
+  "08-19": [
+    {
+      "nome": "San Giovanni Eudes",
+      "titolo": "Sacerdote, fondatore della Congregazione di Gesù e Maria e dell'Ordine di Nostra Signora d",
+      "bio": "San Giovanni Eudes, sacerdote, fondatore della Congregazione di Gesù e Maria e dell'Ordine di Nostra Signora della Carità."
+    },
+    {
+      "nome": "San Magno",
+      "titolo": "Laico martire",
+      "bio": "San Magno, laico martire."
+    },
+    {
+      "nome": "San Magno di Anagni",
+      "titolo": "Martire",
+      "bio": "San Magno di Anagni, martire."
+    },
+    {
+      "nome": "San Magino",
+      "titolo": "Martire",
+      "bio": "San Magino, martire."
+    },
+    {
+      "nome": "San Timoteo",
+      "titolo": "Martire",
+      "bio": "San Timoteo, martire."
+    },
+    {
+      "nome": "Santi Andrea",
+      "titolo": "Tribuno, e compagni, suoi soldati, martiri",
+      "bio": "Santi Andrea, tribuno, e compagni, suoi soldati, martiri."
+    },
+    {
+      "nome": "San Sisto III",
+      "titolo": "Papa",
+      "bio": "San Sisto III, papa."
+    },
+    {
+      "nome": "San Donato",
+      "titolo": "Prete ed eremita",
+      "bio": "San Donato, prete ed eremita."
+    },
+    {
+      "nome": "San Bertolfo abate",
+      "titolo": "Abate di Bobbio",
+      "bio": "San Bertolfo abate, abate di Bobbio."
+    },
+    {
+      "nome": "San Sebaldo da Norimberga",
+      "titolo": "Eremita",
+      "bio": "San Sebaldo da Norimberga, eremita."
+    },
+    {
+      "nome": "San Bartolomeo di Simeri",
+      "titolo": "Sacerdote, abate ed eremita",
+      "bio": "San Bartolomeo di Simeri, sacerdote, abate ed eremita."
+    },
+    {
+      "nome": "San Guerrico d'Igny",
+      "titolo": "Abate di Igny",
+      "bio": "San Guerrico d'Igny, abate di Igny."
+    },
+    {
+      "nome": "Beato Leone II di Cava",
+      "titolo": "Abate di Cava",
+      "bio": "Beato Leone II di Cava, abate di Cava."
+    },
+    {
+      "nome": "San Ludovico di Tolosa",
+      "titolo": "Francescano, vescovo di Tolosa",
+      "bio": "San Ludovico di Tolosa, francescano, vescovo di Tolosa."
+    },
+    {
+      "nome": "Beato Giordano da Pisa",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Giordano da Pisa, sacerdote domenicano."
+    },
+    {
+      "nome": "Beato Angelo di Acquapagana",
+      "titolo": "Eremita camaldolese",
+      "bio": "Beato Angelo di Acquapagana, eremita camaldolese."
+    },
+    {
+      "nome": "Beati Ludovico Flores",
+      "titolo": "Pietro de Zúñiga e tredici compagni, martiri",
+      "bio": "Beati Ludovico Flores, Pietro de Zúñiga e tredici compagni, martiri."
+    },
+    {
+      "nome": "Beato Ugo Green",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Ugo Green, sacerdote e martire."
+    },
+    {
+      "nome": "Sant'Ezequiel Moreno",
+      "titolo": "Agostiniano recolletto, vescovo di Pasto",
+      "bio": "Sant'Ezequiel Moreno, agostiniano recolletto, vescovo di Pasto."
+    },
+    {
+      "nome": "Beato Francesco Ibáñez Ibáñez",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Francesco Ibáñez Ibáñez, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Tommaso Sitjar Fortìa",
+      "titolo": "Sacerdote gesuita e martire",
+      "bio": "Beato Tommaso Sitjar Fortìa, sacerdote gesuita e martire."
+    },
+    {
+      "nome": "Beate Elvira della Natività di Nostra Signora Torrentallé Paraire e compagne",
+      "titolo": "Vergini carmelitane, martiri",
+      "bio": "Beate Elvira della Natività di Nostra Signora Torrentallé Paraire e compagne, vergini carmelitane, martiri."
+    }
+  ],
+  "08-20": [
+    {
+      "nome": "San Bernardo di Chiaravalle (O.Cist.)",
+      "titolo": "Abate di Clairvaux e Dottore della Chiesa",
+      "bio": "San Bernardo di Chiaravalle (O.Cist.), abate di Clairvaux e Dottore della Chiesa."
+    },
+    {
+      "nome": "Samuele",
+      "titolo": "Profeta",
+      "bio": "Samuele, profeta."
+    },
+    {
+      "nome": "San Massimo",
+      "titolo": "Monaco",
+      "bio": "San Massimo, monaco."
+    },
+    {
+      "nome": "San Filiberto di Jumièges",
+      "titolo": "Abate",
+      "bio": "San Filiberto di Jumièges, abate."
+    },
+    {
+      "nome": "Santi Leovigildo e Cristoforo",
+      "titolo": "Monaci, martiri",
+      "bio": "Santi Leovigildo e Cristoforo, monaci, martiri."
+    },
+    {
+      "nome": "San Bernardo Tolomei",
+      "titolo": "Abate, fondatore della Congregazione olivetana",
+      "bio": "San Bernardo Tolomei, abate, fondatore della Congregazione olivetana."
+    },
+    {
+      "nome": "Beati Ludovico Francesco Le Brun",
+      "titolo": "Maurino, e Gervasio Brunel, trappista, sacerdoti e martiri",
+      "bio": "Beati Ludovico Francesco Le Brun, maurino, e Gervasio Brunel, trappista, sacerdoti e martiri."
+    },
+    {
+      "nome": "Santa Maria de Mattias",
+      "titolo": "Vergine, fondatrice delle Suore adoratrici del Sangue di Cristo",
+      "bio": "Santa Maria de Mattias, vergine, fondatrice delle Suore adoratrici del Sangue di Cristo."
+    },
+    {
+      "nome": "natale di San Pio X",
+      "titolo": "Papa",
+      "bio": "natale di San Pio X, papa."
+    },
+    {
+      "nome": "Beato Mattia Cardona",
+      "titolo": "Sacerdote scolopio e martire",
+      "bio": "Beato Mattia Cardona, sacerdote scolopio e martire."
+    },
+    {
+      "nome": "Beata Maria Climent Mateu",
+      "titolo": "Vergine e martire",
+      "bio": "Beata Maria Climent Mateu, vergine e martire."
+    },
+    {
+      "nome": "Beato Ladislao Maczkowski",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Ladislao Maczkowski, sacerdote e martire."
+    }
+  ],
+  "08-21": [
+    {
+      "nome": "San Pio X",
+      "titolo": "Papa",
+      "bio": "San Pio X, papa."
+    },
+    {
+      "nome": "Santi Agatonico",
+      "titolo": "Zotico e compagni, martiri",
+      "bio": "Santi Agatonico, Zotico e compagni, martiri."
+    },
+    {
+      "nome": "Santa Ciriaca",
+      "titolo": "Vedova e martire",
+      "bio": "Santa Ciriaca, vedova e martire."
+    },
+    {
+      "nome": "San Quadrato",
+      "titolo": "Vescovo di Utica e martire",
+      "bio": "San Quadrato, vescovo di Utica e martire."
+    },
+    {
+      "nome": "Sant'Euprepio di Verona",
+      "titolo": "Primo vescovo di Verona",
+      "bio": "Sant'Euprepio di Verona, primo vescovo di Verona."
+    },
+    {
+      "nome": "San Lussorio",
+      "titolo": "Martire",
+      "bio": "San Lussorio, martire."
+    },
+    {
+      "nome": "Santi Bassa",
+      "titolo": "Teognio, Agapio e Pisto, martiri",
+      "bio": "Santi Bassa, Teognio, Agapio e Pisto, martiri."
+    },
+    {
+      "nome": "San Privato",
+      "titolo": "Vescovo di Mende e martire",
+      "bio": "San Privato, vescovo di Mende e martire."
+    },
+    {
+      "nome": "San Sidonio Apollinare (Gaio Sollio Sidonio Apollinare)",
+      "titolo": "Vescovo di Alvernia",
+      "bio": "San Sidonio Apollinare (Gaio Sollio Sidonio Apollinare), vescovo di Alvernia."
+    },
+    {
+      "nome": "Santi Bernardo (Ahmed)",
+      "titolo": "Monaco cistercense, Maria (Zaida) e Grazia (Zoraida), martiri",
+      "bio": "Santi Bernardo (Ahmed), monaco cistercense, Maria (Zaida) e Grazia (Zoraida), martiri."
+    },
+    {
+      "nome": "San Giuseppe Ðặng Văn Viên",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Giuseppe Ðặng Văn Viên, sacerdote e martire."
+    },
+    {
+      "nome": "Beata Vittoria Rasoamanarivo",
+      "titolo": "Vedova",
+      "bio": "Beata Vittoria Rasoamanarivo, vedova."
+    },
+    {
+      "nome": "Beato Salvatore Estrugo Solves",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Salvatore Estrugo Solves, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Raimondo Peirò Victori",
+      "titolo": "Sacerdote francescano e martire",
+      "bio": "Beato Raimondo Peirò Victori, sacerdote francescano e martire."
+    },
+    {
+      "nome": "Beato Brunone Zembol",
+      "titolo": "Martire",
+      "bio": "Beato Brunone Zembol, martire."
+    }
+  ],
+  "08-22": [
+    {
+      "nome": "Beata Vergine Maria Regina",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Beata Vergine Maria Regina."
+    },
+    {
+      "nome": "San Sinforiano di Autun",
+      "titolo": "Martire",
+      "bio": "San Sinforiano di Autun, martire."
+    },
+    {
+      "nome": "San Timoteo",
+      "titolo": "Martire",
+      "bio": "San Timoteo, martire."
+    },
+    {
+      "nome": "San Filippo Benizi",
+      "titolo": "Sacerdote servita",
+      "bio": "San Filippo Benizi, sacerdote servita."
+    },
+    {
+      "nome": "Beato Giacomo Bianconi",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Giacomo Bianconi, sacerdote domenicano."
+    },
+    {
+      "nome": "Beato Timoteo da Monticchio",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Timoteo da Monticchio, sacerdote francescano."
+    },
+    {
+      "nome": "Beato Tommaso Percy",
+      "titolo": "Martire",
+      "bio": "Beato Tommaso Percy, martire."
+    },
+    {
+      "nome": "Beati Guglielmo Lacey e Riccardo Kirkman",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Beati Guglielmo Lacey e Riccardo Kirkman, sacerdoti e martiri."
+    },
+    {
+      "nome": "San Giovanni Wall",
+      "titolo": "Sacerdote francescano e martire",
+      "bio": "San Giovanni Wall, sacerdote francescano e martire."
+    },
+    {
+      "nome": "San Giovanni Kemble",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Giovanni Kemble, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Bernardo da Offida",
+      "titolo": "Religioso cappuccino",
+      "bio": "Beato Bernardo da Offida, religioso cappuccino."
+    },
+    {
+      "nome": "Sant'Elia Leymarie de Laroche",
+      "titolo": "Sacerdote e martire",
+      "bio": "Sant'Elia Leymarie de Laroche, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Simeone Lukač",
+      "titolo": "Vescovo e martire",
+      "bio": "Beato Simeone Lukač, vescovo e martire."
+    },
+    {
+      "nome": "Beato Narciso de Esténaga y Echevarría",
+      "titolo": "Vescovo martire",
+      "bio": "Beato Narciso de Esténaga y Echevarría, vescovo martire."
+    }
+  ],
+  "08-23": [
+    {
+      "nome": "Santa Rosa da Lima",
+      "titolo": "Vergine del terz'ordine domenicano",
+      "bio": "Santa Rosa da Lima, vergine del terz'ordine domenicano."
+    },
+    {
+      "nome": "San Zaccheo",
+      "titolo": "Quarto vescovo di Gerusalemme",
+      "bio": "San Zaccheo, quarto vescovo di Gerusalemme."
+    },
+    {
+      "nome": "Santi Abbondio e Ireneo",
+      "titolo": "Martiri",
+      "bio": "Santi Abbondio e Ireneo, martiri."
+    },
+    {
+      "nome": "Santi Ciriaco e Archelao",
+      "titolo": "Martiri",
+      "bio": "Santi Ciriaco e Archelao, martiri."
+    },
+    {
+      "nome": "San Lupo",
+      "titolo": "Martire",
+      "bio": "San Lupo, martire."
+    },
+    {
+      "nome": "Santi Claudio",
+      "titolo": "Asterio e Neone, martiri",
+      "bio": "Santi Claudio, Asterio e Neone, martiri."
+    },
+    {
+      "nome": "San Flaviano di Autun",
+      "titolo": "Vescovo di Autun",
+      "bio": "San Flaviano di Autun, vescovo di Autun."
+    },
+    {
+      "nome": "Sant'Eugenio di Ardstraw",
+      "titolo": "Primo vescovo di Ardstraw",
+      "bio": "Sant'Eugenio di Ardstraw, primo vescovo di Ardstraw."
+    },
+    {
+      "nome": "Beato Giovanni Bourdon",
+      "titolo": "Sacerdote cappuccino e martire",
+      "bio": "Beato Giovanni Bourdon, sacerdote cappuccino e martire."
+    },
+    {
+      "nome": "Beati Costantino Carbonell Sempere",
+      "titolo": "Pietro Gelabert Amer e Raimondo Grimaltos Monllor, gesuiti",
+      "bio": "Beati Costantino Carbonell Sempere, Pietro Gelabert Amer e Raimondo Grimaltos Monllor, gesuiti."
+    },
+    {
+      "nome": "Beati Florentino Pérez Romero e Urbano Gil Sáez",
+      "titolo": "Amigoniani, martiri",
+      "bio": "Beati Florentino Pérez Romero e Urbano Gil Sáez, amigoniani, martiri."
+    },
+    {
+      "nome": "Beato Giovanni Maria della Croce García Méndez",
+      "titolo": "Sacerdote dehoniano e martire",
+      "bio": "Beato Giovanni Maria della Croce García Méndez, sacerdote dehoniano e martire."
+    },
+    {
+      "nome": "Beate Rosaria Quintana Argos e Serafina Fernández Ibero",
+      "titolo": "Vergini amigoniane e martiri",
+      "bio": "Beate Rosaria Quintana Argos e Serafina Fernández Ibero, vergini amigoniane e martiri."
+    },
+    {
+      "nome": "Beato Francesco Dachtera",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Francesco Dachtera, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Ladislao Findysz",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Ladislao Findysz, sacerdote e martire."
+    }
+  ],
+  "08-24": [
+    {
+      "nome": "San Bartolomeo apostolo",
+      "titolo": "Apostolo",
+      "bio": "San Bartolomeo apostolo, apostolo."
+    },
+    {
+      "nome": "San Taziano",
+      "titolo": "Martire",
+      "bio": "San Taziano, martire."
+    },
+    {
+      "nome": "Sant'Audoeno di Rouen",
+      "titolo": "Vescovo di Rouen",
+      "bio": "Sant'Audoeno di Rouen, vescovo di Rouen."
+    },
+    {
+      "nome": "San Giorgio il Limniota",
+      "titolo": "Monaco",
+      "bio": "San Giorgio il Limniota, monaco."
+    },
+    {
+      "nome": "natale di Santa Rosa",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "natale di Santa Rosa."
+    },
+    {
+      "nome": "Beato Andrea Fardeau",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Andrea Fardeau, sacerdote e martire."
+    },
+    {
+      "nome": "Santa Giovanna Antida Thouret",
+      "titolo": "Vergine, le Suore della Carità",
+      "bio": "Santa Giovanna Antida Thouret, vergine, le Suore della Carità."
+    },
+    {
+      "nome": "Santa Emilia de Vialar",
+      "titolo": "Vergine, fondatrice delle Suore di San Giuseppe dell'Apparizione",
+      "bio": "Santa Emilia de Vialar, vergine, fondatrice delle Suore di San Giuseppe dell'Apparizione."
+    },
+    {
+      "nome": "Santa Maria Michela del Santissimo Sacramento",
+      "titolo": "Vergine, fondatrice delle Ancelle del Santissimo Sacramento e della carità",
+      "bio": "Santa Maria Michela del Santissimo Sacramento, vergine, fondatrice delle Ancelle del Santissimo Sacramento e della carità."
+    },
+    {
+      "nome": "Beata Maria dell'Incarnazione Rosal",
+      "titolo": "Vergine, fondatrice delle Betlemite",
+      "bio": "Beata Maria dell'Incarnazione Rosal, vergine, fondatrice delle Betlemite."
+    },
+    {
+      "nome": "Beato Massimiano Binkiewicz",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Massimiano Binkiewicz, sacerdote e martire."
+    },
+    {
+      "nome": "Beati Ceslao Jóżwiak",
+      "titolo": "Edoardo Kaźmierski, Francesco Kęsy, Edoardo Klinik e Iarognievo Wojciechowski, martiri",
+      "bio": "Beati Ceslao Jóżwiak, Edoardo Kaźmierski, Francesco Kęsy, Edoardo Klinik e Iarognievo Wojciechowski, martiri."
+    }
+  ],
+  "08-25": [
+    {
+      "nome": "San Ludovico (T.O.R.) (Luigi IX di Francia)",
+      "titolo": "Re dei Francesi",
+      "bio": "San Ludovico (T.O.R.) (Luigi IX di Francia), re dei Francesi."
+    },
+    {
+      "nome": "San Giuseppe Calasanzio",
+      "titolo": "Sacerdote, fondatore degli scolopi",
+      "bio": "San Giuseppe Calasanzio, sacerdote, fondatore degli scolopi."
+    },
+    {
+      "nome": "San Genesio di Arles",
+      "titolo": "Martire",
+      "bio": "San Genesio di Arles, martire."
+    },
+    {
+      "nome": "San Geronzio di Italica",
+      "titolo": "Vescovo di Italica",
+      "bio": "San Geronzio di Italica, vescovo di Italica."
+    },
+    {
+      "nome": "San Severo",
+      "titolo": "Abate",
+      "bio": "San Severo, abate."
+    },
+    {
+      "nome": "San Mena di Costantinopoli",
+      "titolo": "Vescovo di Costantinopoli",
+      "bio": "San Mena di Costantinopoli, vescovo di Costantinopoli."
+    },
+    {
+      "nome": "Sant'Aredio di Limoges",
+      "titolo": "Abate fondatore",
+      "bio": "Sant'Aredio di Limoges, abate fondatore."
+    },
+    {
+      "nome": "San Gregorio di Utrecht",
+      "titolo": "Abate",
+      "bio": "San Gregorio di Utrecht, abate."
+    },
+    {
+      "nome": "San Tommaso di Cantilupe",
+      "titolo": "Vescovo di Hereford",
+      "bio": "San Tommaso di Cantilupe, vescovo di Hereford."
+    },
+    {
+      "nome": "Beati Michele Carvalho",
+      "titolo": "Pietro Vasquez, Ludovico Sotelo e Ludovico SaSanda e Ludovico Baba, martiri",
+      "bio": "Beati Michele Carvalho, Pietro Vasquez, Ludovico Sotelo e Ludovico SaSanda e Ludovico Baba, martiri."
+    },
+    {
+      "nome": "Beato Paolo Giovanni Charles",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Paolo Giovanni Charles, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Luigi Urbano Lanaspa",
+      "titolo": "Sacerdote domenicano e martire",
+      "bio": "Beato Luigi Urbano Lanaspa, sacerdote domenicano e martire."
+    },
+    {
+      "nome": "Beata Maria del Transito di Gesù Sacramentato (María del Tránsito Eugenia de los Dolores Cabanillas)",
+      "titolo": "Religiosa e fondatrice delle Suore Missionarie del Terz'Ordine di San Francesco",
+      "bio": "Beata Maria del Transito di Gesù Sacramentato (María del Tránsito Eugenia de los Dolores Cabanillas), religiosa e fondatrice delle Suore Missionarie del Terz'Ordine di San Francesco."
+    },
+    {
+      "nome": "Santa Maria Troncatti",
+      "titolo": "Religiosa appartenente all'Istituto delle Figlie di Maria Ausiliatrice",
+      "bio": "Santa Maria Troncatti, religiosa appartenente all'Istituto delle Figlie di Maria Ausiliatrice."
+    },
+    {
+      "nome": "Beato Luigi della Consolata (Luigi Andrea Bordino)",
+      "titolo": "Religioso dei Fratelli della Piccola Casa della Divina Provvidenza",
+      "bio": "Beato Luigi della Consolata (Luigi Andrea Bordino), religioso dei Fratelli della Piccola Casa della Divina Provvidenza."
+    }
+  ],
+  "08-26": [
+    {
+      "nome": "San Melchisedec",
+      "titolo": "Re di Salem e sacerdote del Dio altissimo",
+      "bio": "San Melchisedec, re di Salem e sacerdote del Dio altissimo."
+    },
+    {
+      "nome": "San Massimiliano",
+      "titolo": "Martire",
+      "bio": "San Massimiliano, martire."
+    },
+    {
+      "nome": "Sant'Anastasio",
+      "titolo": "Martire",
+      "bio": "Sant'Anastasio, martire."
+    },
+    {
+      "nome": "San Vittore",
+      "titolo": "Martire",
+      "bio": "San Vittore, martire."
+    },
+    {
+      "nome": "San Secondo",
+      "titolo": "Martire",
+      "bio": "San Secondo, martire."
+    },
+    {
+      "nome": "Sant'Alessandro di Bergamo",
+      "titolo": "Martire",
+      "bio": "Sant'Alessandro di Bergamo, martire."
+    },
+    {
+      "nome": "Sant'Eleuterio di Auxerre",
+      "titolo": "Vescovo di Auxerre",
+      "bio": "Sant'Eleuterio di Auxerre, vescovo di Auxerre."
+    },
+    {
+      "nome": "Beato Giacomo Retouret",
+      "titolo": "Sacerdote carmelitano e martire",
+      "bio": "Beato Giacomo Retouret, sacerdote carmelitano e martire."
+    },
+    {
+      "nome": "Santa Giovanna Elisabetta Bichier des Ages",
+      "titolo": "Vergine, fondatrice delle Figlie della Croce",
+      "bio": "Santa Giovanna Elisabetta Bichier des Ages, vergine, fondatrice delle Figlie della Croce."
+    },
+    {
+      "nome": "Santa Maria di Gesù Crocifisso Baouardy",
+      "titolo": "Vergine carmelitana scalza",
+      "bio": "Santa Maria di Gesù Crocifisso Baouardy, vergine carmelitana scalza."
+    },
+    {
+      "nome": "Santa Teresa Jornet e Ibars",
+      "titolo": "Vergine, fondatrice delle Piccole suore degli anziani abbandonati",
+      "bio": "Santa Teresa Jornet e Ibars, vergine, fondatrice delle Piccole suore degli anziani abbandonati."
+    },
+    {
+      "nome": "Beato Ambrogio Valls Matamales",
+      "titolo": "Cappuccino e martire",
+      "bio": "Beato Ambrogio Valls Matamales, cappuccino e martire."
+    },
+    {
+      "nome": "Beato Pietro Ginestar",
+      "titolo": "Cappuccino e martire",
+      "bio": "Beato Pietro Ginestar, cappuccino e martire."
+    },
+    {
+      "nome": "Beato Felice Vivet Trabal",
+      "titolo": "Salesiano e martire",
+      "bio": "Beato Felice Vivet Trabal, salesiano e martire."
+    },
+    {
+      "nome": "Beata Levkadija Harasymiv",
+      "titolo": "Vergine giuseppina e martire",
+      "bio": "Beata Levkadija Harasymiv, vergine giuseppina e martire."
+    },
+    {
+      "nome": "Beata Maria Corsini",
+      "titolo": "Madre di famiglia",
+      "bio": "Beata Maria Corsini, madre di famiglia."
+    }
+  ],
+  "08-27": [
+    {
+      "nome": "Santa Monica",
+      "titolo": "Vedova",
+      "bio": "Santa Monica, vedova."
+    },
+    {
+      "nome": "San Rufo",
+      "titolo": "Martire",
+      "bio": "San Rufo, martire."
+    },
+    {
+      "nome": "Santi Marcellino",
+      "titolo": "Mannea, Giovanni, Serapione e Pietro, martiri",
+      "bio": "Santi Marcellino, Mannea, Giovanni, Serapione e Pietro, martiri."
+    },
+    {
+      "nome": "San Narno di Bergamo",
+      "titolo": "Primo vescovo di Bergamo",
+      "bio": "San Narno di Bergamo, primo vescovo di Bergamo."
+    },
+    {
+      "nome": "San Pemene",
+      "titolo": "Abate",
+      "bio": "San Pemene, abate."
+    },
+    {
+      "nome": "San Licerio di Couserans",
+      "titolo": "Vescovo di Couserans",
+      "bio": "San Licerio di Couserans, vescovo di Couserans."
+    },
+    {
+      "nome": "San Fausto",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "San Fausto."
+    },
+    {
+      "nome": "San Cesario d'Arles",
+      "titolo": "Vescovo di Arles",
+      "bio": "San Cesario d'Arles, vescovo di Arles."
+    },
+    {
+      "nome": "San Giovanni",
+      "titolo": "Vescovo di Pavia",
+      "bio": "San Giovanni, vescovo di Pavia."
+    },
+    {
+      "nome": "San Gebardo di Costanza",
+      "titolo": "Vescovo di Costanza",
+      "bio": "San Gebardo di Costanza, vescovo di Costanza."
+    },
+    {
+      "nome": "San Guarino di Sion",
+      "titolo": "Vescovo di Sion",
+      "bio": "San Guarino di Sion, vescovo di Sion."
+    },
+    {
+      "nome": "Sant'Amedeo di Losanna",
+      "titolo": "Cistercense, vescovo di LoSanna",
+      "bio": "Sant'Amedeo di Losanna, cistercense, vescovo di LoSanna."
+    },
+    {
+      "nome": "Beato Angelo Conti",
+      "titolo": "Sacerdote agostiniano eremitano",
+      "bio": "Beato Angelo Conti, sacerdote agostiniano eremitano."
+    },
+    {
+      "nome": "Beato Ruggero Cadwallador",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Ruggero Cadwallador, sacerdote e martire."
+    },
+    {
+      "nome": "Beati Francesco di Santa Maria",
+      "titolo": "Sacerdote francescano, e quattordici compagni, martiri",
+      "bio": "Beati Francesco di Santa Maria, sacerdote francescano, e quattordici compagni, martiri."
+    },
+    {
+      "nome": "San Davide Lewis (S.J.)",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Davide Lewis (S.J.), sacerdote e martire."
+    },
+    {
+      "nome": "Beato Giovanni Battista de Souzy",
+      "titolo": "Sacerdote, e Beato Ulderico Guillaume, lasalliano, martiri",
+      "bio": "Beato Giovanni Battista de Souzy, sacerdote, e Beato Ulderico Guillaume, lasalliano, martiri."
+    },
+    {
+      "nome": "Beato Domenico della Madre di Dio (Domenico Bàrberi)",
+      "titolo": "Sacerdote passionista",
+      "bio": "Beato Domenico della Madre di Dio (Domenico Bàrberi), sacerdote passionista."
+    },
+    {
+      "nome": "Beato Ferdinando Gonzalez Añon",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Ferdinando Gonzalez Añon, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Raimondo Martì Soriano",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Raimondo Martì Soriano, sacerdote e martire."
+    }
+  ],
+  "08-28": [
+    {
+      "nome": "Sant'Agostino d'Ippona",
+      "titolo": "Vescovo di Ippona e dottore della Chiesa",
+      "bio": "Sant'Agostino d'Ippona, vescovo di Ippona e dottore della Chiesa."
+    },
+    {
+      "nome": "Sant'Ermete martire",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Sant'Ermete martire."
+    },
+    {
+      "nome": "San Pelagio di Emona",
+      "titolo": "Martire",
+      "bio": "San Pelagio di Emona, martire."
+    },
+    {
+      "nome": "San Giuliano di Brioude",
+      "titolo": "Martire",
+      "bio": "San Giuliano di Brioude, martire."
+    },
+    {
+      "nome": "Sant'Alessandro",
+      "titolo": "Vescovo di Costantinopoli",
+      "bio": "Sant'Alessandro, vescovo di Costantinopoli."
+    },
+    {
+      "nome": "San Restituto di Cartagine",
+      "titolo": "Vescovo di Cartagine",
+      "bio": "San Restituto di Cartagine, vescovo di Cartagine."
+    },
+    {
+      "nome": "San Vicinio",
+      "titolo": "Primo vescovo di Sarsina",
+      "bio": "San Vicinio, primo vescovo di Sarsina."
+    },
+    {
+      "nome": "San Viviano",
+      "titolo": "Vescovo di Saintes",
+      "bio": "San Viviano, vescovo di Saintes."
+    },
+    {
+      "nome": "San Mosè l'Etiope",
+      "titolo": "Anacoreta",
+      "bio": "San Mosè l'Etiope, anacoreta."
+    },
+    {
+      "nome": "Santa Fiorentina",
+      "titolo": "Vergine",
+      "bio": "Santa Fiorentina, vergine."
+    },
+    {
+      "nome": "Beati Guglielmo Dean e sette compagni",
+      "titolo": "Martiri",
+      "bio": "Beati Guglielmo Dean e sette compagni, martiri."
+    },
+    {
+      "nome": "Sant'Edmondo Arrowsmith (S.J.)",
+      "titolo": "Sacerdote e martire",
+      "bio": "Sant'Edmondo Arrowsmith (S.J.), sacerdote e martire."
+    },
+    {
+      "nome": "San Junípero Serra",
+      "titolo": "Sacerdote francescano",
+      "bio": "San Junípero Serra, sacerdote francescano."
+    },
+    {
+      "nome": "Beato Carlo Arnaldo Hanus",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Carlo Arnaldo Hanus, sacerdote e martire."
+    },
+    {
+      "nome": "Santa Gioacchina de Vedruna",
+      "titolo": "Vedova, fondatrice delle Carmelitane della carità",
+      "bio": "Santa Gioacchina de Vedruna, vedova, fondatrice delle Carmelitane della carità."
+    },
+    {
+      "nome": "Beati Giovanni Battista Faubel Cano e Arturo Ros Montalt",
+      "titolo": "Padri di famiglia, martiri",
+      "bio": "Beati Giovanni Battista Faubel Cano e Arturo Ros Montalt, padri di famiglia, martiri."
+    },
+    {
+      "nome": "Beato Aurelio Ample Alcaide",
+      "titolo": "Sacerdote cappuccino e martire",
+      "bio": "Beato Aurelio Ample Alcaide, sacerdote cappuccino e martire."
+    },
+    {
+      "nome": "Beato Alfonso Maria Mazurek",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Alfonso Maria Mazurek, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Aquilino Pastor Cambero",
+      "titolo": "Sacerdote martire",
+      "bio": "Beato Aquilino Pastor Cambero, sacerdote martire."
+    }
+  ],
+  "08-29": [
+    {
+      "nome": "passione di San Giovanni Battista",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "passione di San Giovanni Battista."
+    },
+    {
+      "nome": "Santa Basilla",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santa Basilla."
+    },
+    {
+      "nome": "Santa Sabina",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santa Sabina."
+    },
+    {
+      "nome": "Sant'Adelfo di Metz",
+      "titolo": "Vescovo di Metz",
+      "bio": "Sant'Adelfo di Metz, vescovo di Metz."
+    },
+    {
+      "nome": "San Vittore",
+      "titolo": "Eremita",
+      "bio": "San Vittore, eremita."
+    },
+    {
+      "nome": "San Sebbo",
+      "titolo": "Re dei Sassoni Orientali",
+      "bio": "San Sebbo, re dei Sassoni Orientali."
+    },
+    {
+      "nome": "San Mederico",
+      "titolo": "Sacerdote e abate di Autun",
+      "bio": "San Mederico, sacerdote e abate di Autun."
+    },
+    {
+      "nome": "Beati Giovanni da Perugia e Pietro da Sassoferrato",
+      "titolo": "Francescani martiri",
+      "bio": "Beati Giovanni da Perugia e Pietro da Sassoferrato, francescani martiri."
+    },
+    {
+      "nome": "Beata Bronislava",
+      "titolo": "Vergine premostratense",
+      "bio": "Beata Bronislava, vergine premostratense."
+    },
+    {
+      "nome": "Beato Riccardo Herst",
+      "titolo": "Martire",
+      "bio": "Beato Riccardo Herst, martire."
+    },
+    {
+      "nome": "Beato Ludovico Vulfilacio Huppy",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Ludovico Vulfilacio Huppy, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Edmund Ignatius Rice",
+      "titolo": "Religioso, pedagogista e fondatore dei Fratelli cristiani e dei Fratelli della Presentazio",
+      "bio": "Beato Edmund Ignatius Rice, religioso, pedagogista e fondatore dei Fratelli cristiani e dei Fratelli della Presentazione."
+    },
+    {
+      "nome": "Santa Maria della Croce Jugan",
+      "titolo": "Vergine, fondatrice delle Piccole sorelle dei poveri",
+      "bio": "Santa Maria della Croce Jugan, vergine, fondatrice delle Piccole sorelle dei poveri."
+    },
+    {
+      "nome": "Beato Costantino Fernández Álvarez",
+      "titolo": "Sacerdote domenicano e martire",
+      "bio": "Beato Costantino Fernández Álvarez, sacerdote domenicano e martire."
+    },
+    {
+      "nome": "Beato Francesco Monzón Romeo",
+      "titolo": "Sacerdote domenicano e martire",
+      "bio": "Beato Francesco Monzón Romeo, sacerdote domenicano e martire."
+    },
+    {
+      "nome": "Beato Domenico Jędrzejewski",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Domenico Jędrzejewski, sacerdote e martire."
+    },
+    {
+      "nome": "Beata Teresa Bracco",
+      "titolo": "Vergine e martire",
+      "bio": "Beata Teresa Bracco, vergine e martire."
+    }
+  ],
+  "08-30": [
+    {
+      "nome": "Santi Felice e Adautto",
+      "titolo": "Martiri",
+      "bio": "Santi Felice e Adautto, martiri."
+    },
+    {
+      "nome": "Sessanta Santi martiri della Colonia Suffetana",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Sessanta Santi martiri della Colonia Suffetana."
+    },
+    {
+      "nome": "San Pammachio",
+      "titolo": "Senatore",
+      "bio": "San Pammachio, senatore."
+    },
+    {
+      "nome": "Sant'Agilo",
+      "titolo": "Primo abate di Rebais",
+      "bio": "Sant'Agilo, primo abate di Rebais."
+    },
+    {
+      "nome": "San Fiacrio",
+      "titolo": "Eremita",
+      "bio": "San Fiacrio, eremita."
+    },
+    {
+      "nome": "San Fantino il Giovane",
+      "titolo": "Eremita",
+      "bio": "San Fantino il Giovane, eremita."
+    },
+    {
+      "nome": "San Bononio di Lucedio",
+      "titolo": "Abate di Lucedio",
+      "bio": "San Bononio di Lucedio, abate di Lucedio."
+    },
+    {
+      "nome": "San Pietro",
+      "titolo": "Eremita",
+      "bio": "San Pietro, eremita."
+    },
+    {
+      "nome": "Santa Margherita Ward",
+      "titolo": "Martire",
+      "bio": "Santa Margherita Ward, martire."
+    },
+    {
+      "nome": "Beati Riccardo Leigh",
+      "titolo": "Edoardo Shelley e Riccardo Martin, Giovanni Roche e Riccardo Lloyd, martiri",
+      "bio": "Beati Riccardo Leigh, Edoardo Shelley e Riccardo Martin, Giovanni Roche e Riccardo Lloyd, martiri."
+    },
+    {
+      "nome": "Beato Giovanni Giovenale Ancina",
+      "titolo": "Oratoriano, vescovo di Saluzzo",
+      "bio": "Beato Giovanni Giovenale Ancina, oratoriano, vescovo di Saluzzo."
+    },
+    {
+      "nome": "Beata María Rafols Bruna",
+      "titolo": "Vergine, fondatrice delle Suore della carità di Sant'Anna",
+      "bio": "Beata María Rafols Bruna, vergine, fondatrice delle Suore della carità di Sant'Anna."
+    },
+    {
+      "nome": "Beati Diego Ventaja Milán",
+      "titolo": "Vescovo di Almería, ed Emanuele Medina Olmos, vescovo di Guadix, martiri",
+      "bio": "Beati Diego Ventaja Milán, vescovo di Almería, ed Emanuele Medina Olmos, vescovo di Guadix, martiri."
+    },
+    {
+      "nome": "Beato Gioacchino Ferre Adell",
+      "titolo": "Sacerdote cappuccino e martire",
+      "bio": "Beato Gioacchino Ferre Adell, sacerdote cappuccino e martire."
+    },
+    {
+      "nome": "Beato Vincenzo Cabanes Badenas",
+      "titolo": "Sacerdote amigoniano e martire",
+      "bio": "Beato Vincenzo Cabanes Badenas, sacerdote amigoniano e martire."
+    },
+    {
+      "nome": "Beato Alfredo Ildefonso Schuster",
+      "titolo": "Abate di San Paolo fuori le mura e poi arcivescovo di Milano",
+      "bio": "Beato Alfredo Ildefonso Schuster, abate di San Paolo fuori le mura e poi arcivescovo di Milano."
+    },
+    {
+      "nome": "Beato Eustachio van Lieshout (Huub)",
+      "titolo": "Sacerdote",
+      "bio": "Beato Eustachio van Lieshout (Huub), sacerdote."
+    },
+    {
+      "nome": "Beato Manuel Medina Olmos",
+      "titolo": "Vescovo martire",
+      "bio": "Beato Manuel Medina Olmos, vescovo martire."
+    }
+  ],
+  "08-31": [
+    {
+      "nome": "Santi Giuseppe d'Arimatea e Nicodemo",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi Giuseppe d'Arimatea e Nicodemo."
+    },
+    {
+      "nome": "Sant'Aristide Marciano",
+      "titolo": "Laico, padre della Chiesa",
+      "bio": "Sant'Aristide Marciano, laico, padre della Chiesa."
+    },
+    {
+      "nome": "San Paolino di Treviri",
+      "titolo": "Vescovo di Treviri e martire",
+      "bio": "San Paolino di Treviri, vescovo di Treviri e martire."
+    },
+    {
+      "nome": "Sant'Aidano di Lindisfarne",
+      "titolo": "Abate-vescovo di Lindisfarne, missionario e fondatore",
+      "bio": "Sant'Aidano di Lindisfarne, abate-vescovo di Lindisfarne, missionario e fondatore."
+    },
+    {
+      "nome": "San Raimondo Nonnato (O. de M.)",
+      "titolo": "Cardinale",
+      "bio": "San Raimondo Nonnato (O. de M.), cardinale."
+    },
+    {
+      "nome": "Beato Andrea Dotti",
+      "titolo": "Sacerdote servita",
+      "bio": "Beato Andrea Dotti, sacerdote servita."
+    },
+    {
+      "nome": "Beati Edmigio Primo Rodríguez",
+      "titolo": "Amalio Zariquiegui Mendoza e Valerio Bernardo Herrero Martínez, lasalliani e martiri",
+      "bio": "Beati Edmigio Primo Rodríguez, Amalio Zariquiegui Mendoza e Valerio Bernardo Herrero Martínez, lasalliani e martiri."
+    }
+  ],
+  "09-01": [
+    {
+      "nome": "San Giosuè",
+      "titolo": "Condottiero biblico",
+      "bio": "San Giosuè, condottiero biblico."
+    },
+    {
+      "nome": "San Sisto di Reims",
+      "titolo": "Primo vescovo di Reims",
+      "bio": "San Sisto di Reims, primo vescovo di Reims."
+    },
+    {
+      "nome": "San Prisco di Capua",
+      "titolo": "Martire",
+      "bio": "San Prisco di Capua, martire."
+    },
+    {
+      "nome": "San Terenziano",
+      "titolo": "Vescovo di Todi",
+      "bio": "San Terenziano, vescovo di Todi."
+    },
+    {
+      "nome": "San Vincenzo di Dax",
+      "titolo": "Vescovo di Dax e martire",
+      "bio": "San Vincenzo di Dax, vescovo di Dax e martire."
+    },
+    {
+      "nome": "Santa Verena di Zurzach",
+      "titolo": "Vergine",
+      "bio": "Santa Verena di Zurzach, vergine."
+    },
+    {
+      "nome": "San Vittorio",
+      "titolo": "Vescovo di Le Mans",
+      "bio": "San Vittorio, vescovo di Le Mans."
+    },
+    {
+      "nome": "San Costanzo d'Aquino",
+      "titolo": "Vescovo di Aquino",
+      "bio": "San Costanzo d'Aquino, vescovo di Aquino."
+    },
+    {
+      "nome": "Sant'Egidio",
+      "titolo": "Abate eremita",
+      "bio": "Sant'Egidio, abate eremita."
+    },
+    {
+      "nome": "San Lupo di Sens",
+      "titolo": "Vescovo di Sens",
+      "bio": "San Lupo di Sens, vescovo di Sens."
+    },
+    {
+      "nome": "Beata Giuliana di Collalto",
+      "titolo": "Badessa benedettina",
+      "bio": "Beata Giuliana di Collalto, badessa benedettina."
+    },
+    {
+      "nome": "Beata Giovanna Soderini",
+      "titolo": "Vergine servitana",
+      "bio": "Beata Giovanna Soderini, vergine servitana."
+    },
+    {
+      "nome": "Beati Cristino Roca Huguet",
+      "titolo": "Sacerdote, e undici compagni, fatebenefratelli, martiri",
+      "bio": "Beati Cristino Roca Huguet, sacerdote, e undici compagni, fatebenefratelli, martiri."
+    },
+    {
+      "nome": "Beato Alfonso Sebastiá Viñals",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Alfonso Sebastiá Viñals, sacerdote e martire."
+    },
+    {
+      "nome": "Beati Pietro Rivera",
+      "titolo": "Sacerdote francescano conventuale, Maria del Monte Carmelo Moreno Benítez e Maria del Rifu",
+      "bio": "Beati Pietro Rivera, sacerdote francescano conventuale, Maria del Monte Carmelo Moreno Benítez e Maria del Rifugio Carbonell Muñoz, vergini salesiane, martiri."
+    }
+  ],
+  "09-02": [
+    {
+      "nome": "San Zenone",
+      "titolo": "Martire",
+      "bio": "San Zenone, martire."
+    },
+    {
+      "nome": "Santa Teodota",
+      "titolo": "Con i figli Evodio, Ermogene e Callisto",
+      "bio": "Santa Teodota, con i figli Evodio, Ermogene e Callisto."
+    },
+    {
+      "nome": "Sant'Habib",
+      "titolo": "Diacono e martire",
+      "bio": "Sant'Habib, diacono e martire."
+    },
+    {
+      "nome": "Sant'Antonino di Apamea",
+      "titolo": "Martire",
+      "bio": "Sant'Antonino di Apamea, martire."
+    },
+    {
+      "nome": "San Prospero",
+      "titolo": "Vescovo di Tarragona",
+      "bio": "San Prospero, vescovo di Tarragona."
+    },
+    {
+      "nome": "San Giusto di Lione",
+      "titolo": "Vescovo di Lione",
+      "bio": "San Giusto di Lione, vescovo di Lione."
+    },
+    {
+      "nome": "San Nonnoso",
+      "titolo": "Abate",
+      "bio": "San Nonnoso, abate."
+    },
+    {
+      "nome": "San Siagrio di Autun",
+      "titolo": "Vescovo di Autun",
+      "bio": "San Siagrio di Autun, vescovo di Autun."
+    },
+    {
+      "nome": "Sant'Agricola di Avignone",
+      "titolo": "Vescovo di Avignone",
+      "bio": "Sant'Agricola di Avignone, vescovo di Avignone."
+    },
+    {
+      "nome": "Sant'Elpidio",
+      "titolo": "Abate",
+      "bio": "Sant'Elpidio, abate."
+    },
+    {
+      "nome": "Sant'Elpidio",
+      "titolo": "Vescovo di Lione",
+      "bio": "Sant'Elpidio, vescovo di Lione."
+    },
+    {
+      "nome": "Santi Alberto",
+      "titolo": "Abate e fondatore e Vito, abate",
+      "bio": "Santi Alberto, abate e fondatore e Vito, abate."
+    },
+    {
+      "nome": "Beato Brocardo",
+      "titolo": "Priore degli eremiti carmelitani",
+      "bio": "Beato Brocardo, priore degli eremiti carmelitani."
+    },
+    {
+      "nome": "Beata Ingrid Elofsdotter",
+      "titolo": "Vedova",
+      "bio": "Beata Ingrid Elofsdotter, vedova."
+    },
+    {
+      "nome": "Beati Giovanni Maria du Lau d'Allemans",
+      "titolo": "François-Joseph de La Rochefoucauld e Pietro Ludovico de la Rochefoucauld, vescovi, e nova",
+      "bio": "Beati Giovanni Maria du Lau d'Allemans, François-Joseph de La Rochefoucauld e Pietro Ludovico de la Rochefoucauld, vescovi, e novantatré compagni, martiri."
+    },
+    {
+      "nome": "Beato Pietro Giacomo Maria Vitalis",
+      "titolo": "Sacerdote, e venti compagni, martiri",
+      "bio": "Beato Pietro Giacomo Maria Vitalis, sacerdote, e venti compagni, martiri."
+    },
+    {
+      "nome": "Beato Jean-Marie du Lau d'Alleman",
+      "titolo": "Arcivescovo e martire",
+      "bio": "Beato Jean-Marie du Lau d'Alleman, arcivescovo e martire."
+    }
+  ],
+  "09-03": [
+    {
+      "nome": "San Gregorio Magno",
+      "titolo": "Papa e dottore della Chiesa",
+      "bio": "San Gregorio Magno, papa e dottore della Chiesa."
+    },
+    {
+      "nome": "Santa Febe",
+      "titolo": "Serva del Signore",
+      "bio": "Santa Febe, serva del Signore."
+    },
+    {
+      "nome": "Santa Basilissa",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Basilissa, vergine e martire."
+    },
+    {
+      "nome": "San San Marino diacono",
+      "titolo": "Diacono e anacoreta",
+      "bio": "San San Marino diacono, diacono e anacoreta."
+    },
+    {
+      "nome": "San Sandalio",
+      "titolo": "Martire",
+      "bio": "San Sandalio, martire."
+    },
+    {
+      "nome": "San Mansueto di Toul",
+      "titolo": "Primo vescovo di Toul",
+      "bio": "San Mansueto di Toul, primo vescovo di Toul."
+    },
+    {
+      "nome": "San Macanisio di Connor",
+      "titolo": "Vescovo di Connor",
+      "bio": "San Macanisio di Connor, vescovo di Connor."
+    },
+    {
+      "nome": "Sant'Ausano di Milano",
+      "titolo": "Vescovo di Milano",
+      "bio": "Sant'Ausano di Milano, vescovo di Milano."
+    },
+    {
+      "nome": "San Remaclo",
+      "titolo": "Abate e poi vescovo di Maastricht",
+      "bio": "San Remaclo, abate e poi vescovo di Maastricht."
+    },
+    {
+      "nome": "Sant'Aigulfo di Lerins",
+      "titolo": "Abate di Lérins, e compagni monaci, martiri",
+      "bio": "Sant'Aigulfo di Lerins, abate di Lérins, e compagni monaci, martiri."
+    },
+    {
+      "nome": "San Vitaliano da Capua",
+      "titolo": "Vescovo di Capua",
+      "bio": "San Vitaliano da Capua, vescovo di Capua."
+    },
+    {
+      "nome": "San Crodegango",
+      "titolo": "Vescovo di Séez e martire",
+      "bio": "San Crodegango, vescovo di Séez e martire."
+    },
+    {
+      "nome": "Beato Guala de Roniis",
+      "titolo": "Domenicano, vescovo di Brescia",
+      "bio": "Beato Guala de Roniis, domenicano, vescovo di Brescia."
+    },
+    {
+      "nome": "Beati Bartolomeo Gutiérrez",
+      "titolo": "Sacerdote eremitano, e cinque compagni, martiri",
+      "bio": "Beati Bartolomeo Gutiérrez, sacerdote eremitano, e cinque compagni, martiri."
+    },
+    {
+      "nome": "Beata Brigida Morello",
+      "titolo": "Vedova, fondatrice del monastero delle orsoline di Piacenza",
+      "bio": "Beata Brigida Morello, vedova, fondatrice del monastero delle orsoline di Piacenza."
+    },
+    {
+      "nome": "Beato Andrea Abel Alricy",
+      "titolo": "Sacerdote, e settantuno compagni, martiri",
+      "bio": "Beato Andrea Abel Alricy, sacerdote, e settantuno compagni, martiri."
+    },
+    {
+      "nome": "Beato Giovanni Battista Bottex",
+      "titolo": "Beato Michele Maria Francesco de la Gardette e Beato Francesco Giacinto le Livec de Tresur",
+      "bio": "Beato Giovanni Battista Bottex, Beato Michele Maria Francesco de la Gardette e Beato Francesco Giacinto le Livec de Tresurin, martiri."
+    },
+    {
+      "nome": "Santi Giovanni Pak Hu-jae e cinque compagni",
+      "titolo": "Martiri",
+      "bio": "Santi Giovanni Pak Hu-jae e cinque compagni, martiri."
+    },
+    {
+      "nome": "Beato Manuel Galcerà Videllet (S.O.D.)",
+      "titolo": "Sacerdote martire",
+      "bio": "Beato Manuel Galcerà Videllet (S.O.D.), sacerdote martire."
+    }
+  ],
+  "09-04": [
+    {
+      "nome": "San Mosè",
+      "titolo": "Profeta",
+      "bio": "San Mosè, profeta."
+    },
+    {
+      "nome": "San Marcello",
+      "titolo": "Martire",
+      "bio": "San Marcello, martire."
+    },
+    {
+      "nome": "San Bonifacio I",
+      "titolo": "Papa",
+      "bio": "San Bonifacio I, papa."
+    },
+    {
+      "nome": "San Caletrico di Chartres",
+      "titolo": "Vescovo di Chartres",
+      "bio": "San Caletrico di Chartres, vescovo di Chartres."
+    },
+    {
+      "nome": "Sant'Ida di Herzfeld",
+      "titolo": "Vedova",
+      "bio": "Sant'Ida di Herzfeld, vedova."
+    },
+    {
+      "nome": "San Fredardo di Mende",
+      "titolo": "Vescovo di Mende e martire",
+      "bio": "San Fredardo di Mende, vescovo di Mende e martire."
+    },
+    {
+      "nome": "Sant'Ermengarda",
+      "titolo": "Contessa di Suchteln",
+      "bio": "Sant'Ermengarda, contessa di Suchteln."
+    },
+    {
+      "nome": "Santa Rosalia",
+      "titolo": "Vergine",
+      "bio": "Santa Rosalia, vergine."
+    },
+    {
+      "nome": "Beata Caterina Mattei",
+      "titolo": "Vergine domenicana",
+      "bio": "Beata Caterina Mattei, vergine domenicana."
+    },
+    {
+      "nome": "Beato Scipione Gerolamo Brigeat de Lambert",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Scipione Gerolamo Brigeat de Lambert, sacerdote e martire."
+    },
+    {
+      "nome": "Beata Dina Bélanger",
+      "titolo": "Vergine delle Religiose di Gesù-Maria",
+      "bio": "Beata Dina Bélanger, vergine delle Religiose di Gesù-Maria."
+    },
+    {
+      "nome": "Beato Giuseppe Pasquale Carda Saporta",
+      "titolo": "Dei sacerdoti operai dioceSani, martire",
+      "bio": "Beato Giuseppe Pasquale Carda Saporta, dei sacerdoti operai dioceSani, martire."
+    },
+    {
+      "nome": "Beato Francesco Sendra Ivars",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Francesco Sendra Ivars, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Bernardo Bieda Grau",
+      "titolo": "Religioso cappuccino e martire",
+      "bio": "Beato Bernardo Bieda Grau, religioso cappuccino e martire."
+    },
+    {
+      "nome": "Beato Giuseppe Toniolo",
+      "titolo": "Laico, accademico, economista e sociologo del Terz'Ordine Francescano",
+      "bio": "Beato Giuseppe Toniolo, laico, accademico, economista e sociologo del Terz'Ordine Francescano."
+    },
+    {
+      "nome": "Beato Nicolò Rusca",
+      "titolo": "Sacerdote arciprete di Sondrio",
+      "bio": "Beato Nicolò Rusca, sacerdote arciprete di Sondrio."
+    }
+  ],
+  "09-05": [
+    {
+      "nome": "Santi Aconzio",
+      "titolo": "Nonno, Ercolano e Taurino, martiri",
+      "bio": "Santi Aconzio, Nonno, Ercolano e Taurino, martiri."
+    },
+    {
+      "nome": "San Quinto",
+      "titolo": "Martire",
+      "bio": "San Quinto, martire."
+    },
+    {
+      "nome": "San Genebaldo",
+      "titolo": "Primo vescovo di Laon",
+      "bio": "San Genebaldo, primo vescovo di Laon."
+    },
+    {
+      "nome": "Santi Urbano",
+      "titolo": "Teodoro, Menedemo e compagni, martiri",
+      "bio": "Santi Urbano, Teodoro, Menedemo e compagni, martiri."
+    },
+    {
+      "nome": "San Bertino di Sithiu",
+      "titolo": "Abate di Sithiu",
+      "bio": "San Bertino di Sithiu, abate di Sithiu."
+    },
+    {
+      "nome": "Sant'Alberto di Butrio",
+      "titolo": "Fondatore e primo abate di Butrio",
+      "bio": "Sant'Alberto di Butrio, fondatore e primo abate di Butrio."
+    },
+    {
+      "nome": "Beato Giovanni il Buono di Siponto",
+      "titolo": "Abate di Meleda",
+      "bio": "Beato Giovanni il Buono di Siponto, abate di Meleda."
+    },
+    {
+      "nome": "Beato Guglielmo Browne",
+      "titolo": "Martire",
+      "bio": "Beato Guglielmo Browne, martire."
+    },
+    {
+      "nome": "Beato Fiorenzo Dumontet de Cardaillac",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Fiorenzo Dumontet de Cardaillac, sacerdote e martire."
+    },
+    {
+      "nome": "San Pietro Nguyễn Văn Tự",
+      "titolo": "Sacerdote domenicano, e San Giuseppe Hoàng Lương Cảnh, medico, martiri",
+      "bio": "San Pietro Nguyễn Văn Tự, sacerdote domenicano, e San Giuseppe Hoàng Lương Cảnh, medico, martiri."
+    },
+    {
+      "nome": "Santa Teresa di Calcutta",
+      "titolo": "Vergine, fondatrice delle Missionarie e dei Missionari della Carità",
+      "bio": "Santa Teresa di Calcutta, vergine, fondatrice delle Missionarie e dei Missionari della Carità."
+    },
+    {
+      "nome": "Beata Maria Maddalena della Passione (Costanza Starace)",
+      "titolo": "Religiosa e fondatrice italiana della congregazione delle Suore Compassioniste Serve di Ma",
+      "bio": "Beata Maria Maddalena della Passione (Costanza Starace), religiosa e fondatrice italiana della congregazione delle Suore Compassioniste Serve di Maria."
+    }
+  ],
+  "09-06": [
+    {
+      "nome": "San Zaccaria",
+      "titolo": "Profeta",
+      "bio": "San Zaccaria, profeta."
+    },
+    {
+      "nome": "Sant'Onesiforo",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Sant'Onesiforo."
+    },
+    {
+      "nome": "Santi Donaziano",
+      "titolo": "Presidio, Mansueto, Germano e Foscolo, confessori della fede, e Lieto, martire, vescovi in",
+      "bio": "Santi Donaziano, Presidio, Mansueto, Germano e Foscolo, confessori della fede, e Lieto, martire, vescovi in Africa."
+    },
+    {
+      "nome": "Sant'Eleuterio",
+      "titolo": "Abate",
+      "bio": "Sant'Eleuterio, abate."
+    },
+    {
+      "nome": "San Cagnoaldo",
+      "titolo": "Vescovo di Laon",
+      "bio": "San Cagnoaldo, vescovo di Laon."
+    },
+    {
+      "nome": "Santa Bega",
+      "titolo": "Monaca",
+      "bio": "Santa Bega, monaca."
+    },
+    {
+      "nome": "San Magno di Füssen",
+      "titolo": "Abate di Füssen",
+      "bio": "San Magno di Füssen, abate di Füssen."
+    },
+    {
+      "nome": "Beato Bertrando de Garrigues",
+      "titolo": "Domenicano",
+      "bio": "Beato Bertrando de Garrigues, domenicano."
+    },
+    {
+      "nome": "Beato Liberato da Loro",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Liberato da Loro, sacerdote francescano."
+    },
+    {
+      "nome": "Beato Diego Llorca Llopis",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Diego Llorca Llopis, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Pasquale Torres Lloret",
+      "titolo": "Martire",
+      "bio": "Beato Pasquale Torres Lloret, martire."
+    },
+    {
+      "nome": "Beato Giuseppe Olinto Marella",
+      "titolo": "Sacerdote e educatore",
+      "bio": "Beato Giuseppe Olinto Marella, sacerdote e educatore."
+    }
+  ],
+  "09-07": [
+    {
+      "nome": "Santa Regina",
+      "titolo": "Martire",
+      "bio": "Santa Regina, martire."
+    },
+    {
+      "nome": "San Sozonte",
+      "titolo": "Martire",
+      "bio": "San Sozonte, martire."
+    },
+    {
+      "nome": "Santi Festo",
+      "titolo": "Diacono, e Desiderio, lettore, martiri",
+      "bio": "Santi Festo, diacono, e Desiderio, lettore, martiri."
+    },
+    {
+      "nome": "Sant'Evorzio",
+      "titolo": "Vescovo di Orléans",
+      "bio": "Sant'Evorzio, vescovo di Orléans."
+    },
+    {
+      "nome": "San Grato di Aosta",
+      "titolo": "Vescovo di Aosta",
+      "bio": "San Grato di Aosta, vescovo di Aosta."
+    },
+    {
+      "nome": "Santi Nemorio e compagni",
+      "titolo": "Martiri",
+      "bio": "Santi Nemorio e compagni, martiri."
+    },
+    {
+      "nome": "Sant'Alpino di Châlons",
+      "titolo": "Vescovo di Châlons",
+      "bio": "Sant'Alpino di Châlons, vescovo di Châlons."
+    },
+    {
+      "nome": "San Clodoaldo",
+      "titolo": "Principe franco e sacerdote",
+      "bio": "San Clodoaldo, principe franco e sacerdote."
+    },
+    {
+      "nome": "Santa Carissima",
+      "titolo": "Vergine reclusa",
+      "bio": "Santa Carissima, vergine reclusa."
+    },
+    {
+      "nome": "Santa Madelberta",
+      "titolo": "Badessa di Maubege",
+      "bio": "Santa Madelberta, badessa di Maubege."
+    },
+    {
+      "nome": "Sant'Ilduardo",
+      "titolo": "Vescovo",
+      "bio": "Sant'Ilduardo, vescovo."
+    },
+    {
+      "nome": "San Gozzelino di Toul",
+      "titolo": "Vescovo di Toul",
+      "bio": "San Gozzelino di Toul, vescovo di Toul."
+    },
+    {
+      "nome": "San Giovanni da Lodi",
+      "titolo": "Vescovo di Gubbio",
+      "bio": "San Giovanni da Lodi, vescovo di Gubbio."
+    },
+    {
+      "nome": "Santi Marco Križevčanin",
+      "titolo": "Stefano Pongrácz e Melchiorre Grodecký, sacerdoti martiri",
+      "bio": "Santi Marco Križevčanin, Stefano Pongrácz e Melchiorre Grodecký, sacerdoti martiri."
+    },
+    {
+      "nome": "Beati Tommaso Tsuji",
+      "titolo": "Ludovico Maki e Giovanni Maki, martiri",
+      "bio": "Beati Tommaso Tsuji, Ludovico Maki e Giovanni Maki, martiri."
+    },
+    {
+      "nome": "Beati Rodolfo Corby",
+      "titolo": "Giovanni Duckett, sacerdoti e martiri",
+      "bio": "Beati Rodolfo Corby, Giovanni Duckett, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beati Claudio Barnaba Laurent de Mascloux e Francesco d'Oudinot de la Boissiere",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Beati Claudio Barnaba Laurent de Mascloux e Francesco d'Oudinot de la Boissiere, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beato Giovanni Mazzucconi",
+      "titolo": "Sacerdote del PIME e martire",
+      "bio": "Beato Giovanni Mazzucconi, sacerdote del PIME e martire."
+    },
+    {
+      "nome": "Beata Anna Eugenia Picco",
+      "titolo": "Religiosa e mistica, superiora generale della congregazione delle Piccole Figlie dei Sacri",
+      "bio": "Beata Anna Eugenia Picco, religiosa e mistica, superiora generale della congregazione delle Piccole Figlie dei Sacri Cuori di Gesù e Maria."
+    },
+    {
+      "nome": "Beato Ignazio Klopotowsk (Ignacy Klopotowski)",
+      "titolo": "Sacerdote e fondatore della Congregazione delle Suore della Beata Vergine Maria di Loreto",
+      "bio": "Beato Ignazio Klopotowsk (Ignacy Klopotowski), sacerdote e fondatore della Congregazione delle Suore della Beata Vergine Maria di Loreto."
+    }
+  ],
+  "09-08": [
+    {
+      "nome": "Natività della Beata Vergine Maria",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Natività della Beata Vergine Maria."
+    },
+    {
+      "nome": "Sant'Adriano",
+      "titolo": "Martire",
+      "bio": "Sant'Adriano, martire."
+    },
+    {
+      "nome": "Santi Fausto",
+      "titolo": "Divo e Ammonio, sacerdoti e martiri",
+      "bio": "Santi Fausto, Divo e Ammonio, sacerdoti e martiri."
+    },
+    {
+      "nome": "Sant'Isacco",
+      "titolo": "Vescovo armeno",
+      "bio": "Sant'Isacco, vescovo armeno."
+    },
+    {
+      "nome": "San Sergio I",
+      "titolo": "Papa",
+      "bio": "San Sergio I, papa."
+    },
+    {
+      "nome": "San Corbiniano di Frisinga",
+      "titolo": "Vescovo di Frisinga",
+      "bio": "San Corbiniano di Frisinga, vescovo di Frisinga."
+    },
+    {
+      "nome": "San Pietro di Chavanon",
+      "titolo": "Sacerdote",
+      "bio": "San Pietro di Chavanon, sacerdote."
+    },
+    {
+      "nome": "Beata Serafina Sforza",
+      "titolo": "Vedova",
+      "bio": "Beata Serafina Sforza, vedova."
+    },
+    {
+      "nome": "San Tommaso da Villanova (O.S.A.)",
+      "titolo": "Eremita, vescovo di Valencia",
+      "bio": "San Tommaso da Villanova (O.S.A.), eremita, vescovo di Valencia."
+    },
+    {
+      "nome": "Beati Tommaso Palaser",
+      "titolo": "Giovanni Norton e Giovanni Talbot, martiri",
+      "bio": "Beati Tommaso Palaser, Giovanni Norton e Giovanni Talbot, martiri."
+    },
+    {
+      "nome": "Beati Antonio di San Bonaventura",
+      "titolo": "Domenico Castellet e venti compagni, martiri",
+      "bio": "Beati Antonio di San Bonaventura, Domenico Castellet e venti compagni, martiri."
+    },
+    {
+      "nome": "Beato Federico Ozanam",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Beato Federico Ozanam."
+    },
+    {
+      "nome": "Beati Giuseppe Cecilio Rodríguez González",
+      "titolo": "Teodomiro Gioacchino Sáinz Sáinz ed Evenzio Riccardo Urjurra, martiri lasalliani",
+      "bio": "Beati Giuseppe Cecilio Rodríguez González, Teodomiro Gioacchino Sáinz Sáinz ed Evenzio Riccardo Urjurra, martiri lasalliani."
+    },
+    {
+      "nome": "Beato Marino Blanes Giner",
+      "titolo": "Martire",
+      "bio": "Beato Marino Blanes Giner, martire."
+    },
+    {
+      "nome": "Beato Ismaele Escrihuela Esteve",
+      "titolo": "Martire",
+      "bio": "Beato Ismaele Escrihuela Esteve, martire."
+    },
+    {
+      "nome": "Beato Pasquale Fortuño Almela",
+      "titolo": "Sacerdote francescano e martire",
+      "bio": "Beato Pasquale Fortuño Almela, sacerdote francescano e martire."
+    },
+    {
+      "nome": "Beate Giuseppina di San Giovanni Ruano García e Maria Addolorata di Sant'Eulalia Puig Bonany",
+      "titolo": "Piccole suore degli anziani abbandonati, vergini e martiri",
+      "bio": "Beate Giuseppina di San Giovanni Ruano García e Maria Addolorata di Sant'Eulalia Puig Bonany, Piccole suore degli anziani abbandonati, vergini e martiri."
+    },
+    {
+      "nome": "Beato Adam Bargielski",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Adam Bargielski, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Ladislao Błądziński",
+      "titolo": "Sacerdote michelita e martire",
+      "bio": "Beato Ladislao Błądziński, sacerdote michelita e martire."
+    },
+    {
+      "nome": "Beato Alano della Rupe (Alain De La Roche)",
+      "titolo": "Religioso",
+      "bio": "Beato Alano della Rupe (Alain De La Roche), religioso."
+    }
+  ],
+  "09-09": [
+    {
+      "nome": "San Pietro Claver (S.J.)",
+      "titolo": "Sacerdote",
+      "bio": "San Pietro Claver (S.J.), sacerdote."
+    },
+    {
+      "nome": "San Gorgonio di Roma",
+      "titolo": "Martire",
+      "bio": "San Gorgonio di Roma, martire."
+    },
+    {
+      "nome": "San Giacinto",
+      "titolo": "Martire in Sabina",
+      "bio": "San Giacinto, martire in Sabina."
+    },
+    {
+      "nome": "San Ciarán di Clonmacnoise",
+      "titolo": "Prete e abate",
+      "bio": "San Ciarán di Clonmacnoise, prete e abate."
+    },
+    {
+      "nome": "Santa Turibia",
+      "titolo": "Moglie di Sant'Isidoro agricoltore",
+      "bio": "Santa Turibia, moglie di Sant'Isidoro agricoltore."
+    },
+    {
+      "nome": "Beato Giorgio Douglas",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giorgio Douglas, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Jacques-Désiré Laval",
+      "titolo": "Sacerdote",
+      "bio": "Beato Jacques-Désiré Laval, sacerdote."
+    },
+    {
+      "nome": "Beato Francisco Gárate",
+      "titolo": "Religioso gesuita",
+      "bio": "Beato Francisco Gárate, religioso gesuita."
+    },
+    {
+      "nome": "Beata Maria Eutimia Üffing",
+      "titolo": "Vergine clementina",
+      "bio": "Beata Maria Eutimia Üffing, vergine clementina."
+    }
+  ],
+  "09-10": [
+    {
+      "nome": "San Nemesio",
+      "titolo": "Martire",
+      "bio": "San Nemesio, martire."
+    },
+    {
+      "nome": "Santi Nemesiano",
+      "titolo": "Vescovo di Tubune di Numidia e compagni, martiri",
+      "bio": "Santi Nemesiano, vescovo di Tubune di Numidia e compagni, martiri."
+    },
+    {
+      "nome": "Santa Pulcheria",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santa Pulcheria."
+    },
+    {
+      "nome": "Sant'Agabio di Novara",
+      "titolo": "Vescovo di Novara",
+      "bio": "Sant'Agabio di Novara, vescovo di Novara."
+    },
+    {
+      "nome": "San Salvio",
+      "titolo": "Vescovo di Albi",
+      "bio": "San Salvio, vescovo di Albi."
+    },
+    {
+      "nome": "San Teodardo di Tongres",
+      "titolo": "Vescovo di Tongres e martire",
+      "bio": "San Teodardo di Tongres, vescovo di Tongres e martire."
+    },
+    {
+      "nome": "Sant'Auberto di Avranches",
+      "titolo": "Vescovo di Avranches",
+      "bio": "Sant'Auberto di Avranches, vescovo di Avranches."
+    },
+    {
+      "nome": "Beato Oglerio di Lucedio",
+      "titolo": "Cistercense, abate di Lucedio",
+      "bio": "Beato Oglerio di Lucedio, cistercense, abate di Lucedio."
+    },
+    {
+      "nome": "San Nicola da Tolentino",
+      "titolo": "Sacerdote agostiniano",
+      "bio": "San Nicola da Tolentino, sacerdote agostiniano."
+    },
+    {
+      "nome": "Beati Sebastiano Kimura",
+      "titolo": "Francesco Morales e cinquanta compagni, martiri",
+      "bio": "Beati Sebastiano Kimura, Francesco Morales e cinquanta compagni, martiri."
+    },
+    {
+      "nome": "Sant'Ambrogio Edoardo Barlow",
+      "titolo": "Sacerdote benedettino e martire",
+      "bio": "Sant'Ambrogio Edoardo Barlow, sacerdote benedettino e martire."
+    },
+    {
+      "nome": "Beato Giacomo Gagnot",
+      "titolo": "Sacerdote carmelitano e martire",
+      "bio": "Beato Giacomo Gagnot, sacerdote carmelitano e martire."
+    },
+    {
+      "nome": "Beato Carlo Spinola",
+      "titolo": "Sacerdote e missionario della Compagnia di Gesù",
+      "bio": "Beato Carlo Spinola, sacerdote e missionario della Compagnia di Gesù."
+    }
+  ],
+  "09-11": [
+    {
+      "nome": "Santi Proto e Giacinto",
+      "titolo": "Martiri",
+      "bio": "Santi Proto e Giacinto, martiri."
+    },
+    {
+      "nome": "Santi Felice e Regola",
+      "titolo": "Martiri",
+      "bio": "Santi Felice e Regola, martiri."
+    },
+    {
+      "nome": "San Pafnuzio di Tebe",
+      "titolo": "Vescovo in Egitto",
+      "bio": "San Pafnuzio di Tebe, vescovo in Egitto."
+    },
+    {
+      "nome": "San Paziente di Lione",
+      "titolo": "Vescovo di Lione",
+      "bio": "San Paziente di Lione, vescovo di Lione."
+    },
+    {
+      "nome": "San Sacerdote di Lione",
+      "titolo": "Vescovo di Lione",
+      "bio": "San Sacerdote di Lione, vescovo di Lione."
+    },
+    {
+      "nome": "San Daniele (Deiniol Wyn)",
+      "titolo": "Abate-vescovo di Bangor",
+      "bio": "San Daniele (Deiniol Wyn), abate-vescovo di Bangor."
+    },
+    {
+      "nome": "Sant'Emiliano",
+      "titolo": "Vescovo di Vercelli",
+      "bio": "Sant'Emiliano, vescovo di Vercelli."
+    },
+    {
+      "nome": "Sant'Adelfio",
+      "titolo": "Abate di Remiremont",
+      "bio": "Sant'Adelfio, abate di Remiremont."
+    },
+    {
+      "nome": "San Leudino di Toul",
+      "titolo": "Vescovo di Toul",
+      "bio": "San Leudino di Toul, vescovo di Toul."
+    },
+    {
+      "nome": "Sant'Elia Speleota",
+      "titolo": "Eremita",
+      "bio": "Sant'Elia Speleota, eremita."
+    },
+    {
+      "nome": "Beati Gaspare Koteda",
+      "titolo": "Francesco Takeya e Pietro Shichiemon, martiri",
+      "bio": "Beati Gaspare Koteda, Francesco Takeya e Pietro Shichiemon, martiri."
+    },
+    {
+      "nome": "Beato Bonaventura da Barcellona",
+      "titolo": "Francescano, fondatore della riformella",
+      "bio": "Beato Bonaventura da Barcellona, francescano, fondatore della riformella."
+    },
+    {
+      "nome": "Beato Francesco Mayaudon",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Francesco Mayaudon, sacerdote e martire."
+    },
+    {
+      "nome": "San Giovanni Gabriele Perboyre",
+      "titolo": "Sacerdote lazzarista e martire",
+      "bio": "San Giovanni Gabriele Perboyre, sacerdote lazzarista e martire."
+    },
+    {
+      "nome": "Beato Pietro de Alcántara Villanueva Larrayoz",
+      "titolo": "Religioso fatebenefratelli e martire",
+      "bio": "Beato Pietro de Alcántara Villanueva Larrayoz, religioso fatebenefratelli e martire."
+    },
+    {
+      "nome": "Beato Giuseppe Maria Segura Penades",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giuseppe Maria Segura Penades, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Francesco Bonifacio. sacerdote martire",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Beato Francesco Bonifacio. sacerdote martire."
+    }
+  ],
+  "09-12": [
+    {
+      "nome": "Santissimo Nome di Maria",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santissimo Nome di Maria."
+    },
+    {
+      "nome": "Sant'Autonomo",
+      "titolo": "Vescovo e martire",
+      "bio": "Sant'Autonomo, vescovo e martire."
+    },
+    {
+      "nome": "Santi Cronide",
+      "titolo": "Leonzio e Serapione, martiri",
+      "bio": "Santi Cronide, Leonzio e Serapione, martiri."
+    },
+    {
+      "nome": "Sant'Ailbeo di Emly",
+      "titolo": "Vescovo di Emly",
+      "bio": "Sant'Ailbeo di Emly, vescovo di Emly."
+    },
+    {
+      "nome": "San Guido di Anderlecht",
+      "titolo": "Pellegrino",
+      "bio": "San Guido di Anderlecht, pellegrino."
+    },
+    {
+      "nome": "Beati Apollinare Franco",
+      "titolo": "Tommaso de Zumárraga e quattro compagni, martiri",
+      "bio": "Beati Apollinare Franco, Tommaso de Zumárraga e quattro compagni, martiri."
+    },
+    {
+      "nome": "Beato Ruggero (Pierre-Sulpice-Christophe Faverge)",
+      "titolo": "Lasalliano e martire",
+      "bio": "Beato Ruggero (Pierre-Sulpice-Christophe Faverge), lasalliano e martire."
+    },
+    {
+      "nome": "San Francesco Ch'oe Kyong-hwan",
+      "titolo": "Martire",
+      "bio": "San Francesco Ch'oe Kyong-hwan, martire."
+    }
+  ],
+  "09-13": [
+    {
+      "nome": "San Giovanni Crisostomo",
+      "titolo": "Vescovo di Costantinopoli e dottore della Chiesa",
+      "bio": "San Giovanni Crisostomo, vescovo di Costantinopoli e dottore della Chiesa."
+    },
+    {
+      "nome": "San Giuliano",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Giuliano, sacerdote e martire."
+    },
+    {
+      "nome": "dedicazione della basilica del Santo Sepolcro di Gerusalemme",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "dedicazione della basilica del Santo Sepolcro di Gerusalemme."
+    },
+    {
+      "nome": "San Lidorio di Tours",
+      "titolo": "Vescovo di Tours",
+      "bio": "San Lidorio di Tours, vescovo di Tours."
+    },
+    {
+      "nome": "Sant'Emiliano di Valence",
+      "titolo": "Vescovo di Valence",
+      "bio": "Sant'Emiliano di Valence, vescovo di Valence."
+    },
+    {
+      "nome": "San Marcellino",
+      "titolo": "Martire",
+      "bio": "San Marcellino, martire."
+    },
+    {
+      "nome": "San Maurilio di Angers",
+      "titolo": "Vescovo di Angers",
+      "bio": "San Maurilio di Angers, vescovo di Angers."
+    },
+    {
+      "nome": "Sant'Amato di Remiremont",
+      "titolo": "Sacerdote, fondatore e abate di Remiremont",
+      "bio": "Sant'Amato di Remiremont, sacerdote, fondatore e abate di Remiremont."
+    },
+    {
+      "nome": "San Venerio",
+      "titolo": "Eremita",
+      "bio": "San Venerio, eremita."
+    },
+    {
+      "nome": "Sant'Amato di Sion",
+      "titolo": "Vescovo di Sion",
+      "bio": "Sant'Amato di Sion, vescovo di Sion."
+    },
+    {
+      "nome": "Beata Maria di Gesù López de Rivas Martínez",
+      "titolo": "Vergine carmelitana",
+      "bio": "Beata Maria di Gesù López de Rivas Martínez, vergine carmelitana."
+    },
+    {
+      "nome": "Beato Claudio Dumonet",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Claudio Dumonet, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Aurelio Maria Villalón Acebrón",
+      "titolo": "Lasalliano e martire",
+      "bio": "Beato Aurelio Maria Villalón Acebrón, lasalliano e martire."
+    },
+    {
+      "nome": "Beato Francisco Cástor Sojo López",
+      "titolo": "Sacerdote martire",
+      "bio": "Beato Francisco Cástor Sojo López, sacerdote martire."
+    }
+  ],
+  "09-14": [
+    {
+      "nome": "Esaltazione della Santa Croce",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Esaltazione della Santa Croce."
+    },
+    {
+      "nome": "deposizione di Cornelio",
+      "titolo": "Papa e martire",
+      "bio": "deposizione di Cornelio, papa e martire."
+    },
+    {
+      "nome": "passione di San Tascio Cecilio Cipriano",
+      "titolo": "Vescovo di Cartagine",
+      "bio": "passione di San Tascio Cecilio Cipriano, vescovo di Cartagine."
+    },
+    {
+      "nome": "San Materno di Colonia",
+      "titolo": "Vescovo di Treviri, poi di Colonia e di Tongres",
+      "bio": "San Materno di Colonia, vescovo di Treviri, poi di Colonia e di Tongres."
+    },
+    {
+      "nome": "natale di San Giovanni Crisostomo",
+      "titolo": "Vescovo di Costantinopoli",
+      "bio": "natale di San Giovanni Crisostomo, vescovo di Costantinopoli."
+    },
+    {
+      "nome": "San Pietro II (O.Cist.)",
+      "titolo": "Vescovo di Tarantasia",
+      "bio": "San Pietro II (O.Cist.), vescovo di Tarantasia."
+    },
+    {
+      "nome": "Sant'Alberto di Gerusalemme (O.C.)",
+      "titolo": "Vescovo di Bobbio, poi di Vercelli e patriarca di Gerusalemme, martire",
+      "bio": "Sant'Alberto di Gerusalemme (O.C.), vescovo di Bobbio, poi di Vercelli e patriarca di Gerusalemme, martire."
+    },
+    {
+      "nome": "Santa Notburga di Eben",
+      "titolo": "Vergine",
+      "bio": "Santa Notburga di Eben, vergine."
+    },
+    {
+      "nome": "Beato Claudio Laplace",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Claudio Laplace, sacerdote e martire."
+    },
+    {
+      "nome": "San Jean-Gabriel-Taurin Dufresse",
+      "titolo": "Vescovo di Tabraca e vicario apostolico del Sichuan, martire",
+      "bio": "San Jean-Gabriel-Taurin Dufresse, vescovo di Tabraca e vicario apostolico del Sichuan, martire."
+    }
+  ],
+  "09-15": [
+    {
+      "nome": "Beata Vergine Maria Addolorata",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Beata Vergine Maria Addolorata."
+    },
+    {
+      "nome": "San Nicomede di Roma",
+      "titolo": "Martire",
+      "bio": "San Nicomede di Roma, martire."
+    },
+    {
+      "nome": "San Valeriano di Tournus",
+      "titolo": "Martire",
+      "bio": "San Valeriano di Tournus, martire."
+    },
+    {
+      "nome": "Santi Stratone",
+      "titolo": "Valerio, Macrobio e Gordiano, martiri",
+      "bio": "Santi Stratone, Valerio, Macrobio e Gordiano, martiri."
+    },
+    {
+      "nome": "San Niceta il Goto",
+      "titolo": "Martire",
+      "bio": "San Niceta il Goto, martire."
+    },
+    {
+      "nome": "Sant'Albino di Lione",
+      "titolo": "Vescovo di Lione",
+      "bio": "Sant'Albino di Lione, vescovo di Lione."
+    },
+    {
+      "nome": "Sant'Apro di Toul",
+      "titolo": "Vescovo di Toul",
+      "bio": "Sant'Apro di Toul, vescovo di Toul."
+    },
+    {
+      "nome": "Sant'Aicardo",
+      "titolo": "Abate di Jumièges",
+      "bio": "Sant'Aicardo, abate di Jumièges."
+    },
+    {
+      "nome": "Santi Emila",
+      "titolo": "Diacono, e Geremia, martiri",
+      "bio": "Santi Emila, diacono, e Geremia, martiri."
+    },
+    {
+      "nome": "Beato Rolando de' Medici",
+      "titolo": "Anacoreta",
+      "bio": "Beato Rolando de' Medici, anacoreta."
+    },
+    {
+      "nome": "Santa Caterina da Genova",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santa Caterina da Genova."
+    },
+    {
+      "nome": "Beato Anton Maria Schwartz",
+      "titolo": "Sacerdote, fondatore della Congregazione degli operai cristiani di San Giuseppe CalaSanzio",
+      "bio": "Beato Anton Maria Schwartz, sacerdote, fondatore della Congregazione degli operai cristiani di San Giuseppe CalaSanzio."
+    },
+    {
+      "nome": "Beato Camillo Costanzo",
+      "titolo": "Sacerdote gesuita e martire",
+      "bio": "Beato Camillo Costanzo, sacerdote gesuita e martire."
+    },
+    {
+      "nome": "Beato Pasquale Penadés Jornet",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Pasquale Penadés Jornet, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Ladislao Miegoń",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Ladislao Miegoń, sacerdote e martire."
+    }
+  ],
+  "09-16": [
+    {
+      "nome": "San Cornelio",
+      "titolo": "Papa, e Cipriano, vescovo di Cartagine, martiri",
+      "bio": "San Cornelio, papa, e Cipriano, vescovo di Cartagine, martiri."
+    },
+    {
+      "nome": "Santa Eufemia di Calcedonia",
+      "titolo": "Martire",
+      "bio": "Santa Eufemia di Calcedonia, martire."
+    },
+    {
+      "nome": "Sant'Abbondio e compagni",
+      "titolo": "Martiri",
+      "bio": "Sant'Abbondio e compagni, martiri."
+    },
+    {
+      "nome": "Santi Vittore",
+      "titolo": "Felice, Alessandro e Papia, martiri",
+      "bio": "Santi Vittore, Felice, Alessandro e Papia, martiri."
+    },
+    {
+      "nome": "San Prisco (martire)",
+      "titolo": "Martire",
+      "bio": "San Prisco (martire), martire."
+    },
+    {
+      "nome": "San Niniano di Whithorn",
+      "titolo": "Vescovo di Whithorn",
+      "bio": "San Niniano di Whithorn, vescovo di Whithorn."
+    },
+    {
+      "nome": "Santi Rogello e Servodidio",
+      "titolo": "Martiri",
+      "bio": "Santi Rogello e Servodidio, martiri."
+    },
+    {
+      "nome": "Santa Ludmilla di Boemia",
+      "titolo": "Martire",
+      "bio": "Santa Ludmilla di Boemia, martire."
+    },
+    {
+      "nome": "Sant'Editta di Wilton",
+      "titolo": "Vergine",
+      "bio": "Sant'Editta di Wilton, vergine."
+    },
+    {
+      "nome": "Beato Vittore III",
+      "titolo": "Papa",
+      "bio": "Beato Vittore III, papa."
+    },
+    {
+      "nome": "San Vitale di Savigny",
+      "titolo": "Abate di Savigny",
+      "bio": "San Vitale di Savigny, abate di Savigny."
+    },
+    {
+      "nome": "San Martino",
+      "titolo": "Chiamato Sacerdote, abate cistercense e vescovo di Sigüenza",
+      "bio": "San Martino, chiamato Sacerdote, abate cistercense e vescovo di Sigüenza."
+    },
+    {
+      "nome": "Beato Louis Aleman",
+      "titolo": "Vescovo di Maguelone, poi di Arles",
+      "bio": "Beato Louis Aleman, vescovo di Maguelone, poi di Arles."
+    },
+    {
+      "nome": "Beati Domenico Shobioye",
+      "titolo": "Michele Timonoya e suo figlio Paolo, martiri",
+      "bio": "Beati Domenico Shobioye, Michele Timonoya e suo figlio Paolo, martiri."
+    },
+    {
+      "nome": "San Giovanni Macías",
+      "titolo": "Domenicano",
+      "bio": "San Giovanni Macías, domenicano."
+    },
+    {
+      "nome": "passione di Sant'Andrea Kim Taegon",
+      "titolo": "Sacerdote e martire",
+      "bio": "passione di Sant'Andrea Kim Taegon, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Ignazio CaSanovas",
+      "titolo": "Sacerdote scolopio e martire",
+      "bio": "Beato Ignazio CaSanovas, sacerdote scolopio e martire."
+    },
+    {
+      "nome": "Beati Laureano Ferrer Cardet",
+      "titolo": "Benedetto Ferrer Jordà e Bernardino Martínez Robles, amigoniani martiri",
+      "bio": "Beati Laureano Ferrer Cardet, Benedetto Ferrer Jordà e Bernardino Martínez Robles, amigoniani martiri."
+    }
+  ],
+  "09-17": [
+    {
+      "nome": "San Roberto Bellarmino (S.J.)",
+      "titolo": "Arcivescovo di Capua, cardinale e dottore della Chiesa",
+      "bio": "San Roberto Bellarmino (S.J.), arcivescovo di Capua, cardinale e dottore della Chiesa."
+    },
+    {
+      "nome": "San Satiro di Milano",
+      "titolo": "Fratello di Sant'Ambrogio",
+      "bio": "San Satiro di Milano, fratello di Sant'Ambrogio."
+    },
+    {
+      "nome": "San Lamberto di Maastricht",
+      "titolo": "Vescovo di Maastricht e martire",
+      "bio": "San Lamberto di Maastricht, vescovo di Maastricht e martire."
+    },
+    {
+      "nome": "San Rodingo",
+      "titolo": "Abate, fondatore dell'abbazia di Beaulieu",
+      "bio": "San Rodingo, abate, fondatore dell'abbazia di Beaulieu."
+    },
+    {
+      "nome": "Santa Colomba",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Colomba, vergine e martire."
+    },
+    {
+      "nome": "San Reginaldo di Mélinais",
+      "titolo": "Eremita",
+      "bio": "San Reginaldo di Mélinais, eremita."
+    },
+    {
+      "nome": "Santa Ildegarda di Bingen",
+      "titolo": "Vergine",
+      "bio": "Santa Ildegarda di Bingen, vergine."
+    },
+    {
+      "nome": "Beato Cherubino Testa",
+      "titolo": "Sacerdote agostiniano",
+      "bio": "Beato Cherubino Testa, sacerdote agostiniano."
+    },
+    {
+      "nome": "San Pietro d'Arbués",
+      "titolo": "Sacerdote agostiniano e martire",
+      "bio": "San Pietro d'Arbués, sacerdote agostiniano e martire."
+    },
+    {
+      "nome": "Sant'Emanuele Nguyễn Văn Triệu",
+      "titolo": "Sacerdote e martire",
+      "bio": "Sant'Emanuele Nguyễn Văn Triệu, sacerdote e martire."
+    },
+    {
+      "nome": "San Francesco Maria da Camporosso",
+      "titolo": "Cappuccino",
+      "bio": "San Francesco Maria da Camporosso, cappuccino."
+    },
+    {
+      "nome": "San Stanislao di Gesù Maria (M.I.C.c) (Jan Stanisław Papczyński)",
+      "titolo": "Presbitero e fondatore",
+      "bio": "San Stanislao di Gesù Maria (M.I.C.c) (Jan Stanisław Papczyński), presbitero e fondatore."
+    },
+    {
+      "nome": "San Sigismondo Felice Feliński",
+      "titolo": "Arcivescovo di Varsavia e fondatore delle Suore Francescane della Famiglia di Maria",
+      "bio": "San Sigismondo Felice Feliński, arcivescovo di Varsavia e fondatore delle Suore Francescane della Famiglia di Maria."
+    },
+    {
+      "nome": "Beato Giovanni Ventura Solsona",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giovanni Ventura Solsona, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Timoteo Valero Pérez",
+      "titolo": "Sacerdote amigoniano, martire",
+      "bio": "Beato Timoteo Valero Pérez, sacerdote amigoniano, martire."
+    },
+    {
+      "nome": "Beato Sigismondo Sajna",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Sigismondo Sajna, sacerdote e martire."
+    }
+  ],
+  "09-18": [
+    {
+      "nome": "Sant'Oceano",
+      "titolo": "Martire",
+      "bio": "Sant'Oceano, martire."
+    },
+    {
+      "nome": "Sant'Arianna",
+      "titolo": "Martire",
+      "bio": "Sant'Arianna, martire."
+    },
+    {
+      "nome": "San Ferreolo di Vienne",
+      "titolo": "Martire",
+      "bio": "San Ferreolo di Vienne, martire."
+    },
+    {
+      "nome": "Sant'Eustorgio di Milano",
+      "titolo": "Vescovo di Milano",
+      "bio": "Sant'Eustorgio di Milano, vescovo di Milano."
+    },
+    {
+      "nome": "San Senario di Avranches",
+      "titolo": "Vescovo di Avranches",
+      "bio": "San Senario di Avranches, vescovo di Avranches."
+    },
+    {
+      "nome": "San Ferreolo",
+      "titolo": "Vescovo di Limoges",
+      "bio": "San Ferreolo, vescovo di Limoges."
+    },
+    {
+      "nome": "Sant'Eumenio di Gortina",
+      "titolo": "Vescovo di Gortina",
+      "bio": "Sant'Eumenio di Gortina, vescovo di Gortina."
+    },
+    {
+      "nome": "Santa Riccarda di Svevia",
+      "titolo": "Regina",
+      "bio": "Santa Riccarda di Svevia, regina."
+    },
+    {
+      "nome": "San Giuseppe da Copertino",
+      "titolo": "Sacerdote francescano conventuale",
+      "bio": "San Giuseppe da Copertino, sacerdote francescano conventuale."
+    },
+    {
+      "nome": "San Domenico Trạch",
+      "titolo": "Sacerdote domenicano e martire",
+      "bio": "San Domenico Trạch, sacerdote domenicano e martire."
+    },
+    {
+      "nome": "Beato Carlo Eraña Guruceta",
+      "titolo": "Religioso marista e martire",
+      "bio": "Beato Carlo Eraña Guruceta, religioso marista e martire."
+    },
+    {
+      "nome": "Beati Ferdinando García Sendra e Giuseppe García Mas",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Beati Ferdinando García Sendra e Giuseppe García Mas, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beati Ambrogio Chuliá Ferrandis e Valentino Jaunzarás Gómez",
+      "titolo": "Francesco Lerma Martínez, Riccardo López Mora e Modesto Gay Zarzo, amigoniani e martiri",
+      "bio": "Beati Ambrogio Chuliá Ferrandis e Valentino Jaunzarás Gómez, Francesco Lerma Martínez, Riccardo López Mora e Modesto Gay Zarzo, amigoniani e martiri."
+    },
+    {
+      "nome": "Beato Giuseppe Kut",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giuseppe Kut, sacerdote e martire."
+    }
+  ],
+  "09-19": [
+    {
+      "nome": "San Gennaro",
+      "titolo": "Vescovo di Benevento e martire",
+      "bio": "San Gennaro, vescovo di Benevento e martire."
+    },
+    {
+      "nome": "San Trofimo",
+      "titolo": "Martire",
+      "bio": "San Trofimo, martire."
+    },
+    {
+      "nome": "Santi Peleo",
+      "titolo": "Nilo, Elia e Patermuzio, martiri",
+      "bio": "Santi Peleo, Nilo, Elia e Patermuzio, martiri."
+    },
+    {
+      "nome": "Sant'Eustochio di Tours",
+      "titolo": "Vescovo di Tours",
+      "bio": "Sant'Eustochio di Tours, vescovo di Tours."
+    },
+    {
+      "nome": "San Sequano",
+      "titolo": "Prete e abate",
+      "bio": "San Sequano, prete e abate."
+    },
+    {
+      "nome": "San Mariano",
+      "titolo": "Eremita",
+      "bio": "San Mariano, eremita."
+    },
+    {
+      "nome": "San Goerico di Metz",
+      "titolo": "Vescovo di Metz",
+      "bio": "San Goerico di Metz, vescovo di Metz."
+    },
+    {
+      "nome": "San Teodoro di Canterbury",
+      "titolo": "Vescovo di Canterbury",
+      "bio": "San Teodoro di Canterbury, vescovo di Canterbury."
+    },
+    {
+      "nome": "San Teodoro",
+      "titolo": "Vescovo di Verona",
+      "bio": "San Teodoro, vescovo di Verona."
+    },
+    {
+      "nome": "Santa Pomposa",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Pomposa, vergine e martire."
+    },
+    {
+      "nome": "San Lamberto di Frisinga",
+      "titolo": "Vescovo di Frisinga",
+      "bio": "San Lamberto di Frisinga, vescovo di Frisinga."
+    },
+    {
+      "nome": "Sant'Arnolfo di Gap",
+      "titolo": "Vescovo di Gap",
+      "bio": "Sant'Arnolfo di Gap, vescovo di Gap."
+    },
+    {
+      "nome": "Beata Maria de Cervellòn",
+      "titolo": "Vergine mercedaria",
+      "bio": "Beata Maria de Cervellòn, vergine mercedaria."
+    },
+    {
+      "nome": "Sant'Alonso de Orozco",
+      "titolo": "Sacerdote agostiniano",
+      "bio": "Sant'Alonso de Orozco, sacerdote agostiniano."
+    },
+    {
+      "nome": "San Carlo Hyon Song-mun",
+      "titolo": "Martire",
+      "bio": "San Carlo Hyon Song-mun, martire."
+    },
+    {
+      "nome": "Sant'Emilia de Rodat",
+      "titolo": "Fondatrice delle Suore della Sacra Famiglia di Villefranche",
+      "bio": "Sant'Emilia de Rodat, fondatrice delle Suore della Sacra Famiglia di Villefranche."
+    },
+    {
+      "nome": "Beato Giacinto Hoynelos González",
+      "titolo": "Religioso fatebenefratelli e martire",
+      "bio": "Beato Giacinto Hoynelos González, religioso fatebenefratelli e martire."
+    },
+    {
+      "nome": "Beato Francesca Cuallado Baixauli",
+      "titolo": "Vergine e martire",
+      "bio": "Beato Francesca Cuallado Baixauli, vergine e martire."
+    },
+    {
+      "nome": "Beate Maria di Gesù de la Iglesia y del Varo",
+      "titolo": "Scolopia, Maria Addolorata e Consolata Aguiar-Mella Díaz, vergini e martiri",
+      "bio": "Beate Maria di Gesù de la Iglesia y del Varo, scolopia, Maria Addolorata e Consolata Aguiar-Mella Díaz, vergini e martiri."
+    }
+  ],
+  "09-20": [
+    {
+      "nome": "Santi Andrea Kim Tae-gŏn",
+      "titolo": "Sacerdote, Paolo Chong Ha-sang e compagni, martiri",
+      "bio": "Santi Andrea Kim Tae-gŏn, sacerdote, Paolo Chong Ha-sang e compagni, martiri."
+    },
+    {
+      "nome": "San Dorimedonte",
+      "titolo": "Martire",
+      "bio": "San Dorimedonte, martire."
+    },
+    {
+      "nome": "Sant'Eustachio Placido",
+      "titolo": "Martire",
+      "bio": "Sant'Eustachio Placido, martire."
+    },
+    {
+      "nome": "Santi Ipazio e Asiano",
+      "titolo": "Vescovi, e Andrea, sacerdote, martiri",
+      "bio": "Santi Ipazio e Asiano, vescovi, e Andrea, sacerdote, martiri."
+    },
+    {
+      "nome": "San Glicerio di Milano",
+      "titolo": "Arcivescovo di Milano",
+      "bio": "San Glicerio di Milano, arcivescovo di Milano."
+    },
+    {
+      "nome": "Beato Adelpreto II",
+      "titolo": "Vescovo di Trento",
+      "bio": "Beato Adelpreto II, vescovo di Trento."
+    },
+    {
+      "nome": "Beato Tommaso Johnson",
+      "titolo": "Sacerdote certosino e martire",
+      "bio": "Beato Tommaso Johnson, sacerdote certosino e martire."
+    },
+    {
+      "nome": "Beato Francisco Martín Fernández de Posadas",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Francisco Martín Fernández de Posadas, sacerdote domenicano."
+    },
+    {
+      "nome": "San Giancarlo Cornay",
+      "titolo": "Sacerdote delle Missioni Estere di Parigi e martire",
+      "bio": "San Giancarlo Cornay, sacerdote delle Missioni Estere di Parigi e martire."
+    },
+    {
+      "nome": "Santi Lorenzo Han I-hyong",
+      "titolo": "Catechista, e sei compagni, martiri",
+      "bio": "Santi Lorenzo Han I-hyong, catechista, e sei compagni, martiri."
+    },
+    {
+      "nome": "San Giuseppe Maria de Yermo y Parres",
+      "titolo": "Sacerdote, fondatore delle Serve del Sacro Cuore di Gesù e dei poveri",
+      "bio": "San Giuseppe Maria de Yermo y Parres, sacerdote, fondatore delle Serve del Sacro Cuore di Gesù e dei poveri."
+    },
+    {
+      "nome": "Beata Maria Teresa di san Giuseppe (Anna Maria Tauscher van den Bosch)",
+      "titolo": "Religiosa e fondatrice tedesca della Congregazione delle Suore Carmelitane del Divino Cuor",
+      "bio": "Beata Maria Teresa di san Giuseppe (Anna Maria Tauscher van den Bosch), religiosa e fondatrice tedesca della Congregazione delle Suore Carmelitane del Divino Cuore di Gesù."
+    }
+  ],
+  "09-21": [
+    {
+      "nome": "San Matteo apostolo",
+      "titolo": "Apostolo ed evangelista",
+      "bio": "San Matteo apostolo, apostolo ed evangelista."
+    },
+    {
+      "nome": "San Giona",
+      "titolo": "Profeta",
+      "bio": "San Giona, profeta."
+    },
+    {
+      "nome": "San Quadrato di Atene",
+      "titolo": "Discepolo degli Apostoli, vescovo di Atene",
+      "bio": "San Quadrato di Atene, discepolo degli Apostoli, vescovo di Atene."
+    },
+    {
+      "nome": "San Panfilo",
+      "titolo": "Martire",
+      "bio": "San Panfilo, martire."
+    },
+    {
+      "nome": "Sant'Alessandro",
+      "titolo": "Vescovo e martire",
+      "bio": "Sant'Alessandro, vescovo e martire."
+    },
+    {
+      "nome": "Santi Eusebio",
+      "titolo": "Nestabo e Zenone, martiri",
+      "bio": "Santi Eusebio, Nestabo e Zenone, martiri."
+    },
+    {
+      "nome": "San Castore di Apt",
+      "titolo": "Vescovo di Apt",
+      "bio": "San Castore di Apt, vescovo di Apt."
+    },
+    {
+      "nome": "San Cadog Ddoeth",
+      "titolo": "Abate",
+      "bio": "San Cadog Ddoeth, abate."
+    },
+    {
+      "nome": "San Landelino",
+      "titolo": "Monaco",
+      "bio": "San Landelino, monaco."
+    },
+    {
+      "nome": "San Gerulfo",
+      "titolo": "Martire",
+      "bio": "San Gerulfo, martire."
+    },
+    {
+      "nome": "Santa Maura di Troyes",
+      "titolo": "Vergine",
+      "bio": "Santa Maura di Troyes, vergine."
+    },
+    {
+      "nome": "Beato Marco da Modena",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Marco da Modena, sacerdote domenicano."
+    },
+    {
+      "nome": "San Francesco Jaccard",
+      "titolo": "Sacerdote, e San Tommaso Trần Văn Thiện, martiri",
+      "bio": "San Francesco Jaccard, sacerdote, e San Tommaso Trần Văn Thiện, martiri."
+    },
+    {
+      "nome": "San Lorenzo Imbert (M.E.P.)",
+      "titolo": "Vescovo di Capso e vicario apostolico di Corea, San Pietro Maubant (M.E.P.) e San Giacomo ",
+      "bio": "San Lorenzo Imbert (M.E.P.), vescovo di Capso e vicario apostolico di Corea, San Pietro Maubant (M.E.P.) e San Giacomo Chastan (M.E.P.), sacerdoti, martiri."
+    },
+    {
+      "nome": "Beati Vincenzo Galbis Gironés",
+      "titolo": "Padre di famiglia, ed Emanuele Torró García, martiri",
+      "bio": "Beati Vincenzo Galbis Gironés, padre di famiglia, ed Emanuele Torró García, martiri."
+    }
+  ],
+  "09-22": [
+    {
+      "nome": "Sant'Emerita",
+      "titolo": "Martire",
+      "bio": "Sant'Emerita, martire."
+    },
+    {
+      "nome": "San Maurizio e compagni",
+      "titolo": "Martiri della Legione tebana",
+      "bio": "San Maurizio e compagni, martiri della Legione tebana."
+    },
+    {
+      "nome": "Santa Basilia",
+      "titolo": "Martire",
+      "bio": "Santa Basilia, martire."
+    },
+    {
+      "nome": "San Silvano",
+      "titolo": "Eremita",
+      "bio": "San Silvano, eremita."
+    },
+    {
+      "nome": "San Fiorenzo",
+      "titolo": "Prete",
+      "bio": "San Fiorenzo, prete."
+    },
+    {
+      "nome": "San Laudo di Coutances",
+      "titolo": "Vescovo di Coutances",
+      "bio": "San Laudo di Coutances, vescovo di Coutances."
+    },
+    {
+      "nome": "Santa Salaberga di Laon",
+      "titolo": "Badessa",
+      "bio": "Santa Salaberga di Laon, badessa."
+    },
+    {
+      "nome": "Sant'Emmerano di Ratisbona",
+      "titolo": "Vescovo di Ratisbona",
+      "bio": "Sant'Emmerano di Ratisbona, vescovo di Ratisbona."
+    },
+    {
+      "nome": "Beato Ottone di Frisinga",
+      "titolo": "Vescovo di Frisinga",
+      "bio": "Beato Ottone di Frisinga, vescovo di Frisinga."
+    },
+    {
+      "nome": "Sant'Ignazio da Santhià",
+      "titolo": "Sacerdote cappuccino",
+      "bio": "Sant'Ignazio da Santhià, sacerdote cappuccino."
+    },
+    {
+      "nome": "Beato Giuseppe Marchandon",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giuseppe Marchandon, sacerdote e martire."
+    },
+    {
+      "nome": "Santi Paolo Chong Ha-Sang e Agostino Yu Chin-gil",
+      "titolo": "Martiri",
+      "bio": "Santi Paolo Chong Ha-Sang e Agostino Yu Chin-gil, martiri."
+    },
+    {
+      "nome": "Beato Carlo Navarro",
+      "titolo": "Sacerdote scolopio e martire",
+      "bio": "Beato Carlo Navarro, sacerdote scolopio e martire."
+    },
+    {
+      "nome": "Beato Germano Gozalvo Andreu",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Germano Gozalvo Andreu, sacerdote e martire."
+    },
+    {
+      "nome": "Beati Vincenzo Pelufo Corts e Giuseppina Moscardo Montalvà",
+      "titolo": "Martiri",
+      "bio": "Beati Vincenzo Pelufo Corts e Giuseppina Moscardo Montalvà, martiri."
+    },
+    {
+      "nome": "Beato Vincenzo Sicluna Hernández",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Vincenzo Sicluna Hernández, sacerdote e martire."
+    },
+    {
+      "nome": "Beata Maria della Purificazione Vidal Pastor",
+      "titolo": "Vergine e martire",
+      "bio": "Beata Maria della Purificazione Vidal Pastor, vergine e martire."
+    },
+    {
+      "nome": "Beato Luigi Maria Monti (C.F.I.C.)",
+      "titolo": "Religioso e fondatore italiano dei Congregazione dei Figli dell'Immacolata Concezione",
+      "bio": "Beato Luigi Maria Monti (C.F.I.C.), religioso e fondatore italiano dei Congregazione dei Figli dell'Immacolata Concezione."
+    }
+  ],
+  "09-23": [
+    {
+      "nome": "San Pio da Pietrelcina (O.F.M. Cap.)",
+      "titolo": "Sacerdote",
+      "bio": "San Pio da Pietrelcina (O.F.M. Cap.), sacerdote."
+    },
+    {
+      "nome": "San Zaccaria e Sant'Elisabetta",
+      "titolo": "Genitori di San Giovanni Battista",
+      "bio": "San Zaccaria e Sant'Elisabetta, genitori di San Giovanni Battista."
+    },
+    {
+      "nome": "San Lino",
+      "titolo": "Papa",
+      "bio": "San Lino, papa."
+    },
+    {
+      "nome": "San Sossio di Miseno",
+      "titolo": "Diacono e martire",
+      "bio": "San Sossio di Miseno, diacono e martire."
+    },
+    {
+      "nome": "San Costanzo",
+      "titolo": "Mansionario",
+      "bio": "San Costanzo, mansionario."
+    },
+    {
+      "nome": "Sant'Adamnano di Iona",
+      "titolo": "Sacerdote e abate di Iona",
+      "bio": "Sant'Adamnano di Iona, sacerdote e abate di Iona."
+    },
+    {
+      "nome": "Santi Andrea",
+      "titolo": "Giovanni, Pietro e Antonio, martiri",
+      "bio": "Santi Andrea, Giovanni, Pietro e Antonio, martiri."
+    },
+    {
+      "nome": "Beato Pietro Acotanto",
+      "titolo": "Monaco",
+      "bio": "Beato Pietro Acotanto, monaco."
+    },
+    {
+      "nome": "Beata Elena Duglioli",
+      "titolo": "Vedova",
+      "bio": "Beata Elena Duglioli, vedova."
+    },
+    {
+      "nome": "Beati Cristoforo",
+      "titolo": "Antonio e Giovanni, martiri",
+      "bio": "Beati Cristoforo, Antonio e Giovanni, martiri."
+    },
+    {
+      "nome": "Beato Guglielmo Way",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Guglielmo Way, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Vincenzo Ballester Far",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Vincenzo Ballester Far, sacerdote e martire."
+    },
+    {
+      "nome": "Beate Sofia Ximénez Ximénez",
+      "titolo": "Madre di famiglia, Maria della Purificazione di San Giuseppe Ximénez e Maria Giuseppina de",
+      "bio": "Beate Sofia Ximénez Ximénez, madre di famiglia, Maria della Purificazione di San Giuseppe Ximénez e Maria Giuseppina del Río Mesa e Ascensione di San Giuseppe CalaSanzio Lloret Marco, vergini carmelitane della carità, martiri."
+    },
+    {
+      "nome": "Beata Bernardina Jabłońska",
+      "titolo": "Vergine, fondatrice delle Suore Albertine Serve dei Poveri",
+      "bio": "Beata Bernardina Jabłońska, vergine, fondatrice delle Suore Albertine Serve dei Poveri."
+    },
+    {
+      "nome": "Beato Giuseppe Stanek",
+      "titolo": "Sacerdote pallottino e martire",
+      "bio": "Beato Giuseppe Stanek, sacerdote pallottino e martire."
+    }
+  ],
+  "09-24": [
+    {
+      "nome": "Sant'Anatalo",
+      "titolo": "Ritenuto primo vescovo di Milano",
+      "bio": "Sant'Anatalo, ritenuto primo vescovo di Milano."
+    },
+    {
+      "nome": "Santi Andochio",
+      "titolo": "Tirso e Felice, martiri",
+      "bio": "Santi Andochio, Tirso e Felice, martiri."
+    },
+    {
+      "nome": "San Rustico di Clermont",
+      "titolo": "Vescovo di Clermont",
+      "bio": "San Rustico di Clermont, vescovo di Clermont."
+    },
+    {
+      "nome": "San Lupo di Lione",
+      "titolo": "Vescovo di Lione",
+      "bio": "San Lupo di Lione, vescovo di Lione."
+    },
+    {
+      "nome": "Sant'Isarno",
+      "titolo": "Abate di San Vittore a Marsiglia",
+      "bio": "Sant'Isarno, abate di San Vittore a Marsiglia."
+    },
+    {
+      "nome": "San Gerardo Sagredo (O.S.B.)",
+      "titolo": "Vescovo di Csanád e martire",
+      "bio": "San Gerardo Sagredo (O.S.B.), vescovo di Csanád e martire."
+    },
+    {
+      "nome": "Beato Dalmazio Moner",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Dalmazio Moner, sacerdote domenicano."
+    },
+    {
+      "nome": "Beati Guglielmo Spenser",
+      "titolo": "Sacerdote, e Roberto Hardesty, martiri",
+      "bio": "Beati Guglielmo Spenser, sacerdote, e Roberto Hardesty, martiri."
+    },
+    {
+      "nome": "Sant'Antonio González",
+      "titolo": "Sacerdote domenicano e martire",
+      "bio": "Sant'Antonio González, sacerdote domenicano e martire."
+    },
+    {
+      "nome": "San Pacifico da San Severino Marche (O.F.M.)",
+      "titolo": "Sacerdote",
+      "bio": "San Pacifico da San Severino Marche (O.F.M.), sacerdote."
+    },
+    {
+      "nome": "Beato Anton Martin Slomšek",
+      "titolo": "Vescovo di Lavant",
+      "bio": "Beato Anton Martin Slomšek, vescovo di Lavant."
+    },
+    {
+      "nome": "Beata Colomba Gabriel",
+      "titolo": "Badessa benedettina di Leopoli, fondatrice delle Suore benedettine di carità",
+      "bio": "Beata Colomba Gabriel, badessa benedettina di Leopoli, fondatrice delle Suore benedettine di carità."
+    },
+    {
+      "nome": "Beato Giuseppe Raimondo Pasquale Ferrer Botella",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giuseppe Raimondo Pasquale Ferrer Botella, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Giuseppe Maria Ferrándiz Hernández",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giuseppe Maria Ferrándiz Hernández, sacerdote e martire."
+    },
+    {
+      "nome": "Beata Incarnazione Gil Valls",
+      "titolo": "Vergine e martire",
+      "bio": "Beata Incarnazione Gil Valls, vergine e martire."
+    },
+    {
+      "nome": "Beato Giuseppe Raimondo Ferragud Girbes",
+      "titolo": "Martire",
+      "bio": "Beato Giuseppe Raimondo Ferragud Girbes, martire."
+    },
+    {
+      "nome": "Beato Ermanno il Contratto",
+      "titolo": "Monaco, astronomo, storico, musicologo",
+      "bio": "Beato Ermanno il Contratto, monaco, astronomo, storico, musicologo."
+    }
+  ],
+  "09-25": [
+    {
+      "nome": "San Cleofa",
+      "titolo": "Discepolo del Signore",
+      "bio": "San Cleofa, discepolo del Signore."
+    },
+    {
+      "nome": "San Firmino di Amiens",
+      "titolo": "Vescovo di Amiens e martire",
+      "bio": "San Firmino di Amiens, vescovo di Amiens e martire."
+    },
+    {
+      "nome": "Santi Paolo",
+      "titolo": "Tatta, Sabiniano, Massimo, Rufo ed Eugenio, martiri",
+      "bio": "Santi Paolo, Tatta, Sabiniano, Massimo, Rufo ed Eugenio, martiri."
+    },
+    {
+      "nome": "San Solenne di Chartres",
+      "titolo": "Vescovo di Chartres",
+      "bio": "San Solenne di Chartres, vescovo di Chartres."
+    },
+    {
+      "nome": "San Principio",
+      "titolo": "Vescovo di Soissons",
+      "bio": "San Principio, vescovo di Soissons."
+    },
+    {
+      "nome": "San Findbar di Cork",
+      "titolo": "Vescovo di Cork",
+      "bio": "San Findbar di Cork, vescovo di Cork."
+    },
+    {
+      "nome": "Sant'Aunacario di Auxerre",
+      "titolo": "Vescovo di Auxerre",
+      "bio": "Sant'Aunacario di Auxerre, vescovo di Auxerre."
+    },
+    {
+      "nome": "Sant'Ermenfrido di CuSance",
+      "titolo": "Abate di CuSance",
+      "bio": "Sant'Ermenfrido di CuSance, abate di CuSance."
+    },
+    {
+      "nome": "San Sergio di Radonež",
+      "titolo": "Sacerdote, eremita, igumeno e fondatore",
+      "bio": "San Sergio di Radonež, sacerdote, eremita, igumeno e fondatore."
+    },
+    {
+      "nome": "Beato Marco Criado",
+      "titolo": "Sacerdote trinitario e martire",
+      "bio": "Beato Marco Criado, sacerdote trinitario e martire."
+    },
+    {
+      "nome": "Beati Giovanni Pietro Bengoa Aranguren",
+      "titolo": "Sacerdote, e Paolo Maria Leoz y Portillo, passionista, e Gesù Hita Miranda, marianista, ma",
+      "bio": "Beati Giovanni Pietro Bengoa Aranguren, sacerdote, e Paolo Maria Leoz y Portillo, passionista, e Gesù Hita Miranda, marianista, martiri."
+    }
+  ],
+  "09-26": [
+    {
+      "nome": "Santi Cosma e Damiano",
+      "titolo": "Martiri",
+      "bio": "Santi Cosma e Damiano, martiri."
+    },
+    {
+      "nome": "San Gedeone",
+      "titolo": "Giudice di Israele",
+      "bio": "San Gedeone, giudice di Israele."
+    },
+    {
+      "nome": "San Senatore",
+      "titolo": "Martire",
+      "bio": "San Senatore, martire."
+    },
+    {
+      "nome": "Sant'Eusebio",
+      "titolo": "Vescovo di Bologna",
+      "bio": "Sant'Eusebio, vescovo di Bologna."
+    },
+    {
+      "nome": "San Nilo da Rossano",
+      "titolo": "Fondatore e abate di Grottaferrata",
+      "bio": "San Nilo da Rossano, fondatore e abate di Grottaferrata."
+    },
+    {
+      "nome": "Santa Lucia da Caltagirone",
+      "titolo": "Vergine francescana",
+      "bio": "Santa Lucia da Caltagirone, vergine francescana."
+    },
+    {
+      "nome": "Santi Sebastiano Nam I-gwan e nove compagni",
+      "titolo": "Martiri",
+      "bio": "Santi Sebastiano Nam I-gwan e nove compagni, martiri."
+    },
+    {
+      "nome": "Sante Lucia Kim",
+      "titolo": "Caterina Yi, vedova, e sua figlia Maddalena Cho, vergine, martiri",
+      "bio": "Sante Lucia Kim, Caterina Yi, vedova, e sua figlia Maddalena Cho, vergine, martiri."
+    },
+    {
+      "nome": "Santa Teresa Couderc",
+      "titolo": "Vergine, fondatrice delle Suore di Nostra Signora del Ritiro al Cenacolo",
+      "bio": "Santa Teresa Couderc, vergine, fondatrice delle Suore di Nostra Signora del Ritiro al Cenacolo."
+    },
+    {
+      "nome": "Beato Kaspar Stanggassinger",
+      "titolo": "Sacerdote redentorista",
+      "bio": "Beato Kaspar Stanggassinger, sacerdote redentorista."
+    },
+    {
+      "nome": "Beate Maria del Rifugio Rosat Balasch e Maria del Calvario Romero Clariana",
+      "titolo": "Vergini suore della dottrina cristiana e martiri",
+      "bio": "Beate Maria del Rifugio Rosat Balasch e Maria del Calvario Romero Clariana, vergini suore della dottrina cristiana e martiri."
+    },
+    {
+      "nome": "Beati Raffaele Pardo Molina e Giuseppe Maria Vidal Segú",
+      "titolo": "Domenicani e martiri",
+      "bio": "Beati Raffaele Pardo Molina e Giuseppe Maria Vidal Segú, domenicani e martiri."
+    },
+    {
+      "nome": "Beata Crescenza Valls Espi",
+      "titolo": "Vergine e martire",
+      "bio": "Beata Crescenza Valls Espi, vergine e martire."
+    },
+    {
+      "nome": "Beata Maria Noguera Albelda",
+      "titolo": "Vergine e martire",
+      "bio": "Beata Maria Noguera Albelda, vergine e martire."
+    },
+    {
+      "nome": "Beato Bonaventura Esteve Flors",
+      "titolo": "Sacerdote cappuccino e martire",
+      "bio": "Beato Bonaventura Esteve Flors, sacerdote cappuccino e martire."
+    },
+    {
+      "nome": "Beata Maria Jordá Botella",
+      "titolo": "Vergine e martire",
+      "bio": "Beata Maria Jordá Botella, vergine e martire."
+    },
+    {
+      "nome": "Beato Leone Legua Martí",
+      "titolo": "Sacerdote amigoniano e martire",
+      "bio": "Beato Leone Legua Martí, sacerdote amigoniano e martire."
+    },
+    {
+      "nome": "Beato Luigi Tezza (M.I.)",
+      "titolo": "Sacerdote e fondatore (insieme alla madre Giuseppina Vannini) della congregazione delle Fi",
+      "bio": "Beato Luigi Tezza (M.I.), sacerdote e fondatore (insieme alla madre Giuseppina Vannini) della congregazione delle Figlie di San Camillo."
+    }
+  ],
+  "09-27": [
+    {
+      "nome": "San Vincenzo de' Paoli (C.M.)",
+      "titolo": "Sacerdote, fondatore della Congregazione della missione e delle Figlie della carità",
+      "bio": "San Vincenzo de' Paoli (C.M.), sacerdote, fondatore della Congregazione della missione e delle Figlie della carità."
+    },
+    {
+      "nome": "San Caio di Milano",
+      "titolo": "Vescovo di Milano",
+      "bio": "San Caio di Milano, vescovo di Milano."
+    },
+    {
+      "nome": "San Fiorentino",
+      "titolo": "Martire",
+      "bio": "San Fiorentino, martire."
+    },
+    {
+      "nome": "Sant'Iltrude",
+      "titolo": "Vergine",
+      "bio": "Sant'Iltrude, vergine."
+    },
+    {
+      "nome": "San Sigeberto II (Sigebert)",
+      "titolo": "Monarca e religioso",
+      "bio": "San Sigeberto II (Sigebert), monarca e religioso."
+    },
+    {
+      "nome": "Sant'Adolfo e San Giovanni",
+      "titolo": "Fratelli martiri",
+      "bio": "Sant'Adolfo e San Giovanni, fratelli martiri."
+    },
+    {
+      "nome": "San Bonfiglio di Foligno",
+      "titolo": "Vescovo di Foligno",
+      "bio": "San Bonfiglio di Foligno, vescovo di Foligno."
+    },
+    {
+      "nome": "Sant'Elzeario da Sabrano",
+      "titolo": "Conte di Ariano",
+      "bio": "Sant'Elzeario da Sabrano, conte di Ariano."
+    },
+    {
+      "nome": "Beato Lorenzo da Ripafratta",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Lorenzo da Ripafratta, sacerdote domenicano."
+    },
+    {
+      "nome": "San Giovanni Battista Laborier du Vivier",
+      "titolo": "Diacono e martire",
+      "bio": "San Giovanni Battista Laborier du Vivier, diacono e martire."
+    },
+    {
+      "nome": "Beati Giuseppe Fenollosa Alcayna",
+      "titolo": "Sacerdote, e Fedele Climent Sanches, cappuccino, martiri",
+      "bio": "Beati Giuseppe Fenollosa Alcayna, sacerdote, e Fedele Climent Sanches, cappuccino, martiri."
+    },
+    {
+      "nome": "Beate Francesca Saveria Fenollosa Alcayna",
+      "titolo": "Religiosa amigoniana, ed Erminia Martínez Amigo, madre di famiglia, martiri",
+      "bio": "Beate Francesca Saveria Fenollosa Alcayna, religiosa amigoniana, ed Erminia Martínez Amigo, madre di famiglia, martiri."
+    },
+    {
+      "nome": "Beata María Agustina Rivas López",
+      "titolo": "Religiosa martire",
+      "bio": "Beata María Agustina Rivas López, religiosa martire."
+    }
+  ],
+  "09-28": [
+    {
+      "nome": "San Venceslao",
+      "titolo": "Principe di Boemia, martire",
+      "bio": "San Venceslao, principe di Boemia, martire."
+    },
+    {
+      "nome": "San Lorenzo Ruiz e quindici compagni",
+      "titolo": "Martiri",
+      "bio": "San Lorenzo Ruiz e quindici compagni, martiri."
+    },
+    {
+      "nome": "Santi Alfeo",
+      "titolo": "Alessandro e Zosimo, martiri",
+      "bio": "Santi Alfeo, Alessandro e Zosimo, martiri."
+    },
+    {
+      "nome": "San Caritone",
+      "titolo": "Abate",
+      "bio": "San Caritone, abate."
+    },
+    {
+      "nome": "San Zama (vescovo)",
+      "titolo": "Primo vescovo di Bologna",
+      "bio": "San Zama (vescovo), primo vescovo di Bologna."
+    },
+    {
+      "nome": "Sant'Esuperio",
+      "titolo": "Vescovo di Tolosa",
+      "bio": "Sant'Esuperio, vescovo di Tolosa."
+    },
+    {
+      "nome": "Santa Giulia Eustochio",
+      "titolo": "Vergine",
+      "bio": "Santa Giulia Eustochio, vergine."
+    },
+    {
+      "nome": "San Salonio",
+      "titolo": "Vescovo di Ginevra",
+      "bio": "San Salonio, vescovo di Ginevra."
+    },
+    {
+      "nome": "San Fausto di Riez",
+      "titolo": "Vescovo di Riez",
+      "bio": "San Fausto di Riez, vescovo di Riez."
+    },
+    {
+      "nome": "Sant'Ennemondo di Lione",
+      "titolo": "Vescovo di Lione e martire",
+      "bio": "Sant'Ennemondo di Lione, vescovo di Lione e martire."
+    },
+    {
+      "nome": "Santi Cunialdo e Gisilario",
+      "titolo": "Sacerdoti",
+      "bio": "Santi Cunialdo e Gisilario, sacerdoti."
+    },
+    {
+      "nome": "Santa Lioba di Tauberbischofsheim",
+      "titolo": "Vergine",
+      "bio": "Santa Lioba di Tauberbischofsheim, vergine."
+    },
+    {
+      "nome": "Beato Bernardino da Feltre",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Bernardino da Feltre, sacerdote francescano."
+    },
+    {
+      "nome": "San Simón de Rojas",
+      "titolo": "Sacerdote trinitario",
+      "bio": "San Simón de Rojas, sacerdote trinitario."
+    },
+    {
+      "nome": "Beati Giovanni Shozaburo",
+      "titolo": "Mancio Ichizayemon, Michele Taiemon Kinoshi, Lorenzo Hachizo, Pietro Terai Kuhioye e Tomma",
+      "bio": "Beati Giovanni Shozaburo, Mancio Ichizayemon, Michele Taiemon Kinoshi, Lorenzo Hachizo, Pietro Terai Kuhioye e Tommaso Terai Kahioye, martiri."
+    },
+    {
+      "nome": "Beato Francesco Saverio Ponsa Casallarch",
+      "titolo": "Religioso fatebenefratelli e martire",
+      "bio": "Beato Francesco Saverio Ponsa Casallarch, religioso fatebenefratelli e martire."
+    },
+    {
+      "nome": "Beata Amalia Abad Casasempere",
+      "titolo": "Martire, madre di famiglia e martire",
+      "bio": "Beata Amalia Abad Casasempere, martire, madre di famiglia e martire."
+    },
+    {
+      "nome": "Beato Giuseppe Tarrats Comaposada",
+      "titolo": "Gesuita e martire",
+      "bio": "Beato Giuseppe Tarrats Comaposada, gesuita e martire."
+    },
+    {
+      "nome": "Beato Nykyta Budka",
+      "titolo": "Vescovo di Patara e martire",
+      "bio": "Beato Nykyta Budka, vescovo di Patara e martire."
+    },
+    {
+      "nome": "Beato Luigi Monza",
+      "titolo": "Sacerdote e fondatore dell'Istituto Secolare delle Piccole Apostole della Carità",
+      "bio": "Beato Luigi Monza, sacerdote e fondatore dell'Istituto Secolare delle Piccole Apostole della Carità."
+    }
+  ],
+  "09-29": [
+    {
+      "nome": "Santi Michele",
+      "titolo": "Gabriele e Raffaele, arcangeli",
+      "bio": "Santi Michele, Gabriele e Raffaele, arcangeli."
+    },
+    {
+      "nome": "Sant'Eutichio",
+      "titolo": "Vescovo di Eraclea di Europa e martire",
+      "bio": "Sant'Eutichio, vescovo di Eraclea di Europa e martire."
+    },
+    {
+      "nome": "Sante Ripsima",
+      "titolo": "Gaiana e compagne, martiri",
+      "bio": "Sante Ripsima, Gaiana e compagne, martiri."
+    },
+    {
+      "nome": "San Fraterno di Auxerre",
+      "titolo": "Vescovo di Auxerre",
+      "bio": "San Fraterno di Auxerre, vescovo di Auxerre."
+    },
+    {
+      "nome": "San Ciriaco",
+      "titolo": "Anacoreta",
+      "bio": "San Ciriaco, anacoreta."
+    },
+    {
+      "nome": "San Liutvino di Treviri",
+      "titolo": "Vescovo di Treviri",
+      "bio": "San Liutvino di Treviri, vescovo di Treviri."
+    },
+    {
+      "nome": "Sant'Alarico",
+      "titolo": "Sacerdote ed eremita",
+      "bio": "Sant'Alarico, sacerdote ed eremita."
+    },
+    {
+      "nome": "San Maurizio",
+      "titolo": "Abate cistercense",
+      "bio": "San Maurizio, abate cistercense."
+    },
+    {
+      "nome": "Beato Giovanni di Montmirail",
+      "titolo": "Monaco cistercense",
+      "bio": "Beato Giovanni di Montmirail, monaco cistercense."
+    },
+    {
+      "nome": "Beato Carlo di Blois",
+      "titolo": "Duca di Bretagna",
+      "bio": "Beato Carlo di Blois, duca di Bretagna."
+    },
+    {
+      "nome": "Beato Nicola da Forca Palena",
+      "titolo": "Fondatore dei Poveri eremiti di San Girolamo",
+      "bio": "Beato Nicola da Forca Palena, fondatore dei Poveri eremiti di San Girolamo."
+    },
+    {
+      "nome": "San Giovanni da Dukla",
+      "titolo": "Sacerdote francescano",
+      "bio": "San Giovanni da Dukla, sacerdote francescano."
+    },
+    {
+      "nome": "passione dei Santi Michele di Aozaraza",
+      "titolo": "Guglielmo Courtet, Vincenzo Shiwozuka, domenicani, Lazzaro di Kyoto e Lorenzo Ruiz, padri ",
+      "bio": "passione dei Santi Michele di Aozaraza, Guglielmo Courtet, Vincenzo Shiwozuka, domenicani, Lazzaro di Kyoto e Lorenzo Ruiz, padri di famiglia, martiri."
+    },
+    {
+      "nome": "passione di San Renato Goupil",
+      "titolo": "Martire",
+      "bio": "passione di San Renato Goupil, martire."
+    },
+    {
+      "nome": "Beato Giacomo Mestre Iborra",
+      "titolo": "Sacerdote cappuccino e martire",
+      "bio": "Beato Giacomo Mestre Iborra, sacerdote cappuccino e martire."
+    },
+    {
+      "nome": "Beati Paolo Bori Puig e Vincenzo Sales Genovés",
+      "titolo": "Gesuiti, martiri",
+      "bio": "Beati Paolo Bori Puig e Vincenzo Sales Genovés, gesuiti, martiri."
+    },
+    {
+      "nome": "Beato Dario Hernández Morato",
+      "titolo": "Gesuita e martire",
+      "bio": "Beato Dario Hernández Morato, gesuita e martire."
+    },
+    {
+      "nome": "Beato Francesco de Paula Castello y Aleu",
+      "titolo": "Martire",
+      "bio": "Beato Francesco de Paula Castello y Aleu, martire."
+    }
+  ],
+  "09-30": [
+    {
+      "nome": "San Girolamo",
+      "titolo": "Sacerdote Padre e Dottore della Chiesa",
+      "bio": "San Girolamo, sacerdote Padre e Dottore della Chiesa."
+    },
+    {
+      "nome": "Sant'Antonino di Piacenza",
+      "titolo": "Martire a Piacenza",
+      "bio": "Sant'Antonino di Piacenza, martire a Piacenza."
+    },
+    {
+      "nome": "Santi Urso e Vittore",
+      "titolo": "Martiri della Legione Tebea",
+      "bio": "Santi Urso e Vittore, martiri della Legione Tebea."
+    },
+    {
+      "nome": "San Gregorio Illuminatore",
+      "titolo": "Catholicos di Armenia",
+      "bio": "San Gregorio Illuminatore, catholicos di Armenia."
+    },
+    {
+      "nome": "Sant'Eusebia",
+      "titolo": "Vergine",
+      "bio": "Sant'Eusebia, vergine."
+    },
+    {
+      "nome": "Sant'Onorio di Canterbury",
+      "titolo": "Vescovo di Canterbury",
+      "bio": "Sant'Onorio di Canterbury, vescovo di Canterbury."
+    },
+    {
+      "nome": "San Simone di Crépy",
+      "titolo": "Monaco",
+      "bio": "San Simone di Crépy, monaco."
+    },
+    {
+      "nome": "Sant'Amato di Nusco",
+      "titolo": "Vescovo di Nusco",
+      "bio": "Sant'Amato di Nusco, vescovo di Nusco."
+    },
+    {
+      "nome": "Sant'Ismidone di Die",
+      "titolo": "Vescovo di Die",
+      "bio": "Sant'Ismidone di Die, vescovo di Die."
+    },
+    {
+      "nome": "Beata Felicia Meda",
+      "titolo": "Badessa clarissa",
+      "bio": "Beata Felicia Meda, badessa clarissa."
+    },
+    {
+      "nome": "San Francesco Borgia",
+      "titolo": "Sacerdote gesuita",
+      "bio": "San Francesco Borgia, sacerdote gesuita."
+    },
+    {
+      "nome": "San Giovanni Nicola Cordier",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Giovanni Nicola Cordier, sacerdote e martire."
+    },
+    {
+      "nome": "natale di Santa Teresa di Lisieux",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "natale di Santa Teresa di Lisieux."
+    },
+    {
+      "nome": "Beato Federico Albert",
+      "titolo": "Sacerdote, fondatore delle Suore vincenzine di Maria Immacolata",
+      "bio": "Beato Federico Albert, sacerdote, fondatore delle Suore vincenzine di Maria Immacolata."
+    }
+  ],
+  "10-01": [
+    {
+      "nome": "Santa Teresa del Bambin Gesù",
+      "titolo": "Vergine del Carmelo di Lisieux e dottore della Chiesa",
+      "bio": "Santa Teresa del Bambin Gesù, vergine del Carmelo di Lisieux e dottore della Chiesa."
+    },
+    {
+      "nome": "San Piatone di Tournai",
+      "titolo": "Martire",
+      "bio": "San Piatone di Tournai, martire."
+    },
+    {
+      "nome": "Santi Verissimo",
+      "titolo": "Massima e Giulia, martiri",
+      "bio": "Santi Verissimo, Massima e Giulia, martiri."
+    },
+    {
+      "nome": "San Nicezio",
+      "titolo": "Vescovo di Treviri",
+      "bio": "San Nicezio, vescovo di Treviri."
+    },
+    {
+      "nome": "San Romano il Melode",
+      "titolo": "Compositore e diacono",
+      "bio": "San Romano il Melode, compositore e diacono."
+    },
+    {
+      "nome": "San Bavone di Gand",
+      "titolo": "Monaco",
+      "bio": "San Bavone di Gand, monaco."
+    },
+    {
+      "nome": "San Vasnulfo",
+      "titolo": "Monaco, di origine irlandese",
+      "bio": "San Vasnulfo, monaco, di origine irlandese."
+    },
+    {
+      "nome": "San Geraldo Edwards",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Geraldo Edwards, sacerdote e martire."
+    },
+    {
+      "nome": "Beati Roberto Wilcox",
+      "titolo": "Cristoforo Buxton e Roberto Widmerpool, martiri",
+      "bio": "Beati Roberto Wilcox, Cristoforo Buxton e Roberto Widmerpool, martiri."
+    },
+    {
+      "nome": "Beati Rodolfo Crockett ed Edoardo James",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Beati Rodolfo Crockett ed Edoardo James, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beato Giovanni Robinson",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giovanni Robinson, sacerdote e martire."
+    },
+    {
+      "nome": "Beati Gaspare Hikojiro e Andrea Yoshida",
+      "titolo": "Catechisti, martiri di Nagasaki",
+      "bio": "Beati Gaspare Hikojiro e Andrea Yoshida, catechisti, martiri di Nagasaki."
+    },
+    {
+      "nome": "Beata Fiorenza Caerols Martínez",
+      "titolo": "Vergine e martire",
+      "bio": "Beata Fiorenza Caerols Martínez, vergine e martire."
+    },
+    {
+      "nome": "Beato Alvaro Sanjuan Canet",
+      "titolo": "Sacerdote salesiano e martire",
+      "bio": "Beato Alvaro Sanjuan Canet, sacerdote salesiano e martire."
+    },
+    {
+      "nome": "Beato Antoni Rewera",
+      "titolo": "Sacerdote, fondatore delle Figlie di San Francesco serafico e martire",
+      "bio": "Beato Antoni Rewera, sacerdote, fondatore delle Figlie di San Francesco serafico e martire."
+    },
+    {
+      "nome": "Beato Juan de Palafox y Mendoza",
+      "titolo": "Vescovo",
+      "bio": "Beato Juan de Palafox y Mendoza, vescovo."
+    }
+  ],
+  "10-02": [
+    {
+      "nome": "Santi Angeli custodi",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi Angeli custodi."
+    },
+    {
+      "nome": "Sant'Eleuterio",
+      "titolo": "Martire",
+      "bio": "Sant'Eleuterio, martire."
+    },
+    {
+      "nome": "San Saturio",
+      "titolo": "Eremita",
+      "bio": "San Saturio, eremita."
+    },
+    {
+      "nome": "San Leodegario di Autun",
+      "titolo": "Vescovo di Autun e martire",
+      "bio": "San Leodegario di Autun, vescovo di Autun e martire."
+    },
+    {
+      "nome": "San Beregiso",
+      "titolo": "Abate",
+      "bio": "San Beregiso, abate."
+    },
+    {
+      "nome": "Sant'Ursicino",
+      "titolo": "Vescovo di Coira",
+      "bio": "Sant'Ursicino, vescovo di Coira."
+    },
+    {
+      "nome": "San Teofilo",
+      "titolo": "Monaco",
+      "bio": "San Teofilo, monaco."
+    },
+    {
+      "nome": "Beati Ludovico",
+      "titolo": "Lucia, Andrea e Francesco Yakichi, martiri di Nagasaki",
+      "bio": "Beati Ludovico, Lucia, Andrea e Francesco Yakichi, martiri di Nagasaki."
+    },
+    {
+      "nome": "Beato Giorgio Edmondo Renè",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giorgio Edmondo Renè, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Antoine Chevrier",
+      "titolo": "Sacerdote, fondatore dell'Istituto del Prado",
+      "bio": "Beato Antoine Chevrier, sacerdote, fondatore dell'Istituto del Prado."
+    },
+    {
+      "nome": "Beato Jan Beyzym",
+      "titolo": "Sacerdote della Compagnia di Gesù",
+      "bio": "Beato Jan Beyzym, sacerdote della Compagnia di Gesù."
+    },
+    {
+      "nome": "Beati Francesco Carceller e Isidoro Bover Oliver",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Beati Francesco Carceller e Isidoro Bover Oliver, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beati Elia e Giovanni Battista Carbonell Mollá",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Beati Elia e Giovanni Battista Carbonell Mollá, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beata Maria Guadalupe Ricart Olmos",
+      "titolo": "Religiosa servita e martire",
+      "bio": "Beata Maria Guadalupe Ricart Olmos, religiosa servita e martire."
+    },
+    {
+      "nome": "Beata Maria Antonina Kratochwil",
+      "titolo": "Vergine delle Suore scolastiche di Nostra Signora e martire",
+      "bio": "Beata Maria Antonina Kratochwil, vergine delle Suore scolastiche di Nostra Signora e martire."
+    },
+    {
+      "nome": "Beato Enrico Saiz Aparicio (Enrique Sáiz Aparicio)",
+      "titolo": "Sacerdote martire appartenete alla Società Salesiana di San Giovanni Bosco",
+      "bio": "Beato Enrico Saiz Aparicio (Enrique Sáiz Aparicio), sacerdote martire appartenete alla Società Salesiana di San Giovanni Bosco."
+    }
+  ],
+  "10-03": [
+    {
+      "nome": "San Dionigi l'Areopagita",
+      "titolo": "Primo vescovo di Atene",
+      "bio": "San Dionigi l'Areopagita, primo vescovo di Atene."
+    },
+    {
+      "nome": "Santa Candida",
+      "titolo": "Martire",
+      "bio": "Santa Candida, martire."
+    },
+    {
+      "nome": "Santi Fausto e compagni",
+      "titolo": "Martiri",
+      "bio": "Santi Fausto e compagni, martiri."
+    },
+    {
+      "nome": "Sant'Esichio",
+      "titolo": "Monaco",
+      "bio": "Sant'Esichio, monaco."
+    },
+    {
+      "nome": "San Massimiano di Bagai",
+      "titolo": "Vescovo di Bagai",
+      "bio": "San Massimiano di Bagai, vescovo di Bagai."
+    },
+    {
+      "nome": "San Cipriano di Tolone",
+      "titolo": "Vescovo di Tolone",
+      "bio": "San Cipriano di Tolone, vescovo di Tolone."
+    },
+    {
+      "nome": "Santi Ewaldo il Nero ed Ewaldo il Bianco",
+      "titolo": "Martiri",
+      "bio": "Santi Ewaldo il Nero ed Ewaldo il Bianco, martiri."
+    },
+    {
+      "nome": "Beato Utto di Metten",
+      "titolo": "Abate di Metten",
+      "bio": "Beato Utto di Metten, abate di Metten."
+    },
+    {
+      "nome": "San Gerardo di Brogne (O.S.B.)",
+      "titolo": "Sacerdote, fondatore e primo abate di Brogne",
+      "bio": "San Gerardo di Brogne (O.S.B.), sacerdote, fondatore e primo abate di Brogne."
+    },
+    {
+      "nome": "Beato Adalgotto di Coira",
+      "titolo": "Vescovo di Coira",
+      "bio": "Beato Adalgotto di Coira, vescovo di Coira."
+    },
+    {
+      "nome": "Beato Ambrogio Francesco Ferro",
+      "titolo": "Sacerdote, e compagni, martiri",
+      "bio": "Beato Ambrogio Francesco Ferro, sacerdote, e compagni, martiri."
+    },
+    {
+      "nome": "Beato Crescenzio García Pobo",
+      "titolo": "Sacerdote amigoniano e martire",
+      "bio": "Beato Crescenzio García Pobo, sacerdote amigoniano e martire."
+    },
+    {
+      "nome": "Beato Jesús Emilio Jaramillo Monsalve",
+      "titolo": "Vescovo, filosofo e teologo, appartenente all'Istituto per le Missioni Estere di Yarumal",
+      "bio": "Beato Jesús Emilio Jaramillo Monsalve, vescovo, filosofo e teologo, appartenente all'Istituto per le Missioni Estere di Yarumal."
+    }
+  ],
+  "10-04": [
+    {
+      "nome": "San Francesco d'Assisi",
+      "titolo": "Fondatore dei Frati Minori",
+      "bio": "San Francesco d'Assisi, fondatore dei Frati Minori.",
+      "fotoUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Raphael_-_Saint_Francis_of_Assisi_-_Google_Art_Project.jpg"
+    },
+    {
+      "nome": "San Petronio di Bologna",
+      "titolo": "Vescovo di Bologna",
+      "bio": "San Petronio di Bologna, vescovo di Bologna."
+    },
+    {
+      "nome": "San Quintino",
+      "titolo": "Martire",
+      "bio": "San Quintino, martire."
+    },
+    {
+      "nome": "Sant'Aurea",
+      "titolo": "Badessa",
+      "bio": "Sant'Aurea, badessa."
+    },
+    {
+      "nome": "Beato Francesco Saverio Seelos",
+      "titolo": "Sacerdote redentorista",
+      "bio": "Beato Francesco Saverio Seelos, sacerdote redentorista."
+    },
+    {
+      "nome": "Beato Enrico Morant Pellicer",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Enrico Morant Pellicer, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Giuseppe Canet Ginet",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giuseppe Canet Ginet, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Alfredo Pellicer Muñoz",
+      "titolo": "Francescano e martire",
+      "bio": "Beato Alfredo Pellicer Muñoz, francescano e martire."
+    },
+    {
+      "nome": "Beato Tommaso da Celano (O.Min.)",
+      "titolo": "Religioso e fondatore",
+      "bio": "Beato Tommaso da Celano (O.Min.), religioso e fondatore."
+    }
+  ],
+  "10-05": [
+    {
+      "nome": "Santi martiri di Treviri",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi martiri di Treviri."
+    },
+    {
+      "nome": "Santa Caritina",
+      "titolo": "Martire",
+      "bio": "Santa Caritina, martire."
+    },
+    {
+      "nome": "Santa Mamlaca",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Mamlaca, vergine e martire."
+    },
+    {
+      "nome": "Sant'Apollinare di Valence",
+      "titolo": "Vescovo di Valence",
+      "bio": "Sant'Apollinare di Valence, vescovo di Valence."
+    },
+    {
+      "nome": "San Mauro (abate) e San Placido",
+      "titolo": "Monaci, discepoli prediletti di Benedetto",
+      "bio": "San Mauro (abate) e San Placido, monaci, discepoli prediletti di Benedetto."
+    },
+    {
+      "nome": "San Girolamo di Nevers",
+      "titolo": "Vescovo di Nevers",
+      "bio": "San Girolamo di Nevers, vescovo di Nevers."
+    },
+    {
+      "nome": "San Meinulfo",
+      "titolo": "Diacono",
+      "bio": "San Meinulfo, diacono."
+    },
+    {
+      "nome": "San Froilano",
+      "titolo": "Vescovo di León",
+      "bio": "San Froilano, vescovo di León."
+    },
+    {
+      "nome": "Sant'Attilano di Zamora",
+      "titolo": "Vescovo di Zamora",
+      "bio": "Sant'Attilano di Zamora, vescovo di Zamora."
+    },
+    {
+      "nome": "Beato Pietro da Imola",
+      "titolo": "Cavaliere gerosolimitano",
+      "bio": "Beato Pietro da Imola, cavaliere gerosolimitano."
+    },
+    {
+      "nome": "Santa Flora di Beaulieu",
+      "titolo": "Vergine gerosolimitana",
+      "bio": "Santa Flora di Beaulieu, vergine gerosolimitana."
+    },
+    {
+      "nome": "Beato Sante da Cori",
+      "titolo": "Sacerdote dell'Ordine degli Eremitani di Sant'Agostino",
+      "bio": "Beato Sante da Cori, sacerdote dell'Ordine degli Eremitani di Sant'Agostino."
+    },
+    {
+      "nome": "Beato Raimondo da Capua",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Raimondo da Capua, sacerdote domenicano."
+    },
+    {
+      "nome": "Beato Matteo Carreri",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Matteo Carreri, sacerdote domenicano."
+    },
+    {
+      "nome": "Beati Guglielmo Hartley",
+      "titolo": "Giovanni Helvett e Roberto Sutton, martiri",
+      "bio": "Beati Guglielmo Hartley, Giovanni Helvett e Roberto Sutton, martiri."
+    },
+    {
+      "nome": "Sant'Anna Schäffer",
+      "titolo": "Vergine",
+      "bio": "Sant'Anna Schäffer, vergine."
+    },
+    {
+      "nome": "Beato Bartolo Longo",
+      "titolo": "Fondatore del Santuario di Pompei e delle Suore domenicane del Rosario",
+      "bio": "Beato Bartolo Longo, fondatore del Santuario di Pompei e delle Suore domenicane del Rosario."
+    },
+    {
+      "nome": "San Tranquillino Ubiarco",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Tranquillino Ubiarco, sacerdote e martire."
+    },
+    {
+      "nome": "Santa Maria Faustina Kowalska",
+      "titolo": "Vergine delle Suore della Beata Vergine Maria della Misericordia",
+      "bio": "Santa Maria Faustina Kowalska, vergine delle Suore della Beata Vergine Maria della Misericordia."
+    },
+    {
+      "nome": "Beato Mariano Skrzypczak",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Mariano Skrzypczak, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Alberto Marvelli",
+      "titolo": "Laico, ingegnere e politico",
+      "bio": "Beato Alberto Marvelli, laico, ingegnere e politico."
+    }
+  ],
+  "10-06": [
+    {
+      "nome": "San Bruno di Colonia",
+      "titolo": "Sacerdote, fondatore dei certosini",
+      "bio": "San Bruno di Colonia, sacerdote, fondatore dei certosini."
+    },
+    {
+      "nome": "San Sagara",
+      "titolo": "Vescovo di Laodicea di Frigia e martire",
+      "bio": "San Sagara, vescovo di Laodicea di Frigia e martire."
+    },
+    {
+      "nome": "Santa Fede di Agen",
+      "titolo": "Martire",
+      "bio": "Santa Fede di Agen, martire."
+    },
+    {
+      "nome": "San Romano di Auxerre",
+      "titolo": "Vescovo di Auxerre",
+      "bio": "San Romano di Auxerre, vescovo di Auxerre."
+    },
+    {
+      "nome": "San Magno di Oderzo",
+      "titolo": "Vescovo di Oderzo",
+      "bio": "San Magno di Oderzo, vescovo di Oderzo."
+    },
+    {
+      "nome": "Sant'Ivo",
+      "titolo": "Diacono e monaco",
+      "bio": "Sant'Ivo, diacono e monaco."
+    },
+    {
+      "nome": "San Pardolfo",
+      "titolo": "Abate",
+      "bio": "San Pardolfo, abate."
+    },
+    {
+      "nome": "Beato Adalberone di Würzburg",
+      "titolo": "Vescovo di Würzburg",
+      "bio": "Beato Adalberone di Würzburg, vescovo di Würzburg."
+    },
+    {
+      "nome": "Sant'Artaldo di Belley (O.Cart.)",
+      "titolo": "Vescovo di Belley",
+      "bio": "Sant'Artaldo di Belley (O.Cart.), vescovo di Belley."
+    },
+    {
+      "nome": "Santa Maria Francesca delle Cinque Piaghe",
+      "titolo": "Vergine francescana",
+      "bio": "Santa Maria Francesca delle Cinque Piaghe, vergine francescana."
+    },
+    {
+      "nome": "Beato Francesco Hunot",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Francesco Hunot, sacerdote e martire."
+    },
+    {
+      "nome": "Beata Marie-Rose Durocher",
+      "titolo": "Vergine, fondatrice delle Suore dei Santi Nomi di Gesù e Maria",
+      "bio": "Beata Marie-Rose Durocher, vergine, fondatrice delle Suore dei Santi Nomi di Gesù e Maria."
+    },
+    {
+      "nome": "San Francesco Trần Văn Trung",
+      "titolo": "Martire",
+      "bio": "San Francesco Trần Văn Trung, martire."
+    },
+    {
+      "nome": "Beato Isidoro di San Giuseppe",
+      "titolo": "Religioso passionista",
+      "bio": "Beato Isidoro di San Giuseppe, religioso passionista."
+    }
+  ],
+  "10-07": [
+    {
+      "nome": "Beata Maria Vergine del Rosario",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Beata Maria Vergine del Rosario."
+    },
+    {
+      "nome": "San Marcello",
+      "titolo": "Martire",
+      "bio": "San Marcello, martire."
+    },
+    {
+      "nome": "Santa Giustina di Padova",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Giustina di Padova, vergine e martire."
+    },
+    {
+      "nome": "Santi Sergio e Bacco",
+      "titolo": "Martiri",
+      "bio": "Santi Sergio e Bacco, martiri."
+    },
+    {
+      "nome": "San Marco",
+      "titolo": "Papa",
+      "bio": "San Marco, papa."
+    },
+    {
+      "nome": "Sant'Augusto di San Sinforiano",
+      "titolo": "Sacerdote e abate",
+      "bio": "Sant'Augusto di San Sinforiano, sacerdote e abate."
+    },
+    {
+      "nome": "San Palladio",
+      "titolo": "Vescovo di Saintes",
+      "bio": "San Palladio, vescovo di Saintes."
+    },
+    {
+      "nome": "Beato Martino",
+      "titolo": "Detto \"il Cid\", abate",
+      "bio": "Beato Martino, detto \"il Cid\", abate."
+    },
+    {
+      "nome": "Beato Giovanni Hunot",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giovanni Hunot, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Giuseppe Llosá Balaguer",
+      "titolo": "Amigoniano e martire",
+      "bio": "Beato Giuseppe Llosá Balaguer, amigoniano e martire."
+    }
+  ],
+  "10-08": [
+    {
+      "nome": "Santa Pelagia di Antiochia",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Pelagia di Antiochia, vergine e martire."
+    },
+    {
+      "nome": "Santa Reparata di Cesarea di Palestina",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Reparata di Cesarea di Palestina, vergine e martire."
+    },
+    {
+      "nome": "San Felice di Como",
+      "titolo": "Vescovo di Como",
+      "bio": "San Felice di Como, vescovo di Como."
+    },
+    {
+      "nome": "Sant'Evodio di Rouen",
+      "titolo": "Vescovo di Rouen",
+      "bio": "Sant'Evodio di Rouen, vescovo di Rouen."
+    },
+    {
+      "nome": "Santa Ragenfreda",
+      "titolo": "Badessa",
+      "bio": "Santa Ragenfreda, badessa."
+    },
+    {
+      "nome": "Sant'Ugo Canefri",
+      "titolo": "Religioso",
+      "bio": "Sant'Ugo Canefri, religioso."
+    },
+    {
+      "nome": "Beati Giovanni Adams",
+      "titolo": "Roberto Dibdale e Giovanni Lowe, sacerdoti e martiri",
+      "bio": "Beati Giovanni Adams, Roberto Dibdale e Giovanni Lowe, sacerdoti e martiri."
+    }
+  ],
+  "10-09": [
+    {
+      "nome": "San Dionigi di Parigi",
+      "titolo": "Primo vescovo di Parigi, e compagni, martiri",
+      "bio": "San Dionigi di Parigi, primo vescovo di Parigi, e compagni, martiri."
+    },
+    {
+      "nome": "San Giovanni Leonardi",
+      "titolo": "Sacerdote, fondatore dei Chierici regolari della Madre di Dio",
+      "bio": "San Giovanni Leonardi, sacerdote, fondatore dei Chierici regolari della Madre di Dio."
+    },
+    {
+      "nome": "Sant'Abramo",
+      "titolo": "Patriarca e padre dei credenti",
+      "bio": "Sant'Abramo, patriarca e padre dei credenti."
+    },
+    {
+      "nome": "Santi Diodoro",
+      "titolo": "Diomede e Didimo, martiri",
+      "bio": "Santi Diodoro, Diomede e Didimo, martiri."
+    },
+    {
+      "nome": "San Donnino di Fidenza",
+      "titolo": "Martire",
+      "bio": "San Donnino di Fidenza, martire."
+    },
+    {
+      "nome": "Santa Publia",
+      "titolo": "Vedova e martire",
+      "bio": "Santa Publia, vedova e martire."
+    },
+    {
+      "nome": "San Sabino",
+      "titolo": "Eremita",
+      "bio": "San Sabino, eremita."
+    },
+    {
+      "nome": "San Donnino",
+      "titolo": "Eremita",
+      "bio": "San Donnino, eremita."
+    },
+    {
+      "nome": "San Gisleno",
+      "titolo": "Monaco",
+      "bio": "San Gisleno, monaco."
+    },
+    {
+      "nome": "San Diodato di Montecassino",
+      "titolo": "Abate",
+      "bio": "San Diodato di Montecassino, abate."
+    },
+    {
+      "nome": "San Guntero",
+      "titolo": "Eremita",
+      "bio": "San Guntero, eremita."
+    },
+    {
+      "nome": "San Bernardo di Rodez",
+      "titolo": "Abate dei Canonici regolari",
+      "bio": "San Bernardo di Rodez, abate dei Canonici regolari."
+    },
+    {
+      "nome": "San Luigi Beltrán (O.P.)",
+      "titolo": "Sacerdote e missionario",
+      "bio": "San Luigi Beltrán (O.P.), sacerdote e missionario."
+    },
+    {
+      "nome": "Santi Innocenzo dell'Immacolata",
+      "titolo": "Sacerdote passionista, e otto compagni lasalliani, martiri",
+      "bio": "Santi Innocenzo dell'Immacolata, sacerdote passionista, e otto compagni lasalliani, martiri."
+    },
+    {
+      "nome": "San Giovanni Enrico Newman (C.O.)",
+      "titolo": "Cardinale e teologo",
+      "bio": "San Giovanni Enrico Newman (C.O.), cardinale e teologo."
+    }
+  ],
+  "10-10": [
+    {
+      "nome": "San Pinito di Cnosso",
+      "titolo": "Vescovo di Cnosso",
+      "bio": "San Pinito di Cnosso, vescovo di Cnosso."
+    },
+    {
+      "nome": "Santi Eulampio ed Eulampia",
+      "titolo": "Martiri",
+      "bio": "Santi Eulampio ed Eulampia, martiri."
+    },
+    {
+      "nome": "San Gereone di Colonia e compagni",
+      "titolo": "Martiri",
+      "bio": "San Gereone di Colonia e compagni, martiri."
+    },
+    {
+      "nome": "Santi Vittore e Malloso",
+      "titolo": "Martiri",
+      "bio": "Santi Vittore e Malloso, martiri."
+    },
+    {
+      "nome": "Santi Cassio e Fiorenzo",
+      "titolo": "Martiri",
+      "bio": "Santi Cassio e Fiorenzo, martiri."
+    },
+    {
+      "nome": "San Chiaro di Nantes",
+      "titolo": "Primo vescovo di Nantes",
+      "bio": "San Chiaro di Nantes, primo vescovo di Nantes."
+    },
+    {
+      "nome": "San Cerbone di Populonia",
+      "titolo": "Vescovo di Populonia",
+      "bio": "San Cerbone di Populonia, vescovo di Populonia."
+    },
+    {
+      "nome": "San Paolino di York",
+      "titolo": "Vescovo di York",
+      "bio": "San Paolino di York, vescovo di York."
+    },
+    {
+      "nome": "Santa Teodechilde di Jouarre",
+      "titolo": "Badessa",
+      "bio": "Santa Teodechilde di Jouarre, badessa."
+    },
+    {
+      "nome": "Santa Tanca",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Tanca, vergine e martire."
+    },
+    {
+      "nome": "Santi Daniele Fasanella",
+      "titolo": "Samuele, Angelo, Leone, Nicola e Ugolino e Domno, martiri francescani",
+      "bio": "Santi Daniele Fasanella, Samuele, Angelo, Leone, Nicola e Ugolino e Domno, martiri francescani."
+    },
+    {
+      "nome": "San Giovanni di Bridlington",
+      "titolo": "Sacerdote, priore di un monastero dei canonici regolari",
+      "bio": "San Giovanni di Bridlington, sacerdote, priore di un monastero dei canonici regolari."
+    },
+    {
+      "nome": "San Daniele Comboni",
+      "titolo": "Vescovo titolare di Claudiopoli di Isauria e vicario apostolico dell'Africa centrale, fond",
+      "bio": "San Daniele Comboni, vescovo titolare di Claudiopoli di Isauria e vicario apostolico dell'Africa centrale, fondatore dei Figli del Cuore di Gesù e delle Pie madri della Nigrizia."
+    },
+    {
+      "nome": "Beata Maria Angela Truszkowska",
+      "titolo": "Vergine, fondatrice delle Suore di San Felice da Cantalice",
+      "bio": "Beata Maria Angela Truszkowska, vergine, fondatrice delle Suore di San Felice da Cantalice."
+    },
+    {
+      "nome": "Beato Leon Wetmański",
+      "titolo": "Vescovo titolare di Camaco e ausiliare di Płock, martire",
+      "bio": "Beato Leon Wetmański, vescovo titolare di Camaco e ausiliare di Płock, martire."
+    },
+    {
+      "nome": "Beato Edoardo Detkens",
+      "titolo": "Martire",
+      "bio": "Beato Edoardo Detkens, martire."
+    }
+  ],
+  "10-11": [
+    {
+      "nome": "San Giovanni XXIII",
+      "titolo": "Papa",
+      "bio": "San Giovanni XXIII, papa."
+    },
+    {
+      "nome": "San Filippo",
+      "titolo": "Diacono",
+      "bio": "San Filippo, diacono."
+    },
+    {
+      "nome": "Santi Taraco",
+      "titolo": "Probo e Andronico, martiri",
+      "bio": "Santi Taraco, Probo e Andronico, martiri."
+    },
+    {
+      "nome": "Santi Nicasio",
+      "titolo": "Quirino, Scubicolo e Pienzia, martiri",
+      "bio": "Santi Nicasio, Quirino, Scubicolo e Pienzia, martiri."
+    },
+    {
+      "nome": "San Santino",
+      "titolo": "Vescovo di Verdun",
+      "bio": "San Santino, vescovo di Verdun."
+    },
+    {
+      "nome": "San Sarmata",
+      "titolo": "Abate e martire",
+      "bio": "San Sarmata, abate e martire."
+    },
+    {
+      "nome": "San Firmino di Uzès",
+      "titolo": "Vescovo di Uzès",
+      "bio": "San Firmino di Uzès, vescovo di Uzès."
+    },
+    {
+      "nome": "San Canizio di Aghaboe",
+      "titolo": "Abate",
+      "bio": "San Canizio di Aghaboe, abate."
+    },
+    {
+      "nome": "Sant'Anastasio",
+      "titolo": "Apocrisario della Chiesa di Roma",
+      "bio": "Sant'Anastasio, apocrisario della Chiesa di Roma."
+    },
+    {
+      "nome": "San Gummario",
+      "titolo": "Soldato",
+      "bio": "San Gummario, soldato."
+    },
+    {
+      "nome": "San Bruno I di Colonia",
+      "titolo": "Vescovo di Colonia",
+      "bio": "San Bruno I di Colonia, vescovo di Colonia."
+    },
+    {
+      "nome": "San Gaudenzio (Radim)",
+      "titolo": "Vescovo di Gniezno",
+      "bio": "San Gaudenzio (Radim), vescovo di Gniezno."
+    },
+    {
+      "nome": "San Meinardo di Riga",
+      "titolo": "Vescovo di Riga",
+      "bio": "San Meinardo di Riga, vescovo di Riga."
+    },
+    {
+      "nome": "Beato Giacomo da Ulma",
+      "titolo": "Religioso domenicano",
+      "bio": "Beato Giacomo da Ulma, religioso domenicano."
+    },
+    {
+      "nome": "Sant'Alessandro Sauli (B.)",
+      "titolo": "Teologo e vescovo di Aleria e poi di Pavia",
+      "bio": "Sant'Alessandro Sauli (B.), teologo e vescovo di Aleria e poi di Pavia."
+    },
+    {
+      "nome": "San Pietro Lê Tùy",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Pietro Lê Tùy, sacerdote e martire."
+    },
+    {
+      "nome": "Santa Maria Soledad Torres Acosta",
+      "titolo": "Vergine, fondatrice delle Serve di Maria",
+      "bio": "Santa Maria Soledad Torres Acosta, vergine, fondatrice delle Serve di Maria."
+    },
+    {
+      "nome": "Beato Angelo Ramos Velázquez",
+      "titolo": "Religioso salesiano e martire",
+      "bio": "Beato Angelo Ramos Velázquez, religioso salesiano e martire."
+    }
+  ],
+  "10-12": [
+    {
+      "nome": "Sant'Edisto (martire)",
+      "titolo": "Martire",
+      "bio": "Sant'Edisto (martire), martire."
+    },
+    {
+      "nome": "Santa Donnina",
+      "titolo": "Martire",
+      "bio": "Santa Donnina, martire."
+    },
+    {
+      "nome": "Santi Cipriano",
+      "titolo": "Felice e 4964 compagni, martiri e confessori africani",
+      "bio": "Santi Cipriano, Felice e 4964 compagni, martiri e confessori africani."
+    },
+    {
+      "nome": "San Felice IV",
+      "titolo": "Papa",
+      "bio": "San Felice IV, papa."
+    },
+    {
+      "nome": "San Massimiliano di Celeia",
+      "titolo": "Vescovo di Lauriaco",
+      "bio": "San Massimiliano di Celeia, vescovo di Lauriaco."
+    },
+    {
+      "nome": "San Rodobaldo II di Pavia",
+      "titolo": "Vescovo di Pavia",
+      "bio": "San Rodobaldo II di Pavia, vescovo di Pavia."
+    },
+    {
+      "nome": "San Serafino da Montegranaro (O.F.M. Cap.)",
+      "titolo": "Religioso fratello",
+      "bio": "San Serafino da Montegranaro (O.F.M. Cap.), religioso fratello."
+    },
+    {
+      "nome": "Sant'Edwin",
+      "titolo": "Re e martire",
+      "bio": "Sant'Edwin, re e martire."
+    },
+    {
+      "nome": "Beato Tommaso Bullaker",
+      "titolo": "Sacerdote francescano e martire",
+      "bio": "Beato Tommaso Bullaker, sacerdote francescano e martire."
+    },
+    {
+      "nome": "Beato Giuseppe Gonzales Huguet",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giuseppe Gonzales Huguet, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Pacifico da Valencia (O.F.M. Cap.) (Pedro Salcedo Puchades)",
+      "titolo": "Religioso martire",
+      "bio": "Beato Pacifico da Valencia (O.F.M. Cap.) (Pedro Salcedo Puchades), religioso martire."
+    },
+    {
+      "nome": "Beato Romano Sitko",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Romano Sitko, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Carlo Acutis",
+      "titolo": "Studente",
+      "bio": "Beato Carlo Acutis, studente."
+    }
+  ],
+  "10-13": [
+    {
+      "nome": "San Teofilo di Antiochia",
+      "titolo": "Vescovo di Antiochia",
+      "bio": "San Teofilo di Antiochia, vescovo di Antiochia."
+    },
+    {
+      "nome": "Santi Fausto",
+      "titolo": "Gennaro e Marziale, martiri",
+      "bio": "Santi Fausto, Gennaro e Marziale, martiri."
+    },
+    {
+      "nome": "San Fiorenzo",
+      "titolo": "Martire",
+      "bio": "San Fiorenzo, martire."
+    },
+    {
+      "nome": "San Romolo di Genova",
+      "titolo": "Vescovo di Genova",
+      "bio": "San Romolo di Genova, vescovo di Genova."
+    },
+    {
+      "nome": "San Lubenzio",
+      "titolo": "Sacerdote",
+      "bio": "San Lubenzio, sacerdote."
+    },
+    {
+      "nome": "San Venanzio",
+      "titolo": "Abate",
+      "bio": "San Venanzio, abate."
+    },
+    {
+      "nome": "San Leobono",
+      "titolo": "Solitario",
+      "bio": "San Leobono, solitario."
+    },
+    {
+      "nome": "San Comgano di Lochalsh",
+      "titolo": "Abate",
+      "bio": "San Comgano di Lochalsh, abate."
+    },
+    {
+      "nome": "San Simperto di Murbach",
+      "titolo": "Abate di Murbach e poi vescovo di Augusta",
+      "bio": "San Simperto di Murbach, abate di Murbach e poi vescovo di Augusta."
+    },
+    {
+      "nome": "San Geraldo d'Aurillac",
+      "titolo": "Conte di Aurillac",
+      "bio": "San Geraldo d'Aurillac, conte di Aurillac."
+    },
+    {
+      "nome": "Beato Gerardo Sasso",
+      "titolo": "Fondatore e primo superiore dell'Ordine di San Giovanni di Gerusalemme",
+      "bio": "Beato Gerardo Sasso, fondatore e primo superiore dell'Ordine di San Giovanni di Gerusalemme."
+    },
+    {
+      "nome": "Santa Chelidonia",
+      "titolo": "Vergine",
+      "bio": "Santa Chelidonia, vergine."
+    },
+    {
+      "nome": "Beata Maddalena Panattieri",
+      "titolo": "Vergine domenicana",
+      "bio": "Beata Maddalena Panattieri, vergine domenicana."
+    },
+    {
+      "nome": "Beata Alessandrina Maria da Costa",
+      "titolo": "Laica consacrata e mistica",
+      "bio": "Beata Alessandrina Maria da Costa, laica consacrata e mistica."
+    },
+    {
+      "nome": "Beato Giovanni Fornasini",
+      "titolo": "Sacerdote martire",
+      "bio": "Beato Giovanni Fornasini, sacerdote martire."
+    }
+  ],
+  "10-14": [
+    {
+      "nome": "San Callisto I",
+      "titolo": "Papa e martire",
+      "bio": "San Callisto I, papa e martire."
+    },
+    {
+      "nome": "San Lupulo",
+      "titolo": "Martire",
+      "bio": "San Lupulo, martire."
+    },
+    {
+      "nome": "San Gaudenzio di Rimini",
+      "titolo": "Primo vescovo di Rimini",
+      "bio": "San Gaudenzio di Rimini, primo vescovo di Rimini."
+    },
+    {
+      "nome": "San Donaziano di Reims",
+      "titolo": "Vescovo di Reims",
+      "bio": "San Donaziano di Reims, vescovo di Reims."
+    },
+    {
+      "nome": "San Fortunato di Todi",
+      "titolo": "Vescovo di Todi",
+      "bio": "San Fortunato di Todi, vescovo di Todi."
+    },
+    {
+      "nome": "Santa Menechilde",
+      "titolo": "Vergine",
+      "bio": "Santa Menechilde, vergine."
+    },
+    {
+      "nome": "San Venanzio di Luni",
+      "titolo": "Vescovo di Luni",
+      "bio": "San Venanzio di Luni, vescovo di Luni."
+    },
+    {
+      "nome": "Santa Andagrisma",
+      "titolo": "Badessa",
+      "bio": "Santa Andagrisma, badessa."
+    },
+    {
+      "nome": "San Domenico Loricato",
+      "titolo": "Sacerdote camaldolese",
+      "bio": "San Domenico Loricato, sacerdote camaldolese."
+    },
+    {
+      "nome": "Beato Giacomo Laigneau de Langellerie",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giacomo Laigneau de Langellerie, sacerdote e martire."
+    },
+    {
+      "nome": "Beata Anna Maria Aranda Riera",
+      "titolo": "Vergine e martire",
+      "bio": "Beata Anna Maria Aranda Riera, vergine e martire."
+    },
+    {
+      "nome": "Beati Stanislao Mysakowski e Francesco Rosłaniec",
+      "titolo": "Sacerdoti e martiri",
+      "bio": "Beati Stanislao Mysakowski e Francesco Rosłaniec, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beato Roman Lysko",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Roman Lysko, sacerdote e martire."
+    }
+  ],
+  "10-15": [
+    {
+      "nome": "Santa Teresa d'Avila",
+      "titolo": "Vergine del Carmelo di Avila e dottore della Chiesa",
+      "bio": "Santa Teresa d'Avila, vergine del Carmelo di Avila e dottore della Chiesa."
+    },
+    {
+      "nome": "San Barses",
+      "titolo": "Vescovo di Edessa di Osroene",
+      "bio": "San Barses, vescovo di Edessa di Osroene."
+    },
+    {
+      "nome": "San Severo",
+      "titolo": "Vescovo di Treviri",
+      "bio": "San Severo, vescovo di Treviri."
+    },
+    {
+      "nome": "Santa Tecla",
+      "titolo": "Badessa di Kitzingen",
+      "bio": "Santa Tecla, badessa di Kitzingen."
+    },
+    {
+      "nome": "natale di Sant'Edvige di Andechs",
+      "titolo": "Religiosa",
+      "bio": "natale di Sant'Edvige di Andechs, religiosa."
+    },
+    {
+      "nome": "Beato Gonsalvo da Lagos",
+      "titolo": "Sacerdote agostiniano",
+      "bio": "Beato Gonsalvo da Lagos, sacerdote agostiniano."
+    },
+    {
+      "nome": "Santa Maddalena da Nagasaki",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Maddalena da Nagasaki, vergine e martire."
+    },
+    {
+      "nome": "Beato Narciso Basté",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Narciso Basté, sacerdote e martire."
+    }
+  ],
+  "10-16": [
+    {
+      "nome": "Sant'Edvige di Andechs (O.Cist.)",
+      "titolo": "Religiosa",
+      "bio": "Sant'Edvige di Andechs (O.Cist.), religiosa."
+    },
+    {
+      "nome": "Santa Margherita Maria Alacoque",
+      "titolo": "Vergine visitandina",
+      "bio": "Santa Margherita Maria Alacoque, vergine visitandina."
+    },
+    {
+      "nome": "San Longino",
+      "titolo": "Soldato personaggio del Nuovo Testamento",
+      "bio": "San Longino, soldato personaggio del Nuovo Testamento."
+    },
+    {
+      "nome": "Sant'Elisio",
+      "titolo": "Martire",
+      "bio": "Sant'Elisio, martire."
+    },
+    {
+      "nome": "Santi Martiniano e Saturiano",
+      "titolo": "Martiri",
+      "bio": "Santi Martiniano e Saturiano, martiri."
+    },
+    {
+      "nome": "Santi Amando e Iuniano",
+      "titolo": "Eremiti",
+      "bio": "Santi Amando e Iuniano, eremiti."
+    },
+    {
+      "nome": "San Gallo (O.S.B.)",
+      "titolo": "Sacerdote, monaco, missionario e scrittore",
+      "bio": "San Gallo (O.S.B.), sacerdote, monaco, missionario e scrittore."
+    },
+    {
+      "nome": "San Mommolino di Noyon",
+      "titolo": "Vescovo di Noyon",
+      "bio": "San Mommolino di Noyon, vescovo di Noyon."
+    },
+    {
+      "nome": "San Lullo di Magonza",
+      "titolo": "Vescovo di Magonza",
+      "bio": "San Lullo di Magonza, vescovo di Magonza."
+    },
+    {
+      "nome": "San Vitale",
+      "titolo": "Eremita",
+      "bio": "San Vitale, eremita."
+    },
+    {
+      "nome": "San Gauderico",
+      "titolo": "Agricoltore",
+      "bio": "San Gauderico, agricoltore."
+    },
+    {
+      "nome": "Santa Bonita",
+      "titolo": "Vergine",
+      "bio": "Santa Bonita, vergine."
+    },
+    {
+      "nome": "Sant'Anastasio",
+      "titolo": "Monaco",
+      "bio": "Sant'Anastasio, monaco."
+    },
+    {
+      "nome": "San Bertrando di Comminges",
+      "titolo": "Vescovo di Comminges",
+      "bio": "San Bertrando di Comminges, vescovo di Comminges."
+    },
+    {
+      "nome": "Beato Gerardo di Chiaravalle",
+      "titolo": "Abate di Clairvaux",
+      "bio": "Beato Gerardo di Chiaravalle, abate di Clairvaux."
+    },
+    {
+      "nome": "San Gerardo Maiella",
+      "titolo": "Redentorista",
+      "bio": "San Gerardo Maiella, redentorista."
+    },
+    {
+      "nome": "Beati Aniceto Koplin",
+      "titolo": "Cappuccino, e Giuseppe Jankowski, pallottino, sacerdoti e martiri",
+      "bio": "Beati Aniceto Koplin, cappuccino, e Giuseppe Jankowski, pallottino, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beato Agostino Thevarparampil (chiamato Kunjachan)",
+      "titolo": "Sacerdote",
+      "bio": "Beato Agostino Thevarparampil (chiamato Kunjachan), sacerdote."
+    }
+  ],
+  "10-17": [
+    {
+      "nome": "Sant'Ignazio di Antiochia",
+      "titolo": "Vescovo di Antiochia e martire",
+      "bio": "Sant'Ignazio di Antiochia, vescovo di Antiochia e martire."
+    },
+    {
+      "nome": "Sant'Osea (profeta)",
+      "titolo": "Profeta",
+      "bio": "Sant'Osea (profeta), profeta."
+    },
+    {
+      "nome": "Santi Rufo e Zosimo",
+      "titolo": "Martiri",
+      "bio": "Santi Rufo e Zosimo, martiri."
+    },
+    {
+      "nome": "Santi Martiri volitani",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi Martiri volitani."
+    },
+    {
+      "nome": "San Giovanni",
+      "titolo": "Eremita",
+      "bio": "San Giovanni, eremita."
+    },
+    {
+      "nome": "San Dulcedio di Agen",
+      "titolo": "Vescovo di Agen",
+      "bio": "San Dulcedio di Agen, vescovo di Agen."
+    },
+    {
+      "nome": "San Fiorenzo",
+      "titolo": "Vescovo di Orange",
+      "bio": "San Fiorenzo, vescovo di Orange."
+    },
+    {
+      "nome": "Beato Gilberto",
+      "titolo": "Abate di Cîteaux",
+      "bio": "Beato Gilberto, abate di Cîteaux."
+    },
+    {
+      "nome": "Beato Baldassarre Ravaschieri",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Baldassarre Ravaschieri, sacerdote francescano."
+    },
+    {
+      "nome": "San Riccardo Gwyn e Santi quaranta martiri d'Inghilterra e Galles",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "San Riccardo Gwyn e Santi quaranta martiri d'Inghilterra e Galles."
+    },
+    {
+      "nome": "Beato Pietro Casani",
+      "titolo": "Sacerdote scolopio",
+      "bio": "Beato Pietro Casani, sacerdote scolopio."
+    },
+    {
+      "nome": "transito di Santa Margherita Maria Alacoque",
+      "titolo": "Vergine",
+      "bio": "transito di Santa Margherita Maria Alacoque, vergine."
+    },
+    {
+      "nome": "Beato Giacomo Burin",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giacomo Burin, sacerdote e martire."
+    },
+    {
+      "nome": "Beate Maria Natalia di San Luigi e quattro compagne",
+      "titolo": "Vergini orsoline e martiri",
+      "bio": "Beate Maria Natalia di San Luigi e quattro compagne, vergini orsoline e martiri."
+    },
+    {
+      "nome": "Sant'Isidoro Gagelin",
+      "titolo": "Sacerdote e martire",
+      "bio": "Sant'Isidoro Gagelin, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Contardo Ferrini",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Beato Contardo Ferrini."
+    },
+    {
+      "nome": "Beato Fedele Fuidio Rodríguez",
+      "titolo": "Marista e martire",
+      "bio": "Beato Fedele Fuidio Rodríguez, marista e martire."
+    },
+    {
+      "nome": "Beato Raimondo Stefano Bou Pascual",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Raimondo Stefano Bou Pascual, sacerdote e martire."
+    },
+    {
+      "nome": "Beata Tarsilla Córdoba Belda",
+      "titolo": "Martire",
+      "bio": "Beata Tarsilla Córdoba Belda, martire."
+    }
+  ],
+  "10-18": [
+    {
+      "nome": "San Luca",
+      "titolo": "Evangelista",
+      "bio": "San Luca, evangelista."
+    },
+    {
+      "nome": "Sant'Asclepiade",
+      "titolo": "Vescovo di Antiochia",
+      "bio": "Sant'Asclepiade, vescovo di Antiochia."
+    },
+    {
+      "nome": "Santi Procolo",
+      "titolo": "Eutichio e Acuzio, martiri",
+      "bio": "Santi Procolo, Eutichio e Acuzio, martiri."
+    },
+    {
+      "nome": "Sant'Amabile di Riom",
+      "titolo": "Sacerdote",
+      "bio": "Sant'Amabile di Riom, sacerdote."
+    },
+    {
+      "nome": "San Monone",
+      "titolo": "Martire",
+      "bio": "San Monone, martire."
+    },
+    {
+      "nome": "San Pietro d'Alcántara (O.F.M. Alc.)",
+      "titolo": "Sacerdote e fondatore",
+      "bio": "San Pietro d'Alcántara (O.F.M. Alc.), sacerdote e fondatore."
+    },
+    {
+      "nome": "passione di Sant'Isacco Jogues",
+      "titolo": "Gesuita e martire",
+      "bio": "passione di Sant'Isacco Jogues, gesuita e martire."
+    },
+    {
+      "nome": "natale di San Paolo della Croce",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "natale di San Paolo della Croce."
+    }
+  ],
+  "10-19": [
+    {
+      "nome": "Santi Giovanni de Brébeuf",
+      "titolo": "Isacco Jogues, Giovanni de La Lande, Renato Goupil, Gabriele Lalemant, Antonio Daniel, Car",
+      "bio": "Santi Giovanni de Brébeuf, Isacco Jogues, Giovanni de La Lande, Renato Goupil, Gabriele Lalemant, Antonio Daniel, Carlo Garnier e Natale Chabanel, gesuiti, martiri canadesi."
+    },
+    {
+      "nome": "San Paolo della Croce",
+      "titolo": "Sacerdote, fondatore dei passionisti",
+      "bio": "San Paolo della Croce, sacerdote, fondatore dei passionisti."
+    },
+    {
+      "nome": "San Gioele",
+      "titolo": "Profeta",
+      "bio": "San Gioele, profeta."
+    },
+    {
+      "nome": "Santi Tolomeo",
+      "titolo": "Lucio e altri compagni, martiri",
+      "bio": "Santi Tolomeo, Lucio e altri compagni, martiri."
+    },
+    {
+      "nome": "Sant'Asterio",
+      "titolo": "Martire",
+      "bio": "Sant'Asterio, martire."
+    },
+    {
+      "nome": "Santi Sabiniano e Potenziano",
+      "titolo": "Vescovi di Sens, martiri",
+      "bio": "Santi Sabiniano e Potenziano, vescovi di Sens, martiri."
+    },
+    {
+      "nome": "San Varo",
+      "titolo": "Martire",
+      "bio": "San Varo, martire."
+    },
+    {
+      "nome": "San Grato",
+      "titolo": "Vescovo di Oloron",
+      "bio": "San Grato, vescovo di Oloron."
+    },
+    {
+      "nome": "Sant'Etbino",
+      "titolo": "Monaco",
+      "bio": "Sant'Etbino, monaco."
+    },
+    {
+      "nome": "San Verano di Cavaillon",
+      "titolo": "Vescovo di Cavaillon",
+      "bio": "San Verano di Cavaillon, vescovo di Cavaillon."
+    },
+    {
+      "nome": "Sant'Aquilino di Évreux",
+      "titolo": "Vescovo di Évreux",
+      "bio": "Sant'Aquilino di Évreux, vescovo di Évreux."
+    },
+    {
+      "nome": "Santa Fridesvida",
+      "titolo": "Vergine",
+      "bio": "Santa Fridesvida, vergine."
+    },
+    {
+      "nome": "Beato Tommaso Hélye",
+      "titolo": "Sacerdote",
+      "bio": "Beato Tommaso Hélye, sacerdote."
+    },
+    {
+      "nome": "San Filippo Howard",
+      "titolo": "Laico martire",
+      "bio": "San Filippo Howard, laico martire."
+    },
+    {
+      "nome": "Santi Luca Alonso Gorda e Matteo Kohioye",
+      "titolo": "Domenicani",
+      "bio": "Santi Luca Alonso Gorda e Matteo Kohioye, domenicani."
+    },
+    {
+      "nome": "Beata Agnese di Gesù Galand de Langeac",
+      "titolo": "Vergine domenicana",
+      "bio": "Beata Agnese di Gesù Galand de Langeac , vergine domenicana."
+    },
+    {
+      "nome": "Beato Jerzy Popiełuszko",
+      "titolo": "Sacerdote martire",
+      "bio": "Beato Jerzy Popiełuszko, sacerdote martire."
+    }
+  ],
+  "10-20": [
+    {
+      "nome": "San Cornelio",
+      "titolo": "Centurione",
+      "bio": "San Cornelio, centurione."
+    },
+    {
+      "nome": "San Capraio",
+      "titolo": "Martire",
+      "bio": "San Capraio, martire."
+    },
+    {
+      "nome": "San Sindolfo",
+      "titolo": "Eremita",
+      "bio": "San Sindolfo, eremita."
+    },
+    {
+      "nome": "San Vitale",
+      "titolo": "Vescovo di Salisburgo",
+      "bio": "San Vitale, vescovo di Salisburgo."
+    },
+    {
+      "nome": "Sant'Andrea il Calibita",
+      "titolo": "Monaco e martire",
+      "bio": "Sant'Andrea il Calibita, monaco e martire."
+    },
+    {
+      "nome": "Sant'Aderaldo",
+      "titolo": "Arcidiacono di Troyes",
+      "bio": "Sant'Aderaldo, arcidiacono di Troyes."
+    },
+    {
+      "nome": "Sant'Adelina (O.S.B.)",
+      "titolo": "Prima badessa di Mortain",
+      "bio": "Sant'Adelina (O.S.B.), prima badessa di Mortain."
+    },
+    {
+      "nome": "Beato Giacomo Strepa",
+      "titolo": "Francescano arcivescovo di Halyč",
+      "bio": "Beato Giacomo Strepa, francescano arcivescovo di Halyč."
+    },
+    {
+      "nome": "Santa Maria Bertilla Boscardin",
+      "titolo": "Vergine dorotea",
+      "bio": "Santa Maria Bertilla Boscardin, vergine dorotea."
+    },
+    {
+      "nome": "Beato Giacomo Kern",
+      "titolo": "Sacerdote premostratense",
+      "bio": "Beato Giacomo Kern, sacerdote premostratense."
+    },
+    {
+      "nome": "Sant'Irene del Portogallo",
+      "titolo": "Vergine e martire",
+      "bio": "Sant'Irene del Portogallo, vergine e martire."
+    }
+  ],
+  "10-21": [
+    {
+      "nome": "Santi Dasio",
+      "titolo": "Zotico e Caio, martiri",
+      "bio": "Santi Dasio, Zotico e Caio, martiri."
+    },
+    {
+      "nome": "Sant'Orsola e compagne",
+      "titolo": "Vergini e martiri",
+      "bio": "Sant'Orsola e compagne, vergini e martiri."
+    },
+    {
+      "nome": "Sant'Ilarione di Gaza",
+      "titolo": "Abate",
+      "bio": "Sant'Ilarione di Gaza, abate."
+    },
+    {
+      "nome": "San Malco",
+      "titolo": "Monaco",
+      "bio": "San Malco, monaco."
+    },
+    {
+      "nome": "San Severino",
+      "titolo": "Vescovo di Bordeaux",
+      "bio": "San Severino, vescovo di Bordeaux."
+    },
+    {
+      "nome": "Santa Celina",
+      "titolo": "Madre dei Santi vescovi Principio e Remigio",
+      "bio": "Santa Celina, madre dei Santi vescovi Principio e Remigio."
+    },
+    {
+      "nome": "San Viatore di Lione",
+      "titolo": "Lettore",
+      "bio": "San Viatore di Lione, lettore."
+    },
+    {
+      "nome": "San Vendelino",
+      "titolo": "Eremita",
+      "bio": "San Vendelino, eremita."
+    },
+    {
+      "nome": "San Mauronto di Marsiglia",
+      "titolo": "Abate di San Vittore e poi vescovo di Marsiglia",
+      "bio": "San Mauronto di Marsiglia, abate di San Vittore e poi vescovo di Marsiglia."
+    },
+    {
+      "nome": "Beato Pietro Capucci",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Pietro Capucci, sacerdote domenicano."
+    },
+    {
+      "nome": "San Pietro Yu Tae-ch'ol",
+      "titolo": "Laico martire",
+      "bio": "San Pietro Yu Tae-ch'ol, laico martire."
+    },
+    {
+      "nome": "Beata Maria Lorenza Longo (Maria Requenses)",
+      "titolo": "Religiosa e fondatrice dell'ordine delle monache Clarisse Cappuccine",
+      "bio": "Beata Maria Lorenza Longo (Maria Requenses), religiosa e fondatrice dell'ordine delle monache Clarisse Cappuccine."
+    },
+    {
+      "nome": "Beato Giuseppe Puglisi",
+      "titolo": "Sacerdote educatore",
+      "bio": "Beato Giuseppe Puglisi, sacerdote educatore."
+    }
+  ],
+  "10-22": [
+    {
+      "nome": "San Giovanni Paolo II",
+      "titolo": "Papa",
+      "bio": "San Giovanni Paolo II, papa."
+    },
+    {
+      "nome": "San Marco",
+      "titolo": "Vescovo di Gerusalemme",
+      "bio": "San Marco, vescovo di Gerusalemme."
+    },
+    {
+      "nome": "Sant'Abercio di Gerapoli",
+      "titolo": "Vescovo di Gerapoli di Frigia",
+      "bio": "Sant'Abercio di Gerapoli, vescovo di Gerapoli di Frigia."
+    },
+    {
+      "nome": "Santi Filippo",
+      "titolo": "Vescovo di Eraclea di Europa, ed Ermete, diacono, martiri",
+      "bio": "Santi Filippo, vescovo di Eraclea di Europa, ed Ermete, diacono, martiri."
+    },
+    {
+      "nome": "San Mellone di Rouen",
+      "titolo": "Vescovo di Rouen",
+      "bio": "San Mellone di Rouen, vescovo di Rouen."
+    },
+    {
+      "nome": "San Valerio",
+      "titolo": "Diacono e martire",
+      "bio": "San Valerio, diacono e martire."
+    },
+    {
+      "nome": "San Lupenzio",
+      "titolo": "Abate di San Privato",
+      "bio": "San Lupenzio, abate di San Privato."
+    },
+    {
+      "nome": "San Leotadio",
+      "titolo": "Vescovo di Auch",
+      "bio": "San Leotadio, vescovo di Auch."
+    },
+    {
+      "nome": "San Moderanno di Rennes",
+      "titolo": "Vescovo di Rennes, poi abate di Berceto",
+      "bio": "San Moderanno di Rennes, vescovo di Rennes, poi abate di Berceto."
+    },
+    {
+      "nome": "San Benedetto",
+      "titolo": "Eremita",
+      "bio": "San Benedetto, eremita."
+    },
+    {
+      "nome": "Sante Nunilone e Alodia",
+      "titolo": "Vergini e martiri",
+      "bio": "Sante Nunilone e Alodia, vergini e martiri."
+    },
+    {
+      "nome": "San Donato di Fiesole",
+      "titolo": "Vescovo di Fiesole",
+      "bio": "San Donato di Fiesole, vescovo di Fiesole."
+    }
+  ],
+  "10-23": [
+    {
+      "nome": "San Giovanni da Capestrano",
+      "titolo": "Sacerdote francescano",
+      "bio": "San Giovanni da Capestrano, sacerdote francescano."
+    },
+    {
+      "nome": "Santi Servando e Germano",
+      "titolo": "Martiri",
+      "bio": "Santi Servando e Germano, martiri."
+    },
+    {
+      "nome": "San Teodoreto",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Teodoreto, sacerdote e martire."
+    },
+    {
+      "nome": "San Severino di Colonia",
+      "titolo": "Vescovo di Colonia",
+      "bio": "San Severino di Colonia, vescovo di Colonia."
+    },
+    {
+      "nome": "San Severino Boezio (Anicio Manlio Torquato)",
+      "titolo": "Filosofo, senatore martire",
+      "bio": "San Severino Boezio (Anicio Manlio Torquato), filosofo, senatore martire."
+    },
+    {
+      "nome": "San Giovanni",
+      "titolo": "Vescovo di Siracusa",
+      "bio": "San Giovanni, vescovo di Siracusa."
+    },
+    {
+      "nome": "San Romano di Rouen",
+      "titolo": "Vescovo di Rouen",
+      "bio": "San Romano di Rouen, vescovo di Rouen."
+    },
+    {
+      "nome": "San Benedetto",
+      "titolo": "Sacerdote",
+      "bio": "San Benedetto, sacerdote."
+    },
+    {
+      "nome": "Sant'Ignazio I",
+      "titolo": "Vescovo di Costantinopoli",
+      "bio": "Sant'Ignazio I, vescovo di Costantinopoli."
+    },
+    {
+      "nome": "Sant'Efleda",
+      "titolo": "Badessa",
+      "bio": "Sant'Efleda, badessa."
+    },
+    {
+      "nome": "Sant'Allucio di Campugliano in Valdinievole",
+      "titolo": "Pacificatore dei poveri",
+      "bio": "Sant'Allucio di Campugliano in Valdinievole, pacificatore dei poveri."
+    },
+    {
+      "nome": "Beato Giovanni Bono",
+      "titolo": "Eremita, fondatore dei giamboniti",
+      "bio": "Beato Giovanni Bono, eremita, fondatore dei giamboniti."
+    },
+    {
+      "nome": "Beato Giovannangelo Porro",
+      "titolo": "Sacerdote servita",
+      "bio": "Beato Giovannangelo Porro, sacerdote servita."
+    },
+    {
+      "nome": "Beato Tommaso Thwing",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Tommaso Thwing, sacerdote e martire."
+    },
+    {
+      "nome": "Beate Maria Clotilde Angela di San Francesco Borgia Paillot e cinque compagne",
+      "titolo": "Vergini e martiri",
+      "bio": "Beate Maria Clotilde Angela di San Francesco Borgia Paillot e cinque compagne, vergini e martiri."
+    },
+    {
+      "nome": "San Paolo Tống Viết Bường",
+      "titolo": "Martire",
+      "bio": "San Paolo Tống Viết Bường, martire."
+    },
+    {
+      "nome": "Beato Arnoldo Rèche",
+      "titolo": "Lasalliano",
+      "bio": "Beato Arnoldo Rèche, lasalliano."
+    },
+    {
+      "nome": "Beati Ildefonso García",
+      "titolo": "Giustino Cuesta, Eufrasio de Celis, Onorino Carracedo, Tommaso Cuartero e Giuseppe Maria C",
+      "bio": "Beati Ildefonso García, Giustino Cuesta, Eufrasio de Celis, Onorino Carracedo, Tommaso Cuartero e Giuseppe Maria Cuartero, martiri."
+    },
+    {
+      "nome": "Beato Leonardo Olivera Buera",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Leonardo Olivera Buera, sacerdote e martire."
+    },
+    {
+      "nome": "Beati Ambrogio Leone Lorente Vicente",
+      "titolo": "Fiorenzo Martino Ibáñez Lázaro e Onorato Zorraquino Herrero, lasalliani e martiri",
+      "bio": "Beati Ambrogio Leone Lorente Vicente, Fiorenzo Martino Ibáñez Lázaro e Onorato Zorraquino Herrero, lasalliani e martiri."
+    }
+  ],
+  "10-24": [
+    {
+      "nome": "Sant'Antonio María Claret y Clará",
+      "titolo": "Arcivescovo di Santiago di Cuba, poi arcivescovo titolare di Traianopoli di Rodope, fondat",
+      "bio": "Sant'Antonio María Claret y Clará, arcivescovo di Santiago di Cuba, poi arcivescovo titolare di Traianopoli di Rodope, fondatore dei Missionari figli del Cuore Immacolato di Maria."
+    },
+    {
+      "nome": "Santi Ciriaco e Claudiano",
+      "titolo": "Martiri",
+      "bio": "Santi Ciriaco e Claudiano, martiri."
+    },
+    {
+      "nome": "San Proclo",
+      "titolo": "Vescovo di Costantinopoli",
+      "bio": "San Proclo, vescovo di Costantinopoli."
+    },
+    {
+      "nome": "Sant'Areta martire e 340 compagni",
+      "titolo": "Martiri",
+      "bio": "Sant'Areta martire e 340 compagni, martiri."
+    },
+    {
+      "nome": "San Senoco",
+      "titolo": "Sacerdote",
+      "bio": "San Senoco, sacerdote."
+    },
+    {
+      "nome": "San Martino",
+      "titolo": "Diacono e abate",
+      "bio": "San Martino, diacono e abate."
+    },
+    {
+      "nome": "Sant'Evergislo",
+      "titolo": "Vescovo di Colonia e martire",
+      "bio": "Sant'Evergislo, vescovo di Colonia e martire."
+    },
+    {
+      "nome": "San Maglorio di Dol",
+      "titolo": "Vescovo di Dol",
+      "bio": "San Maglorio di Dol, vescovo di Dol."
+    },
+    {
+      "nome": "San Fromundo di Coutances",
+      "titolo": "Vescovo di Coutances",
+      "bio": "San Fromundo di Coutances, vescovo di Coutances."
+    },
+    {
+      "nome": "San Giuseppe Lê Dăng Thi",
+      "titolo": "Martire",
+      "bio": "San Giuseppe Lê Dăng Thi, martire."
+    },
+    {
+      "nome": "San Luigi Guanella (S.d.C.)",
+      "titolo": "Sacerdote, fondatore dei Servi della carità e delle Figlie di Santa Maria della Divina Pro",
+      "bio": "San Luigi Guanella (S.d.C.), sacerdote, fondatore dei Servi della carità e delle Figlie di Santa Maria della Divina Provvidenza."
+    },
+    {
+      "nome": "Beato Giuseppe Baldo",
+      "titolo": "Sacerdote, fondatore delle Piccole Figlie di San Giuseppe",
+      "bio": "Beato Giuseppe Baldo, sacerdote, fondatore delle Piccole Figlie di San Giuseppe."
+    }
+  ],
+  "10-25": [
+    {
+      "nome": "Santi Crisante e Daria",
+      "titolo": "Martiri",
+      "bio": "Santi Crisante e Daria, martiri."
+    },
+    {
+      "nome": "Santi Crispino e Crispiniano",
+      "titolo": "Martiri",
+      "bio": "Santi Crispino e Crispiniano, martiri."
+    },
+    {
+      "nome": "San Miniato di Firenze",
+      "titolo": "Martire",
+      "bio": "San Miniato di Firenze, martire."
+    },
+    {
+      "nome": "San Frontone",
+      "titolo": "Primo vescovo di Périgueux",
+      "bio": "San Frontone, primo vescovo di Périgueux."
+    },
+    {
+      "nome": "Santi Martirio e Marciano",
+      "titolo": "Martiri",
+      "bio": "Santi Martirio e Marciano, martiri."
+    },
+    {
+      "nome": "San Gaudenzio di Brescia",
+      "titolo": "Vescovo di Brescia",
+      "bio": "San Gaudenzio di Brescia, vescovo di Brescia."
+    },
+    {
+      "nome": "Sant'Ilario di Javols",
+      "titolo": "Vescovo di Mende",
+      "bio": "Sant'Ilario di Javols, vescovo di Mende."
+    },
+    {
+      "nome": "Santi Frutto",
+      "titolo": "Valentino ed Engrazia, martiri",
+      "bio": "Santi Frutto, Valentino ed Engrazia, martiri."
+    },
+    {
+      "nome": "San Mauro di Pécs",
+      "titolo": "Vescovo di Pécs",
+      "bio": "San Mauro di Pécs, vescovo di Pécs."
+    },
+    {
+      "nome": "San Bernardo Calbò",
+      "titolo": "Vescovo di Vic",
+      "bio": "San Bernardo Calbò, vescovo di Vic."
+    },
+    {
+      "nome": "Beato Carlo Gnocchi",
+      "titolo": "Sacerdote, educatore, scrittore, cappellano militare degli alpini",
+      "bio": "Beato Carlo Gnocchi, sacerdote, educatore, scrittore, cappellano militare degli alpini."
+    },
+    {
+      "nome": "Beato Taddeo McCarthy",
+      "titolo": "Vescovo di Cork e Cloyne",
+      "bio": "Beato Taddeo McCarthy, vescovo di Cork e Cloyne."
+    },
+    {
+      "nome": "Beato Recaredo Centelles Abad",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Recaredo Centelles Abad, sacerdote e martire."
+    },
+    {
+      "nome": "Beata Maria Teresa Ferragud Roig",
+      "titolo": "Martire",
+      "bio": "Beata Maria Teresa Ferragud Roig, martire."
+    },
+    {
+      "nome": "Beate Maria di Gesù",
+      "titolo": "Maria Veronica e Maria Felicita Masià Ferragud, vergini clarisse cappuccine, e Giuseppa de",
+      "bio": "Beate Maria di Gesù, Maria Veronica e Maria Felicita Masià Ferragud, vergini clarisse cappuccine, e Giuseppa della Purificazione Masià Ferragud, vergine agostiniana scalza, martiri."
+    }
+  ],
+  "10-26": [
+    {
+      "nome": "Santi Luciano e Marciano",
+      "titolo": "Martiri",
+      "bio": "Santi Luciano e Marciano, martiri."
+    },
+    {
+      "nome": "San Ragaziano",
+      "titolo": "Sacerdote",
+      "bio": "San Ragaziano, sacerdote."
+    },
+    {
+      "nome": "Sant'Amando di Strasburgo",
+      "titolo": "Primo vescovo di Strasburgo",
+      "bio": "Sant'Amando di Strasburgo, primo vescovo di Strasburgo."
+    },
+    {
+      "nome": "San Rustico di Narbona",
+      "titolo": "Vescovo di Narbona",
+      "bio": "San Rustico di Narbona, vescovo di Narbona."
+    },
+    {
+      "nome": "Sant'Aptonio di Angoulême",
+      "titolo": "Vescovo di Angoulême",
+      "bio": "Sant'Aptonio di Angoulême, vescovo di Angoulême."
+    },
+    {
+      "nome": "San Cedda",
+      "titolo": "Vescovo di Londra",
+      "bio": "San Cedda, vescovo di Londra."
+    },
+    {
+      "nome": "Sant'Eata",
+      "titolo": "Vescovo di Hexham",
+      "bio": "Sant'Eata, vescovo di Hexham."
+    },
+    {
+      "nome": "San Sigebaldo",
+      "titolo": "Vescovo di Metz",
+      "bio": "San Sigebaldo, vescovo di Metz."
+    },
+    {
+      "nome": "San Witta di Büraburg",
+      "titolo": "Primo vescovo di Büraburg",
+      "bio": "San Witta di Büraburg, primo vescovo di Büraburg."
+    },
+    {
+      "nome": "San Beano di Mortlach",
+      "titolo": "Vescovo di Mortlach",
+      "bio": "San Beano di Mortlach, vescovo di Mortlach."
+    },
+    {
+      "nome": "San Folco Scotti",
+      "titolo": "Vescovo di Pavia",
+      "bio": "San Folco Scotti, vescovo di Pavia."
+    },
+    {
+      "nome": "Beato Damiano da Finale",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Damiano da Finale, sacerdote domenicano."
+    },
+    {
+      "nome": "Beato Bonaventura da Potenza",
+      "titolo": "Sacerdote francescano conventuale",
+      "bio": "Beato Bonaventura da Potenza, sacerdote francescano conventuale."
+    },
+    {
+      "nome": "Beata Celina Chludzińska Borzęcka",
+      "titolo": "Religiosa e fondatrice della congregazione delle Suore della Risurrezione di Nostro Signor",
+      "bio": "Beata Celina Chludzińska Borzęcka, religiosa e fondatrice della congregazione delle Suore della Risurrezione di Nostro Signore Gesù Cristo."
+    }
+  ],
+  "10-27": [
+    {
+      "nome": "Sant'Evaristo",
+      "titolo": "Papa",
+      "bio": "Sant'Evaristo, papa."
+    },
+    {
+      "nome": "San Trasea",
+      "titolo": "Vescovo di Eumenia e martire",
+      "bio": "San Trasea, vescovo di Eumenia e martire."
+    },
+    {
+      "nome": "San Namazio di Clermont",
+      "titolo": "Vescovo di Clermont",
+      "bio": "San Namazio di Clermont, vescovo di Clermont."
+    },
+    {
+      "nome": "San Gaudioso di Napoli",
+      "titolo": "Vescovo di Napoli",
+      "bio": "San Gaudioso di Napoli, vescovo di Napoli."
+    },
+    {
+      "nome": "Sant'Otturano",
+      "titolo": "Monaco",
+      "bio": "Sant'Otturano, monaco."
+    },
+    {
+      "nome": "Beato Bartolomeo da Breganze",
+      "titolo": "Domenicano, vescovo di Limisso, poi di Vicenza, fondatore della Milizia di Gesù Cristo",
+      "bio": "Beato Bartolomeo da Breganze, domenicano, vescovo di Limisso, poi di Vicenza, fondatore della Milizia di Gesù Cristo."
+    },
+    {
+      "nome": "Beato Salvatore Mollar Ventura",
+      "titolo": "Francescano e martire",
+      "bio": "Beato Salvatore Mollar Ventura, francescano e martire."
+    }
+  ],
+  "10-28": [
+    {
+      "nome": "San Simone apostolo e San Giuda Taddeo",
+      "titolo": "Apostoli",
+      "bio": "San Simone apostolo e San Giuda Taddeo, apostoli."
+    },
+    {
+      "nome": "San Ferruccio di Magonza",
+      "titolo": "Martire",
+      "bio": "San Ferruccio di Magonza, martire."
+    },
+    {
+      "nome": "San Fedele di Como",
+      "titolo": "Martire",
+      "bio": "San Fedele di Como, martire."
+    },
+    {
+      "nome": "Santi Vincenzo",
+      "titolo": "Sabina e Cristeta, martiri",
+      "bio": "Santi Vincenzo, Sabina e Cristeta, martiri."
+    },
+    {
+      "nome": "San Genesio",
+      "titolo": "Martire",
+      "bio": "San Genesio, martire."
+    },
+    {
+      "nome": "San Salvio di Amiens",
+      "titolo": "Vescovo di Amiens",
+      "bio": "San Salvio di Amiens, vescovo di Amiens."
+    },
+    {
+      "nome": "San Farone di Meaux",
+      "titolo": "Vescovo di Meaux",
+      "bio": "San Farone di Meaux, vescovo di Meaux."
+    },
+    {
+      "nome": "San Germano di Talloires",
+      "titolo": "Abate",
+      "bio": "San Germano di Talloires, abate."
+    },
+    {
+      "nome": "San Francisco Serrano Frías",
+      "titolo": "Vescovo titolare di Tipasa e vicario apostolico del Fujian, e Gioacchino Royo Pérez, Giova",
+      "bio": "San Francisco Serrano Frías, vescovo titolare di Tipasa e vicario apostolico del Fujian, e Gioacchino Royo Pérez, Giovanni Alcober Figuera e Francesco Díaz del Rincón, sacerdoti domenicani, martiri."
+    },
+    {
+      "nome": "San Giovanni Ðạt",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Giovanni Ðạt, sacerdote e martire."
+    },
+    {
+      "nome": "San Rodrico Aguilar",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Rodrico Aguilar, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Salvatore Damiano Enguix Garés",
+      "titolo": "Padre di famiglia, martire",
+      "bio": "Beato Salvatore Damiano Enguix Garés, padre di famiglia, martire."
+    },
+    {
+      "nome": "Beato Giuseppe Ruiz Bruitola",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giuseppe Ruiz Bruitola, sacerdote e martire."
+    }
+  ],
+  "10-29": [
+    {
+      "nome": "San Feliciano",
+      "titolo": "Martire",
+      "bio": "San Feliciano, martire."
+    },
+    {
+      "nome": "San Narciso di Gerusalemme",
+      "titolo": "Vescovo di Gerusalemme",
+      "bio": "San Narciso di Gerusalemme, vescovo di Gerusalemme."
+    },
+    {
+      "nome": "Sant'Onorato di Vercelli",
+      "titolo": "Vescovo di Vercelli",
+      "bio": "Sant'Onorato di Vercelli, vescovo di Vercelli."
+    },
+    {
+      "nome": "San Zenobio",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Zenobio, sacerdote e martire."
+    },
+    {
+      "nome": "Sant'Abramo",
+      "titolo": "Anacoreta",
+      "bio": "Sant'Abramo, anacoreta."
+    },
+    {
+      "nome": "San Teodario",
+      "titolo": "Abate",
+      "bio": "San Teodario, abate."
+    },
+    {
+      "nome": "San Colmano di Kilmacduagh",
+      "titolo": "Vescovo di Kilmacduagh",
+      "bio": "San Colmano di Kilmacduagh, vescovo di Kilmacduagh."
+    },
+    {
+      "nome": "San Dodone",
+      "titolo": "Abate",
+      "bio": "San Dodone, abate."
+    },
+    {
+      "nome": "San Gaetano Errico",
+      "titolo": "Sacerdote, fondatore dei Missionari dei Sacri Cuori di Gesù e Maria",
+      "bio": "San Gaetano Errico, sacerdote, fondatore dei Missionari dei Sacri Cuori di Gesù e Maria."
+    },
+    {
+      "nome": "Beata Chiara Badano",
+      "titolo": "Giovane studentessa e laica appartenente al Movimento dei Focolari",
+      "bio": "Beata Chiara Badano, giovane studentessa e laica appartenente al Movimento dei Focolari."
+    },
+    {
+      "nome": "Beato Rosario Livatino",
+      "titolo": "Laico magistrato martire",
+      "bio": "Beato Rosario Livatino, laico magistrato martire."
+    }
+  ],
+  "10-30": [
+    {
+      "nome": "San Marciano di Siracusa",
+      "titolo": "Primo vescovo di Siracusa",
+      "bio": "San Marciano di Siracusa, primo vescovo di Siracusa."
+    },
+    {
+      "nome": "San Serapione di Antiochia",
+      "titolo": "Vescovo di Antiochia",
+      "bio": "San Serapione di Antiochia, vescovo di Antiochia."
+    },
+    {
+      "nome": "Sant'Eutropia",
+      "titolo": "Martire",
+      "bio": "Sant'Eutropia, martire."
+    },
+    {
+      "nome": "San Marcello",
+      "titolo": "Martire",
+      "bio": "San Marcello, martire."
+    },
+    {
+      "nome": "Santi Claudio",
+      "titolo": "Lupercio e Vittorio, martiri",
+      "bio": "Santi Claudio, Lupercio e Vittorio, martiri."
+    },
+    {
+      "nome": "San Massimo",
+      "titolo": "Martire",
+      "bio": "San Massimo, martire."
+    },
+    {
+      "nome": "San Germano di Capua",
+      "titolo": "Vescovo di Capua",
+      "bio": "San Germano di Capua, vescovo di Capua."
+    },
+    {
+      "nome": "San Gerardo Della Porta",
+      "titolo": "Vescovo di Potenza",
+      "bio": "San Gerardo Della Porta, vescovo di Potenza."
+    },
+    {
+      "nome": "Beata Benvenuta Boiani",
+      "titolo": "Vergine domenicana",
+      "bio": "Beata Benvenuta Boiani, vergine domenicana."
+    },
+    {
+      "nome": "Beato Giovanni Slade",
+      "titolo": "Martire",
+      "bio": "Beato Giovanni Slade, martire."
+    },
+    {
+      "nome": "Beato Terenzio Alberto O'Brien (O.P.)",
+      "titolo": "Vescovo di Emly e martire",
+      "bio": "Beato Terenzio Alberto O'Brien (O.P.), vescovo di Emly e martire."
+    },
+    {
+      "nome": "Sant'Angelo d'Acri (O.F.M. Cap.)",
+      "titolo": "Sacerdote",
+      "bio": "Sant'Angelo d'Acri (O.F.M. Cap.), sacerdote."
+    },
+    {
+      "nome": "Beato Giovanni Michele Langevin",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giovanni Michele Langevin, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Alessio Zaryckyj",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Alessio Zaryckyj, sacerdote e martire."
+    }
+  ],
+  "10-31": [
+    {
+      "nome": "Sant'Epimachio Pelusiota",
+      "titolo": "Martire",
+      "bio": "Sant'Epimachio Pelusiota, martire."
+    },
+    {
+      "nome": "San Quintino di Vermand",
+      "titolo": "Laico martire",
+      "bio": "San Quintino di Vermand, laico martire."
+    },
+    {
+      "nome": "San Foillano",
+      "titolo": "Abate di Fosses",
+      "bio": "San Foillano, abate di Fosses."
+    },
+    {
+      "nome": "Sant'Antonino di Milano",
+      "titolo": "Vescovo di Milano",
+      "bio": "Sant'Antonino di Milano, vescovo di Milano."
+    },
+    {
+      "nome": "San Volfango di Ratisbona (O.S.B.)",
+      "titolo": "Vescovo di Ratisbona",
+      "bio": "San Volfango di Ratisbona (O.S.B.), vescovo di Ratisbona."
+    },
+    {
+      "nome": "Beato Cristoforo di Romagna",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Cristoforo di Romagna, sacerdote francescano."
+    },
+    {
+      "nome": "Beato Tommaso Bellacci da Firenze",
+      "titolo": "Francescano",
+      "bio": "Beato Tommaso Bellacci da Firenze, francescano."
+    },
+    {
+      "nome": "Beato Domenico Collins",
+      "titolo": "Gesuita e martire",
+      "bio": "Beato Domenico Collins, gesuita e martire."
+    },
+    {
+      "nome": "Sant'Alfonso Rodríguez (S.J.)",
+      "titolo": "Religioso",
+      "bio": "Sant'Alfonso Rodríguez (S.J.), religioso."
+    },
+    {
+      "nome": "Beato Leone Nowakowski",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Leone Nowakowski, sacerdote e martire."
+    }
+  ],
+  "11-01": [
+    {
+      "nome": "solennità di Tutti i Santi",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "solennità di Tutti i Santi."
+    },
+    {
+      "nome": "San Cesario di Terracina",
+      "titolo": "Diacono e martire",
+      "bio": "San Cesario di Terracina, diacono e martire."
+    },
+    {
+      "nome": "San Benigno di Digione",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Benigno di Digione, sacerdote e martire."
+    },
+    {
+      "nome": "Sant'Austremonio di Clermont",
+      "titolo": "Primo vescovo dell'Alvernia",
+      "bio": "Sant'Austremonio di Clermont, primo vescovo dell'Alvernia."
+    },
+    {
+      "nome": "santi Giovanni",
+      "titolo": "Vescovo di Hormizd Ardashir e Giacomo, martiri",
+      "bio": "santi Giovanni, vescovo di Hormizd Ardashir e Giacomo, martiri."
+    },
+    {
+      "nome": "San Marcello di Parigi",
+      "titolo": "Vescovo di Parigi",
+      "bio": "San Marcello di Parigi, vescovo di Parigi."
+    },
+    {
+      "nome": "San Romolo",
+      "titolo": "Sacerdote e abate",
+      "bio": "San Romolo, sacerdote e abate."
+    },
+    {
+      "nome": "San Severino",
+      "titolo": "Monaco",
+      "bio": "San Severino, monaco."
+    },
+    {
+      "nome": "San Magno di Milano",
+      "titolo": "Vescovo di Milano",
+      "bio": "San Magno di Milano, vescovo di Milano."
+    },
+    {
+      "nome": "San Vigor di Bayeux",
+      "titolo": "Vescovo di Bayeux",
+      "bio": "San Vigor di Bayeux, vescovo di Bayeux."
+    },
+    {
+      "nome": "San Licinio di Angers",
+      "titolo": "Vescovo di Angers",
+      "bio": "San Licinio di Angers, vescovo di Angers."
+    },
+    {
+      "nome": "San Maturino di Langres",
+      "titolo": "Sacerdote",
+      "bio": "San Maturino di Langres, sacerdote."
+    },
+    {
+      "nome": "Sant'Audomaro di Thérouanne",
+      "titolo": "Vescovo di Thérouanne",
+      "bio": "Sant'Audomaro di Thérouanne, vescovo di Thérouanne."
+    },
+    {
+      "nome": "Beato Ranieri dal Borgo",
+      "titolo": "Religioso francescano",
+      "bio": "Beato Ranieri dal Borgo, religioso francescano."
+    },
+    {
+      "nome": "San Nuno Álvares Pereira",
+      "titolo": "Carmelitano",
+      "bio": "San Nuno Álvares Pereira, carmelitano."
+    },
+    {
+      "nome": "Beati Pietro Paolo Navarro",
+      "titolo": "Dionigi Fujishima, Pietro Onizucha Sandayn e Clemente Kyuemon, martiri",
+      "bio": "Beati Pietro Paolo Navarro, Dionigi Fujishima, Pietro Onizucha Sandayn e Clemente Kyuemon, martiri."
+    },
+    {
+      "nome": "Santi Girolamo Hermosilla",
+      "titolo": "Valentino Berrio Ochoa e Pietro Almató Ribera, martiri domenicani",
+      "bio": "Santi Girolamo Hermosilla, Valentino Berrio Ochoa e Pietro Almató Ribera, martiri domenicani."
+    },
+    {
+      "nome": "Beato Rupert Mayer",
+      "titolo": "Sacerdote gesuita",
+      "bio": "Beato Rupert Mayer, sacerdote gesuita."
+    },
+    {
+      "nome": "Beato Teodoro Romža",
+      "titolo": "Vescovo di Mukačevo e martire",
+      "bio": "Beato Teodoro Romža, vescovo di Mukačevo e martire."
+    }
+  ],
+  "11-02": [
+    {
+      "nome": "Commemorazione di tutti i fedeli defunti",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Commemorazione di tutti i fedeli defunti."
+    },
+    {
+      "nome": "San Vittorino di Petovio",
+      "titolo": "Vescovo di Petovio",
+      "bio": "San Vittorino di Petovio, vescovo di Petovio."
+    },
+    {
+      "nome": "San Giusto di Trieste",
+      "titolo": "Martire",
+      "bio": "San Giusto di Trieste, martire."
+    },
+    {
+      "nome": "santi Carterio",
+      "titolo": "Stiriaco, Tobia, Eudosio, Agapio e compagni, martiri",
+      "bio": "santi Carterio, Stiriaco, Tobia, Eudosio, Agapio e compagni, martiri."
+    },
+    {
+      "nome": "Santi Acindino",
+      "titolo": "Pegasio, Aftonio, Elpidero, Anempodisto e molti altri, martiri",
+      "bio": "Santi Acindino, Pegasio, Aftonio, Elpidero, Anempodisto e molti altri, martiri."
+    },
+    {
+      "nome": "San Marciano",
+      "titolo": "Eremita",
+      "bio": "San Marciano, eremita."
+    },
+    {
+      "nome": "sant'Ambrogio",
+      "titolo": "Abate di Agauno",
+      "bio": "sant'Ambrogio, abate di Agauno."
+    },
+    {
+      "nome": "Santa Winifred del Galles",
+      "titolo": "Vergine",
+      "bio": "Santa Winifred del Galles, vergine."
+    },
+    {
+      "nome": "San Giorgio",
+      "titolo": "Vescovo di Vienne",
+      "bio": "San Giorgio, vescovo di Vienne."
+    },
+    {
+      "nome": "San Malachia di Armagh",
+      "titolo": "Vescovo di Down",
+      "bio": "San Malachia di Armagh, vescovo di Down."
+    },
+    {
+      "nome": "Beata Margherita di Lorena",
+      "titolo": "Duchessa di Alençon, vedova",
+      "bio": "Beata Margherita di Lorena, duchessa di Alençon, vedova."
+    },
+    {
+      "nome": "Beato Giovanni Bodey",
+      "titolo": "Martire",
+      "bio": "Beato Giovanni Bodey, martire."
+    },
+    {
+      "nome": "Beato Pio di San Luigi",
+      "titolo": "Passionista",
+      "bio": "Beato Pio di San Luigi, passionista."
+    }
+  ],
+  "11-03": [
+    {
+      "nome": "San Martino de Porres (O.P.)",
+      "titolo": "Religioso",
+      "bio": "San Martino de Porres (O.P.), religioso."
+    },
+    {
+      "nome": "Santi Germano",
+      "titolo": "Teofilo e Cirillo, martiri",
+      "bio": "Santi Germano, Teofilo e Cirillo, martiri."
+    },
+    {
+      "nome": "San Libertino di Agrigento",
+      "titolo": "Vescovo di Agrigento e martire",
+      "bio": "San Libertino di Agrigento, vescovo di Agrigento e martire."
+    },
+    {
+      "nome": "San Papulo",
+      "titolo": "Martire",
+      "bio": "San Papulo, martire."
+    },
+    {
+      "nome": "Santi Valentino e Ilario",
+      "titolo": "Martiri",
+      "bio": "Santi Valentino e Ilario, martiri."
+    },
+    {
+      "nome": "San Guenaele di Landévennec",
+      "titolo": "Abate di Landévennec",
+      "bio": "San Guenaele di Landévennec, abate di Landévennec."
+    },
+    {
+      "nome": "Santa Silvia",
+      "titolo": "Madre di San Gregorio Magno",
+      "bio": "Santa Silvia, madre di San Gregorio Magno."
+    },
+    {
+      "nome": "San Donnino",
+      "titolo": "Vescovo di Vienne",
+      "bio": "San Donnino, vescovo di Vienne."
+    },
+    {
+      "nome": "San Pirmino",
+      "titolo": "Abate-vescovo di Reichenau e di Murbach",
+      "bio": "San Pirmino, abate-vescovo di Reichenau e di Murbach."
+    },
+    {
+      "nome": "San Giovanniccio",
+      "titolo": "Monaco",
+      "bio": "San Giovanniccio, monaco."
+    },
+    {
+      "nome": "Sant'Odrade",
+      "titolo": "Vergine",
+      "bio": "Sant'Odrade, vergine."
+    },
+    {
+      "nome": "Sant'Armengol di Urgell",
+      "titolo": "Vescovo di Urgell",
+      "bio": "Sant'Armengol di Urgell, vescovo di Urgell."
+    },
+    {
+      "nome": "San Berardo da Teramo",
+      "titolo": "Vescovo di Teramo",
+      "bio": "San Berardo da Teramo, vescovo di Teramo."
+    },
+    {
+      "nome": "San Berardo dei Marsi (O.S.B.)",
+      "titolo": "Vescovo e cardinale",
+      "bio": "San Berardo dei Marsi (O.S.B.), vescovo e cardinale."
+    },
+    {
+      "nome": "Beata Alpaide",
+      "titolo": "Vergine",
+      "bio": "Beata Alpaide, vergine."
+    },
+    {
+      "nome": "Sant'Ida di Fischingen",
+      "titolo": "Reclusa",
+      "bio": "Sant'Ida di Fischingen, reclusa."
+    },
+    {
+      "nome": "Beato Simone Balacchi",
+      "titolo": "Religioso domenicano",
+      "bio": "Beato Simone Balacchi, religioso domenicano."
+    },
+    {
+      "nome": "natale di San Carlo Borromeo",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "natale di San Carlo Borromeo."
+    },
+    {
+      "nome": "San Pietro Francesco Néron",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Pietro Francesco Néron, sacerdote e martire."
+    }
+  ],
+  "11-04": [
+    {
+      "nome": "San Carlo Borromeo",
+      "titolo": "Cardinale, vescovo di Milano",
+      "bio": "San Carlo Borromeo, cardinale, vescovo di Milano."
+    },
+    {
+      "nome": "Santi Vitale e Agricola",
+      "titolo": "Martiri",
+      "bio": "Santi Vitale e Agricola, martiri."
+    },
+    {
+      "nome": "Santi Nicandro ed Ermete",
+      "titolo": "Martiri",
+      "bio": "Santi Nicandro ed Ermete, martiri."
+    },
+    {
+      "nome": "San Pierio",
+      "titolo": "Sacerdote alessandrino",
+      "bio": "San Pierio, sacerdote alessandrino."
+    },
+    {
+      "nome": "Sant'Amanzio",
+      "titolo": "Primo vescovo di Rodez",
+      "bio": "Sant'Amanzio, primo vescovo di Rodez."
+    },
+    {
+      "nome": "San Perpetuo",
+      "titolo": "Vescovo di Maastricht",
+      "bio": "San Perpetuo, vescovo di Maastricht."
+    },
+    {
+      "nome": "santa Modesta",
+      "titolo": "Badessa di Öhren",
+      "bio": "santa Modesta, badessa di Öhren."
+    },
+    {
+      "nome": "Sant'Emerico d'Ungheria",
+      "titolo": "Principe d'Ungheria",
+      "bio": "Sant'Emerico d'Ungheria, principe d'Ungheria."
+    },
+    {
+      "nome": "Beata Elena Enselmini",
+      "titolo": "Vergine clarissa",
+      "bio": "Beata Elena Enselmini, vergine clarissa."
+    },
+    {
+      "nome": "San Felice di Valois",
+      "titolo": "Fondatore dei trinitari",
+      "bio": "San Felice di Valois, fondatore dei trinitari."
+    },
+    {
+      "nome": "Beata Francesca d'Amboise",
+      "titolo": "Vedova carmelitana",
+      "bio": "Beata Francesca d'Amboise, vedova carmelitana."
+    }
+  ],
+  "11-05": [
+    {
+      "nome": "San Donnino",
+      "titolo": "Martire",
+      "bio": "San Donnino, martire."
+    },
+    {
+      "nome": "Santi Teotimo",
+      "titolo": "Filoteo e Timoteo, martiri",
+      "bio": "Santi Teotimo, Filoteo e Timoteo, martiri."
+    },
+    {
+      "nome": "Santa Bertilla di Chelles",
+      "titolo": "Prima badessa del monastero di Chelles",
+      "bio": "Santa Bertilla di Chelles, prima badessa del monastero di Chelles."
+    },
+    {
+      "nome": "San Fibicio",
+      "titolo": "Vescovo di Treviri",
+      "bio": "San Fibicio, vescovo di Treviri."
+    },
+    {
+      "nome": "San Guetnoco",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "San Guetnoco."
+    },
+    {
+      "nome": "San Geraldo",
+      "titolo": "Vescovo di Béziers",
+      "bio": "San Geraldo, vescovo di Béziers."
+    },
+    {
+      "nome": "Beato Gomidas Keumurdjian",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Gomidas Keumurdjian, sacerdote e martire."
+    },
+    {
+      "nome": "San Domenico Mầu",
+      "titolo": "Sacerdote domenicano e martire",
+      "bio": "San Domenico Mầu, sacerdote domenicano e martire."
+    },
+    {
+      "nome": "San Guido Maria Conforti",
+      "titolo": "Arcivescovo di Ravenna, poi titolare di Stauropoli e di Parma, fondatore dei saveriani",
+      "bio": "San Guido Maria Conforti, arcivescovo di Ravenna, poi titolare di Stauropoli e di Parma, fondatore dei saveriani."
+    },
+    {
+      "nome": "Beato Giovanni Antonio Burró Mas",
+      "titolo": "Religioso Fatebenefratelli e martire",
+      "bio": "Beato Giovanni Antonio Burró Mas, religioso Fatebenefratelli e martire."
+    },
+    {
+      "nome": "Beata Maria del Monte Carmelo Viel Ferrando",
+      "titolo": "Vergine e martire",
+      "bio": "Beata Maria del Monte Carmelo Viel Ferrando, vergine e martire."
+    },
+    {
+      "nome": "Beato Narciso Putz",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Narciso Putz, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Bernhard Lichtenberg",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Bernhard Lichtenberg, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Hryhorij Lakota",
+      "titolo": "Vescovo titolare di Daonio e ausiliare di Przemyśl, Sambor e Sanok, martire",
+      "bio": "Beato Hryhorij Lakota, vescovo titolare di Daonio e ausiliare di Przemyśl, Sambor e Sanok, martire."
+    }
+  ],
+  "11-06": [
+    {
+      "nome": "San Felice",
+      "titolo": "Martire",
+      "bio": "San Felice, martire."
+    },
+    {
+      "nome": "San Melanio",
+      "titolo": "Vescovo di Rennes",
+      "bio": "San Melanio, vescovo di Rennes."
+    },
+    {
+      "nome": "Sant'Iltuto",
+      "titolo": "Abate",
+      "bio": "Sant'Iltuto, abate."
+    },
+    {
+      "nome": "San Leonardo di Noblac",
+      "titolo": "Eremita",
+      "bio": "San Leonardo di Noblac, eremita."
+    },
+    {
+      "nome": "Santi Callinico",
+      "titolo": "Imerio, Teodoro, Stefano, Pietro, Paolo, un altro Teodoro, Giovanni, un altro Giovanni e c",
+      "bio": "Santi Callinico, Imerio, Teodoro, Stefano, Pietro, Paolo, un altro Teodoro, Giovanni, un altro Giovanni e compagni, martiri."
+    },
+    {
+      "nome": "San Severo",
+      "titolo": "Vescovo di Barcellona",
+      "bio": "San Severo, vescovo di Barcellona."
+    },
+    {
+      "nome": "San Protasio di Losanna",
+      "titolo": "Vescovo di Losanna",
+      "bio": "San Protasio di Losanna, vescovo di Losanna."
+    },
+    {
+      "nome": "San Vinnoco",
+      "titolo": "Abate",
+      "bio": "San Vinnoco, abate."
+    },
+    {
+      "nome": "Santo Stefano di Apt",
+      "titolo": "Vescovo di Apt",
+      "bio": "Santo Stefano di Apt, vescovo di Apt."
+    },
+    {
+      "nome": "San Teobaldo",
+      "titolo": "Ostiario",
+      "bio": "San Teobaldo, ostiario."
+    },
+    {
+      "nome": "Beata Cristina di Stommeln",
+      "titolo": "Vergine",
+      "bio": "Beata Cristina di Stommeln, vergine."
+    }
+  ],
+  "11-07": [
+    {
+      "nome": "San Prosdocimo di Padova",
+      "titolo": "Primo vescovo di Padova",
+      "bio": "San Prosdocimo di Padova, primo vescovo di Padova."
+    },
+    {
+      "nome": "Sant'Atenodoro",
+      "titolo": "Vescovo di Neocesarea o di Amasea",
+      "bio": "Sant'Atenodoro, vescovo di Neocesarea o di Amasea."
+    },
+    {
+      "nome": "Sant'Amaranto",
+      "titolo": "Martire",
+      "bio": "Sant'Amaranto, martire."
+    },
+    {
+      "nome": "Santi Ierone e compagni",
+      "titolo": "Martiri",
+      "bio": "Santi Ierone e compagni, martiri."
+    },
+    {
+      "nome": "Sant'Ercolano di Perugia",
+      "titolo": "Vescovo di Perugia e martire",
+      "bio": "Sant'Ercolano di Perugia, vescovo di Perugia e martire."
+    },
+    {
+      "nome": "San Baldo",
+      "titolo": "Vescovo di Tours",
+      "bio": "San Baldo, vescovo di Tours."
+    },
+    {
+      "nome": "San Cungar di Ceredigion",
+      "titolo": "Abate",
+      "bio": "San Cungar di Ceredigion, abate."
+    },
+    {
+      "nome": "San Fiorenzo di Strasburgo",
+      "titolo": "Vescovo di Strasburgo",
+      "bio": "San Fiorenzo di Strasburgo, vescovo di Strasburgo."
+    },
+    {
+      "nome": "San Villibrordo",
+      "titolo": "Vescovo di Utrecht",
+      "bio": "San Villibrordo, vescovo di Utrecht."
+    },
+    {
+      "nome": "San Lazzaro",
+      "titolo": "Stilita",
+      "bio": "San Lazzaro, stilita."
+    },
+    {
+      "nome": "Sant'Engelberto di Berg",
+      "titolo": "Vescovo di Colonia",
+      "bio": "Sant'Engelberto di Berg, vescovo di Colonia."
+    },
+    {
+      "nome": "Beato Antonio Baldinucci",
+      "titolo": "Sacerdote gesuita",
+      "bio": "Beato Antonio Baldinucci, sacerdote gesuita."
+    },
+    {
+      "nome": "Santi Giacinto Castañeda e Vincenzo Lê Quang Liêm",
+      "titolo": "Sacerdoti domenicani e martiri",
+      "bio": "Santi Giacinto Castañeda e Vincenzo Lê Quang Liêm, sacerdoti domenicani e martiri."
+    },
+    {
+      "nome": "San Pietro Wu Guosheng",
+      "titolo": "Catechista e martire",
+      "bio": "San Pietro Wu Guosheng, catechista e martire."
+    },
+    {
+      "nome": "San Vincenzo Grossi",
+      "titolo": "Sacerdote, fondatore delle Figlie dell'Oratorio",
+      "bio": "San Vincenzo Grossi, sacerdote, fondatore delle Figlie dell'Oratorio."
+    }
+  ],
+  "11-08": [
+    {
+      "nome": "Santi Semproniano",
+      "titolo": "Claudio, Nicostrato, Castorio e Simplicio, martiri",
+      "bio": "Santi Semproniano, Claudio, Nicostrato, Castorio e Simplicio, martiri."
+    },
+    {
+      "nome": "San Chiaro",
+      "titolo": "Sacerdote",
+      "bio": "San Chiaro, sacerdote."
+    },
+    {
+      "nome": "Sant'Adeodato I",
+      "titolo": "Papa",
+      "bio": "Sant'Adeodato I, papa."
+    },
+    {
+      "nome": "San Villeado di Brema",
+      "titolo": "Vescovo di Brema",
+      "bio": "San Villeado di Brema, vescovo di Brema."
+    },
+    {
+      "nome": "San Goffredo di Amiens",
+      "titolo": "Vescovo di Amiens",
+      "bio": "San Goffredo di Amiens, vescovo di Amiens."
+    },
+    {
+      "nome": "Beato Ugo de Glazinis",
+      "titolo": "Monaco di San Vittore",
+      "bio": "Beato Ugo de Glazinis, monaco di San Vittore."
+    },
+    {
+      "nome": "Beato Duns Scoto",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Duns Scoto, sacerdote francescano."
+    },
+    {
+      "nome": "Beata Maria Crocifissa Satellico",
+      "titolo": "Badessa clarissa",
+      "bio": "Beata Maria Crocifissa Satellico, badessa clarissa."
+    },
+    {
+      "nome": "Santi Giuseppe Nguyễn Ðình Nghi",
+      "titolo": "Paolo Nguyễn Ngân, Martino Tạ Ðức ThỊnh, Martino Thọ e Giovanni Battista Còn, martiri",
+      "bio": "Santi Giuseppe Nguyễn Ðình Nghi, Paolo Nguyễn Ngân, Martino Tạ Ðức ThỊnh, Martino Thọ e Giovanni Battista Còn, martiri."
+    }
+  ],
+  "11-09": [
+    {
+      "nome": "festa della Dedicazione della Basilica Lateranense",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "festa della Dedicazione della Basilica Lateranense."
+    },
+    {
+      "nome": "Sant'Ursino di Bourges",
+      "titolo": "Primo vescovo di Bourges",
+      "bio": "Sant'Ursino di Bourges, primo vescovo di Bourges."
+    },
+    {
+      "nome": "Sant'Agrippino di Napoli",
+      "titolo": "Vescovo di Napoli",
+      "bio": "Sant'Agrippino di Napoli, vescovo di Napoli."
+    },
+    {
+      "nome": "San Vitone di Verdun",
+      "titolo": "Vescovo di Verdun",
+      "bio": "San Vitone di Verdun, vescovo di Verdun."
+    },
+    {
+      "nome": "Sante Eustolia e Sopatra",
+      "titolo": "Vergini",
+      "bio": "Sante Eustolia e Sopatra, vergini."
+    },
+    {
+      "nome": "San Giorgio",
+      "titolo": "Vescovo di Lodève",
+      "bio": "San Giorgio, vescovo di Lodève."
+    },
+    {
+      "nome": "Beata Giovanna da Signa",
+      "titolo": "Vergine",
+      "bio": "Beata Giovanna da Signa, vergine."
+    },
+    {
+      "nome": "Beato Gabriele Ferretti",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Gabriele Ferretti, sacerdote francescano."
+    },
+    {
+      "nome": "Beato Ludovico Morbioli",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Beato Ludovico Morbioli."
+    },
+    {
+      "nome": "Beato Grazia da Cattaro",
+      "titolo": "Religioso agostiniano",
+      "bio": "Beato Grazia da Cattaro, religioso agostiniano."
+    },
+    {
+      "nome": "Beato Giorgio Napper",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giorgio Napper, sacerdote e martire."
+    },
+    {
+      "nome": "Santa Elisabetta della Trinità (O.C.D.) (Elisabeth Catez)",
+      "titolo": "Vergine e mistica",
+      "bio": "Santa Elisabetta della Trinità (O.C.D.) (Elisabeth Catez), vergine e mistica."
+    },
+    {
+      "nome": "Beato Enrico Hlebowicz",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Enrico Hlebowicz, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Luigi Beltrame Quattrocchi",
+      "titolo": "Padre di famiglia",
+      "bio": "Beato Luigi Beltrame Quattrocchi, padre di famiglia."
+    },
+    {
+      "nome": "Beata Maria del Monte Carmelo del Bambino Gesù (Maria del Carmen Gonzalez-Ramon Garcia-Prieto)",
+      "titolo": "Religiosa e fondatrice della Congregazione delle Suore Terziarie Francescane dei Sacri Cuo",
+      "bio": "Beata Maria del Monte Carmelo del Bambino Gesù (Maria del Carmen Gonzalez-Ramon Garcia-Prieto), religiosa e fondatrice della Congregazione delle Suore Terziarie Francescane dei Sacri Cuori di Gesù e Maria."
+    }
+  ],
+  "11-10": [
+    {
+      "nome": "San Leone I Magno",
+      "titolo": "Papa e dottore della Chiesa",
+      "bio": "San Leone I Magno, papa e dottore della Chiesa."
+    },
+    {
+      "nome": "San Demetriano di Antiochia",
+      "titolo": "Vescovo di Antiochia",
+      "bio": "San Demetriano di Antiochia, vescovo di Antiochia."
+    },
+    {
+      "nome": "Sant'Oreste",
+      "titolo": "Martire",
+      "bio": "Sant'Oreste, martire."
+    },
+    {
+      "nome": "San Probo",
+      "titolo": "Vescovo di Ravenna",
+      "bio": "San Probo, vescovo di Ravenna."
+    },
+    {
+      "nome": "Santi Narsete e Giuseppe",
+      "titolo": "Martiri",
+      "bio": "Santi Narsete e Giuseppe, martiri."
+    },
+    {
+      "nome": "San Giusto di Canterbury",
+      "titolo": "Vescovo di Canterbury",
+      "bio": "San Giusto di Canterbury, vescovo di Canterbury."
+    },
+    {
+      "nome": "San Baudolino",
+      "titolo": "Eremita",
+      "bio": "San Baudolino, eremita."
+    },
+    {
+      "nome": "Sant'Andrea Avellino (C.R.)",
+      "titolo": "Sacerdote",
+      "bio": "Sant'Andrea Avellino (C.R.), sacerdote."
+    },
+    {
+      "nome": "Beato Acisclo Piña Piazuelo",
+      "titolo": "Religioso fatebenefratelli e martire",
+      "bio": "Beato Acisclo Piña Piazuelo, religioso fatebenefratelli e martire."
+    }
+  ],
+  "11-11": [
+    {
+      "nome": "San Martino di Tours",
+      "titolo": "Vescovo di Tours",
+      "bio": "San Martino di Tours, vescovo di Tours."
+    },
+    {
+      "nome": "San Mena d'Egitto",
+      "titolo": "Martire",
+      "bio": "San Mena d'Egitto, martire."
+    },
+    {
+      "nome": "San Verano",
+      "titolo": "Vescovo di Vence",
+      "bio": "San Verano, vescovo di Vence."
+    },
+    {
+      "nome": "San Menna",
+      "titolo": "Eremita",
+      "bio": "San Menna, eremita."
+    },
+    {
+      "nome": "San Giovanni l'Elemosiniere",
+      "titolo": "Vescovo di Alessandria",
+      "bio": "San Giovanni l'Elemosiniere, vescovo di Alessandria."
+    },
+    {
+      "nome": "San Bertuino",
+      "titolo": "Vescovo e abate",
+      "bio": "San Bertuino, vescovo e abate."
+    },
+    {
+      "nome": "San Teodoro Studita",
+      "titolo": "Abate",
+      "bio": "San Teodoro Studita, abate."
+    },
+    {
+      "nome": "San Bartolomeo il Giovane",
+      "titolo": "Abate di Grottaferrata",
+      "bio": "San Bartolomeo il Giovane, abate di Grottaferrata."
+    },
+    {
+      "nome": "Santa Marina di Omura",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Marina di Omura, vergine e martire."
+    },
+    {
+      "nome": "Beata Alice Kotowska",
+      "titolo": "Vergine risurrezionista e martire",
+      "bio": "Beata Alice Kotowska, vergine risurrezionista e martire."
+    },
+    {
+      "nome": "Beato Eugenio Bossilkov",
+      "titolo": "Passionista, vescovo di Nicopoli e martire",
+      "bio": "Beato Eugenio Bossilkov, passionista, vescovo di Nicopoli e martire."
+    }
+  ],
+  "11-12": [
+    {
+      "nome": "San Giosafat Kuncewycz",
+      "titolo": "Vescovo di Polack e martire",
+      "bio": "San Giosafat Kuncewycz, vescovo di Polack e martire."
+    },
+    {
+      "nome": "San Nilo",
+      "titolo": "Abate",
+      "bio": "San Nilo, abate."
+    },
+    {
+      "nome": "San Macario",
+      "titolo": "Vescovo di Mull",
+      "bio": "San Macario, vescovo di Mull."
+    },
+    {
+      "nome": "Sant'Esichio II di Vienne",
+      "titolo": "Vescovo di Vienne",
+      "bio": "Sant'Esichio II di Vienne, vescovo di Vienne."
+    },
+    {
+      "nome": "Sant'Emiliano della Cogolla",
+      "titolo": "Sacerdote",
+      "bio": "Sant'Emiliano della Cogolla, sacerdote."
+    },
+    {
+      "nome": "San Cuniberto di Colonia",
+      "titolo": "Vescovo di Colonia",
+      "bio": "San Cuniberto di Colonia, vescovo di Colonia."
+    },
+    {
+      "nome": "San Livino di Deventer",
+      "titolo": "Sacerdote e monaco",
+      "bio": "San Livino di Deventer, sacerdote e monaco."
+    },
+    {
+      "nome": "santi Benedetto",
+      "titolo": "Giovanni, Matteo e Isacco, martiri",
+      "bio": "santi Benedetto, Giovanni, Matteo e Isacco, martiri."
+    },
+    {
+      "nome": "Beato Giovanni Cini",
+      "titolo": "Detto della Pace, terziario francescano",
+      "bio": "Beato Giovanni Cini, detto della Pace, terziario francescano."
+    },
+    {
+      "nome": "San Diego d'Alcalá",
+      "titolo": "Religioso francescano",
+      "bio": "San Diego d'Alcalá, religioso francescano."
+    },
+    {
+      "nome": "San Margarito Flores",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Margarito Flores, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Giuseppe Medes Ferrìs",
+      "titolo": "Martire",
+      "bio": "Beato Giuseppe Medes Ferrìs, martire."
+    }
+  ],
+  "11-13": [
+    {
+      "nome": "Santi Antonino",
+      "titolo": "Niceforo, Zebina, Germano e Manatha, martiri",
+      "bio": "Santi Antonino, Niceforo, Zebina, Germano e Manatha, martiri."
+    },
+    {
+      "nome": "San Mitrio d'Aix",
+      "titolo": "Martire",
+      "bio": "San Mitrio d'Aix, martire."
+    },
+    {
+      "nome": "San Brizio di Tours",
+      "titolo": "Vescovo di Tours",
+      "bio": "San Brizio di Tours, vescovo di Tours."
+    },
+    {
+      "nome": "Santi Arcadio",
+      "titolo": "Pascasio, Probo ed Eutichiano, martiri",
+      "bio": "Santi Arcadio, Pascasio, Probo ed Eutichiano, martiri."
+    },
+    {
+      "nome": "San Leoniano di Vienne",
+      "titolo": "Abate",
+      "bio": "San Leoniano di Vienne, abate."
+    },
+    {
+      "nome": "San Quinziano di Rodez",
+      "titolo": "Vescovo di Rodez e poi di Clermont",
+      "bio": "San Quinziano di Rodez, vescovo di Rodez e poi di Clermont."
+    },
+    {
+      "nome": "San San Florido",
+      "titolo": "Vescovo di Città di Castello",
+      "bio": "San San Florido, vescovo di Città di Castello."
+    },
+    {
+      "nome": "San Dalmazio",
+      "titolo": "Vescovo di Rodez",
+      "bio": "San Dalmazio, vescovo di Rodez."
+    },
+    {
+      "nome": "Sant'Imerio",
+      "titolo": "Eremita",
+      "bio": "Sant'Imerio, eremita."
+    },
+    {
+      "nome": "Sant'Eugenio III di Toledo",
+      "titolo": "Vescovo di Toledo",
+      "bio": "Sant'Eugenio III di Toledo, vescovo di Toledo."
+    },
+    {
+      "nome": "Santa Maxellendis",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Maxellendis, vergine e martire."
+    },
+    {
+      "nome": "San Niccolò I",
+      "titolo": "Papa",
+      "bio": "San Niccolò I, papa."
+    },
+    {
+      "nome": "Sant'Abbone di Fleury",
+      "titolo": "Abate di Fleury",
+      "bio": "Sant'Abbone di Fleury, abate di Fleury."
+    },
+    {
+      "nome": "Beato Warmondo",
+      "titolo": "Vescovo di Ivrea",
+      "bio": "Beato Warmondo, vescovo di Ivrea."
+    },
+    {
+      "nome": "Sant'Omobono Tucenghi",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Sant'Omobono Tucenghi."
+    },
+    {
+      "nome": "Sant'Agostina Pietrantoni (S.D.C.)",
+      "titolo": "Religiosa",
+      "bio": "Sant'Agostina Pietrantoni (S.D.C.), religiosa."
+    },
+    {
+      "nome": "Beato Giovanni Gonga Martínez",
+      "titolo": "Martire",
+      "bio": "Beato Giovanni Gonga Martínez, martire."
+    },
+    {
+      "nome": "Beata Maria del Patrocinio di San Giovanni Giner Gomis",
+      "titolo": "Vergine claretiana e martire",
+      "bio": "Beata Maria del Patrocinio di San Giovanni Giner Gomis, vergine claretiana e martire."
+    },
+    {
+      "nome": "Beati Pietro Vičev",
+      "titolo": "Paolo Dzidzov e Giosafat Siskov, sacerdoti assunzionisti e martiri",
+      "bio": "Beati Pietro Vičev, Paolo Dzidzov e Giosafat Siskov, sacerdoti assunzionisti e martiri."
+    },
+    {
+      "nome": "Beata Maria Teresa di Gesù (Maria Scrilli)",
+      "titolo": "Religiosa e fondatrice della Congregazione delle Suore di Nostra Signora del Carmelo",
+      "bio": "Beata Maria Teresa di Gesù (Maria Scrilli), religiosa e fondatrice della Congregazione delle Suore di Nostra Signora del Carmelo."
+    }
+  ],
+  "11-14": [
+    {
+      "nome": "San Teodoto",
+      "titolo": "Martire",
+      "bio": "San Teodoto, martire."
+    },
+    {
+      "nome": "Sant'Ippazio di Gangra",
+      "titolo": "Vescovo di Gangra",
+      "bio": "Sant'Ippazio di Gangra, vescovo di Gangra."
+    },
+    {
+      "nome": "San Rufo di Avignone",
+      "titolo": "Vescovo di Avignone",
+      "bio": "San Rufo di Avignone, vescovo di Avignone."
+    },
+    {
+      "nome": "San Dubricio di Llandaff",
+      "titolo": "Vescovo di Llandaff e abate",
+      "bio": "San Dubricio di Llandaff, vescovo di Llandaff e abate."
+    },
+    {
+      "nome": "San Giovanni da Traù",
+      "titolo": "Camaldolese, vescovo di Traù",
+      "bio": "San Giovanni da Traù, camaldolese, vescovo di Traù."
+    },
+    {
+      "nome": "San Lorenzo O'Toole",
+      "titolo": "Vescovo di Dublino",
+      "bio": "San Lorenzo O'Toole, vescovo di Dublino."
+    },
+    {
+      "nome": "San Siardo di Mariengaard",
+      "titolo": "Abate premostratense",
+      "bio": "San Siardo di Mariengaard, abate premostratense."
+    },
+    {
+      "nome": "San Serapio (O. de M.) (anche Serapione)",
+      "titolo": "Religioso martire",
+      "bio": "San Serapio (O. de M.) (anche Serapione), religioso martire."
+    },
+    {
+      "nome": "Santi Nicola Tavelić",
+      "titolo": "Deodato Aribert, Stefano da Cuneo e Pietro da Narbona, martiri francescani",
+      "bio": "Santi Nicola Tavelić, Deodato Aribert, Stefano da Cuneo e Pietro da Narbona, martiri francescani."
+    },
+    {
+      "nome": "Beato Giovanni Liccio",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Giovanni Liccio, sacerdote domenicano."
+    },
+    {
+      "nome": "Santo Stefano Teodoro Cuénot",
+      "titolo": "Vescovo titolare di Metellopoli e vicario apostolico della Cocincina, martire",
+      "bio": "Santo Stefano Teodoro Cuénot, vescovo titolare di Metellopoli e vicario apostolico della Cocincina, martire."
+    },
+    {
+      "nome": "Beato Leone d'Assisi",
+      "titolo": "Sacerdote confessore di Francesco d'Assisi",
+      "bio": "Beato Leone d'Assisi, sacerdote confessore di Francesco d'Assisi."
+    }
+  ],
+  "11-15": [
+    {
+      "nome": "Sant'Alberto Magno (O.P.)",
+      "titolo": "Vescovo di Ratisbona e dottore della Chiesa",
+      "bio": "Sant'Alberto Magno (O.P.), vescovo di Ratisbona e dottore della Chiesa.",
+      "fotoUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8f/Vicente_salvador_gomez-san_alberto.jpg"
+    },
+    {
+      "nome": "Santi Fidenziano",
+      "titolo": "Valeriana, Vittoria e compagni, martiri",
+      "bio": "Santi Fidenziano, Valeriana, Vittoria e compagni, martiri."
+    },
+    {
+      "nome": "Santi Guria e Samona",
+      "titolo": "Martiri",
+      "bio": "Santi Guria e Samona, martiri."
+    },
+    {
+      "nome": "San Felice di Nola",
+      "titolo": "Vescovo di Nola",
+      "bio": "San Felice di Nola, vescovo di Nola."
+    },
+    {
+      "nome": "San Maclovio",
+      "titolo": "Vescovo di Aleth",
+      "bio": "San Maclovio, vescovo di Aleth."
+    },
+    {
+      "nome": "San Desiderio di Cahors",
+      "titolo": "Vescovo di Cahors",
+      "bio": "San Desiderio di Cahors, vescovo di Cahors."
+    },
+    {
+      "nome": "Santi Marino",
+      "titolo": "Vescovo, e Aniano, martiri",
+      "bio": "Santi Marino, vescovo, e Aniano, martiri."
+    },
+    {
+      "nome": "San Sidonio",
+      "titolo": "Abate",
+      "bio": "San Sidonio, abate."
+    },
+    {
+      "nome": "San Fintano di Rheinau",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "San Fintano di Rheinau."
+    },
+    {
+      "nome": "San Leopoldo III di Babenberg",
+      "titolo": "Margravio d'Austria",
+      "bio": "San Leopoldo III di Babenberg, margravio d'Austria.",
+      "fotoUrl": "https://www.santodelgiorno.it/foto/santo7363.jpg"
+    },
+    {
+      "nome": "Beati Ugo Faringdon",
+      "titolo": "Giovanni Eynon e Giovanni Rugg, martiri benedettini",
+      "bio": "Beati Ugo Faringdon, Giovanni Eynon e Giovanni Rugg, martiri benedettini."
+    },
+    {
+      "nome": "Beati Riccardo Whiting",
+      "titolo": "Roger James e Giovanni Thorne, martiri benedettini",
+      "bio": "Beati Riccardo Whiting, Roger James e Giovanni Thorne, martiri benedettini."
+    },
+    {
+      "nome": "Beata Lucia Broccadelli da Narni",
+      "titolo": "Terziaria domenicana",
+      "bio": "Beata Lucia Broccadelli da Narni, terziaria domenicana."
+    },
+    {
+      "nome": "Beato Caio Coreano",
+      "titolo": "Catechista e martire",
+      "bio": "Beato Caio Coreano, catechista e martire."
+    },
+    {
+      "nome": "San Rocco Gonzalez de Santa Cruz (S.J.) e Sant'Alonso Rodriguez martire (S.J.)",
+      "titolo": "Presbiteri e martiri",
+      "bio": "San Rocco Gonzalez de Santa Cruz (S.J.) e Sant'Alonso Rodriguez martire (S.J.), presbiteri e martiri."
+    },
+    {
+      "nome": "San Giuseppe Pignatelli",
+      "titolo": "Sacerdote gesuita",
+      "bio": "San Giuseppe Pignatelli, sacerdote gesuita.",
+      "fotoUrl": "https://upload.wikimedia.org/wikipedia/commons/4/4c/%D0%98%D0%BE%D1%81%D0%B8%D1%84_%D0%9F%D0%B8%D0%BD%D1%8C%D1%8F%D1%82%D0%B5%D0%BB%D0%BB%D0%B8.jpg"
+    },
+    {
+      "nome": "San Giuseppe Mkasa Balikuddembè",
+      "titolo": "Martire",
+      "bio": "San Giuseppe Mkasa Balikuddembè, martire."
+    },
+    {
+      "nome": "San Raffaele di San Giuseppe",
+      "titolo": "Sacerdote carmelitano",
+      "bio": "San Raffaele di San Giuseppe, sacerdote carmelitano."
+    },
+    {
+      "nome": "Beata Maria della Passione de Chappotin de Neuville",
+      "titolo": "Religiosa e fondatrice",
+      "bio": "Beata Maria della Passione de Chappotin de Neuville, religiosa e fondatrice."
+    }
+  ],
+  "11-16": [
+    {
+      "nome": "Santa Margherita di Scozia",
+      "titolo": "Regina di Scozia",
+      "bio": "Santa Margherita di Scozia, regina di Scozia."
+    },
+    {
+      "nome": "Santa Gertrude di Helfta",
+      "titolo": "Detta la Grande",
+      "bio": "Santa Gertrude di Helfta, detta la Grande."
+    },
+    {
+      "nome": "Santi Agostino e Felicita",
+      "titolo": "Martiri",
+      "bio": "Santi Agostino e Felicita, martiri."
+    },
+    {
+      "nome": "Santi Leocadio e Lusore",
+      "titolo": "Martiri",
+      "bio": "Santi Leocadio e Lusore, martiri."
+    },
+    {
+      "nome": "Sant'Eucherio di Lione",
+      "titolo": "Vescovo di Lione",
+      "bio": "Sant'Eucherio di Lione, vescovo di Lione."
+    },
+    {
+      "nome": "Sant'Otmar di San Gallo",
+      "titolo": "Abate di San Gallo",
+      "bio": "Sant'Otmar di San Gallo, abate di San Gallo."
+    },
+    {
+      "nome": "Sant'Emiliano",
+      "titolo": "Eremita",
+      "bio": "Sant'Emiliano, eremita."
+    },
+    {
+      "nome": "Beato Simeone (abate)",
+      "titolo": "Abate di Cava",
+      "bio": "Beato Simeone (abate), abate di Cava."
+    },
+    {
+      "nome": "Sant'Edmondo di Canterbury (O.Cist.)",
+      "titolo": "Vescovo di Canterbury",
+      "bio": "Sant'Edmondo di Canterbury (O.Cist.), vescovo di Canterbury."
+    },
+    {
+      "nome": "Sant'Agnese d'Assisi (O.S.C.)",
+      "titolo": "Vergine, badessa e fondatrice",
+      "bio": "Sant'Agnese d'Assisi (O.S.C.), vergine, badessa e fondatrice."
+    },
+    {
+      "nome": "Beato Edoardo Osbaldeston",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Edoardo Osbaldeston, sacerdote e martire."
+    }
+  ],
+  "11-17": [
+    {
+      "nome": "Sant'Elisabetta d'Ungheria (T.O.F.)",
+      "titolo": "Principessa vedova",
+      "bio": "Sant'Elisabetta d'Ungheria (T.O.F.), principessa vedova."
+    },
+    {
+      "nome": "San Gregorio Taumaturgo",
+      "titolo": "Vescovo di Neocesarea",
+      "bio": "San Gregorio Taumaturgo, vescovo di Neocesarea."
+    },
+    {
+      "nome": "santi Alfeo e Zaccheo",
+      "titolo": "Martiri",
+      "bio": "santi Alfeo e Zaccheo, martiri."
+    },
+    {
+      "nome": "sant'Acisclo",
+      "titolo": "Martire",
+      "bio": "sant'Acisclo, martire."
+    },
+    {
+      "nome": "Sant'Aniano di Orléans",
+      "titolo": "Vescovo di Orléans",
+      "bio": "Sant'Aniano di Orléans, vescovo di Orléans."
+    },
+    {
+      "nome": "San Namazio di Vienne",
+      "titolo": "Vescovo di Vienne",
+      "bio": "San Namazio di Vienne, vescovo di Vienne."
+    },
+    {
+      "nome": "San Gregorio di Tours",
+      "titolo": "Vescovo di Tours",
+      "bio": "San Gregorio di Tours, vescovo di Tours."
+    },
+    {
+      "nome": "Sant'Ilda di Whitby",
+      "titolo": "Badessa",
+      "bio": "Sant'Ilda di Whitby, badessa."
+    },
+    {
+      "nome": "San Fiorino",
+      "titolo": "Sacerdote",
+      "bio": "San Fiorino, sacerdote."
+    },
+    {
+      "nome": "San Lazzaro di Costantinopoli",
+      "titolo": "Monaco",
+      "bio": "San Lazzaro di Costantinopoli, monaco."
+    },
+    {
+      "nome": "Sant'Ugo di Novara di Sicilia",
+      "titolo": "Abate cistercense",
+      "bio": "Sant'Ugo di Novara di Sicilia, abate cistercense."
+    },
+    {
+      "nome": "Sant'Ugo di Lincoln",
+      "titolo": "Certosino, vescovo di Lincoln",
+      "bio": "Sant'Ugo di Lincoln, certosino, vescovo di Lincoln."
+    },
+    {
+      "nome": "Beata Salomea di Polonia",
+      "titolo": "Regina di Galizia",
+      "bio": "Beata Salomea di Polonia, regina di Galizia."
+    },
+    {
+      "nome": "San Giovanni del Castillo (S.J.)",
+      "titolo": "Sacerdote martire",
+      "bio": "San Giovanni del Castillo (S.J.), sacerdote martire."
+    },
+    {
+      "nome": "santi Giordano Ansalone",
+      "titolo": "Tommaso Hioji Kokuzayemon Nishi, sacerdoti domenicani, martiri",
+      "bio": "santi Giordano Ansalone, Tommaso Hioji Kokuzayemon Nishi, sacerdoti domenicani, martiri."
+    },
+    {
+      "nome": "Beato Lupo Sebastiano Hunot",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Lupo Sebastiano Hunot, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Josafat Kocylovs'kyj",
+      "titolo": "Basiliano, vescovo di Przemyśl, Sambor e Sanok e martire",
+      "bio": "Beato Josafat Kocylovs'kyj, basiliano, vescovo di Przemyśl, Sambor e Sanok e martire."
+    }
+  ],
+  "11-18": [
+    {
+      "nome": "dedicazione delle basiliche di San Pietro e San Paolo",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "dedicazione delle basiliche di San Pietro e San Paolo."
+    },
+    {
+      "nome": "San Romano",
+      "titolo": "Diacono e martire",
+      "bio": "San Romano, diacono e martire."
+    },
+    {
+      "nome": "San Patroclo",
+      "titolo": "Sacerdote ed eremita",
+      "bio": "San Patroclo, sacerdote ed eremita."
+    },
+    {
+      "nome": "San Maudeto",
+      "titolo": "Abate",
+      "bio": "San Maudeto, abate."
+    },
+    {
+      "nome": "San Romacario di Coutances",
+      "titolo": "Vescovo di Coutances",
+      "bio": "San Romacario di Coutances, vescovo di Coutances."
+    },
+    {
+      "nome": "San Teofredo",
+      "titolo": "Abate e martire",
+      "bio": "San Teofredo, abate e martire."
+    },
+    {
+      "nome": "Sant'Oddone di Cluny",
+      "titolo": "Abate di Cluny",
+      "bio": "Sant'Oddone di Cluny, abate di Cluny."
+    },
+    {
+      "nome": "Beati Leonardo Rimura",
+      "titolo": "Andrea Murayama Tokuan, Cosma Takeya, Giovanni Yoshida Shoun e Domenico Jorge, martiri",
+      "bio": "Beati Leonardo Rimura, Andrea Murayama Tokuan, Cosma Takeya, Giovanni Yoshida Shoun e Domenico Jorge, martiri."
+    },
+    {
+      "nome": "Santa Rose-Philippine Duchesne",
+      "titolo": "Vergine della Società del Sacro Cuore di Gesù",
+      "bio": "Santa Rose-Philippine Duchesne, vergine della Società del Sacro Cuore di Gesù."
+    },
+    {
+      "nome": "Beato Grimoaldo della Purificazione",
+      "titolo": "Religioso passionista",
+      "bio": "Beato Grimoaldo della Purificazione, religioso passionista."
+    },
+    {
+      "nome": "Beata Karolina Kózka",
+      "titolo": "Vergine e martire",
+      "bio": "Beata Karolina Kózka, vergine e martire."
+    },
+    {
+      "nome": "Beate Maria del Rifugio Hinojosa y Naveros e cinque compagne",
+      "titolo": "Vergini visitandine e martiri",
+      "bio": "Beate Maria del Rifugio Hinojosa y Naveros e cinque compagne, vergini visitandine e martiri."
+    }
+  ],
+  "11-19": [
+    {
+      "nome": "Sant'Abdia (profeta)",
+      "titolo": "Profeta",
+      "bio": "Sant'Abdia (profeta), profeta."
+    },
+    {
+      "nome": "San Massimo",
+      "titolo": "Corepiscopo e martire",
+      "bio": "San Massimo, corepiscopo e martire."
+    },
+    {
+      "nome": "Santi Severino",
+      "titolo": "Essuperio e Feliciano, martiri",
+      "bio": "Santi Severino, Essuperio e Feliciano, martiri."
+    },
+    {
+      "nome": "San Barlaam di Pečers'k",
+      "titolo": "Martire",
+      "bio": "San Barlaam di Pečers'k, martire."
+    },
+    {
+      "nome": "Sante quaranta vergini e vedove di Eraclea",
+      "titolo": "Martiri",
+      "bio": "Sante quaranta vergini e vedove di Eraclea, martiri."
+    },
+    {
+      "nome": "Sant'Eudone",
+      "titolo": "Abate",
+      "bio": "Sant'Eudone, abate."
+    },
+    {
+      "nome": "Santa Matilde di Hackeborn",
+      "titolo": "Vergine",
+      "bio": "Santa Matilde di Hackeborn, vergine."
+    },
+    {
+      "nome": "Beato Giacomo Benfatti",
+      "titolo": "Domenicano, vescovo di Mantova",
+      "bio": "Beato Giacomo Benfatti, domenicano, vescovo di Mantova."
+    },
+    {
+      "nome": "Beati Eliseo García",
+      "titolo": "Salesiano, e Alessandro Planas Saurí, martiri",
+      "bio": "Beati Eliseo García, salesiano, e Alessandro Planas Saurí, martiri."
+    },
+    {
+      "nome": "Beato Alessandro Planas Saurí",
+      "titolo": "Laico martire",
+      "bio": "Beato Alessandro Planas Saurí, laico martire."
+    }
+  ],
+  "11-20": [
+    {
+      "nome": "San Basilio",
+      "titolo": "Martire",
+      "bio": "San Basilio, martire."
+    },
+    {
+      "nome": "San Crispino",
+      "titolo": "Vescovo di Astigi e martire",
+      "bio": "San Crispino, vescovo di Astigi e martire."
+    },
+    {
+      "nome": "San Dasio",
+      "titolo": "Martire",
+      "bio": "San Dasio, martire."
+    },
+    {
+      "nome": "Santi Avventore",
+      "titolo": "Ottavio e Solutore, martiri",
+      "bio": "Santi Avventore, Ottavio e Solutore, martiri."
+    },
+    {
+      "nome": "San Teonesto",
+      "titolo": "Martire",
+      "bio": "San Teonesto, martire."
+    },
+    {
+      "nome": "San Doro da Benevento",
+      "titolo": "Vescovo di Benevento",
+      "bio": "San Doro da Benevento, vescovo di Benevento."
+    },
+    {
+      "nome": "San Silvestro di Chalon-sur-Saône",
+      "titolo": "Vescovo di Chalon",
+      "bio": "San Silvestro di Chalon-sur-Saône, vescovo di Chalon."
+    },
+    {
+      "nome": "Sant'Edmondo",
+      "titolo": "Re dell'Anglia orientale e martire",
+      "bio": "Sant'Edmondo, re dell'Anglia orientale e martire."
+    },
+    {
+      "nome": "San Gregorio Decapolitano",
+      "titolo": "Monaco",
+      "bio": "San Gregorio Decapolitano, monaco."
+    },
+    {
+      "nome": "San Bernoardo di Hildesheim",
+      "titolo": "Vescovo di Hildesheim",
+      "bio": "San Bernoardo di Hildesheim, vescovo di Hildesheim."
+    },
+    {
+      "nome": "San Cipriano di Calamizzi",
+      "titolo": "Abate",
+      "bio": "San Cipriano di Calamizzi, abate."
+    },
+    {
+      "nome": "San Francesco Saverio Cần",
+      "titolo": "Catechista e martire",
+      "bio": "San Francesco Saverio Cần, catechista e martire."
+    },
+    {
+      "nome": "Beata Maria Fortunata Viti",
+      "titolo": "Benedettina",
+      "bio": "Beata Maria Fortunata Viti, benedettina."
+    },
+    {
+      "nome": "Sant'Angela di San Giuseppe e compagne",
+      "titolo": "Vergini della congregazione della dottrina cristiana, martiri",
+      "bio": "Sant'Angela di San Giuseppe e compagne, vergini della congregazione della dottrina cristiana, martiri."
+    },
+    {
+      "nome": "Beata Maria dei Miracoli Ortelles Gimeno",
+      "titolo": "Vergine clarissa cappuccina, martire",
+      "bio": "Beata Maria dei Miracoli Ortelles Gimeno, vergine clarissa cappuccina, martire."
+    },
+    {
+      "nome": "Beata Clelia Merloni",
+      "titolo": "Religiosa e fondatrice italiana dell'Istituto delle Suore Apostole del Sacro Cuore di Gesù",
+      "bio": "Beata Clelia Merloni, religiosa e fondatrice italiana dell'Istituto delle Suore Apostole del Sacro Cuore di Gesù."
+    }
+  ],
+  "11-21": [
+    {
+      "nome": "Presentazione della Beata Vergine Maria",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Presentazione della Beata Vergine Maria."
+    },
+    {
+      "nome": "San Rufo",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "San Rufo."
+    },
+    {
+      "nome": "San Mauro di Parenzo",
+      "titolo": "Vescovo di Parenzo e martire",
+      "bio": "San Mauro di Parenzo, vescovo di Parenzo e martire."
+    },
+    {
+      "nome": "sant'Agapio",
+      "titolo": "Martire",
+      "bio": "sant'Agapio, martire."
+    },
+    {
+      "nome": "San Gelasio I",
+      "titolo": "Papa",
+      "bio": "San Gelasio I, papa."
+    },
+    {
+      "nome": "San Mauro di Cesena",
+      "titolo": "Vescovo di Cesena",
+      "bio": "San Mauro di Cesena, vescovo di Cesena."
+    },
+    {
+      "nome": "Beata Franciszka Siedliska",
+      "titolo": "Vergine, fondatrice delle Suore della Sacra Famiglia di Nazareth",
+      "bio": "Beata Franciszka Siedliska, vergine, fondatrice delle Suore della Sacra Famiglia di Nazareth."
+    }
+  ],
+  "11-22": [
+    {
+      "nome": "Santa Cecilia",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Cecilia, vergine e martire."
+    },
+    {
+      "nome": "San Filemone",
+      "titolo": "Discepolo di San Paolo",
+      "bio": "San Filemone, discepolo di San Paolo."
+    },
+    {
+      "nome": "Sant'Anania",
+      "titolo": "Martire",
+      "bio": "Sant'Anania, martire."
+    },
+    {
+      "nome": "San Benigno di Milano",
+      "titolo": "Vescovo di Milano",
+      "bio": "San Benigno di Milano, vescovo di Milano."
+    },
+    {
+      "nome": "San Pragmazio di Autun",
+      "titolo": "Vescovo di Autun",
+      "bio": "San Pragmazio di Autun, vescovo di Autun."
+    },
+    {
+      "nome": "San Valeriano di Forlì",
+      "titolo": "Laico martire",
+      "bio": "San Valeriano di Forlì, laico martire."
+    },
+    {
+      "nome": "Beati Salvatore Lilli",
+      "titolo": "Sacerdote francescano, Giovanni e altri sei compagni, martiri armeni",
+      "bio": "Beati Salvatore Lilli, sacerdote francescano, Giovanni e altri sei compagni, martiri armeni."
+    },
+    {
+      "nome": "Beato Tommaso Reggio",
+      "titolo": "Arcivescovo di Genova, fondatore delle Suore di Santa Marta",
+      "bio": "Beato Tommaso Reggio, arcivescovo di Genova, fondatore delle Suore di Santa Marta."
+    },
+    {
+      "nome": "San Pietro Esqueda Ramirez",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Pietro Esqueda Ramirez, sacerdote e martire."
+    },
+    {
+      "nome": "Beati Elia Torrido Sánchez e Bertrando Lahoz Moliner",
+      "titolo": "Lasalliani, martiri",
+      "bio": "Beati Elia Torrido Sánchez e Bertrando Lahoz Moliner, lasalliani, martiri."
+    }
+  ],
+  "11-23": [
+    {
+      "nome": "San Clemente I",
+      "titolo": "Papa e martire",
+      "bio": "San Clemente I, papa e martire."
+    },
+    {
+      "nome": "San Colombano",
+      "titolo": "Abate di Bobbio",
+      "bio": "San Colombano, abate di Bobbio."
+    },
+    {
+      "nome": "Santa Felicita e sette fratelli",
+      "titolo": "Martiri",
+      "bio": "Santa Felicita e sette fratelli, martiri."
+    },
+    {
+      "nome": "Santa Mustiola",
+      "titolo": "Martire",
+      "bio": "Santa Mustiola, martire."
+    },
+    {
+      "nome": "San Sisinnio",
+      "titolo": "Vescovo di Cizico e martire",
+      "bio": "San Sisinnio, vescovo di Cizico e martire."
+    },
+    {
+      "nome": "San Clemente di Metz",
+      "titolo": "Primo vescovo di Metz",
+      "bio": "San Clemente di Metz, primo vescovo di Metz."
+    },
+    {
+      "nome": "Santa Lucrezia",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Lucrezia,vergine e martire."
+    },
+    {
+      "nome": "Sant'Anfilochio di Iconio",
+      "titolo": "Vescovo di Iconio",
+      "bio": "Sant'Anfilochio di Iconio, vescovo di Iconio."
+    },
+    {
+      "nome": "San Severino",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "San Severino."
+    },
+    {
+      "nome": "San Gregorio II di Agrigento",
+      "titolo": "Vescovo di Agrigento",
+      "bio": "San Gregorio II di Agrigento, vescovo di Agrigento."
+    },
+    {
+      "nome": "San Trudone",
+      "titolo": "Sacerdote",
+      "bio": "San Trudone, sacerdote."
+    },
+    {
+      "nome": "Beata Margherita di Savoia",
+      "titolo": "Vedova, terziaria domenicana",
+      "bio": "Beata Margherita di Savoia, vedova, terziaria domenicana."
+    },
+    {
+      "nome": "Santa Cecilia Yu So-sa",
+      "titolo": "Martire",
+      "bio": "Santa Cecilia Yu So-sa, martire."
+    },
+    {
+      "nome": "Beato Miguel Agustín Pro",
+      "titolo": "Sacerdote gesuita e martire",
+      "bio": "Beato Miguel Agustín Pro, sacerdote gesuita e martire."
+    },
+    {
+      "nome": "Beata Maria Cecilia Cendoya y Araquistain",
+      "titolo": "Vergine visitandina e martire",
+      "bio": "Beata Maria Cecilia Cendoya y Araquistain, vergine visitandina e martire."
+    }
+  ],
+  "11-24": [
+    {
+      "nome": "Sant'Andrea Dung-Lac",
+      "titolo": "Sacerdote martire, e compagni",
+      "bio": "Sant'Andrea Dung-Lac, sacerdote martire, e compagni."
+    },
+    {
+      "nome": "San Crisogono di Aquileia",
+      "titolo": "Vescovo di Aquileia, martire",
+      "bio": "San Crisogono di Aquileia, vescovo di Aquileia, martire."
+    },
+    {
+      "nome": "Santa Firmina di Amelia",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Firmina di Amelia, vergine e martire."
+    },
+    {
+      "nome": "San Protasio Algisi",
+      "titolo": "Vescovo di Milano",
+      "bio": "San Protasio Algisi, vescovo di Milano."
+    },
+    {
+      "nome": "San Romano",
+      "titolo": "Sacerdote",
+      "bio": "San Romano, sacerdote."
+    },
+    {
+      "nome": "San Colomano di Cloyne",
+      "titolo": "Vescovo di Cloyne",
+      "bio": "San Colomano di Cloyne, vescovo di Cloyne."
+    },
+    {
+      "nome": "San Porziano",
+      "titolo": "Abate",
+      "bio": "San Porziano, abate."
+    },
+    {
+      "nome": "Sante Flora e Marta (Maria) di Cordova",
+      "titolo": "Vergini e martiri",
+      "bio": "Sante Flora e Marta (Maria) di Cordova, vergini e martiri."
+    },
+    {
+      "nome": "Sant'Alberto di Lovanio",
+      "titolo": "Cardinale, vescovo di Liegi e martire",
+      "bio": "Sant'Alberto di Lovanio, cardinale, vescovo di Liegi e martire."
+    },
+    {
+      "nome": "Beato Balsamo (abate)",
+      "titolo": "Abate di Cava",
+      "bio": "Beato Balsamo (abate), abate di Cava."
+    },
+    {
+      "nome": "San Pierre Dumoulin-Borie",
+      "titolo": "Vescovo titolare di Gerisso e vicario apostolico del Tonchino occidentale, Pietro Võ Ðăng ",
+      "bio": "San Pierre Dumoulin-Borie, vescovo titolare di Gerisso e vicario apostolico del Tonchino occidentale, Pietro Võ Ðăng Khoa e Vincenzo Nguyễn Thế Ðiểm, martiri."
+    },
+    {
+      "nome": "Beata Maria Anna Sala",
+      "titolo": "Vergine marcellina",
+      "bio": "Beata Maria Anna Sala, vergine marcellina."
+    },
+    {
+      "nome": "Beate Niceta di San Prudenzio Plaja Xifra e compagne",
+      "titolo": "Vergini carmelitane e martiri",
+      "bio": "Beate Niceta di San Prudenzio Plaja Xifra e compagne, vergini carmelitane e martiri."
+    }
+  ],
+  "11-25": [
+    {
+      "nome": "Santa Caterina d'Alessandria",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Caterina d'Alessandria, vergine e martire."
+    },
+    {
+      "nome": "San Mercurio di Cesarea",
+      "titolo": "Martire",
+      "bio": "San Mercurio di Cesarea, martire."
+    },
+    {
+      "nome": "San Mosè di Roma",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Mosè di Roma, sacerdote e martire."
+    },
+    {
+      "nome": "San Pietro I di Alessandria",
+      "titolo": "Vescovo di Alessandria e martire",
+      "bio": "San Pietro I di Alessandria, vescovo di Alessandria e martire."
+    },
+    {
+      "nome": "San Marcolo",
+      "titolo": "Vescovo",
+      "bio": "San Marcolo, vescovo."
+    },
+    {
+      "nome": "San Maurino",
+      "titolo": "Martire",
+      "bio": "San Maurino, martire."
+    },
+    {
+      "nome": "Beata Beatrice d'Ornacieux",
+      "titolo": "Vergine certosina",
+      "bio": "Beata Beatrice d'Ornacieux, vergine certosina."
+    },
+    {
+      "nome": "Beata Elisabetta Achler",
+      "titolo": "Vergine del terz'ordine francescano",
+      "bio": "Beata Elisabetta Achler, vergine del terz'ordine francescano."
+    },
+    {
+      "nome": "San Pietro Yi Ho-yong",
+      "titolo": "Laico, catechista e martire",
+      "bio": "San Pietro Yi Ho-yong, laico, catechista e martire."
+    },
+    {
+      "nome": "Beato Giacinto Serrano Lopez e Giacomo Meseguer Burillo",
+      "titolo": "Sacerdoti domenicani e martiri",
+      "bio": "Beato Giacinto Serrano Lopez e Giacomo Meseguer Burillo, sacerdoti domenicani e martiri."
+    }
+  ],
+  "11-26": [
+    {
+      "nome": "San Siricio",
+      "titolo": "Papa",
+      "bio": "San Siricio, papa."
+    },
+    {
+      "nome": "Sant'Alipio",
+      "titolo": "Diacono e stilita",
+      "bio": "Sant'Alipio, diacono e stilita."
+    },
+    {
+      "nome": "San Corrado di Costanza",
+      "titolo": "Vescovo di Costanza",
+      "bio": "San Corrado di Costanza, vescovo di Costanza."
+    },
+    {
+      "nome": "San Nicone Metanoita",
+      "titolo": "Monaco",
+      "bio": "San Nicone Metanoita, monaco."
+    },
+    {
+      "nome": "San Bellino di Padova",
+      "titolo": "Vescovo di Padova e martire",
+      "bio": "San Bellino di Padova, vescovo di Padova e martire."
+    },
+    {
+      "nome": "Beato Ponzio di Faucigny",
+      "titolo": "Canonico regolare",
+      "bio": "Beato Ponzio di Faucigny, canonico regolare."
+    },
+    {
+      "nome": "San Silvestro Guzzolini (O.S.B. Silv.)",
+      "titolo": "Abate, fondatore dei benedettini silvestrini",
+      "bio": "San Silvestro Guzzolini (O.S.B. Silv.), abate, fondatore dei benedettini silvestrini."
+    },
+    {
+      "nome": "Beata Delfina di Signe",
+      "titolo": "Sposa",
+      "bio": "Beata Delfina di Signe, sposa."
+    },
+    {
+      "nome": "Beati Ugo Taylor",
+      "titolo": "Sacerdote, e Marmaduke Bowes, martiri",
+      "bio": "Beati Ugo Taylor, sacerdote, e Marmaduke Bowes, martiri."
+    },
+    {
+      "nome": "Sant'Umile da Bisignano",
+      "titolo": "Francescano",
+      "bio": "Sant'Umile da Bisignano, francescano."
+    },
+    {
+      "nome": "San Leonardo da Porto Maurizio",
+      "titolo": "Sacerdote francescano",
+      "bio": "San Leonardo da Porto Maurizio, sacerdote francescano."
+    },
+    {
+      "nome": "Santi Tommaso Ðinh Viết Dụ e Domenico Nguyễn Văn Xuyên",
+      "titolo": "Sacerdoti domenicani, martiri",
+      "bio": "Santi Tommaso Ðinh Viết Dụ e Domenico Nguyễn Văn Xuyên, sacerdoti domenicani, martiri."
+    },
+    {
+      "nome": "Beato Giacomo Alberione",
+      "titolo": "Sacerdote, editore e fondatore",
+      "bio": "Beato Giacomo Alberione, sacerdote, editore e fondatore."
+    }
+  ],
+  "11-27": [
+    {
+      "nome": "Santi Facondo e Primitivo",
+      "titolo": "Martiri",
+      "bio": "Santi Facondo e Primitivo, martiri."
+    },
+    {
+      "nome": "San Laverio (martire)",
+      "titolo": "Martire",
+      "bio": "San Laverio (martire), martire."
+    },
+    {
+      "nome": "San Valeriano di Aquileia",
+      "titolo": "Patriarca di Aquileia",
+      "bio": "San Valeriano di Aquileia, patriarca di Aquileia."
+    },
+    {
+      "nome": "San Giacomo l'Interciso",
+      "titolo": "Martire",
+      "bio": "San Giacomo l'Interciso, martire."
+    },
+    {
+      "nome": "San Massimo",
+      "titolo": "Abate di Lérins e poi vescovo di Riez",
+      "bio": "San Massimo, abate di Lérins e poi vescovo di Riez."
+    },
+    {
+      "nome": "Sant'Eusicio",
+      "titolo": "Eremita",
+      "bio": "Sant'Eusicio, eremita."
+    },
+    {
+      "nome": "San Siffredo di Carpentras",
+      "titolo": "Vescovo di Carpentras",
+      "bio": "San Siffredo di Carpentras, vescovo di Carpentras."
+    },
+    {
+      "nome": "Sant'Acario",
+      "titolo": "Vescovo di Noyon e di Tournai",
+      "bio": "Sant'Acario, vescovo di Noyon e di Tournai."
+    },
+    {
+      "nome": "Santa Bililde",
+      "titolo": "Vergine",
+      "bio": "Santa Bililde, vergine."
+    },
+    {
+      "nome": "San Fergus",
+      "titolo": "Vescovo",
+      "bio": "San Fergus, vescovo."
+    },
+    {
+      "nome": "San Virgilio di Salisburgo",
+      "titolo": "Vescovo di Salisburgo",
+      "bio": "San Virgilio di Salisburgo, vescovo di Salisburgo."
+    },
+    {
+      "nome": "San Gustavo di Rhuys",
+      "titolo": "Monaco",
+      "bio": "San Gustavo di Rhuys, monaco."
+    },
+    {
+      "nome": "Beato Bernardino da Fossa",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Bernardino da Fossa, sacerdote francescano."
+    },
+    {
+      "nome": "Beati Tommaso Koteda Kiuni e dieci compagni",
+      "titolo": "Martiri",
+      "bio": "Beati Tommaso Koteda Kiuni e dieci compagni, martiri."
+    },
+    {
+      "nome": "Beato Bronislao Kostowski",
+      "titolo": "Martire",
+      "bio": "Beato Bronislao Kostowski, martire."
+    }
+  ],
+  "11-28": [
+    {
+      "nome": "Sant'Irenarco",
+      "titolo": "Martire",
+      "bio": "Sant'Irenarco, martire."
+    },
+    {
+      "nome": "San Papiniano di Vita",
+      "titolo": "Vescovo di Vita, San Mansueto di Urusi, vescovo di Urusi e compagni, vescovi, martiri",
+      "bio": "San Papiniano di Vita, vescovo di Vita, San Mansueto di Urusi, vescovo di Urusi e compagni, vescovi, martiri."
+    },
+    {
+      "nome": "Santo Stefano il Giovane",
+      "titolo": "Monaco e martire",
+      "bio": "Santo Stefano il Giovane, monaco e martire."
+    },
+    {
+      "nome": "San Giacomo della Marca",
+      "titolo": "Sacerdote francescano",
+      "bio": "San Giacomo della Marca, sacerdote francescano."
+    },
+    {
+      "nome": "Beato Giacomo Thomson",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giacomo Thomson, sacerdote e martire."
+    },
+    {
+      "nome": "Sant'Andrea Trần Văn Trông",
+      "titolo": "Martire",
+      "bio": "Sant'Andrea Trần Văn Trông, martire."
+    },
+    {
+      "nome": "Beati Giovanni Gesù Adradas Gonzalo e 14 compagni",
+      "titolo": "Religiosi fatebenefratelli, martiri",
+      "bio": "Beati Giovanni Gesù Adradas Gonzalo e 14 compagni, religiosi fatebenefratelli, martiri."
+    },
+    {
+      "nome": "Beato Luigi Campos Gorriz e 14 compagni",
+      "titolo": "Martiri",
+      "bio": "Beato Luigi Campos Gorriz e 14 compagni, martiri."
+    }
+  ],
+  "11-29": [
+    {
+      "nome": "San Saturnino di Cartagine",
+      "titolo": "Martire",
+      "bio": "San Saturnino di Cartagine, martire."
+    },
+    {
+      "nome": "San Saturnino di Tolosa",
+      "titolo": "Vescovo di Tolosa e martire",
+      "bio": "San Saturnino di Tolosa, vescovo di Tolosa e martire."
+    },
+    {
+      "nome": "San Filomeno",
+      "titolo": "Martire",
+      "bio": "San Filomeno, martire."
+    },
+    {
+      "nome": "Sant'Illuminata di Todi",
+      "titolo": "Vergine",
+      "bio": "Sant'Illuminata di Todi, vergine."
+    },
+    {
+      "nome": "San Giacomo di Sarug",
+      "titolo": "Vescovo di Batne",
+      "bio": "San Giacomo di Sarug, vescovo di Batne."
+    },
+    {
+      "nome": "San Radbodo",
+      "titolo": "Vescovo di Utrecht",
+      "bio": "San Radbodo, vescovo di Utrecht."
+    },
+    {
+      "nome": "Beato Edoardo Burden",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Edoardo Burden, sacerdote e martire."
+    },
+    {
+      "nome": "Beati Giorgio Errington",
+      "titolo": "Guglielmo Gibson e Guglielmo Knight, martiri",
+      "bio": "Beati Giorgio Errington, Guglielmo Gibson e Guglielmo Knight, martiri."
+    },
+    {
+      "nome": "Beati Dionigi della Natività e Redento della Croce",
+      "titolo": "Carmelitani scalzi, martiri",
+      "bio": "Beati Dionigi della Natività e Redento della Croce, carmelitani scalzi, martiri."
+    },
+    {
+      "nome": "San Francesco Antonio Fasani",
+      "titolo": "Francescano conventuale",
+      "bio": "San Francesco Antonio Fasani, francescano conventuale."
+    },
+    {
+      "nome": "Beato Alfredo Simón Colomina",
+      "titolo": "Gesuita e martire",
+      "bio": "Beato Alfredo Simón Colomina, gesuita e martire."
+    },
+    {
+      "nome": "Beata Maria Maddalena dell'Incarnazione (Caterina Maria Francesca Antonia)",
+      "titolo": "Religiosa e fondatrice italiana delle monache Adoratrici Perpetue del Santissimo Sacrament",
+      "bio": "Beata Maria Maddalena dell'Incarnazione (Caterina Maria Francesca Antonia), religiosa e fondatrice italiana delle monache Adoratrici Perpetue del Santissimo Sacramento."
+    }
+  ],
+  "11-30": [
+    {
+      "nome": "Sant'Andrea",
+      "titolo": "Apostolo",
+      "bio": "Sant'Andrea, apostolo."
+    },
+    {
+      "nome": "San Mirocle di Milano",
+      "titolo": "Vescovo di Milano",
+      "bio": "San Mirocle di Milano, vescovo di Milano."
+    },
+    {
+      "nome": "San Tugdual di Tréguier",
+      "titolo": "Detto Pabu, abate e vescovo di Tréguier",
+      "bio": "San Tugdual di Tréguier, detto Pabu, abate e vescovo di Tréguier."
+    },
+    {
+      "nome": "San Galgano Guidotti",
+      "titolo": "Laico eremita",
+      "bio": "San Galgano Guidotti, laico eremita."
+    },
+    {
+      "nome": "Beato Giovanni da Vercelli",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Giovanni da Vercelli, sacerdote domenicano."
+    },
+    {
+      "nome": "Beato Federico da Ratisbona",
+      "titolo": "Religioso eremitano",
+      "bio": "Beato Federico da Ratisbona, religioso eremitano."
+    },
+    {
+      "nome": "San Cutberto Mayne",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Cutberto Mayne, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Alessandro Crow",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Alessandro Crow, sacerdote e martire."
+    },
+    {
+      "nome": "San Taddeo Liu Ruiting",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Taddeo Liu Ruiting, sacerdote e martire."
+    },
+    {
+      "nome": "San Giuseppe Marchand",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Giuseppe Marchand, sacerdote e martire."
+    },
+    {
+      "nome": "Beati Michele Ruedas Mejías e sei compagni",
+      "titolo": "Fatebenefratelli, martiri",
+      "bio": "Beati Michele Ruedas Mejías e sei compagni, fatebenefratelli, martiri."
+    },
+    {
+      "nome": "Beato Giuseppe Otín Aquilé",
+      "titolo": "Sacerdote salesiano, martire",
+      "bio": "Beato Giuseppe Otín Aquilé, sacerdote salesiano, martire."
+    },
+    {
+      "nome": "Beato Ludovico Rocco Gientyngier",
+      "titolo": "Sacerdote, martire",
+      "bio": "Beato Ludovico Rocco Gientyngier, sacerdote, martire."
+    }
+  ],
+  "12-01": [
+    {
+      "nome": "San Naum",
+      "titolo": "Profeta",
+      "bio": "San Naum, profeta."
+    },
+    {
+      "nome": "San Castriciano",
+      "titolo": "Vescovo di Milano",
+      "bio": "San Castriciano, vescovo di Milano."
+    },
+    {
+      "nome": "Santa Fiorenza",
+      "titolo": "Vergine",
+      "bio": "Santa Fiorenza, vergine."
+    },
+    {
+      "nome": "San Leonzio di Fréjus",
+      "titolo": "Vescovo di Fréjus",
+      "bio": "San Leonzio di Fréjus, vescovo di Fréjus."
+    },
+    {
+      "nome": "Sant'Agerico",
+      "titolo": "Vescovo di Verdun",
+      "bio": "Sant'Agerico, vescovo di Verdun."
+    },
+    {
+      "nome": "Sant'Eligio di Noyon",
+      "titolo": "Vescovo di Noyon",
+      "bio": "Sant'Eligio di Noyon, vescovo di Noyon."
+    },
+    {
+      "nome": "Sant'Ansano",
+      "titolo": "Laico martire",
+      "bio": "Sant'Ansano, laico martire."
+    },
+    {
+      "nome": "Beato Antonio Bonfadini",
+      "titolo": "Predicatore francescano",
+      "bio": "Beato Antonio Bonfadini, predicatore francescano."
+    },
+    {
+      "nome": "Sant'Edmondo Campion (S.J.)",
+      "titolo": "San Rodolfo Sherwin S.J., Sant'Alessandro Briant S.J., Beato Giovanni Beche e Beato Riccar",
+      "bio": "Sant'Edmondo Campion (S.J.), San Rodolfo Sherwin S.J., Sant'Alessandro Briant S.J., Beato Giovanni Beche e Beato Riccardo Langley, martiri d'Inghilterra."
+    },
+    {
+      "nome": "San Charles de Foucauld (O.C.S.O.)",
+      "titolo": "Sacerdote ed eremita",
+      "bio": "San Charles de Foucauld (O.C.S.O.), sacerdote ed eremita."
+    },
+    {
+      "nome": "Beato Kazimierz Tomasz Sykulski",
+      "titolo": "Martire ad Auschwitz",
+      "bio": "Beato Kazimierz Tomasz Sykulski, martire ad Auschwitz."
+    },
+    {
+      "nome": "Beata Maria Clementina Anuarite Nengapeta",
+      "titolo": "Vergine delle Suore della Sacra Famiglia e martire congolese",
+      "bio": "Beata Maria Clementina Anuarite Nengapeta, vergine delle Suore della Sacra Famiglia e martire congolese."
+    }
+  ],
+  "12-02": [
+    {
+      "nome": "Sant'Abacuc",
+      "titolo": "Profeta",
+      "bio": "Sant'Abacuc, profeta."
+    },
+    {
+      "nome": "Santa Bibiana",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Bibiana, vergine e martire."
+    },
+    {
+      "nome": "San Pimenio",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Pimenio, sacerdote e martire."
+    },
+    {
+      "nome": "San Cromazio d'Aquileia",
+      "titolo": "Scrittore e patriarca di Aquileia",
+      "bio": "San Cromazio d'Aquileia, scrittore e patriarca di Aquileia."
+    },
+    {
+      "nome": "San Silverio",
+      "titolo": "Papa e martire",
+      "bio": "San Silverio, papa e martire."
+    },
+    {
+      "nome": "Beato Jan van Ruusbroec",
+      "titolo": "Canonico regolare",
+      "bio": "Beato Jan van Ruusbroec, canonico regolare."
+    },
+    {
+      "nome": "Beata Maria Angela Astorch",
+      "titolo": "Badessa clarissa",
+      "bio": "Beata Maria Angela Astorch, badessa clarissa."
+    },
+    {
+      "nome": "Beato Raffaele Chyliński",
+      "titolo": "Sacerdote dell'Ordine dei frati minori conventuali",
+      "bio": "Beato Raffaele Chyliński, sacerdote dell'Ordine dei frati minori conventuali."
+    },
+    {
+      "nome": "Beato Ivan Slezjuk",
+      "titolo": "Vescovo eparca di Stanislaviv e martire",
+      "bio": "Beato Ivan Slezjuk, vescovo eparca di Stanislaviv e martire."
+    },
+    {
+      "nome": "Beato Giovanni Francesco Macha",
+      "titolo": "Sacerdote martire",
+      "bio": "Beato Giovanni Francesco Macha, sacerdote martire."
+    }
+  ],
+  "12-03": [
+    {
+      "nome": "San Francesco Saverio",
+      "titolo": "Sacerdote gesuita, apostolo delle Indie",
+      "bio": "San Francesco Saverio, sacerdote gesuita, apostolo delle Indie."
+    },
+    {
+      "nome": "San Cassiano di Tangeri",
+      "titolo": "Martire",
+      "bio": "San Cassiano di Tangeri, martire."
+    },
+    {
+      "nome": "San Birino di Dorchester",
+      "titolo": "Apostolo del Wessex, primo vescovo di Dorchester",
+      "bio": "San Birino di Dorchester, apostolo del Wessex, primo vescovo di Dorchester."
+    },
+    {
+      "nome": "San Lucio di Coira",
+      "titolo": "Eremita",
+      "bio": "San Lucio di Coira, eremita."
+    },
+    {
+      "nome": "Beato Edoardo Coleman",
+      "titolo": "Martire d'Inghilterra",
+      "bio": "Beato Edoardo Coleman, martire d'Inghilterra."
+    },
+    {
+      "nome": "Beato Giovanni Nepomuceno Tschiderer Von Gleifheim",
+      "titolo": "Vescovo di Trento",
+      "bio": "Beato Giovanni Nepomuceno Tschiderer Von Gleifheim, vescovo di Trento."
+    }
+  ],
+  "12-04": [
+    {
+      "nome": "San Giovanni Damasceno",
+      "titolo": "Dottore della Chiesa",
+      "bio": "San Giovanni Damasceno, dottore della Chiesa."
+    },
+    {
+      "nome": "Santa Barbara",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Barbara, vergine e martire."
+    },
+    {
+      "nome": "Sant'Eraclio di Alessandria",
+      "titolo": "Vescovo di Alessandria",
+      "bio": "Sant'Eraclio di Alessandria, vescovo di Alessandria."
+    },
+    {
+      "nome": "San Melezio",
+      "titolo": "Vescovo di Sebaste",
+      "bio": "San Melezio, vescovo di Sebaste."
+    },
+    {
+      "nome": "San Felice",
+      "titolo": "Vescovo di Bologna",
+      "bio": "San Felice, vescovo di Bologna."
+    },
+    {
+      "nome": "Sant'Apro di Vienne",
+      "titolo": "Sacerdote ed eremita",
+      "bio": "Sant'Apro di Vienne, sacerdote ed eremita."
+    },
+    {
+      "nome": "San Sigiranno",
+      "titolo": "Abate di Lonrey",
+      "bio": "San Sigiranno, abate di Lonrey."
+    },
+    {
+      "nome": "Santa Adreilde",
+      "titolo": "Badessa del monastero di Santa Maria a Le Mans",
+      "bio": "Santa Adreilde, badessa del monastero di Santa Maria a Le Mans."
+    },
+    {
+      "nome": "San Sola di Husen",
+      "titolo": "Sacerdote ed eremita",
+      "bio": "San Sola di Husen, sacerdote ed eremita."
+    },
+    {
+      "nome": "San Giovanni",
+      "titolo": "Detto il taumaturgo, vescovo di Poliboto",
+      "bio": "San Giovanni, detto il taumaturgo, vescovo di Poliboto."
+    },
+    {
+      "nome": "Sant'Annone II di Colonia",
+      "titolo": "Vescovo di Colonia",
+      "bio": "Sant'Annone II di Colonia, vescovo di Colonia."
+    },
+    {
+      "nome": "Sant'Osmundo di Salisbury",
+      "titolo": "Vescovo di Salisbury",
+      "bio": "Sant'Osmundo di Salisbury, vescovo di Salisbury."
+    },
+    {
+      "nome": "San Bernardo degli Uberti",
+      "titolo": "Abate vallombroSano, cardinale e vescovo di Parma",
+      "bio": "San Bernardo degli Uberti, abate vallombroSano, cardinale e vescovo di Parma."
+    },
+    {
+      "nome": "Beato Pier Pettinaio",
+      "titolo": "Terziario francescano",
+      "bio": "Beato Pier Pettinaio, terziario francescano."
+    },
+    {
+      "nome": "Beati Francesco Galvéz Iranzo",
+      "titolo": "Francescano, Girolamo de Angelis e Simone Enpō, gesuiti, martiri del Giappone",
+      "bio": "Beati Francesco Galvéz Iranzo, francescano, Girolamo de Angelis e Simone Enpō, gesuiti, martiri del Giappone."
+    },
+    {
+      "nome": "Beato Adolph Kolping",
+      "titolo": "Sacerdote",
+      "bio": "Beato Adolph Kolping, sacerdote."
+    },
+    {
+      "nome": "San Giovanni Calabria",
+      "titolo": "Sacerdote, fondatore delle Povere serve e dei Poveri servi della Divina Provvidenza",
+      "bio": "San Giovanni Calabria, sacerdote, fondatore delle Povere serve e dei Poveri servi della Divina Provvidenza."
+    }
+  ],
+  "12-05": [
+    {
+      "nome": "Santa Crispina",
+      "titolo": "Madre di famiglia",
+      "bio": "Santa Crispina, madre di famiglia."
+    },
+    {
+      "nome": "San Saba Archimandrita",
+      "titolo": "Sacerdote, eremita e abate di San Saba",
+      "bio": "San Saba Archimandrita, sacerdote, eremita e abate di San Saba."
+    },
+    {
+      "nome": "San Lucido di Aquara",
+      "titolo": "Primo abate di Aquara",
+      "bio": "San Lucido di Aquara, primo abate di Aquara."
+    },
+    {
+      "nome": "San Geraldo",
+      "titolo": "Vescovo di Braga",
+      "bio": "San Geraldo, vescovo di Braga."
+    },
+    {
+      "nome": "Beato Bartolomeo Fanti",
+      "titolo": "Sacerdote carmelitano",
+      "bio": "Beato Bartolomeo Fanti, sacerdote carmelitano."
+    },
+    {
+      "nome": "San Giovanni Almond",
+      "titolo": "Sacerdote e martire d'Inghilterra",
+      "bio": "San Giovanni Almond, sacerdote e martire d'Inghilterra."
+    },
+    {
+      "nome": "Beato Niccolò Stenone",
+      "titolo": "Vescovo titolare di Tiziopoli e vicario apostolico della Germania settentrionale",
+      "bio": "Beato Niccolò Stenone, vescovo titolare di Tiziopoli e vicario apostolico della Germania settentrionale."
+    },
+    {
+      "nome": "Beato Filippo Rinaldi",
+      "titolo": "Sacerdote salesiano",
+      "bio": "Beato Filippo Rinaldi, sacerdote salesiano."
+    }
+  ],
+  "12-06": [
+    {
+      "nome": "San Nicola di Bari",
+      "titolo": "Vescovo di Mira",
+      "bio": "San Nicola di Bari, vescovo di Mira."
+    },
+    {
+      "nome": "Sant'Asella",
+      "titolo": "Vergine",
+      "bio": "Sant'Asella, vergine."
+    },
+    {
+      "nome": "Santi Dionisia",
+      "titolo": "Maiorico e compagni, martiri in Africa, vittime della persecuzione del re ariano Unnerico",
+      "bio": "Santi Dionisia, Maiorico e compagni, martiri in Africa, vittime della persecuzione del re ariano Unnerico."
+    },
+    {
+      "nome": "Sant'Obizio da Niardo",
+      "titolo": "Penitente",
+      "bio": "Sant'Obizio da Niardo, penitente."
+    },
+    {
+      "nome": "San Pietro Pascual (O. de M.)",
+      "titolo": "Vescovo di Jaén, martire",
+      "bio": "San Pietro Pascual (O. de M.), vescovo di Jaén, martire."
+    },
+    {
+      "nome": "San Giuseppe Nguyễn Duy Khang",
+      "titolo": "Catechista, martire del Vietnam",
+      "bio": "San Giuseppe Nguyễn Duy Khang, catechista, martire del Vietnam."
+    },
+    {
+      "nome": "Beata Luisa María Frías Cañizares",
+      "titolo": "Vergine e martire",
+      "bio": "Beata Luisa María Frías Cañizares, vergine e martire."
+    }
+  ],
+  "12-07": [
+    {
+      "nome": "Sant'Ambrogio",
+      "titolo": "Vescovo di Milano Padre e dottore della Chiesa",
+      "bio": "Sant'Ambrogio, vescovo di Milano Padre e dottore della Chiesa."
+    },
+    {
+      "nome": "San Savino di Spoleto",
+      "titolo": "Vescovo di Spoleto e martire",
+      "bio": "San Savino di Spoleto, vescovo di Spoleto e martire."
+    },
+    {
+      "nome": "Sant'Atenodoro",
+      "titolo": "Martire in Siria",
+      "bio": "Sant'Atenodoro, martire in Siria."
+    },
+    {
+      "nome": "Sant'Urbano",
+      "titolo": "Vescovo di Teano",
+      "bio": "Sant'Urbano, vescovo di Teano."
+    },
+    {
+      "nome": "San Giovanni Silenziario o l'Esicasta o Sabaita",
+      "titolo": "Vescovo di Colonia in Armenia, monaco ed eremita",
+      "bio": "San Giovanni Silenziario o l'Esicasta o Sabaita, vescovo di Colonia in Armenia, monaco ed eremita."
+    },
+    {
+      "nome": "San Martino",
+      "titolo": "Sacerdote e abate di Saujon",
+      "bio": "San Martino, sacerdote e abate di Saujon."
+    },
+    {
+      "nome": "Santa Fara",
+      "titolo": "Badessa",
+      "bio": "Santa Fara, badessa."
+    },
+    {
+      "nome": "San Carlo Garnier",
+      "titolo": "Sacerdote gesuita e martire del Canada",
+      "bio": "San Carlo Garnier, sacerdote gesuita e martire del Canada."
+    },
+    {
+      "nome": "Santa Maria Giuseppa Rossello",
+      "titolo": "Vergine, fondatrice delle Figlie di Nostra Signora della Misericordia",
+      "bio": "Santa Maria Giuseppa Rossello, vergine, fondatrice delle Figlie di Nostra Signora della Misericordia."
+    }
+  ],
+  "12-08": [
+    {
+      "nome": "solennità dell'Immacolata Concezione della Beata Vergine Maria",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "solennità dell'Immacolata Concezione della Beata Vergine Maria."
+    },
+    {
+      "nome": "San Macario",
+      "titolo": "Martire",
+      "bio": "San Macario, martire."
+    },
+    {
+      "nome": "Sant'Eutichiano",
+      "titolo": "Papa",
+      "bio": "Sant'Eutichiano, papa."
+    },
+    {
+      "nome": "Sant'Eucario di Treviri",
+      "titolo": "Primo vescovo di Treviri",
+      "bio": "Sant'Eucario di Treviri, primo vescovo di Treviri."
+    },
+    {
+      "nome": "San Patapio",
+      "titolo": "Eremita",
+      "bio": "San Patapio, eremita."
+    },
+    {
+      "nome": "San Romarico",
+      "titolo": "Abate di Remiremont e Remiremont",
+      "bio": "San Romarico, abate di Remiremont e Remiremont."
+    },
+    {
+      "nome": "San Teobaldo di Marly (O.Cist.)",
+      "titolo": "Abate",
+      "bio": "San Teobaldo di Marly (O.Cist.), abate."
+    },
+    {
+      "nome": "San Natale Chabanel",
+      "titolo": "Sacerdote gesuita e martire del Canada",
+      "bio": "San Natale Chabanel, sacerdote gesuita e martire del Canada."
+    },
+    {
+      "nome": "Santa Narcisa di Gesù Martillo y Morán",
+      "titolo": "Vergine",
+      "bio": "Santa Narcisa di Gesù Martillo y Morán, vergine."
+    },
+    {
+      "nome": "Beato Giuseppe Maria Zabal Blasco",
+      "titolo": "Padre di famiglia e martire",
+      "bio": "Beato Giuseppe Maria Zabal Blasco, padre di famiglia e martire."
+    },
+    {
+      "nome": "Beato Alojzy Liguda",
+      "titolo": "Sacerdote verbita, martire a Dachau",
+      "bio": "Beato Alojzy Liguda, sacerdote verbita, martire a Dachau."
+    }
+  ],
+  "12-09": [
+    {
+      "nome": "Santa Leocadia",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Leocadia, vergine e martire."
+    },
+    {
+      "nome": "San Siro di Pavia",
+      "titolo": "Primo vescovo di Pavia",
+      "bio": "San Siro di Pavia, primo vescovo di Pavia."
+    },
+    {
+      "nome": "Santa Gorgonia",
+      "titolo": "Madre di famiglia",
+      "bio": "Santa Gorgonia, madre di famiglia."
+    },
+    {
+      "nome": "San Cipriano",
+      "titolo": "Abate di Genouillac",
+      "bio": "San Cipriano, abate di Genouillac."
+    },
+    {
+      "nome": "San Giovanni Diego Cuauhtlatoatzin",
+      "titolo": "Laico, contadino e veggente al quale apparve la Beata Vergine Maria di Guadalupe",
+      "bio": "San Giovanni Diego Cuauhtlatoatzin, laico, contadino e veggente al quale apparve la Beata Vergine Maria di Guadalupe."
+    },
+    {
+      "nome": "Beato Liborius Wagner",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Liborius Wagner, sacerdote e martire."
+    },
+    {
+      "nome": "San Pietro Fourier (C.R.S.A.)",
+      "titolo": "Sacerdote e fondatore delle Canonichesse di Sant'Agostino della Congregazione di Nostra Si",
+      "bio": "San Pietro Fourier (C.R.S.A.), sacerdote e fondatore delle Canonichesse di Sant'Agostino della Congregazione di Nostra Signora."
+    },
+    {
+      "nome": "Beato Bernardo Maria di Gesù",
+      "titolo": "Sacerdote passionista",
+      "bio": "Beato Bernardo Maria di Gesù, sacerdote passionista."
+    },
+    {
+      "nome": "Beato Giuseppe Ferrer Esteve",
+      "titolo": "Sacerdote scolopio e martire",
+      "bio": "Beato Giuseppe Ferrer Esteve, sacerdote scolopio e martire."
+    },
+    {
+      "nome": "Beati Riccardo de Los Rìos Fabregat",
+      "titolo": "Giuliano Rodríguez Sánchez e Giuseppe Giménez López, salesiani e martiri",
+      "bio": "Beati Riccardo de Los Rìos Fabregat, Giuliano Rodríguez Sánchez e Giuseppe Giménez López, salesiani e martiri."
+    }
+  ],
+  "12-10": [
+    {
+      "nome": "Beata Vergine Maria di Loreto",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Beata Vergine Maria di Loreto."
+    },
+    {
+      "nome": "Sant'Eulalia di Mérida",
+      "titolo": "Vergine e martire",
+      "bio": "Sant'Eulalia di Mérida, vergine e martire."
+    },
+    {
+      "nome": "San Mauro",
+      "titolo": "Fanciullo martire",
+      "bio": "San Mauro, fanciullo martire."
+    },
+    {
+      "nome": "San Gemello",
+      "titolo": "Martire",
+      "bio": "San Gemello, martire."
+    },
+    {
+      "nome": "San Gregorio III",
+      "titolo": "Papa",
+      "bio": "San Gregorio III, papa."
+    },
+    {
+      "nome": "San Luca di Melicuccà",
+      "titolo": "Vescovo di Isola",
+      "bio": "San Luca di Melicuccà, vescovo di Isola."
+    },
+    {
+      "nome": "Sant'Edmondo Gennings",
+      "titolo": "Sacerdote, e San Swithun Wells, martiri d'Inghilterra",
+      "bio": "Sant'Edmondo Gennings, sacerdote, e San Swithun Wells, martiri d'Inghilterra."
+    },
+    {
+      "nome": "Santi Polidoro Plasden ed Eustazio White",
+      "titolo": "Sacerdoti",
+      "bio": "Santi Polidoro Plasden ed Eustazio White, sacerdoti."
+    },
+    {
+      "nome": "Beati Brian Lacy",
+      "titolo": "Giovanni Mason e Sidney Hodgson, martiri",
+      "bio": "Beati Brian Lacy, Giovanni Mason e Sidney Hodgson, martiri."
+    },
+    {
+      "nome": "San Giovanni Roberts",
+      "titolo": "Benedettino e il Beato Tommaso Somers, sacerdoti e martiri",
+      "bio": "San Giovanni Roberts, benedettino e il Beato Tommaso Somers, sacerdoti e martiri."
+    },
+    {
+      "nome": "Beato Marcantonio Durando",
+      "titolo": "Prete della missione, fondatore delle suore nazarene della Passione",
+      "bio": "Beato Marcantonio Durando, prete della missione, fondatore delle suore nazarene della Passione."
+    },
+    {
+      "nome": "Beato Gonsalvo Viñes Masip",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Gonsalvo Viñes Masip, sacerdote e martire."
+    },
+    {
+      "nome": "Beati Beato Antonio Martín Hernández e Agostino García Calvo",
+      "titolo": "Martiri salesiani",
+      "bio": "Beati Beato Antonio Martín Hernández e Agostino García Calvo, martiri salesiani."
+    },
+    {
+      "nome": "Beato Agostino García Calvo (Augusto García Calvo)",
+      "titolo": "Coadiutore salesiano e martire",
+      "bio": "Beato Agostino García Calvo (Augusto García Calvo), coadiutore salesiano e martire."
+    }
+  ],
+  "12-11": [
+    {
+      "nome": "San Damaso I",
+      "titolo": "Papa",
+      "bio": "San Damaso I, papa."
+    },
+    {
+      "nome": "Santi Vittorico e Fusciano",
+      "titolo": "Martiri",
+      "bio": "Santi Vittorico e Fusciano, martiri."
+    },
+    {
+      "nome": "San Savino di Piacenza",
+      "titolo": "Vescovo di Piacenza",
+      "bio": "San Savino di Piacenza, vescovo di Piacenza."
+    },
+    {
+      "nome": "San Daniele lo Stilita",
+      "titolo": "Sacerdote",
+      "bio": "San Daniele lo Stilita, sacerdote."
+    },
+    {
+      "nome": "Beato Davide",
+      "titolo": "Monaco",
+      "bio": "Beato Davide, monaco."
+    },
+    {
+      "nome": "Beato Franco Lippi",
+      "titolo": "Eremita carmelitano",
+      "bio": "Beato Franco Lippi, eremita carmelitano."
+    },
+    {
+      "nome": "Beato Ugolino Magalotti",
+      "titolo": "Terziario francescano ed eremita",
+      "bio": "Beato Ugolino Magalotti, terziario francescano ed eremita."
+    },
+    {
+      "nome": "Beato Girolamo da Sant'Angelo in Vado",
+      "titolo": "Sacerdote servita",
+      "bio": "Beato Girolamo da Sant'Angelo in Vado, sacerdote servita."
+    },
+    {
+      "nome": "Beati Martino di San Nicola e Melchiorre di Sant'Agostino",
+      "titolo": "Sacerdoti agostiniani recolletti e martiri del Giappone",
+      "bio": "Beati Martino di San Nicola e Melchiorre di Sant'Agostino, sacerdoti agostiniani recolletti e martiri del Giappone."
+    },
+    {
+      "nome": "Beato Arturo Bell",
+      "titolo": "Sacerdote francescano e martire",
+      "bio": "Beato Arturo Bell, sacerdote francescano e martire."
+    },
+    {
+      "nome": "Beata Maria del Pilar Villalonga Villalba",
+      "titolo": "Vergine e martire",
+      "bio": "Beata Maria del Pilar Villalonga Villalba, vergine e martire."
+    },
+    {
+      "nome": "Santa María Maravillas de Jesús",
+      "titolo": "Vergine carmelitana scalza",
+      "bio": "Santa María Maravillas de Jesús, vergine carmelitana scalza."
+    }
+  ],
+  "12-12": [
+    {
+      "nome": "Beata Vergine Maria di Guadalupe",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Beata Vergine Maria di Guadalupe."
+    },
+    {
+      "nome": "Santi Epimaco e Alessandro",
+      "titolo": "Martiri di Alessandria",
+      "bio": "Santi Epimaco e Alessandro, martiri di Alessandria."
+    },
+    {
+      "nome": "San Spiridione di Trimithonte",
+      "titolo": "Vescovo di Cipro",
+      "bio": "San Spiridione di Trimithonte, vescovo di Cipro."
+    },
+    {
+      "nome": "San Finnian di Clonard",
+      "titolo": "Abate",
+      "bio": "San Finnian di Clonard, abate."
+    },
+    {
+      "nome": "San Corentino di Quimper",
+      "titolo": "Primo vescovo di Quimper",
+      "bio": "San Corentino di Quimper, primo vescovo di Quimper."
+    },
+    {
+      "nome": "Sant'Israele",
+      "titolo": "Sacerdote e canonico regolare di Le Dorat",
+      "bio": "Sant'Israele, sacerdote e canonico regolare di Le Dorat."
+    },
+    {
+      "nome": "San Vicelino di Oldenburg",
+      "titolo": "Vescovo di Oldenburg",
+      "bio": "San Vicelino di Oldenburg, vescovo di Oldenburg."
+    },
+    {
+      "nome": "Beato Bartolo da San Gimignano",
+      "titolo": "Sacerdote",
+      "bio": "Beato Bartolo da San Gimignano, sacerdote."
+    },
+    {
+      "nome": "Beato Corrado da Offida",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Corrado da Offida, sacerdote francescano."
+    },
+    {
+      "nome": "Beato Giacomo da Viterbo",
+      "titolo": "Eremitano, vescovo di Benevento e di Napoli",
+      "bio": "Beato Giacomo da Viterbo, eremitano, vescovo di Benevento e di Napoli."
+    },
+    {
+      "nome": "San Simone Phan Ðắc Hòa",
+      "titolo": "Martire del Vietnam",
+      "bio": "San Simone Phan Ðắc Hòa, martire del Vietnam."
+    },
+    {
+      "nome": "Beato Pio Bartosik",
+      "titolo": "Sacerdote francescano conventuale e martire di Auschwitz",
+      "bio": "Beato Pio Bartosik, sacerdote francescano conventuale e martire di Auschwitz."
+    }
+  ],
+  "12-13": [
+    {
+      "nome": "Santa Lucia",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Lucia, vergine e martire."
+    },
+    {
+      "nome": "Sant'Aristone",
+      "titolo": "Martire",
+      "bio": "Sant'Aristone, martire."
+    },
+    {
+      "nome": "Sant'Antioco di Sulcis",
+      "titolo": "Martire",
+      "bio": "Sant'Antioco di Sulcis, martire."
+    },
+    {
+      "nome": "Santi Eustrazio",
+      "titolo": "Assenzio, Eugenio, Mardario e Oreste, martiri",
+      "bio": "Santi Eustrazio, Assenzio, Eugenio, Mardario e Oreste, martiri."
+    },
+    {
+      "nome": "San Giudoco",
+      "titolo": "Sacerdote e martire",
+      "bio": "San Giudoco, sacerdote e martire."
+    },
+    {
+      "nome": "Sant'Autberto",
+      "titolo": "Vescovo di Cambrai",
+      "bio": "Sant'Autberto, vescovo di Cambrai."
+    },
+    {
+      "nome": "Sant'Ottilia di Hohenbourg",
+      "titolo": "Vergine e prima badessa di Hohenburg",
+      "bio": "Sant'Ottilia di Hohenbourg, vergine e prima badessa di Hohenburg."
+    },
+    {
+      "nome": "Beato Giovanni Marinoni",
+      "titolo": "Sacerdote teatino",
+      "bio": "Beato Giovanni Marinoni, sacerdote teatino."
+    },
+    {
+      "nome": "natale di Santa Giovanna Francesca Frémiot de Chantal",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "natale di Santa Giovanna Francesca Frémiot de Chantal."
+    },
+    {
+      "nome": "Beato Antonio Grassi",
+      "titolo": "Sacerdote oratoriano",
+      "bio": "Beato Antonio Grassi, sacerdote oratoriano."
+    },
+    {
+      "nome": "Santi Pietro Cho Hwa-so",
+      "titolo": "Padre di famiglia, e cinque compagni, martiri di Corea",
+      "bio": "Santi Pietro Cho Hwa-so, padre di famiglia, e cinque compagni, martiri di Corea."
+    }
+  ],
+  "12-14": [
+    {
+      "nome": "San Giovanni della Croce",
+      "titolo": "Sacerdote carmelitano e dottore della Chiesa",
+      "bio": "San Giovanni della Croce, sacerdote carmelitano e dottore della Chiesa."
+    },
+    {
+      "nome": "Santi Erone",
+      "titolo": "Ateo, Isidoro e Dioscuro, martiri di Alessandria d'Egitto",
+      "bio": "Santi Erone, Ateo, Isidoro e Dioscuro, martiri di Alessandria d'Egitto."
+    },
+    {
+      "nome": "Santi Tirso",
+      "titolo": "Leucio, Callinico e compagni, martiri ad Apollonia in Bitinia",
+      "bio": "Santi Tirso, Leucio, Callinico e compagni, martiri ad Apollonia in Bitinia."
+    },
+    {
+      "nome": "Santa Droside",
+      "titolo": "Martire di Antiochia di Siria",
+      "bio": "Santa Droside, martire di Antiochia di Siria."
+    },
+    {
+      "nome": "Santi Ares",
+      "titolo": "Promo ed Elia, martiri di Ascalona",
+      "bio": "Santi Ares, Promo ed Elia, martiri di Ascalona."
+    },
+    {
+      "nome": "San Pompeo",
+      "titolo": "Vescovo di Pavia",
+      "bio": "San Pompeo, vescovo di Pavia."
+    },
+    {
+      "nome": "San Nicasio di Reims",
+      "titolo": "Vescovo di Reims, e compagni",
+      "bio": "San Nicasio di Reims, vescovo di Reims, e compagni."
+    },
+    {
+      "nome": "Sant'Agnello di Napoli",
+      "titolo": "Abate del monastero di San Gaudioso",
+      "bio": "Sant'Agnello di Napoli, abate del monastero di San Gaudioso."
+    },
+    {
+      "nome": "San Venanzio Fortunato",
+      "titolo": "Vescovo di Poitiers",
+      "bio": "San Venanzio Fortunato, vescovo di Poitiers."
+    },
+    {
+      "nome": "San Folcuino",
+      "titolo": "Vescovo di Thérouanne",
+      "bio": "San Folcuino, vescovo di Thérouanne."
+    },
+    {
+      "nome": "Beato Bonaventura da Pistoia",
+      "titolo": "Sacerdote servita",
+      "bio": "Beato Bonaventura da Pistoia, sacerdote servita."
+    },
+    {
+      "nome": "San Nimatullah Youssef Kassab Al-Hardini (O.L.M.a)",
+      "titolo": "Sacerdote",
+      "bio": "San Nimatullah Youssef Kassab Al-Hardini (O.L.M.a), sacerdote."
+    },
+    {
+      "nome": "Beata Francesca Schervier",
+      "titolo": "Vergine e fondatrice delle Suore dei poveri di San Francesco",
+      "bio": "Beata Francesca Schervier, vergine e fondatrice delle Suore dei poveri di San Francesco."
+    },
+    {
+      "nome": "Beato Protasio Cubells Minguell",
+      "titolo": "Religioso dei fatebenefratelli e martire",
+      "bio": "Beato Protasio Cubells Minguell, religioso dei fatebenefratelli e martire."
+    }
+  ],
+  "12-15": [
+    {
+      "nome": "San Valeriano di Avensano",
+      "titolo": "Vescovo di Avensa",
+      "bio": "San Valeriano di Avensano, vescovo di Avensa."
+    },
+    {
+      "nome": "Beato Marino",
+      "titolo": "Abate di Cava",
+      "bio": "Beato Marino, abate di Cava."
+    },
+    {
+      "nome": "Beata Maria Vittoria De Fornari Strata",
+      "titolo": "Vedova, fondatrice delle monache turchine",
+      "bio": "Beata Maria Vittoria De Fornari Strata, vedova, fondatrice delle monache turchine."
+    },
+    {
+      "nome": "Santa Virginia Centurione Bracelli",
+      "titolo": "Vedova, fondatrice delle Suore di Nostra Signora del Rifugio in Monte Calvario",
+      "bio": "Santa Virginia Centurione Bracelli, vedova, fondatrice delle Suore di Nostra Signora del Rifugio in Monte Calvario."
+    },
+    {
+      "nome": "Santa Maria Crocifissa Di Rosa",
+      "titolo": "Vergine, fondatrice delle Ancelle della carità",
+      "bio": "Santa Maria Crocifissa Di Rosa, vergine, fondatrice delle Ancelle della carità."
+    },
+    {
+      "nome": "Beato Carlo Steeb",
+      "titolo": "Sacerdote fondatore delle Sorelle della misericordia",
+      "bio": "Beato Carlo Steeb, sacerdote fondatore delle Sorelle della misericordia."
+    },
+    {
+      "nome": "Beate Maria Jula Ivanisevic e 4 compagne",
+      "titolo": "Suore della congregazione delle figlie della Divina Carità, martiri",
+      "bio": "Beate Maria Jula Ivanisevic e 4 compagne, suore della congregazione delle figlie della Divina Carità, martiri."
+    }
+  ],
+  "12-16": [
+    {
+      "nome": "Sant'Aggeo",
+      "titolo": "Profeta",
+      "bio": "Sant'Aggeo, profeta."
+    },
+    {
+      "nome": "Sante vergini e martiri d'Africa",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Sante vergini e martiri d'Africa."
+    },
+    {
+      "nome": "San Beano",
+      "titolo": "Eremita",
+      "bio": "San Beano, eremita."
+    },
+    {
+      "nome": "Sant'Eberardo del Friuli",
+      "titolo": "Fondatore dell'abbazia di Cysoing",
+      "bio": "Sant'Eberardo del Friuli, fondatore dell'abbazia di Cysoing."
+    },
+    {
+      "nome": "Sant'Adone di Vienne (O.S.B.)",
+      "titolo": "Vescovo di Vienne",
+      "bio": "Sant'Adone di Vienne (O.S.B.), vescovo di Vienne."
+    },
+    {
+      "nome": "Sant'Adelaide",
+      "titolo": "Imperatrice",
+      "bio": "Sant'Adelaide, imperatrice."
+    },
+    {
+      "nome": "Sant'Albina",
+      "titolo": "Laica martire",
+      "bio": "Sant'Albina, laica martire."
+    },
+    {
+      "nome": "Beato Sebastiano Maggi",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Sebastiano Maggi, sacerdote domenicano."
+    },
+    {
+      "nome": "Beata Maria degli Angeli Fontanella",
+      "titolo": "Vergine carmelitana",
+      "bio": "Beata Maria degli Angeli Fontanella, vergine carmelitana."
+    },
+    {
+      "nome": "Beato Clemente Marchisio",
+      "titolo": "Sacerdote, fondatore delle Figlie di San Giuseppe di Rivalba",
+      "bio": "Beato Clemente Marchisio, sacerdote, fondatore delle Figlie di San Giuseppe di Rivalba."
+    },
+    {
+      "nome": "Beato Onorato da Biała Podlaska (O.F.M. Cap.)",
+      "titolo": "Sacerdote e fondatore",
+      "bio": "Beato Onorato da Biała Podlaska (O.F.M. Cap.), sacerdote e fondatore."
+    },
+    {
+      "nome": "Beato Filippo Siphong Onphitak",
+      "titolo": "Padre di famiglia, martire in Thailandia",
+      "bio": "Beato Filippo Siphong Onphitak, padre di famiglia, martire in Thailandia."
+    }
+  ],
+  "12-17": [
+    {
+      "nome": "San Modesto di Gerusalemme",
+      "titolo": "Vescovo di Gerusalemme",
+      "bio": "San Modesto di Gerusalemme, vescovo di Gerusalemme."
+    },
+    {
+      "nome": "Santi cinquanta martiri di Eleuteropoli",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi cinquanta martiri di Eleuteropoli."
+    },
+    {
+      "nome": "San Giudicaele",
+      "titolo": "Eremita",
+      "bio": "San Giudicaele, eremita."
+    },
+    {
+      "nome": "Santa Begga",
+      "titolo": "Vedova",
+      "bio": "Santa Begga, vedova."
+    },
+    {
+      "nome": "San Sturmio di Fulda",
+      "titolo": "Abate di Fulda",
+      "bio": "San Sturmio di Fulda, abate di Fulda."
+    },
+    {
+      "nome": "Santa Wivine di Gran Bigard",
+      "titolo": "Prima badessa del monastero di Santa Maria di Bigard",
+      "bio": "Santa Wivine di Gran Bigard, prima badessa del monastero di Santa Maria di Bigard."
+    },
+    {
+      "nome": "San Giovanni de Matha",
+      "titolo": "Sacerdote, fondatore dell'Ordine della Santissima Trinità",
+      "bio": "San Giovanni de Matha, sacerdote, fondatore dell'Ordine della Santissima Trinità."
+    },
+    {
+      "nome": "San Giuseppe Manyanet y Vives",
+      "titolo": "Sacerdote, fondatore delle congregazioni delle Figlie e dei Figli della Sacra Famiglia",
+      "bio": "San Giuseppe Manyanet y Vives, sacerdote, fondatore delle congregazioni delle Figlie e dei Figli della Sacra Famiglia."
+    },
+    {
+      "nome": "Beato Giacinto Maria Cormier",
+      "titolo": "Sacerdote, maestro generale dei domenicani",
+      "bio": "Beato Giacinto Maria Cormier, sacerdote, maestro generale dei domenicani."
+    },
+    {
+      "nome": "Beata Matilde del Sagrado Corazon Tellez Robles",
+      "titolo": "Religiosa e fondatrice della congregazione delle Figlie di Maria Madre della Chiesa",
+      "bio": "Beata Matilde del Sagrado Corazon Tellez Robles, religiosa e fondatrice della congregazione delle Figlie di Maria Madre della Chiesa."
+    }
+  ],
+  "12-18": [
+    {
+      "nome": "San Malachia",
+      "titolo": "Profeta",
+      "bio": "San Malachia, profeta."
+    },
+    {
+      "nome": "Santi Namfamone e compagni",
+      "titolo": "Martiri in Africa",
+      "bio": "Santi Namfamone e compagni, martiri in Africa."
+    },
+    {
+      "nome": "San Graziano di Tours",
+      "titolo": "Vescovo di Tours",
+      "bio": "San Graziano di Tours, vescovo di Tours."
+    },
+    {
+      "nome": "San Flannano di Killaloe",
+      "titolo": "Vescovo di Killaloe",
+      "bio": "San Flannano di Killaloe, vescovo di Killaloe."
+    },
+    {
+      "nome": "San Vunibaldo di Heidenheim (O.S.B.)",
+      "titolo": "SACERDOTE abate di Heidenheim",
+      "bio": "San Vunibaldo di Heidenheim (O.S.B.), SACERDOTE abate di Heidenheim."
+    },
+    {
+      "nome": "San Paolo Nguyễn Văn Mỹ",
+      "titolo": "San Pietro Trương Văn Ðường eSan Pietro Vũ Văn Truật, catechisti, martiri vietnamiti",
+      "bio": "San Paolo Nguyễn Văn Mỹ, San Pietro Trương Văn Ðường eSan Pietro Vũ Văn Truật, catechisti, martiri vietnamiti."
+    },
+    {
+      "nome": "Beata Nemesia Valle",
+      "titolo": "Vergine vincenziana",
+      "bio": "Beata Nemesia Valle, vergine vincenziana."
+    }
+  ],
+  "12-19": [
+    {
+      "nome": "Sant'Anastasio I",
+      "titolo": "Papa",
+      "bio": "Sant'Anastasio I, papa."
+    },
+    {
+      "nome": "San Gregorio di Auxerre",
+      "titolo": "Vescovo di Auxerre",
+      "bio": "San Gregorio di Auxerre, vescovo di Auxerre."
+    },
+    {
+      "nome": "Beato Guglielmo di Fenoglio",
+      "titolo": "Religioso certosino",
+      "bio": "Beato Guglielmo di Fenoglio, religioso certosino."
+    },
+    {
+      "nome": "Sant'Urbano V",
+      "titolo": "Papa",
+      "bio": "Sant'Urbano V, papa."
+    },
+    {
+      "nome": "San Francesco Saverio Hà Trọng Mậu",
+      "titolo": "San Domenico Bùi Văn Úy, San Tommaso Nguyễn Văn Ðệ, Sant'Agostino Nguyễn Văn Mới, Santo St",
+      "bio": "San Francesco Saverio Hà Trọng Mậu, San Domenico Bùi Văn Úy, San Tommaso Nguyễn Văn Ðệ, Sant'Agostino Nguyễn Văn Mới, Santo Stefano Nguyễn Văn Vinh, martiri."
+    },
+    {
+      "nome": "Beata Maria Eva della Provvidenza Noiszewska e Beata Maria Marta di Gesù Wolowska",
+      "titolo": "Vergini della congregazione delle Suore dell'Immacolata Concezione della Beata Vergine Mar",
+      "bio": "Beata Maria Eva della Provvidenza Noiszewska e Beata Maria Marta di Gesù Wolowska, vergini della congregazione delle Suore dell'Immacolata Concezione della Beata Vergine Maria, martiri."
+    }
+  ],
+  "12-20": [
+    {
+      "nome": "San Zefirino",
+      "titolo": "Papa",
+      "bio": "San Zefirino, papa."
+    },
+    {
+      "nome": "San Liberale",
+      "titolo": "Martire",
+      "bio": "San Liberale, martire."
+    },
+    {
+      "nome": "San Filogonio",
+      "titolo": "Patriarca di Antiochia",
+      "bio": "San Filogonio, patriarca di Antiochia."
+    },
+    {
+      "nome": "Sant'Ursicino del Giura",
+      "titolo": "Monaco",
+      "bio": "Sant'Ursicino del Giura, monaco."
+    },
+    {
+      "nome": "San Domenico di Silos",
+      "titolo": "Abate di Silos",
+      "bio": "San Domenico di Silos, abate di Silos."
+    },
+    {
+      "nome": "San Vincenzo Romano",
+      "titolo": "Sacerdote",
+      "bio": "San Vincenzo Romano, sacerdote."
+    },
+    {
+      "nome": "Beato Michał Piaszczyński",
+      "titolo": "Sacerdote e martire a Sachsenhausen",
+      "bio": "Beato Michał Piaszczyński, sacerdote e martire a Sachsenhausen."
+    }
+  ],
+  "12-21": [
+    {
+      "nome": "San Pietro Canisio (S.J.)",
+      "titolo": "Sacerdote e dottore della Chiesa",
+      "bio": "San Pietro Canisio (S.J.), sacerdote e dottore della Chiesa."
+    },
+    {
+      "nome": "San Michea",
+      "titolo": "Profeta",
+      "bio": "San Michea, profeta."
+    },
+    {
+      "nome": "San Temistocle",
+      "titolo": "Martire di Licia",
+      "bio": "San Temistocle, martire di Licia."
+    },
+    {
+      "nome": "Beato Domenico Spadafora",
+      "titolo": "Sacerdote domenicano",
+      "bio": "Beato Domenico Spadafora, sacerdote domenicano."
+    },
+    {
+      "nome": "passione dei Santi Andrea Dũng Lạc e San Pietro Truong van Thi",
+      "titolo": "Sacerdoti e martiri del Vietnam",
+      "bio": "passione dei Santi Andrea Dũng Lạc e San Pietro Truong van Thi, sacerdoti e martiri del Vietnam."
+    },
+    {
+      "nome": "Beato Peter Friedhofen",
+      "titolo": "Fondatore dei Fratelli della misericordia di Maria Ausiliatrice",
+      "bio": "Beato Peter Friedhofen, fondatore dei Fratelli della misericordia di Maria Ausiliatrice."
+    }
+  ],
+  "12-22": [
+    {
+      "nome": "San Cheremone di Nilopoli",
+      "titolo": "Vescovo di Nilopoli, e compagni",
+      "bio": "San Cheremone di Nilopoli, vescovo di Nilopoli, e compagni."
+    },
+    {
+      "nome": "San Flaviano",
+      "titolo": "Laico martire",
+      "bio": "San Flaviano, laico martire."
+    },
+    {
+      "nome": "Sant'Ischirione",
+      "titolo": "Martire in Egitto",
+      "bio": "Sant'Ischirione, martire in Egitto."
+    },
+    {
+      "nome": "Santi trenta martiri di Via Labicana",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi trenta martiri di Via Labicana."
+    },
+    {
+      "nome": "Santi quarantatré monaci",
+      "titolo": "Martiri di Rhaitum",
+      "bio": "Santi quarantatré monaci, martiri di Rhaitum."
+    },
+    {
+      "nome": "Sant'Ungero",
+      "titolo": "Vescovo di Utrecht",
+      "bio": "Sant'Ungero, vescovo di Utrecht."
+    },
+    {
+      "nome": "Beato Tommaso Holland",
+      "titolo": "Sacerdote gesuita e martire d'Inghilterra",
+      "bio": "Beato Tommaso Holland, sacerdote gesuita e martire d'Inghilterra."
+    },
+    {
+      "nome": "Santa Francesca Saverio Cabrini",
+      "titolo": "Vergine, fondatrice delle Missionarie del Sacro Cuore di Gesù",
+      "bio": "Santa Francesca Saverio Cabrini, vergine, fondatrice delle Missionarie del Sacro Cuore di Gesù."
+    }
+  ],
+  "12-23": [
+    {
+      "nome": "San Giovanni da Kęty",
+      "titolo": "Sacerdote",
+      "bio": "San Giovanni da Kęty, sacerdote."
+    },
+    {
+      "nome": "Santi Teodulo",
+      "titolo": "Saturnino e compagni, martiri a Gortina",
+      "bio": "Santi Teodulo, Saturnino e compagni, martiri a Gortina."
+    },
+    {
+      "nome": "San Servolo",
+      "titolo": "Mendicante",
+      "bio": "San Servolo, mendicante."
+    },
+    {
+      "nome": "Sant'Ivo di Chartres",
+      "titolo": "Vescovo di Chartres",
+      "bio": "Sant'Ivo di Chartres, vescovo di Chartres."
+    },
+    {
+      "nome": "Beato Artmanno di Bressanone",
+      "titolo": "Canonico regolare, vescovo di Bressanone",
+      "bio": "Beato Artmanno di Bressanone, canonico regolare, vescovo di Bressanone."
+    },
+    {
+      "nome": "San Torlaco (C.R.S.A.)",
+      "titolo": "Vescovo di Skálholt",
+      "bio": "San Torlaco (C.R.S.A.), vescovo di Skálholt."
+    },
+    {
+      "nome": "San Giovanni Stone",
+      "titolo": "Sacerdote agostiniano e martire",
+      "bio": "San Giovanni Stone, sacerdote agostiniano e martire."
+    },
+    {
+      "nome": "Beato Niccolò Fattore",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Niccolò Fattore, sacerdote francescano."
+    },
+    {
+      "nome": "Santa Maria Margherita d'Youville",
+      "titolo": "Religiosa, fondatrice delle Suore della carità di Montréal",
+      "bio": "Santa Maria Margherita d'Youville, religiosa, fondatrice delle Suore della carità di Montréal."
+    },
+    {
+      "nome": "Sant'Antonio di Sant'Anna Galvão (O.F.M.)",
+      "titolo": "Sacerdote",
+      "bio": "Sant'Antonio di Sant'Anna Galvão (O.F.M.), sacerdote."
+    },
+    {
+      "nome": "San Giuseppe Cho Yun-ho",
+      "titolo": "Martire",
+      "bio": "San Giuseppe Cho Yun-ho, martire."
+    },
+    {
+      "nome": "Beato Paolo Meléndez Gonzalo",
+      "titolo": "Padre di famiglia e martire",
+      "bio": "Beato Paolo Meléndez Gonzalo, padre di famiglia e martire."
+    }
+  ],
+  "12-24": [
+    {
+      "nome": "Santi antenati di Gesù Cristo",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi antenati di Gesù Cristo."
+    },
+    {
+      "nome": "San Delfino di Bordeaux",
+      "titolo": "Vescovo di Bordeaux",
+      "bio": "San Delfino di Bordeaux, vescovo di Bordeaux."
+    },
+    {
+      "nome": "Santa Tarsilia di Roma",
+      "titolo": "Vergine",
+      "bio": "Santa Tarsilia di Roma, vergine."
+    },
+    {
+      "nome": "Sant'Irmina di Oehren",
+      "titolo": "Badessa del Monastero di Ohren",
+      "bio": "Sant'Irmina di Oehren, badessa del Monastero di Ohren."
+    },
+    {
+      "nome": "natale di San Giovanni da Kęty",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "natale di San Giovanni da Kęty."
+    },
+    {
+      "nome": "Beato Bartolomeo Maria Dal Monte",
+      "titolo": "Sacerdote",
+      "bio": "Beato Bartolomeo Maria Dal Monte, sacerdote."
+    },
+    {
+      "nome": "Santa Paola Elisabetta Cerioli",
+      "titolo": "Vedova, fondatrice della Congregazione della Sacra Famiglia di Bergamo",
+      "bio": "Santa Paola Elisabetta Cerioli, vedova, fondatrice della Congregazione della Sacra Famiglia di Bergamo."
+    },
+    {
+      "nome": "natale di San Charbel Makhluf",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "natale di San Charbel Makhluf."
+    }
+  ],
+  "12-25": [
+    {
+      "nome": "Natale del Signore",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Natale del Signore."
+    },
+    {
+      "nome": "Sant'Anastasia di Sirmio",
+      "titolo": "Laica martire",
+      "bio": "Sant'Anastasia di Sirmio, laica martire."
+    },
+    {
+      "nome": "Sant'Eugenia di Roma",
+      "titolo": "Martire",
+      "bio": "Sant'Eugenia di Roma, martire."
+    },
+    {
+      "nome": "Santi Giovino e Basileo",
+      "titolo": "Martiri",
+      "bio": "Santi Giovino e Basileo, martiri."
+    },
+    {
+      "nome": "San Pietro il Venerabile",
+      "titolo": "Abate di Cluny",
+      "bio": "San Pietro il Venerabile, abate di Cluny."
+    },
+    {
+      "nome": "Beato Bentivoglio de Bonis",
+      "titolo": "Sacerdote francescano",
+      "bio": "Beato Bentivoglio de Bonis, sacerdote francescano."
+    },
+    {
+      "nome": "Beato Michele Nakashima",
+      "titolo": "Religioso gesuita e martire",
+      "bio": "Beato Michele Nakashima, religioso gesuita e martire."
+    },
+    {
+      "nome": "Beata Maria degli Apostoli von Wüllenweber",
+      "titolo": "Vergine, fondatrice delle Suore del Divin Salvatore",
+      "bio": "Beata Maria degli Apostoli von Wüllenweber, vergine, fondatrice delle Suore del Divin Salvatore."
+    },
+    {
+      "nome": "Sant'Alberto Chmielowski (T.O.R.) (Adamo Bernardo Ilario)",
+      "titolo": "Religioso, pittore e fondatore dei Fratelli e delle Suore albertine serve dei poveri",
+      "bio": "Sant'Alberto Chmielowski (T.O.R.) (Adamo Bernardo Ilario), religioso, pittore e fondatore dei Fratelli e delle Suore albertine serve dei poveri."
+    },
+    {
+      "nome": "Beato Jacopo De Benedictis (Jacopone da Todi)",
+      "titolo": "Religioso e poeta",
+      "bio": "Beato Jacopo De Benedictis (Jacopone da Todi), religioso e poeta."
+    },
+    {
+      "nome": "Beato Matteo di Albano (O.S.B. Clun.)",
+      "titolo": "Vescovo e cardinale",
+      "bio": "Beato Matteo di Albano (O.S.B. Clun.), vescovo e cardinale."
+    }
+  ],
+  "12-26": [
+    {
+      "nome": "Santo Stefano",
+      "titolo": "Protomartire",
+      "bio": "Santo Stefano, protomartire."
+    },
+    {
+      "nome": "San Dionigi",
+      "titolo": "Papa",
+      "bio": "San Dionigi, papa."
+    },
+    {
+      "nome": "San Zenone di Maiuma",
+      "titolo": "Vescovo di Maiuma di Gaza",
+      "bio": "San Zenone di Maiuma, vescovo di Maiuma di Gaza."
+    },
+    {
+      "nome": "San Zosimo",
+      "titolo": "Papa",
+      "bio": "San Zosimo, papa."
+    },
+    {
+      "nome": "Sant'Eutimio",
+      "titolo": "Vescovo di Sardi e martire",
+      "bio": "Sant'Eutimio, vescovo di Sardi e martire."
+    },
+    {
+      "nome": "Santa Vincenza Maria Lopez y Vicuna",
+      "titolo": "Vergine, fondatrice delle Religiose di Maria Immacolata",
+      "bio": "Santa Vincenza Maria Lopez y Vicuna, vergine, fondatrice delle Religiose di Maria Immacolata."
+    },
+    {
+      "nome": "Beate Agnese Phila",
+      "titolo": "Lucia Khambang, Agata Putta, Cecilia Butsi, Bibiana Hampai e Maria Phon, martiri thailande",
+      "bio": "Beate Agnese Phila, Lucia Khambang, Agata Putta, Cecilia Butsi, Bibiana Hampai e Maria Phon, martiri thailandesi."
+    },
+    {
+      "nome": "Beato Secondo Pollo",
+      "titolo": "Sacerdote di Vercelli",
+      "bio": "Beato Secondo Pollo, sacerdote di Vercelli."
+    },
+    {
+      "nome": "Beato Piero Fedele Pagano (O.P.)",
+      "titolo": "Religioso",
+      "bio": "Beato Piero Fedele Pagano (O.P.), religioso."
+    }
+  ],
+  "12-27": [
+    {
+      "nome": "San Giovanni",
+      "titolo": "Apostolo ed evangelista",
+      "bio": "San Giovanni, apostolo ed evangelista."
+    },
+    {
+      "nome": "Santa Fabiola di Roma",
+      "titolo": "Vedova",
+      "bio": "Santa Fabiola di Roma, vedova."
+    },
+    {
+      "nome": "San Teodoro",
+      "titolo": "Monaco di Apamea, sacerdote e martire",
+      "bio": "San Teodoro, monaco di Apamea, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Alfredo Parte Saiz",
+      "titolo": "Scolopio e martire",
+      "bio": "Beato Alfredo Parte Saiz, scolopio e martire."
+    },
+    {
+      "nome": "Beato Giuseppe Maria Corbín Ferrer",
+      "titolo": "Martire",
+      "bio": "Beato Giuseppe Maria Corbín Ferrer, martire."
+    },
+    {
+      "nome": "Beata Sara Salkahazi",
+      "titolo": "Religiosa e martire",
+      "bio": "Beata Sara Salkahazi, religiosa e martire."
+    },
+    {
+      "nome": "Beato Francesco Spoto",
+      "titolo": "Saceredote martire, superiore generale della |Congregazione dei Missionari Servi dei Pover",
+      "bio": "Beato Francesco Spoto, saceredote martire, superiore generale della |Congregazione dei Missionari Servi dei Poveri."
+    }
+  ],
+  "12-28": [
+    {
+      "nome": "Santi Innocenti",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santi Innocenti."
+    },
+    {
+      "nome": "San Teone di Alessandria",
+      "titolo": "Vescovo di Alessandria",
+      "bio": "San Teone di Alessandria, vescovo di Alessandria."
+    },
+    {
+      "nome": "Sant'Antonio di Lerino",
+      "titolo": "Eremita e monaco a Lerino",
+      "bio": "Sant'Antonio di Lerino, eremita e monaco a Lerino."
+    },
+    {
+      "nome": "Beata Mattia Nazareni",
+      "titolo": "Badessa clarissa",
+      "bio": "Beata Mattia Nazareni, badessa clarissa."
+    },
+    {
+      "nome": "natale di San Francesco di Sales",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "natale di San Francesco di Sales."
+    },
+    {
+      "nome": "San Gaspare del Bufalo",
+      "titolo": "Sacerdote e fondatore dei Missionari del Preziosissimo Sangue",
+      "bio": "San Gaspare del Bufalo, sacerdote e fondatore dei Missionari del Preziosissimo Sangue."
+    },
+    {
+      "nome": "Santa Caterina Volpicelli",
+      "titolo": "Vergine e fondatrice delle Ancelle del Sacro Cuore",
+      "bio": "Santa Caterina Volpicelli, vergine e fondatrice delle Ancelle del Sacro Cuore."
+    },
+    {
+      "nome": "Beato Hryhoryj Chomyšyn",
+      "titolo": "Vescovo di Stanislaviv e martire",
+      "bio": "Beato Hryhoryj Chomyšyn, vescovo di Stanislaviv e martire."
+    }
+  ],
+  "12-29": [
+    {
+      "nome": "San Tommaso Becket",
+      "titolo": "Vescovo di Canterbury e martire",
+      "bio": "San Tommaso Becket, vescovo di Canterbury e martire."
+    },
+    {
+      "nome": "San Davide",
+      "titolo": "Re e profeta",
+      "bio": "San Davide, re e profeta."
+    },
+    {
+      "nome": "San Trofimo di Arles",
+      "titolo": "Vescovo di Arles",
+      "bio": "San Trofimo di Arles, vescovo di Arles."
+    },
+    {
+      "nome": "San Liboso di Vaga",
+      "titolo": "Vescovo di Vaga e martire",
+      "bio": "San Liboso di Vaga, vescovo di Vaga e martire."
+    },
+    {
+      "nome": "San Martiniano di Milano",
+      "titolo": "Vescovo",
+      "bio": "San Martiniano di Milano, vescovo."
+    },
+    {
+      "nome": "San Marcello l'Acemeta",
+      "titolo": "Abate del monastero degli acemeti",
+      "bio": "San Marcello l'Acemeta, abate del monastero degli acemeti."
+    },
+    {
+      "nome": "Sant'Ebrulfo",
+      "titolo": "Abate di Ouches",
+      "bio": "Sant'Ebrulfo, abate di Ouches."
+    },
+    {
+      "nome": "Beato Gerardo Cagnoli",
+      "titolo": "Francescano",
+      "bio": "Beato Gerardo Cagnoli, francescano."
+    },
+    {
+      "nome": "Beato Guglielmo Howard",
+      "titolo": "Martire",
+      "bio": "Beato Guglielmo Howard, martire."
+    },
+    {
+      "nome": "Santi Benedetta Hyon Hyon-nyon",
+      "titolo": "Vedova e catechista, e sei compagni",
+      "bio": "Santi Benedetta Hyon Hyon-nyon, vedova e catechista, e sei compagni."
+    },
+    {
+      "nome": "Beato Giuseppe Aparicio Sanz",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giuseppe Aparicio Sanz, sacerdote e martire."
+    },
+    {
+      "nome": "Beato Enrico Giovanni Requena",
+      "titolo": "Sacerdote e Giuseppe Perpiña Nácher, martiri",
+      "bio": "Beato Enrico Giovanni Requena, sacerdote e Giuseppe Perpiña Nácher, martiri."
+    },
+    {
+      "nome": "Beato Giovanni Battista Ferreres Boluda",
+      "titolo": "Sacerdote e martire",
+      "bio": "Beato Giovanni Battista Ferreres Boluda, sacerdote e martire."
+    }
+  ],
+  "12-30": [
+    {
+      "nome": "San Felice I",
+      "titolo": "Papa",
+      "bio": "San Felice I, papa."
+    },
+    {
+      "nome": "Sant'Ermete",
+      "titolo": "Esorcista e martire",
+      "bio": "Sant'Ermete, esorcista e martire."
+    },
+    {
+      "nome": "Sant'Anicio",
+      "titolo": "Vescovo di Tessalonica",
+      "bio": "Sant'Anicio, vescovo di Tessalonica."
+    },
+    {
+      "nome": "San Perpetuo di Tours",
+      "titolo": "Vescovo di Tours",
+      "bio": "San Perpetuo di Tours, vescovo di Tours."
+    },
+    {
+      "nome": "San Giocondo di Aosta",
+      "titolo": "Vescovo di Aosta",
+      "bio": "San Giocondo di Aosta, vescovo di Aosta."
+    },
+    {
+      "nome": "San Geremaro",
+      "titolo": "Abate",
+      "bio": "San Geremaro, abate."
+    },
+    {
+      "nome": "Sant'Egwin di Evesham",
+      "titolo": "Vescovo di Worcester, fondatore del monastero di Evesham",
+      "bio": "Sant'Egwin di Evesham, vescovo di Worcester, fondatore del monastero di Evesham."
+    },
+    {
+      "nome": "San Raniero di Forcona",
+      "titolo": "Vescovo di Forcona",
+      "bio": "San Raniero di Forcona, vescovo di Forcona."
+    },
+    {
+      "nome": "San Ruggero di Canne",
+      "titolo": "Vescovo di Canne",
+      "bio": "San Ruggero di Canne, vescovo di Canne."
+    },
+    {
+      "nome": "San Lorenzo da Frazzanò",
+      "titolo": "Monaco di rito orientale",
+      "bio": "San Lorenzo da Frazzanò, monaco di rito orientale."
+    },
+    {
+      "nome": "Beata Margherita Colonna",
+      "titolo": "Vergine clarissa",
+      "bio": "Beata Margherita Colonna, vergine clarissa."
+    },
+    {
+      "nome": "Beato Giovanni Maria Boccardo",
+      "titolo": "Sacerdote, fondatore delle Povere figlie di San Gaetano",
+      "bio": "Beato Giovanni Maria Boccardo, sacerdote, fondatore delle Povere figlie di San Gaetano."
+    },
+    {
+      "nome": "Beata Eugenia Maria Ravasco",
+      "titolo": "Filantropa, religiosa e fondatrice dell'Istituto delle Suore Figlie dei Sacratissimi Cuori",
+      "bio": "Beata Eugenia Maria Ravasco, filantropa, religiosa e fondatrice dell'Istituto delle Suore Figlie dei Sacratissimi Cuori di Gesù e di Maria."
+    }
+  ],
+  "12-31": [
+    {
+      "nome": "San Silvestro I",
+      "titolo": "Papa",
+      "bio": "San Silvestro I, papa."
+    },
+    {
+      "nome": "Sante Donata",
+      "titolo": "Paolina, Rogata, Dominanda, Serotina, Saturnina e Ilaria, martiri",
+      "bio": "Sante Donata, Paolina, Rogata, Dominanda, Serotina, Saturnina e Ilaria, martiri."
+    },
+    {
+      "nome": "Santa Colomba di Sens",
+      "titolo": "Vergine e martire",
+      "bio": "Santa Colomba di Sens, vergine e martire."
+    },
+    {
+      "nome": "San Zotico di Costantinopoli",
+      "titolo": "Sacerdote",
+      "bio": "San Zotico di Costantinopoli, sacerdote."
+    },
+    {
+      "nome": "Santa Melania la giovane",
+      "titolo": "Ricorrenza del giorno",
+      "bio": "Santa Melania la giovane."
+    },
+    {
+      "nome": "San Barbaziano",
+      "titolo": "Sacerdote",
+      "bio": "San Barbaziano, sacerdote."
+    },
+    {
+      "nome": "San Mario di Avenches",
+      "titolo": "Vescovo di Avenches",
+      "bio": "San Mario di Avenches, vescovo di Avenches."
+    },
+    {
+      "nome": "San Giovanni Francesco Régis",
+      "titolo": "Sacerdote gesuita",
+      "bio": "San Giovanni Francesco Régis, sacerdote gesuita."
+    },
+    {
+      "nome": "Beato Alano di Solminihac",
+      "titolo": "Vescovo di Cahors",
+      "bio": "Beato Alano di Solminihac, vescovo di Cahors."
+    },
+    {
+      "nome": "Santa Caterina Labouré",
+      "titolo": "Vergine delle Figlie della Carità",
+      "bio": "Santa Caterina Labouré, vergine delle Figlie della Carità."
+    }
+  ],
+  "default": [
+    {
+      "nome": "San Francesco d'Assisi",
+      "titolo": "Patrono d'Italia",
+      "bio": "Il poverello di Assisi, amante del Creato.",
+      "fotoUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Raphael_-_Saint_Francis_of_Assisi_-_Google_Art_Project.jpg"
+    },
+    {
+      "nome": "Santa Chiara d'Assisi",
+      "titolo": "Vergine",
+      "bio": "Fondatrice delle Clarisse."
+    },
+    {
+      "nome": "San Pietro Apostolo",
+      "titolo": "Principe degli Apostoli",
+      "bio": "Primo Vescovo di Roma."
+    },
+    {
+      "nome": "San Paolo di Tarso",
+      "titolo": "Apostolo delle Genti",
+      "bio": "Instancabile annunciatore del Vangelo."
+    },
+    {
+      "nome": "Santa Teresa d'Avila",
+      "titolo": "Dottore della Chiesa",
+      "bio": "Mistica e riformatrice del Carmelo."
+    }
   ]
 };
 
@@ -74,7 +24729,7 @@ function getSantiDiOggi() {
   const opzioniData = { day: 'numeric', month: 'long', year: 'numeric' };
   const dataFormattata = oggi.toLocaleDateString('it-IT', opzioniData);
 
-  const lista = SANTI_DATABASE[chiave] || SANTI_DATABASE["11-15"];
+  const lista = SANTI_DATABASE[chiave] || SANTI_DATABASE["default"];
 
   return {
     dataFormattata,
