@@ -1,4 +1,4 @@
-// Santini 3D - Motore Three.js con foto reali, testo centrato e contrasto ottimizzato
+// Santini 3D - Motore Three.js con foto reali, testo centrato, streak 3 giorni e santi bonus infiniti
 
 let scene, camera, renderer;
 let currentCardMesh = null;
@@ -8,6 +8,12 @@ let currentEnv = 'montagna';
 
 let deck = [];
 let currentIndex = 0;
+let datiOggiCache = null;
+
+// Gestione modalità bonus e progressione
+let isBonusMode = false;
+let selectedBonusIndex = 0;
+const STORAGE_KEY = 'santini_3d_progress_v1';
 
 let isDragging = false;
 let dragStartPos = { x: 0, y: 0, time: 0 };
@@ -15,6 +21,102 @@ let dragCurrentPos = { x: 0, y: 0 };
 const cardRestPos = new THREE.Vector3(0, 0.25, 3.1);
 
 const textureLoader = new THREE.TextureLoader();
+
+// --- GESTIONE PROGRESSIONE E STREAK (localStorage) ---
+
+function getTodayDateString() {
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, '0');
+  const d = String(now.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
+function getYesterdayDateString() {
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const y = yesterday.getFullYear();
+  const m = String(yesterday.getMonth() + 1).padStart(2, '0');
+  const d = String(yesterday.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
+function loadProgress() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      return {
+        streak: parsed.streak || 0,
+        lastCompletedDate: parsed.lastCompletedDate || null,
+        unlockedBonusCount: parsed.unlockedBonusCount || 0
+      };
+    }
+  } catch (e) {
+    console.warn('Errore lettura progressi:', e);
+  }
+  return { streak: 0, lastCompletedDate: null, unlockedBonusCount: 0 };
+}
+
+function saveProgress(progress) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+  } catch (e) {
+    console.warn('Errore salvataggio progressi:', e);
+  }
+}
+
+function getAvailableBonusList() {
+  if (typeof SANTI_BONUS === 'undefined' || !Array.isArray(SANTI_BONUS)) {
+    return [];
+  }
+  const progress = loadProgress();
+  return SANTI_BONUS.slice(0, progress.unlockedBonusCount);
+}
+
+// Registra il completamento del mazzo giornaliero (max 1 volta al giorno)
+function registerDailyDeckCompletion() {
+  const progress = loadProgress();
+  const today = getTodayDateString();
+  const yesterday = getYesterdayDateString();
+
+  // Se l'utente ha già completato il mazzo oggi (es. ha cliccato "Ricarica mazzo santi"), non incrementare
+  if (progress.lastCompletedDate === today) {
+    return { newlyUnlocked: false, progress };
+  }
+
+  if (progress.lastCompletedDate === yesterday) {
+    progress.streak += 1;
+  } else {
+    // Ha saltato uno o più giorni (o è la prima volta): la serie riparte da 1
+    progress.streak = 1;
+  }
+
+  progress.lastCompletedDate = today;
+
+  let newlyUnlocked = false;
+  const maxBonusDisponibili = (typeof SANTI_BONUS !== 'undefined' && Array.isArray(SANTI_BONUS)) ? SANTI_BONUS.length : 0;
+
+  // Ogni 3 giorni consecutivi sblocca un nuovo santino bonus in modo permanente
+  if (progress.streak % 3 === 0 && progress.unlockedBonusCount < maxBonusDisponibili) {
+    progress.unlockedBonusCount += 1;
+    newlyUnlocked = true;
+  }
+
+  saveProgress(progress);
+  updateStreakBadge();
+  return { newlyUnlocked, progress };
+}
+
+function updateStreakBadge() {
+  const progress = loadProgress();
+  const badge = document.getElementById('streak-badge');
+  const unlocked = getAvailableBonusList().length;
+  const bonusLabel = unlocked > 0 ? ` • ✨ ${unlocked} bonus` : '';
+  badge.textContent = `🔥 Serie: ${progress.streak} gg${bonusLabel}`;
+}
+
+// --- INIZIALIZZAZIONE SCENA 3D ---
 
 function init() {
   const container = document.getElementById('canvas-container');
@@ -31,7 +133,6 @@ function init() {
   renderer.shadowMap.enabled = true;
   container.appendChild(renderer.domElement);
 
-  // Illuminazione bilanciata per evitare riflessi bianchi bruciati sulla carta
   const ambientLight = new THREE.AmbientLight(0xffffff, 0.68);
   scene.add(ambientLight);
 
@@ -42,9 +143,11 @@ function init() {
   scene.add(environmentGroup);
   buildEnvironment(currentEnv);
 
-  const datiOggi = getSantiDiOggi();
-  document.getElementById('date-title').textContent = `Santi del ${datiOggi.dataFormattata}`;
-  deck = datiOggi.santi;
+  datiOggiCache = getSantiDiOggi();
+  document.getElementById('date-title').textContent = `Santi del ${datiOggiCache.dataFormattata}`;
+  deck = datiOggiCache.santi;
+
+  updateStreakBadge();
   spawnNextCard();
 
   setupEvents();
@@ -52,22 +155,28 @@ function init() {
 }
 
 // Crea la texture del santino con testo perfettamente centrato e contrasto elevato
-async function createSantinoTextureAsync(santo) {
+async function createSantinoTextureAsync(santo, isBonusCard = false) {
   return new Promise((resolve) => {
     const canvas = document.createElement('canvas');
     canvas.width = 512;
     canvas.height = 768;
     const ctx = canvas.getContext('2d');
 
-    // Sfondo pergamena antica più calda e scura per dare contrasto al testo
+    // Sfondo pergamena (leggermente più luminoso/prezioso per i santini bonus)
     const bgPergamena = ctx.createLinearGradient(0, 0, 0, 768);
-    bgPergamena.addColorStop(0, '#f3e5c8');
-    bgPergamena.addColorStop(0.5, '#ead5ad');
-    bgPergamena.addColorStop(1, '#dfc28d');
+    if (isBonusCard) {
+      bgPergamena.addColorStop(0, '#fef9c3');
+      bgPergamena.addColorStop(0.5, '#fde68a');
+      bgPergamena.addColorStop(1, '#f59e0b');
+    } else {
+      bgPergamena.addColorStop(0, '#f3e5c8');
+      bgPergamena.addColorStop(0.5, '#ead5ad');
+      bgPergamena.addColorStop(1, '#dfc28d');
+    }
     ctx.fillStyle = bgPergamena;
     ctx.fillRect(0, 0, 512, 768);
 
-    // Cornice dorata esterna ricca e contrastata
+    // Cornice dorata esterna
     const gradGold = ctx.createLinearGradient(0, 0, 512, 768);
     gradGold.addColorStop(0, '#78350f');
     gradGold.addColorStop(0.25, '#d97706');
@@ -96,28 +205,26 @@ async function createSantinoTextureAsync(santo) {
     const imgX = 76, imgY = 64, imgW = 360, imgH = 360;
 
     const finishCanvas = () => {
-      // Cornice interna dell'illustrazione
       ctx.lineWidth = 6;
       ctx.strokeStyle = '#78350f';
       ctx.strokeRect(imgX, imgY, imgW, imgH);
 
-      // Riquadro testo inferiore leggermente ombreggiato per massima leggibilità
-      ctx.fillStyle = 'rgba(255, 251, 235, 0.72)';
+      // Riquadro testo inferiore
+      ctx.fillStyle = 'rgba(255, 251, 235, 0.82)';
       ctx.fillRect(52, 442, 408, 272);
       ctx.lineWidth = 2;
       ctx.strokeStyle = 'rgba(120, 53, 15, 0.35)';
       ctx.strokeRect(52, 442, 408, 272);
 
-      // Allineamento esplicito al centro orizzontale
       ctx.textAlign = 'center';
       ctx.textBaseline = 'alphabetic';
 
-      // Nome del Santo (scuro e nitido)
+      // Nome del Santo
       ctx.fillStyle = '#1c1917';
       ctx.font = 'bold 32px Georgia, serif';
       const afterNameY = wrapText(ctx, santo.nome, 256, 485, 380, 36);
 
-      // Titolo liturgico (marrone/ambra intenso)
+      // Titolo liturgico
       ctx.fillStyle = '#92400e';
       ctx.font = 'italic bold 21px Georgia, serif';
       const afterTitleY = wrapText(ctx, santo.titolo, 256, afterNameY + 14, 380, 26);
@@ -131,7 +238,7 @@ async function createSantinoTextureAsync(santo) {
       ctx.lineWidth = 2.5;
       ctx.stroke();
 
-      // Breve descrizione (grigio antracite scuro ad alto contrasto)
+      // Breve descrizione
       ctx.fillStyle = '#292524';
       ctx.font = '19px Georgia, serif';
       wrapText(ctx, santo.bio, 256, lineY + 30, 370, 24);
@@ -193,7 +300,6 @@ function drawFallbackIcon(ctx, santo, imgX, imgY, imgW, imgH) {
   ctx.fillText(santo.grafica.icona, 256, 250);
 }
 
-// Texture retro del santino
 function createBackTexture() {
   const canvas = document.createElement('canvas');
   canvas.width = 512;
@@ -219,7 +325,6 @@ function createBackTexture() {
 
 const sharedBackTexture = createBackTexture();
 
-// Funzione wrapText che mantiene il centramento e restituisce la coordinata Y finale
 function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
   ctx.textAlign = 'center';
   const words = text.split(' ');
@@ -241,26 +346,18 @@ function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
   return currentY + lineHeight * 0.5;
 }
 
-async function spawnNextCard() {
-  updateUI();
-  if (currentIndex >= deck.length) {
-    document.getElementById('reset-btn').style.display = 'inline-block';
-    document.getElementById('hint-text').textContent = 'Hai lanciato tutti i santi di oggi!';
-    document.getElementById('current-saint-sub').textContent = 'Mazzo completato';
-    return;
+// --- GESTIONE CARTE E MODALITÀ BONUS ---
+
+async function spawnCardMesh(santo, isBonusCard = false) {
+  if (currentCardMesh) {
+    scene.remove(currentCardMesh);
+    currentCardMesh = null;
   }
 
-  document.getElementById('reset-btn').style.display = 'none';
-  document.getElementById('hint-text').textContent = '👆 Trascina e lancia il santino come un frisbee!';
-
-  const santo = deck[currentIndex];
-  document.getElementById('current-saint-sub').textContent = santo.nome;
-
-  const frontTex = await createSantinoTextureAsync(santo);
+  const frontTex = await createSantinoTextureAsync(santo, isBonusCard);
   const geometry = new THREE.BoxGeometry(1.18, 1.77, 0.02);
 
-  // Materiale opaco/satinato (roughness 0.78) per eliminare il riflesso speculare bianco
-  const sideMat = new THREE.MeshStandardMaterial({ color: 0x92400e, roughness: 0.6 });
+  const sideMat = new THREE.MeshStandardMaterial({ color: isBonusCard ? 0xd97706 : 0x92400e, roughness: 0.6 });
   const frontMat = new THREE.MeshStandardMaterial({ map: frontTex, roughness: 0.78, metalness: 0.05 });
   const backMat = new THREE.MeshStandardMaterial({ map: sharedBackTexture, roughness: 0.78, metalness: 0.05 });
 
@@ -273,10 +370,118 @@ async function spawnNextCard() {
   currentCardMesh = card;
 }
 
+async function spawnNextCard() {
+  updateUI();
+
+  const endActions = document.getElementById('end-actions');
+  const bonusModeBtn = document.getElementById('bonus-mode-btn');
+  const bonusPickerContainer = document.getElementById('bonus-picker-container');
+  const exitBonusBtn = document.getElementById('exit-bonus-btn');
+
+  // MODALITÀ BONUS INFINITA
+  if (isBonusMode) {
+    const bonusList = getAvailableBonusList();
+    if (bonusList.length === 0) {
+      exitBonusMode();
+      return;
+    }
+
+    if (selectedBonusIndex >= bonusList.length) {
+      selectedBonusIndex = 0;
+    }
+
+    endActions.style.display = 'none';
+    bonusPickerContainer.style.display = 'flex';
+    exitBonusBtn.style.display = 'inline-block';
+
+    const santoBonus = bonusList[selectedBonusIndex];
+    document.getElementById('date-title').textContent = '✨ Santi Bonus Infiniti';
+    document.getElementById('current-saint-sub').textContent = santoBonus.nome;
+    document.getElementById('hint-text').textContent = '✨ Lancia questo santino bonus quante volte vuoi!';
+
+    await spawnCardMesh(santoBonus, true);
+    return;
+  }
+
+  // MODALITÀ NORMALE (SANTI DEL GIORNO)
+  bonusPickerContainer.style.display = 'none';
+  exitBonusBtn.style.display = 'none';
+  document.getElementById('date-title').textContent = `Santi del ${datiOggiCache.dataFormattata}`;
+
+  if (currentIndex >= deck.length) {
+    // Mazzo giornaliero completato! Aggiorna streak e controlla eventuali sblocchi
+    const result = registerDailyDeckCompletion();
+    const availableBonus = getAvailableBonusList();
+
+    endActions.style.display = 'flex';
+    bonusModeBtn.style.display = availableBonus.length > 0 ? 'inline-block' : 'none';
+
+    if (result.newlyUnlocked) {
+      document.getElementById('hint-text').textContent = '🎉 3 giorni consecutivi! Nuovo Santino Bonus sbloccato!';
+    } else {
+      document.getElementById('hint-text').textContent = 'Hai lanciato tutti i santi di oggi!';
+    }
+    document.getElementById('current-saint-sub').textContent = 'Mazzo completato';
+    return;
+  }
+
+  endActions.style.display = 'none';
+  document.getElementById('hint-text').textContent = '👆 Trascina e lancia il santino come un frisbee!';
+
+  const santo = deck[currentIndex];
+  document.getElementById('current-saint-sub').textContent = santo.nome;
+  await spawnCardMesh(santo, false);
+}
+
+function enterBonusMode() {
+  const bonusList = getAvailableBonusList();
+  if (bonusList.length === 0) return;
+
+  isBonusMode = true;
+  selectedBonusIndex = 0;
+  renderBonusSelector();
+  spawnNextCard();
+}
+
+function exitBonusMode() {
+  isBonusMode = false;
+  if (currentCardMesh) {
+    scene.remove(currentCardMesh);
+    currentCardMesh = null;
+  }
+  spawnNextCard();
+}
+
+function renderBonusSelector() {
+  const container = document.getElementById('bonus-selector');
+  container.innerHTML = '';
+
+  const bonusList = getAvailableBonusList();
+  bonusList.forEach((santo, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'bonus-select-btn' + (idx === selectedBonusIndex ? ' active' : '');
+    const icon = (santo.grafica && santo.grafica.icona) ? santo.grafica.icona : '✨';
+    btn.textContent = `${icon} ${santo.nome}`;
+    btn.addEventListener('click', () => {
+      if (selectedBonusIndex === idx) return;
+      selectedBonusIndex = idx;
+      renderBonusSelector();
+      spawnNextCard();
+    });
+    container.appendChild(btn);
+  });
+}
+
 function updateUI() {
+  if (isBonusMode) {
+    document.getElementById('card-counter').textContent = '∞ Bonus';
+    return;
+  }
   const remaining = Math.max(0, deck.length - currentIndex);
   document.getElementById('card-counter').textContent = `${remaining} / ${deck.length}`;
 }
+
+// --- AMBIENTI 3D ---
 
 function updateBackgroundAspect(texture) {
   if (!texture || !texture.image) return;
@@ -320,7 +525,7 @@ function buildEnvironment(envType) {
       scene.fog = null;
     },
     undefined,
-    (err) => {
+    () => {
       scene.background = new THREE.Color(fallbackColors[envType] || 0x1e293b);
     }
   );
@@ -344,6 +549,8 @@ function buildEnvironment(envType) {
   ledge.position.set(0, -2.7, 3.6);
   environmentGroup.add(ledge);
 }
+
+// --- EVENTI E FISICA LANCIO ---
 
 function setupEvents() {
   const dom = renderer.domElement;
@@ -382,7 +589,11 @@ function setupEvents() {
 
       launchCardAsFrisbee(currentCardMesh, speedX, speedY);
       currentCardMesh = null;
-      currentIndex++;
+
+      // In modalità normale avanza nel mazzo; in modalità bonus il mazzo è infinito
+      if (!isBonusMode) {
+        currentIndex++;
+      }
 
       setTimeout(() => {
         spawnNextCard();
@@ -411,10 +622,19 @@ function setupEvents() {
   });
 
   document.getElementById('reset-btn').addEventListener('click', () => {
+    isBonusMode = false;
     currentIndex = 0;
     flyingCards.forEach(fc => scene.remove(fc.mesh));
     flyingCards = [];
     spawnNextCard();
+  });
+
+  document.getElementById('bonus-mode-btn').addEventListener('click', () => {
+    enterBonusMode();
+  });
+
+  document.getElementById('exit-bonus-btn').addEventListener('click', () => {
+    exitBonusMode();
   });
 
   window.addEventListener('resize', () => {
