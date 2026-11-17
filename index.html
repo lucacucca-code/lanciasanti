@@ -506,12 +506,22 @@
   <script src="santi.js"></script>
   <!-- Logica 3D e Fisica -->
   <script src="app.js"></script>
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(err => console.warn('SW non registrato:', err));
-      });
-    }
-  </script>
+<script>
+  if ('serviceWorker' in navigator) {
+    const avevaGiaUnController = !!navigator.serviceWorker.controller;
+
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      // Evita un ricaricamento al primo accesso, quando il service worker
+      // prende il controllo per la prima volta.
+      if (avevaGiaUnController) window.location.reload();
+    });
+
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' })
+        .then(registration => registration.update())
+        .catch(err => console.warn('SW non registrato:', err));
+    });
+  }
+</script>
 </body>
 </html>
