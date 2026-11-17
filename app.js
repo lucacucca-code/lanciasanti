@@ -1,0 +1,1113 @@
+// Santini 3D - Motore Three.js con Firebase Auth + Firestore, suoni di lancio, barra riducibile, proxy CORS immagini e selettore data
+
+// =========================================================================
+// INCOLLA QUI LA TUA CONFIGURAZIONE FIREBASE (sostituisci i valori qui sotto)
+// =========================================================================
+const firebaseConfig = {
+  apiKey: "INCOLLA_QUI_LA_TUA_API_KEY",
+  authDomain: "INCOLLA_QUI_IL_TUO_AUTH_DOMAIN",
+  projectId: "INCOLLA_QUI_IL_TUO_PROJECT_ID",
+  storageBucket: "INCOLLA_QUI_IL_TUO_STORAGE_BUCKET",
+  messagingSenderId: "INCOLLA_QUI_IL_TUO_MESSAGING_SENDER_ID",
+  appId: "INCOLLA_QUI_IL_TUO_APP_ID"
+};
+// =========================================================================
+
+let auth = null;
+let db = null;
+let currentUser = null;
+let cachedProgress = { streak: 0, lastCompletedDate: null, unlockedBonusCount: 0 };
+
+try {
+  if (typeof firebase !== 'undefined' && firebaseConfig.apiKey && !firebaseConfig.apiKey.startsWith('INCOLLA_QUI')) {
+    firebase.initializeApp(firebaseConfig);
+    auth = firebase.auth();
+    db = firebase.firestore();
+  }
+} catch (e) {
+  console.warn('Firebase non ancora configurato, attivo salvataggio locale:', e);
+}
+
+let scene, camera, renderer;
+let currentCardMesh = null;
+let flyingCards = [];
+let environmentGroup = new THREE.Group();
+let currentEnv = 'montagna';
+let currentSound = 'frisbee';
+let audioCtx = null;
+
+let deck = [];
+let currentIndex = 0;
+let datiCorrentiCache = null;
+let selectedDateStr = null; // Formato 'YYYY-MM-DD'
+
+// Gestione modalità bonus e progressione
+let isBonusMode = false;
+let selectedBonusIndex = 0;
+const STORAGE_KEY = 'santini_3d_progress_v1';
+
+let isDragging = false;
+let dragStartPos = { x: 0, y: 0, time: 0 };
+let dragCurrentPos = { x: 0, y: 0 };
+const cardRestPos = new THREE.Vector3(0, 0.25, 3.1);
+
+const textureLoader = new THREE.TextureLoader();
+
+// --- MOTORE AUDIO WEB AUDIO API (SUONI DI LANCIO SINTETIZZATI) ---
+
+function getAudioContext() {
+  if (!audioCtx) {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (AudioContextClass) {
+      audioCtx = new AudioContextClass();
+    }
+  }
+  if (audioCtx && audioCtx.state === 'suspended') {
+    audioCtx.resume().catch(() => {});
+  }
+  return audioCtx;
+}
+
+function playLaunchSound(type) {
+  if (!type || type === 'muto') return;
+  const ctx = getAudioContext();
+  if (!ctx) return;
+
+  const now = ctx.currentTime;
+
+  if (type === 'frisbee') {
+    // Sibilio aerodinamico (rumore filtrato + swoosh ascendente/discendente)
+    const bufferSize = Math.floor(ctx.sampleRate * 0.45);
+    const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      data[i] = Math.random() * 2 - 1;
+    }
+
+    const noise = ctx.createBufferSource();
+    noise.buffer = buffer;
+
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'bandpass';
+    filter.Q.setValueAtTime(3.2, now);
+    filter.frequency.setValueAtTime(320, now);
+    filter.frequency.exponentialRampToValueAtTime(1450, now + 0.14);
+    filter.frequency.exponentialRampToValueAtTime(420, now + 0.42);
+
+    const gain = ctx.createGain();
+    gain.gain.setValueAtTime(0.01, now);
+    gain.gain.linearRampToValueAtTime(0.32, now + 0.08);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.44);
+
+    noise.connect(filter);
+    filter.connect(gain);
+    gain.connect(ctx.destination);
+    noise.start(now);
+    noise.stop(now + 0.45);
+
+  } else if (type === 'campana') {
+    // Rintocco di campana sacra con armoniche metalliche
+    const freqs = [523.25, 1046.5, 1567.98, 2093.0]; // Do5 e armoniche
+    const gains = [0.22, 0.11, 0.06, 0.03];
+    freqs.forEach((f, idx) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = idx === 0 ? 'sine' : 'triangle';
+      osc.frequency.setValueAtTime(f, now);
+
+      gain.gain.setValueAtTime(0.001, now);
+      gain.gain.linearRampToValueAtTime(gains[idx], now + 0.015);
+      gain.gain.exponentialRampToValueAtTime(0.0008, now + 1.3 - idx * 0.2);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 1.35);
+    });
+
+  } else if (type === 'coro') {
+    // Arpeggio celeste (accordo maggiore brillante Do-Mi-Sol-Do)
+    const notes = [523.25, 659.25, 783.99, 1046.5];
+    notes.forEach((freq, i) => {
+      const startTime = now + i * 0.065;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, startTime);
+
+      gain.gain.setValueAtTime(0.001, startTime);
+      gain.gain.linearRampToValueAtTime(0.14, startTime + 0.04);
+      gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.85);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(startTime);
+      osc.stop(startTime + 0.9);
+    });
+
+  } else if (type === 'vento') {
+    // Folata di vento mistico profondo
+    const bufferSize = Math.floor(ctx.sampleRate * 0.7);
+    const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      data[i] = Math.random() * 2 - 1;
+    }
+
+    const noise = ctx.createBufferSource();
+    noise.buffer = buffer;
+
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(180, now);
+    filter.frequency.exponentialRampToValueAtTime(750, now + 0.25);
+    filter.frequency.exponentialRampToValueAtTime(140, now + 0.68);
+
+    const gain = ctx.createGain();
+    gain.gain.setValueAtTime(0.01, now);
+    gain.gain.linearRampToValueAtTime(0.35, now + 0.18);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.69);
+
+    noise.connect(filter);
+    filter.connect(gain);
+    gain.connect(ctx.destination);
+    noise.start(now);
+    noise.stop(now + 0.7);
+  }
+}
+
+// --- GESTIONE AUTENTICAZIONE E SINCRONIZZAZIONE CLOUD (FIREBASE) ---
+
+function loadLocalProgress() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      return {
+        streak: parsed.streak || 0,
+        lastCompletedDate: parsed.lastCompletedDate || null,
+        unlockedBonusCount: parsed.unlockedBonusCount || 0
+      };
+    }
+  } catch (e) {
+    console.warn('Errore lettura localStorage:', e);
+  }
+  return { streak: 0, lastCompletedDate: null, unlockedBonusCount: 0 };
+}
+
+async function syncProgressFromCloud(uid) {
+  if (!db) return;
+  try {
+    const docRef = db.collection('utenti').doc(uid);
+    const docSnap = await docRef.get();
+    if (docSnap.exists) {
+      const data = docSnap.data();
+      cachedProgress = {
+        streak: data.streak || 0,
+        lastCompletedDate: data.lastCompletedDate || null,
+        unlockedBonusCount: data.unlockedBonusCount || 0
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(cachedProgress));
+    } else {
+      cachedProgress = loadLocalProgress();
+      await docRef.set(cachedProgress);
+    }
+  } catch (err) {
+    console.warn('Errore lettura Firestore (uso cache locale):', err);
+    cachedProgress = loadLocalProgress();
+  }
+}
+
+function loadProgress() {
+  return cachedProgress;
+}
+
+async function saveProgress(progress, overrideUid = null) {
+  cachedProgress = progress;
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+  } catch (e) {
+    console.warn('Errore salvataggio localStorage:', e);
+  }
+
+  const uid = overrideUid || (currentUser ? currentUser.uid : null);
+  if (db && uid) {
+    try {
+      await db.collection('utenti').doc(uid).set(progress, { merge: true });
+    } catch (err) {
+      console.warn('Errore salvataggio Firestore:', err);
+    }
+  }
+}
+
+function initAuthListener() {
+  const statusEl = document.getElementById('auth-status');
+  const formsEl = document.getElementById('auth-forms');
+  const logoutBtn = document.getElementById('btn-logout');
+
+  if (!auth) {
+    if (statusEl) statusEl.textContent = '👤 Modalità locale (inserisci chiavi Firebase in app.js)';
+    if (formsEl) formsEl.style.display = 'none';
+    return;
+  }
+
+  auth.onAuthStateChanged(async (user) => {
+    currentUser = user;
+    if (user) {
+      statusEl.textContent = `👤 ${user.email}`;
+      formsEl.style.display = 'none';
+      logoutBtn.style.display = 'inline-block';
+      await syncProgressFromCloud(user.uid);
+    } else {
+      statusEl.textContent = '👤 Ospite (locale)';
+      formsEl.style.display = 'flex';
+      logoutBtn.style.display = 'none';
+      cachedProgress = loadLocalProgress();
+    }
+
+    updateStreakBadge();
+    updateDatePickerVisibility();
+    if (currentIndex >= deck.length && !isBonusMode) {
+      const availableBonus = getAvailableBonusList();
+      const bonusModeBtn = document.getElementById('bonus-mode-btn');
+      if (bonusModeBtn) {
+        bonusModeBtn.style.display = availableBonus.length > 0 ? 'inline-block' : 'none';
+      }
+    }
+  });
+
+  document.getElementById('btn-login').addEventListener('click', async () => {
+    const email = document.getElementById('auth-email').value.trim();
+    const pass = document.getElementById('auth-pass').value;
+    if (!email || !pass) return alert('Inserisci email e password');
+    try {
+      await auth.signInWithEmailAndPassword(email, pass);
+    } catch (err) {
+      alert('Errore accesso: ' + err.message);
+    }
+  });
+
+  document.getElementById('btn-register').addEventListener('click', async () => {
+    const email = document.getElementById('auth-email').value.trim();
+    const pass = document.getElementById('auth-pass').value;
+    if (!email || pass.length < 6) return alert('Inserisci email e password (min. 6 caratteri)');
+    try {
+      const cred = await auth.createUserWithEmailAndPassword(email, pass);
+      await saveProgress(loadLocalProgress(), cred.user.uid);
+    } catch (err) {
+      alert('Errore registrazione: ' + err.message);
+    }
+  });
+
+  document.getElementById('btn-logout').addEventListener('click', () => {
+    auth.signOut();
+  });
+}
+
+// --- GESTIONE DATE E LETTURA DATABASE SANTI ---
+
+function formatDateYYYYMMDD(dateObj) {
+  const y = dateObj.getFullYear();
+  const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+  const d = String(dateObj.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
+function getTodayDateString() {
+  return formatDateYYYYMMDD(new Date());
+}
+
+function getYesterdayDateString() {
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  return formatDateYYYYMMDD(yesterday);
+}
+
+function getSantiByDateString(dateStr) {
+  const todayStr = getTodayDateString();
+  if (!dateStr || dateStr === todayStr) {
+    return getSantiDiOggi();
+  }
+
+  const parts = dateStr.split('-');
+  const year = parseInt(parts[0], 10);
+  const month = parseInt(parts[1], 10) - 1;
+  const day = parseInt(parts[2], 10);
+  const targetDate = new Date(year, month, day);
+
+  const mese = String(targetDate.getMonth() + 1).padStart(2, '0');
+  const giorno = String(targetDate.getDate()).padStart(2, '0');
+  const chiave = `${mese}-${giorno}`;
+
+  const opzioniData = { day: 'numeric', month: 'long' };
+  const dataFormattata = targetDate.toLocaleDateString('it-IT', opzioniData);
+
+  const lista = (typeof SANTI_DATABASE !== 'undefined' && SANTI_DATABASE[chiave])
+    ? SANTI_DATABASE[chiave]
+    : (typeof SANTI_DATABASE !== 'undefined' ? (SANTI_DATABASE['default'] || Object.values(SANTI_DATABASE)[0] || []) : []);
+
+  const pool = (typeof IMMAGINI_SANTI_POOL !== 'undefined' && Array.isArray(IMMAGINI_SANTI_POOL))
+    ? IMMAGINI_SANTI_POOL
+    : [{ icona: '✝️', colorePrimario: '#78350f', coloreSecondario: '#fbbf24' }];
+
+  return {
+    dataFormattata,
+    santi: lista.map(santo => {
+      const graficaRandom = pool[Math.floor(Math.random() * pool.length)];
+      return {
+        ...santo,
+        grafica: santo.grafica || graficaRandom
+      };
+    })
+  };
+}
+
+// --- GESTIONE PROGRESSIONE, STREAK E SBLOCCO SELETTORE DATA ---
+
+function getTotalBonusCount() {
+  return (typeof SANTI_BONUS !== 'undefined' && Array.isArray(SANTI_BONUS)) ? SANTI_BONUS.length : 0;
+}
+
+function getAvailableBonusList() {
+  const total = getTotalBonusCount();
+  if (total === 0) return [];
+  const progress = loadProgress();
+  return SANTI_BONUS.slice(0, progress.unlockedBonusCount);
+}
+
+function areAllBonusUnlocked() {
+  const total = getTotalBonusCount();
+  if (total === 0) return false;
+  const progress = loadProgress();
+  return progress.unlockedBonusCount >= total;
+}
+
+function updateDatePickerVisibility() {
+  const pickerBar = document.getElementById('date-picker-bar');
+  if (!pickerBar) return;
+
+  if (areAllBonusUnlocked()) {
+    pickerBar.style.display = 'flex';
+    const input = document.getElementById('custom-date-input');
+    if (input && !input.value) {
+      input.value = selectedDateStr || getTodayDateString();
+    }
+  } else {
+    pickerBar.style.display = 'none';
+  }
+}
+
+function registerDailyDeckCompletion() {
+  const progress = loadProgress();
+  const today = getTodayDateString();
+
+  if (selectedDateStr && selectedDateStr !== today) {
+    return { newlyUnlocked: false, allUnlockedJustNow: false, progress };
+  }
+
+  if (progress.lastCompletedDate === today) {
+    return { newlyUnlocked: false, allUnlockedJustNow: false, progress };
+  }
+
+  const yesterday = getYesterdayDateString();
+  if (progress.lastCompletedDate === yesterday) {
+    progress.streak += 1;
+  } else {
+    progress.streak = 1;
+  }
+
+  progress.lastCompletedDate = today;
+
+  let newlyUnlocked = false;
+  let allUnlockedJustNow = false;
+  const maxBonusDisponibili = getTotalBonusCount();
+
+  if (progress.streak % 3 === 0 && progress.unlockedBonusCount < maxBonusDisponibili) {
+    progress.unlockedBonusCount += 1;
+    newlyUnlocked = true;
+    if (progress.unlockedBonusCount >= maxBonusDisponibili) {
+      allUnlockedJustNow = true;
+    }
+  }
+
+  saveProgress(progress);
+  updateStreakBadge();
+  updateDatePickerVisibility();
+  return { newlyUnlocked, allUnlockedJustNow, progress };
+}
+
+function updateStreakBadge() {
+  const progress = loadProgress();
+  const badge = document.getElementById('streak-badge');
+  const unlocked = getAvailableBonusList().length;
+  const bonusLabel = unlocked > 0 ? ` • ✨ ${unlocked} bonus` : '';
+  badge.textContent = `🔥 Serie: ${progress.streak} gg${bonusLabel}`;
+}
+
+function loadDeckForDate(dateStr) {
+  selectedDateStr = dateStr;
+  isBonusMode = false;
+  currentIndex = 0;
+
+  const input = document.getElementById('custom-date-input');
+  if (input) input.value = dateStr;
+
+  flyingCards.forEach(fc => scene.remove(fc.mesh));
+  flyingCards = [];
+
+  datiCorrentiCache = getSantiByDateString(dateStr);
+  deck = datiCorrentiCache.santi;
+  document.getElementById('date-title').textContent = `Santi del ${datiCorrentiCache.dataFormattata}`;
+  spawnNextCard();
+}
+
+// --- INIZIALIZZAZIONE SCENA 3D ---
+
+function init() {
+  const container = document.getElementById('canvas-container');
+
+  cachedProgress = loadLocalProgress();
+  initAuthListener();
+
+  scene = new THREE.Scene();
+
+  camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 300);
+  camera.position.set(0, 1.2, 5.5);
+  camera.lookAt(0, 0.4, -5);
+
+  renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.shadowMap.enabled = true;
+  container.appendChild(renderer.domElement);
+
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.68);
+  scene.add(ambientLight);
+
+  const dirLight = new THREE.DirectionalLight(0xfff1d6, 0.42);
+  dirLight.position.set(5, 14, 8);
+  scene.add(dirLight);
+
+  scene.add(environmentGroup);
+  buildEnvironment(currentEnv);
+
+  selectedDateStr = getTodayDateString();
+  datiCorrentiCache = getSantiByDateString(selectedDateStr);
+  document.getElementById('date-title').textContent = `Santi del ${datiCorrentiCache.dataFormattata}`;
+  deck = datiCorrentiCache.santi;
+
+  updateStreakBadge();
+  updateDatePickerVisibility();
+  spawnNextCard();
+
+  setupEvents();
+  animate();
+}
+
+// Caricamento immagine resiliente (tenta diretto, poi tramite proxy CORS wsrv.nl, poi fallback icona)
+function loadImageWithCorsFallback(rawUrl) {
+  return new Promise((resolve) => {
+    if (!rawUrl || typeof rawUrl !== 'string') {
+      resolve(null);
+      return;
+    }
+
+    const cleanUrl = rawUrl.trim();
+    const isExternalHttp = /^https?:\/\//i.test(cleanUrl);
+
+    const tryLoad = (urlToLoad, useCors, onFail) => {
+      const img = new Image();
+      if (useCors) {
+        img.crossOrigin = "anonymous";
+      }
+      img.onload = () => resolve(img);
+      img.onerror = onFail;
+      img.src = urlToLoad;
+    };
+
+    // 1° tentativo: URL diretto con crossOrigin anonymous
+    tryLoad(cleanUrl, true, () => {
+      if (isExternalHttp) {
+        // 2° tentativo: Proxy CORS wsrv.nl per aggirare blocchi Access-Control-Allow-Origin dei siti esterni
+        const stripped = cleanUrl.replace(/^https?:\/\//i, '');
+        const proxyUrl = `https://wsrv.nl/?url=${encodeURIComponent(stripped)}&w=512&output=jpg`;
+        tryLoad(proxyUrl, true, () => {
+          resolve(null);
+        });
+      } else {
+        resolve(null);
+      }
+    });
+  });
+}
+
+// Crea la texture del santino con testo perfettamente centrato e contrasto elevato
+async function createSantinoTextureAsync(santo, isBonusCard = false) {
+  // Supporta sia fotoUrl che eventuali varianti di nome campo (immagine, imgUrl, url)
+  const candidateUrl = santo.fotoUrl || santo.immagine || santo.imgUrl || santo.url || null;
+  const loadedImg = await loadImageWithCorsFallback(candidateUrl);
+
+  const canvas = document.createElement('canvas');
+  canvas.width = 512;
+  canvas.height = 768;
+  const ctx = canvas.getContext('2d');
+
+  const bgPergamena = ctx.createLinearGradient(0, 0, 0, 768);
+  if (isBonusCard) {
+    bgPergamena.addColorStop(0, '#fef9c3');
+    bgPergamena.addColorStop(0.5, '#fde68a');
+    bgPergamena.addColorStop(1, '#f59e0b');
+  } else {
+    bgPergamena.addColorStop(0, '#f3e5c8');
+    bgPergamena.addColorStop(0.5, '#ead5ad');
+    bgPergamena.addColorStop(1, '#dfc28d');
+  }
+  ctx.fillStyle = bgPergamena;
+  ctx.fillRect(0, 0, 512, 768);
+
+  const gradGold = ctx.createLinearGradient(0, 0, 512, 768);
+  gradGold.addColorStop(0, '#78350f');
+  gradGold.addColorStop(0.25, '#d97706');
+  gradGold.addColorStop(0.5, '#f59e0b');
+  gradGold.addColorStop(0.75, '#b45309');
+  gradGold.addColorStop(1, '#451a03');
+
+  ctx.lineWidth = 28;
+  ctx.strokeStyle = gradGold;
+  ctx.strokeRect(14, 14, 484, 740);
+
+  ctx.lineWidth = 4;
+  ctx.strokeStyle = '#5c2808';
+  ctx.strokeRect(36, 36, 440, 696);
+
+  const corners = [[42,42], [470,42], [42,726], [470,726]];
+  ctx.fillStyle = '#78350f';
+  corners.forEach(([cx, cy]) => {
+    ctx.beginPath();
+    ctx.arc(cx, cy, 12, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  const imgX = 76, imgY = 64, imgW = 360, imgH = 360;
+
+  if (loadedImg) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(imgX, imgY, imgW, imgH);
+    ctx.clip();
+
+    const hRatio = imgW / loadedImg.width;
+    const vRatio = imgH / loadedImg.height;
+    const ratio = Math.max(hRatio, vRatio);
+    const centerShiftX = (imgW - loadedImg.width * ratio) / 2;
+    const centerShiftY = (imgH - loadedImg.height * ratio) / 2;
+    ctx.drawImage(
+      loadedImg,
+      0, 0, loadedImg.width, loadedImg.height,
+      imgX + centerShiftX, imgY + centerShiftY,
+      loadedImg.width * ratio, loadedImg.height * ratio
+    );
+    ctx.restore();
+  } else {
+    drawFallbackIcon(ctx, santo, imgX, imgY, imgW, imgH);
+  }
+
+  ctx.lineWidth = 6;
+  ctx.strokeStyle = '#78350f';
+  ctx.strokeRect(imgX, imgY, imgW, imgH);
+
+  ctx.fillStyle = 'rgba(255, 251, 235, 0.82)';
+  ctx.fillRect(52, 442, 408, 272);
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = 'rgba(120, 53, 15, 0.35)';
+  ctx.strokeRect(52, 442, 408, 272);
+
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'alphabetic';
+
+  ctx.fillStyle = '#1c1917';
+  ctx.font = 'bold 32px Georgia, serif';
+  const afterNameY = wrapText(ctx, santo.nome || 'Santo', 256, 485, 380, 36);
+
+  ctx.fillStyle = '#92400e';
+  ctx.font = 'italic bold 21px Georgia, serif';
+  const afterTitleY = wrapText(ctx, santo.titolo || '', 256, afterNameY + 14, 380, 26);
+
+  const lineY = afterTitleY + 10;
+  ctx.beginPath();
+  ctx.moveTo(136, lineY);
+  ctx.lineTo(376, lineY);
+  ctx.strokeStyle = '#92400e';
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+
+  ctx.fillStyle = '#292524';
+  ctx.font = '19px Georgia, serif';
+  wrapText(ctx, santo.bio || '', 256, lineY + 30, 370, 24);
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.anisotropy = 4;
+  return texture;
+}
+
+function drawFallbackIcon(ctx, santo, imgX, imgY, imgW, imgH) {
+  const grafica = santo.grafica || { icona: '✝️', colorePrimario: '#78350f', coloreSecondario: '#fbbf24' };
+  const bgGrad = ctx.createRadialGradient(256, 244, 30, 256, 244, 220);
+  bgGrad.addColorStop(0, grafica.coloreSecondario);
+  bgGrad.addColorStop(1, grafica.colorePrimario);
+  ctx.fillStyle = bgGrad;
+  ctx.fillRect(imgX, imgY, imgW, imgH);
+
+  ctx.beginPath();
+  ctx.arc(256, 244, 108, 0, Math.PI * 2);
+  ctx.fillStyle = 'rgba(254, 240, 138, 0.35)';
+  ctx.fill();
+  ctx.lineWidth = 5;
+  ctx.strokeStyle = '#fbbf24';
+  ctx.stroke();
+
+  ctx.font = '140px serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(grafica.icona, 256, 250);
+}
+
+function createBackTexture() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 512;
+  canvas.height = 768;
+  const ctx = canvas.getContext('2d');
+
+  ctx.fillStyle = '#5c2808';
+  ctx.fillRect(0, 0, 512, 768);
+
+  ctx.lineWidth = 24;
+  ctx.strokeStyle = '#d97706';
+  ctx.strokeRect(16, 16, 480, 736);
+
+  ctx.fillStyle = '#fef3c7';
+  ctx.font = 'bold 42px Georgia, serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('✝', 256, 340);
+  ctx.font = 'italic 26px Georgia, serif';
+  ctx.fillText('Santi del Giorno', 256, 400);
+
+  return new THREE.CanvasTexture(canvas);
+}
+
+const sharedBackTexture = createBackTexture();
+
+function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+  if (!text) return y;
+  ctx.textAlign = 'center';
+  const words = text.split(' ');
+  let line = '';
+  let currentY = y;
+
+  for (let n = 0; n < words.length; n++) {
+    const testLine = line + words[n] + ' ';
+    const metrics = ctx.measureText(testLine);
+    if (metrics.width > maxWidth && n > 0) {
+      ctx.fillText(line.trim(), x, currentY);
+      line = words[n] + ' ';
+      currentY += lineHeight;
+    } else {
+      line = testLine;
+    }
+  }
+  ctx.fillText(line.trim(), x, currentY);
+  return currentY + lineHeight * 0.5;
+}
+
+// --- GESTIONE CARTE E MODALITÀ BONUS ---
+
+async function spawnCardMesh(santo, isBonusCard = false) {
+  if (currentCardMesh) {
+    scene.remove(currentCardMesh);
+    currentCardMesh = null;
+  }
+
+  const frontTex = await createSantinoTextureAsync(santo, isBonusCard);
+  const geometry = new THREE.BoxGeometry(1.18, 1.77, 0.02);
+
+  const sideMat = new THREE.MeshStandardMaterial({ color: isBonusCard ? 0xd97706 : 0x92400e, roughness: 0.6 });
+  const frontMat = new THREE.MeshStandardMaterial({ map: frontTex, roughness: 0.78, metalness: 0.05 });
+  const backMat = new THREE.MeshStandardMaterial({ map: sharedBackTexture, roughness: 0.78, metalness: 0.05 });
+
+  const materials = [sideMat, sideMat, sideMat, sideMat, frontMat, backMat];
+  const card = new THREE.Mesh(geometry, materials);
+
+  card.position.copy(cardRestPos);
+  card.rotation.set(-0.16, 0, 0);
+  scene.add(card);
+  currentCardMesh = card;
+}
+
+async function spawnNextCard() {
+  updateUI();
+
+  const endActions = document.getElementById('end-actions');
+  const bonusModeBtn = document.getElementById('bonus-mode-btn');
+  const bonusPickerContainer = document.getElementById('bonus-picker-container');
+  const exitBonusBtn = document.getElementById('exit-bonus-btn');
+
+  // MODALITÀ BONUS INFINITA
+  if (isBonusMode) {
+    const bonusList = getAvailableBonusList();
+    if (bonusList.length === 0) {
+      exitBonusMode();
+      return;
+    }
+
+    if (selectedBonusIndex >= bonusList.length) {
+      selectedBonusIndex = 0;
+    }
+
+    endActions.style.display = 'none';
+    bonusPickerContainer.style.display = 'flex';
+    exitBonusBtn.style.display = 'inline-block';
+
+    const santoBonus = bonusList[selectedBonusIndex];
+    document.getElementById('date-title').textContent = '✨ Santi Bonus';
+    document.getElementById('current-saint-sub').textContent = santoBonus.nome;
+    document.getElementById('hint-text').textContent = '✨ Lancia questo santino bonus quante volte vuoi!';
+
+    await spawnCardMesh(santoBonus, true);
+    return;
+  }
+
+  // MODALITÀ NORMALE (SANTI DELLA DATA CORRENTE / SCELTA)
+  bonusPickerContainer.style.display = 'none';
+  exitBonusBtn.style.display = 'none';
+  document.getElementById('date-title').textContent = `Santi del ${datiCorrentiCache.dataFormattata}`;
+
+  if (currentIndex >= deck.length) {
+    const result = registerDailyDeckCompletion();
+    const availableBonus = getAvailableBonusList();
+
+    endActions.style.display = 'flex';
+    bonusModeBtn.style.display = availableBonus.length > 0 ? 'inline-block' : 'none';
+
+    if (result.allUnlockedJustNow) {
+      document.getElementById('hint-text').textContent = '🏆 Tutti i Bonus sbloccati! Ora puoi scegliere qualsiasi data in alto!';
+    } else if (result.newlyUnlocked) {
+      document.getElementById('hint-text').textContent = '🎉 3 giorni consecutivi! Nuovo Santino Bonus sbloccato!';
+    } else {
+      document.getElementById('hint-text').textContent = `Hai lanciato tutti i santi del ${datiCorrentiCache.dataFormattata}!`;
+    }
+    document.getElementById('current-saint-sub').textContent = 'Mazzo completato';
+    return;
+  }
+
+  endActions.style.display = 'none';
+  document.getElementById('hint-text').textContent = '👆 Trascina e lancia il santino come un frisbee!';
+
+  const santo = deck[currentIndex];
+  document.getElementById('current-saint-sub').textContent = santo.nome;
+  await spawnCardMesh(santo, false);
+}
+
+function enterBonusMode() {
+  const bonusList = getAvailableBonusList();
+  if (bonusList.length === 0) return;
+
+  isBonusMode = true;
+  selectedBonusIndex = 0;
+  renderBonusSelector();
+  spawnNextCard();
+}
+
+function exitBonusMode() {
+  isBonusMode = false;
+  if (currentCardMesh) {
+    scene.remove(currentCardMesh);
+    currentCardMesh = null;
+  }
+  spawnNextCard();
+}
+
+function renderBonusSelector() {
+  const container = document.getElementById('bonus-selector');
+  container.innerHTML = '';
+
+  const bonusList = getAvailableBonusList();
+  bonusList.forEach((santo, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'bonus-select-btn' + (idx === selectedBonusIndex ? ' active' : '');
+    const icon = (santo.grafica && santo.grafica.icona) ? santo.grafica.icona : '✨';
+    btn.textContent = `${icon} ${santo.nome}`;
+    btn.addEventListener('click', () => {
+      if (selectedBonusIndex === idx) return;
+      selectedBonusIndex = idx;
+      renderBonusSelector();
+      spawnNextCard();
+    });
+    container.appendChild(btn);
+  });
+}
+
+function updateUI() {
+  if (isBonusMode) {
+    document.getElementById('card-counter').textContent = '∞ Bonus';
+    return;
+  }
+  const remaining = Math.max(0, deck.length - currentIndex);
+  document.getElementById('card-counter').textContent = `${remaining} / ${deck.length}`;
+}
+
+// --- AMBIENTI 3D ---
+
+function updateBackgroundAspect(texture) {
+  if (!texture || !texture.image) return;
+  const targetAspect = window.innerWidth / window.innerHeight;
+  const imageAspect = texture.image.width / texture.image.height;
+  const factor = imageAspect / targetAspect;
+
+  texture.offset.x = factor > 1 ? (1 - 1 / factor) / 2 : 0;
+  texture.repeat.x = factor > 1 ? 1 / factor : 1;
+  texture.offset.y = factor > 1 ? 0 : (1 - factor) / 2;
+  texture.repeat.y = factor > 1 ? 1 : factor;
+  texture.needsUpdate = true;
+}
+
+function buildEnvironment(envType) {
+  while (environmentGroup.children.length > 0) {
+    environmentGroup.remove(environmentGroup.children[0]);
+  }
+
+  const bgFiles = {
+    'montagna': 'montagna.jpg',
+    'grattacielo': 'grattacielo.jpg',
+    'scogliera': 'scogliera.jpg',
+    'sanpietro': 'sanpietro.jpg'
+  };
+
+  const fallbackColors = {
+    'montagna': 0x60a5fa,
+    'grattacielo': 0xf97316,
+    'scogliera': 0x0284c7,
+    'sanpietro': 0x7dd3fc
+  };
+
+  const fileName = bgFiles[envType];
+
+  textureLoader.load(
+    fileName,
+    (texture) => {
+      updateBackgroundAspect(texture);
+      scene.background = texture;
+      scene.fog = null;
+    },
+    undefined,
+    () => {
+      scene.background = new THREE.Color(fallbackColors[envType] || 0x1e293b);
+    }
+  );
+
+  const ledgeConfigs = {
+    'montagna': { color: 0x64748b, opacity: 0.85 },
+    'grattacielo': { color: 0x334155, opacity: 0.75 },
+    'scogliera': { color: 0x78716c, opacity: 0.85 },
+    'sanpietro': { color: 0xfef3c7, opacity: 0.9 }
+  };
+
+  const cfg = ledgeConfigs[envType] || { color: 0x334155, opacity: 0.8 };
+  const ledgeGeo = new THREE.BoxGeometry(8, 1.0, 3.5);
+  const ledgeMat = new THREE.MeshStandardMaterial({
+    color: cfg.color,
+    roughness: 0.85,
+    transparent: true,
+    opacity: cfg.opacity
+  });
+  const ledge = new THREE.Mesh(ledgeGeo, ledgeMat);
+  ledge.position.set(0, -2.7, 3.6);
+  environmentGroup.add(ledge);
+}
+
+// --- EVENTI E FISICA LANCIO ---
+
+function setupEvents() {
+  const dom = renderer.domElement;
+
+  const onStart = (x, y) => {
+    if (!currentCardMesh) return;
+    // Sblocca l'AudioContext al primo tocco dell'utente su mobile
+    getAudioContext();
+    isDragging = true;
+    dragStartPos = { x, y, time: performance.now() };
+    dragCurrentPos = { x, y };
+  };
+
+  const onMove = (x, y) => {
+    if (!isDragging || !currentCardMesh) return;
+    dragCurrentPos = { x, y };
+
+    const dx = (x - dragStartPos.x) / window.innerWidth;
+    const dy = (y - dragStartPos.y) / window.innerHeight;
+
+    currentCardMesh.position.x = cardRestPos.x + dx * 3.5;
+    currentCardMesh.position.y = cardRestPos.y - dy * 3.5;
+    currentCardMesh.rotation.z = -dx * 1.2;
+    currentCardMesh.rotation.x = -0.16 + dy * 1.2;
+  };
+
+  const onEnd = () => {
+    if (!isDragging || !currentCardMesh) return;
+    isDragging = false;
+
+    const dt = Math.max(0.05, (performance.now() - dragStartPos.time) / 1000);
+    const dy = dragStartPos.y - dragCurrentPos.y;
+    const dx = dragCurrentPos.x - dragStartPos.x;
+
+    if (dy > 45) {
+      const speedY = Math.min(25, (dy / window.innerHeight) / dt * 4.5);
+      const speedX = (dx / window.innerWidth) / dt * 2.5;
+
+      playLaunchSound(currentSound);
+      launchCardAsFrisbee(currentCardMesh, speedX, speedY);
+      currentCardMesh = null;
+
+      if (!isBonusMode) {
+        currentIndex++;
+      }
+
+      setTimeout(() => {
+        spawnNextCard();
+      }, 350);
+    } else {
+      currentCardMesh.position.copy(cardRestPos);
+      currentCardMesh.rotation.set(-0.16, 0, 0);
+    }
+  };
+
+  dom.addEventListener('touchstart', e => onStart(e.touches[0].clientX, e.touches[0].clientY), { passive: true });
+  dom.addEventListener('touchmove', e => onMove(e.touches[0].clientX, e.touches[0].clientY), { passive: true });
+  dom.addEventListener('touchend', onEnd);
+
+  dom.addEventListener('mousedown', e => onStart(e.clientX, e.clientY));
+  window.addEventListener('mousemove', e => onMove(e.clientX, e.clientY));
+  window.addEventListener('mouseup', onEnd);
+
+  // Pulsante Riduci / Espandi blocco in alto
+  const topBar = document.getElementById('top-bar');
+  const toggleBtn = document.getElementById('toggle-top-bar-btn');
+  if (topBar && toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      const isCollapsed = topBar.classList.toggle('collapsed');
+      toggleBtn.textContent = isCollapsed ? '▼' : '▲';
+      toggleBtn.title = isCollapsed ? 'Espandi barra' : 'Riduci barra';
+    });
+  }
+
+  // Selettore Ambienti
+  document.querySelectorAll('.env-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.env-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentEnv = btn.dataset.env;
+      buildEnvironment(currentEnv);
+    });
+  });
+
+  // Selettore Suoni di Lancio (riproduce anche un'anteprima al clic)
+  document.querySelectorAll('.sound-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.sound-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentSound = btn.dataset.sound;
+      playLaunchSound(currentSound);
+    });
+  });
+
+  document.getElementById('reset-btn').addEventListener('click', () => {
+    isBonusMode = false;
+    currentIndex = 0;
+    flyingCards.forEach(fc => scene.remove(fc.mesh));
+    flyingCards = [];
+    spawnNextCard();
+  });
+
+  document.getElementById('bonus-mode-btn').addEventListener('click', () => {
+    enterBonusMode();
+  });
+
+  document.getElementById('exit-bonus-btn').addEventListener('click', () => {
+    exitBonusMode();
+  });
+
+  const customDateInput = document.getElementById('custom-date-input');
+  if (customDateInput) {
+    customDateInput.addEventListener('change', (e) => {
+      if (e.target.value) {
+        loadDeckForDate(e.target.value);
+      }
+    });
+  }
+
+  const todayDateBtn = document.getElementById('today-date-btn');
+  if (todayDateBtn) {
+    todayDateBtn.addEventListener('click', () => {
+      loadDeckForDate(getTodayDateString());
+    });
+  }
+
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    if (scene.background && scene.background.isTexture) {
+      updateBackgroundAspect(scene.background);
+    }
+  });
+}
+
+function launchCardAsFrisbee(mesh, vx, forwardSpeed) {
+  mesh.rotation.x = -Math.PI / 2.2;
+
+  flyingCards.push({
+    mesh,
+    velocity: new THREE.Vector3(vx, 3.8 + forwardSpeed * 0.18, -14 - forwardSpeed * 0.9),
+    spinSpeed: (vx >= 0 ? -1 : 1) * (12 + Math.random() * 6),
+    curveForce: -vx * 0.45,
+    age: 0
+  });
+}
+
+let lastTime = performance.now();
+
+function animate() {
+  requestAnimationFrame(animate);
+
+  const now = performance.now();
+  const dt = Math.min(0.05, (now - lastTime) / 1000);
+  lastTime = now;
+
+  if (currentCardMesh && !isDragging) {
+    currentCardMesh.position.y = cardRestPos.y + Math.sin(now * 0.003) * 0.04;
+    currentCardMesh.rotation.y = Math.sin(now * 0.002) * 0.06;
+  }
+
+  for (let i = flyingCards.length - 1; i >= 0; i--) {
+    const fc = flyingCards[i];
+    fc.age += dt;
+
+    const lift = Math.max(-4.5, 2.5 - fc.age * 2.2);
+    fc.velocity.y += lift * dt;
+    fc.velocity.x += fc.curveForce * dt;
+    fc.velocity.z *= (1 - 0.18 * dt);
+
+    fc.mesh.position.addScaledVector(fc.velocity, dt);
+
+    fc.mesh.rotation.z += fc.spinSpeed * dt;
+    fc.mesh.rotation.y = Math.sin(fc.age * 3) * 0.25;
+
+    if (fc.mesh.position.z < -120 || fc.mesh.position.y < -25 || fc.age > 7) {
+      scene.remove(fc.mesh);
+      flyingCards.splice(i, 1);
+    }
+  }
+
+  renderer.render(scene, camera);
+}
+
+window.addEventListener('DOMContentLoaded', init);
