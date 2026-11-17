@@ -1,4 +1,4 @@
-const CACHE_NAME = 'santini-3d-v3';
+const CACHE_NAME = 'santini-3d-v4';
 const ASSETS = [
   './',
   './index.html',
