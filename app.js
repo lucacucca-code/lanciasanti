@@ -3,13 +3,16 @@
 // =========================================================================
 // INCOLLA QUI LA TUA CONFIGURAZIONE FIREBASE (sostituisci i valori qui sotto)
 // =========================================================================
+
 const firebaseConfig = {
-  apiKey: "INCOLLA_QUI_LA_TUA_API_KEY",
-  authDomain: "INCOLLA_QUI_IL_TUO_AUTH_DOMAIN",
-  projectId: "INCOLLA_QUI_IL_TUO_PROJECT_ID",
-  storageBucket: "INCOLLA_QUI_IL_TUO_STORAGE_BUCKET",
-  messagingSenderId: "INCOLLA_QUI_IL_TUO_MESSAGING_SENDER_ID",
-  appId: "INCOLLA_QUI_IL_TUO_APP_ID"
+  apiKey: "AIzaSyA0Ara7gkgkD4_2cslsJYeUtaPkY5Jxlx0",
+  authDomain: "auth-lanciasanti.firebaseapp.com",
+  projectId: "auth-lanciasanti",
+  storageBucket: "auth-lanciasanti.firebasestorage.app",
+  messagingSenderId: "171414483792",
+  appId: "1:171414483792:web:023b5e5b5645af7c4bb255",
+  measurementId: "G-KB8ELBM90Y"
+
 };
 // =========================================================================
 
